@@ -10,10 +10,11 @@ Temp
 *.pidb
 *.userprefs
 
-Library/cache/*
-Library/metadata/*
-Library/previews/*
-Library/ScriptAssemblies/*
+MSSTGame/Library/
+MSSTGame/Library/cache/*
+MSSTGame/Library/metadata/*
+MSSTGame/Library/previews/*
+MSSTGame/Library/ScriptAssemblies/*
 
 AnnotationManager
 assetDatabase3
