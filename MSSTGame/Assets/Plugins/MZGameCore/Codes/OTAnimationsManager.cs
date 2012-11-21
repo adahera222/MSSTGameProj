@@ -9,8 +9,8 @@ namespace MZGameCore
 {
 	public class OTAnimationsManager
 	{
-		public OTContainer originContainer;
-		public GameObject originAnimation;
+//		public OTContainer originContainer;
+//		public GameObject originAnimation;
 		static OTAnimationsManager instance;
 		GameObject cloneAniamtion;
 		Dictionary<string,OTContainer> animationsDictionary;
@@ -32,9 +32,8 @@ namespace MZGameCore
 		{
 			MZDebug.Log( "Add Container (spriteheetPath = " + spritesheetPath + ")" );
 
-			MZDebug.Assert( originContainer, "originContainer is null, bind it first" );
-
-			OTContainer cloneSpritesheetsContainer = (OTContainer)GameObject.Instantiate( originContainer );
+//			OTContainer cloneSpritesheetsContainer = (OTContainer)GameObject.Instantiate( originContainer );
+			OTContainer cloneSpritesheetsContainer = MZResources.InstantiateOrthelloContainer_SpriteAtlasCocos2D();
 			OTSpriteAtlasCocos2D spriteAtlasCocos2D = (OTSpriteAtlasCocos2D)cloneSpritesheetsContainer.GetComponent( typeof( OTSpriteAtlasCocos2D ) );
 
 			TextAsset spritesheetTextAsset = (TextAsset)Resources.Load( spritesheetPath );
@@ -64,8 +63,8 @@ namespace MZGameCore
 
 			if( cloneAniamtion == null )
 			{
-				MZDebug.Assert( originAnimation != null, "originAnimation is null, bind it first" );
-				cloneAniamtion = (GameObject)GameObject.Instantiate( originAnimation );
+//				MZDebug.Assert( originAnimation != null, "originAnimation is null, bind it first" );
+				cloneAniamtion = MZResources.InstantiateOrthelloSprite( "Animation" );
 				( (OTAnimation)cloneAniamtion.GetComponent( typeof( OTAnimation ) ) ).name = "AnimationsCollection";
 			}
 

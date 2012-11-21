@@ -718,69 +718,71 @@ namespace PlistCS
         }
 
         private static object parseBinaryDictionary(int objRef)
-        {
-            Dictionary<string, object> buffer = new Dictionary<string, object>();
-            List<int> refs = new List<int>();
-            int refCount = 0;
+		{
+			Dictionary<string, object> buffer = new Dictionary<string, object>();
+			List<int> refs = new List<int>();
+			int refCount = 0;
 
-            byte dictByte = objectTable[offsetTable[objRef]];
-            
-            int refStartPosition;
-            refCount = getCount(offsetTable[objRef], out refStartPosition);
+			// fix warning
+//			byte dictByte = objectTable[ offsetTable[ objRef ] ];
+
+			int refStartPosition;
+			refCount = getCount( offsetTable[ objRef ], out refStartPosition );
 
 
-            if (refCount < 15)
-                refStartPosition = offsetTable[objRef] + 1;
-            else
-                refStartPosition = offsetTable[objRef] + 2 + RegulateNullBytes(BitConverter.GetBytes(refCount), 1).Length;
+			if( refCount < 15 )
+				refStartPosition = offsetTable[ objRef ] + 1;
+			else
+				refStartPosition = offsetTable[ objRef ] + 2 + RegulateNullBytes( BitConverter.GetBytes( refCount ), 1 ).Length;
 
-            for (int i = refStartPosition; i < refStartPosition + refCount * 2 * objRefSize; i += objRefSize)
-            {
-                byte[] refBuffer = objectTable.GetRange(i, objRefSize).ToArray();
-                Array.Reverse(refBuffer);
-                refs.Add(BitConverter.ToInt32(RegulateNullBytes(refBuffer, 4), 0));
-            }
+			for( int i = refStartPosition; i < refStartPosition + refCount * 2 * objRefSize; i += objRefSize )
+			{
+				byte[] refBuffer = objectTable.GetRange( i, objRefSize ).ToArray();
+				Array.Reverse( refBuffer );
+				refs.Add( BitConverter.ToInt32( RegulateNullBytes( refBuffer, 4 ), 0 ) );
+			}
 
-            for (int i = 0; i < refCount; i++)
-            {
-                buffer.Add((string)parseBinary(refs[i]), parseBinary(refs[i + refCount]));
-            }
+			for( int i = 0; i < refCount; i++ )
+			{
+				buffer.Add( (string)parseBinary( refs[ i ] ), parseBinary( refs[ i + refCount ] ) );
+			}
 
-            return buffer;
-        }
+			return buffer;
+		}
 
         private static object parseBinaryArray(int objRef)
-        {
-            List<object> buffer = new List<object>();
-            List<int> refs = new List<int>();
-            int refCount = 0;
+		{
+			List<object> buffer = new List<object>();
+			List<int> refs = new List<int>();
+			int refCount = 0;
 
-            byte arrayByte = objectTable[offsetTable[objRef]];
+			// fix warning
+//            byte arrayByte = objectTable[offsetTable[objRef]];
 
-            int refStartPosition;
-            refCount = getCount(offsetTable[objRef], out refStartPosition);
+			int refStartPosition;
+			refCount = getCount( offsetTable[ objRef ], out refStartPosition );
 
 
-            if (refCount < 15)
-                refStartPosition = offsetTable[objRef] + 1;
-            else
+			if( refCount < 15 )
+				refStartPosition = offsetTable[ objRef ] + 1;
+			else
                 //The following integer has a header aswell so we increase the refStartPosition by two to account for that.
-                refStartPosition = offsetTable[objRef] + 2 + RegulateNullBytes(BitConverter.GetBytes(refCount), 1).Length;
+				refStartPosition = offsetTable[ objRef ] + 2 + RegulateNullBytes( BitConverter.GetBytes( refCount ), 1 ).Length;
 
-            for (int i = refStartPosition; i < refStartPosition + refCount * objRefSize; i += objRefSize)
-            {
-                byte[] refBuffer = objectTable.GetRange(i, objRefSize).ToArray();
-                Array.Reverse(refBuffer);
-                refs.Add(BitConverter.ToInt32(RegulateNullBytes(refBuffer, 4), 0));
-            }
+			for( int i = refStartPosition; i < refStartPosition + refCount * objRefSize; i += objRefSize )
+			{
+				byte[] refBuffer = objectTable.GetRange( i, objRefSize ).ToArray();
+				Array.Reverse( refBuffer );
+				refs.Add( BitConverter.ToInt32( RegulateNullBytes( refBuffer, 4 ), 0 ) );
+			}
 
-            for (int i = 0; i < refCount; i++)
-            {
-                buffer.Add(parseBinary(refs[i]));
-            }
+			for( int i = 0; i < refCount; i++ )
+			{
+				buffer.Add( parseBinary( refs[ i ] ) );
+			}
 
-            return buffer;
-        }
+			return buffer;
+		}
 
         private static int getCount(int bytePosition, out int newBytePosition)
         {
