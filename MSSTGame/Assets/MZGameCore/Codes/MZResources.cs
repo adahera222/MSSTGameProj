@@ -19,9 +19,10 @@ public class MZResources
 		return prefab;
 	}
 
-//	static public OTContainer InstantiateOrthelloContainer_SpriteAtlasCocos2D()
 	static public GameObject InstantiateOrthelloContainer_SpriteAtlasCocos2D()
 	{
+		MZDebug.Assert( false, "I am suck ... do't use me now" );
+
 		GameObject prefab = (GameObject)Resources.Load( ORTHELLO_OBJECTS_PATH + "Sprites/SpriteAtlas/SpriteAtlas-Cocos2D", typeof( GameObject ) );
 		MZDebug.Assert( prefab != null, "prefabContainer isn null" );
 		GameObject clone = (GameObject)GameObject.Instantiate( prefab );

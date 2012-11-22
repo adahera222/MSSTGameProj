@@ -3,7 +3,6 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using MZUtility;
-using MZGameCore;
 
 public class MZOTAnimationsManager
 {
@@ -13,14 +12,8 @@ public class MZOTAnimationsManager
 
 	public OTAnimation otAnimation
 	{
-		get
-		{
-			if( cloneAniamtion == null )
-			{
-				Debug.Log( "XXXXXXXXXX" );
-			}
-			return (OTAnimation)cloneAniamtion.GetComponent( typeof( OTAnimation ) );
-		}
+//		get{ return (OTAnimation)cloneAniamtion.GetComponent( typeof( OTAnimation ) ); }
+		get{ return (OTAnimation)GameObject.Find( "AnimationsCollection" ).GetComponent( typeof( OTAnimation ) ); }
 	}
 
 	static public MZOTAnimationsManager GetInstance()
@@ -31,25 +24,12 @@ public class MZOTAnimationsManager
 		return instance;
 	}
 
-	public void AddContainter(string spritesheetPath)
+	public void CreateAnimationsByExistedContainer()
 	{
-//		MZDebug.Log( "Add Container (spriteheetPath = " + spritesheetPath + ")" );
-//
-//		GameObject cloneSpritesheetsContainer = MZResources.InstantiateOrthelloContainer_SpriteAtlasCocos2D();
-//		OTSpriteAtlasCocos2D spriteAtlasCocos2D = (OTSpriteAtlasCocos2D)cloneSpritesheetsContainer.GetComponent( typeof( OTSpriteAtlasCocos2D ) );
-//
-		TextAsset spritesheetTextAsset = (TextAsset)Resources.Load( spritesheetPath );
-//
-//		string fileName = System.IO.Path.GetFileName( spritesheetPath );
-//		spriteAtlasCocos2D.name = fileName;
-//		spriteAtlasCocos2D.atlasDataFile = spritesheetTextAsset;
-
-		GameObject cloneSpritesheetsContainer = GameObject.Find( "[test]enemies_atlas" );
-
-		if( cloneSpritesheetsContainer == null )
-			Debug.Log( "Oh my GOD" );
-
-		AddAnimations( cloneSpritesheetsContainer.GetComponent<OTContainer>(), spritesheetTextAsset );
+		foreach( OTSpriteAtlasCocos2D container in (OTSpriteAtlasCocos2D[])GameObject.FindObjectsOfType( typeof( OTSpriteAtlasCocos2D ) ) )
+		{
+			AddAnimations( container );
+		}
 	}
 
 	private MZOTAnimationsManager()
@@ -57,12 +37,8 @@ public class MZOTAnimationsManager
 
 	}
 
-	private void AddAnimations(OTContainer container, TextAsset spritesheetTextAsset)
+	private void AddAnimations(OTContainer container)
 	{
-//		Dictionary<string,object> spritesheetDesc = NSDictionaryHelp.Create( spritesheetTextAsset.bytes );
-//
-//		Dictionary<string,object> framesDictionary = NSDictionaryHelp.GetDictionary( "frames", spritesheetDesc );
-//
 		List<OTAnimationFrameset> framesetsList = new List<OTAnimationFrameset>();
 		List<string> frameNamesList = new List<string>();
 
@@ -105,8 +81,7 @@ public class MZOTAnimationsManager
 		return frameset;
 	}
 
-	private void SetFramesets(ref List<OTAnimationFrameset> framesetsList, ref List<string> frameNamesList,
-			/*Dictionary<string,object> framesDictionary,*/ OTContainer container)
+	private void SetFramesets(ref List<OTAnimationFrameset> framesetsList, ref List<string> frameNamesList, OTContainer container)
 	{
 		if( framesetsList == null )
 			framesetsList = new List<OTAnimationFrameset>();
@@ -120,8 +95,7 @@ public class MZOTAnimationsManager
 		string preClearFrameName = null;
 
 		OTAtlasData[] datas = container.GetComponent<OTSpriteAtlasCocos2D>().atlasData;
-		foreach( OTAtlasData data in  datas )
-//		foreach( string frameName in framesDictionary.Keys )
+		foreach( OTAtlasData data in datas )
 		{
 			string frameName = data.name;
 
@@ -132,7 +106,7 @@ public class MZOTAnimationsManager
 				preClearFrameName = currentClearFrameName;
 			}
 
-			if( currentClearFrameName != preClearFrameName || index == /*framesDictionary.Count - 1*/ datas.Length - 1 )
+			if( currentClearFrameName != preClearFrameName || index == datas.Length - 1 )
 			{
 				endFrameIndex = index - 1;
 

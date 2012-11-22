@@ -1,12 +1,8 @@
 using System.Collections;
 
-//  temp
-using UnityEngine;
-
 public class MZCharacterFactory
 {
 	// depth
-
 	public enum CharacterType
 	{
 		Player,
@@ -25,31 +21,31 @@ public class MZCharacterFactory
 		return instance;
 	}
 
-	public GameObject _test_create_characterPart()
+	public UnityEngine.GameObject _test_create_characterPart()
 	{
 		MZCharacterPartSetting setting = new MZCharacterPartSetting();
 		setting.animationName = "Donut_normal";
 		setting.name = "call me test";
 
-		GameObject prefab = MZResources.InstantiateMZGameCoreObject( "MZCharacterPart" );
+		UnityEngine.GameObject prefab = MZResources.InstantiateMZGameCoreObject( "MZCharacterPart" );
 		MZDebug.Assert( prefab != null, "prefab(" + "MZCharacterPart.prefab" + ") is null" );
 
-		GameObject clone = (GameObject)GameObject.Instantiate( prefab );
+		UnityEngine.GameObject clone = (UnityEngine.GameObject)UnityEngine.GameObject.Instantiate( prefab );
 		clone.GetComponent<MZCharacterPart>().Init( setting );
 
 		return clone;
 	}
 
-	public GameObject _test_create_character()
+	public UnityEngine.GameObject _test_create_character()
 	{
 		MZCharacterPartSetting partSetting1 = new MZCharacterPartSetting();
 		partSetting1.animationName = "Donut_normal";
 		partSetting1.name = "Part1";
-		partSetting1.position = new Vector2( 50, 50 );
+		partSetting1.position = new UnityEngine.Vector2( 50, 50 );
 
-		GameObject character = MZResources.InstantiateMZGameCoreObject( "MZCharacter" );
+		UnityEngine.GameObject character = MZResources.InstantiateMZGameCoreObject( "MZCharacter" );
 		character.GetComponent<MZCharacter>().AddPart( partSetting1 );
-		character.transform.position = new Vector3( -300, -490, -50 );
+		character.transform.position = new UnityEngine.Vector3( -300, -490, -50 );
 
 		return character;
 	}

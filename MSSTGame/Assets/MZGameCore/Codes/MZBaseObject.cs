@@ -4,7 +4,6 @@
 
 using UnityEngine;
 using System.Collections;
-using MZGameCore;
 
 public class MZBaseObject : MonoBehaviour
 {
