@@ -3,15 +3,14 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using MZUnitySupport;
+using MZUtility;
 using MZGameCore;
 
 namespace MZGameCore
 {
-	public class OTAnimationsManager
+	public class MZOTAnimationsManager
 	{
-//		public OTContainer originContainer;
-//		public GameObject originAnimation;
-		static OTAnimationsManager instance;
+		static MZOTAnimationsManager instance;
 		GameObject cloneAniamtion;
 		Dictionary<string,OTContainer> animationsDictionary;
 
@@ -20,10 +19,10 @@ namespace MZGameCore
 			get{ return (OTAnimation)cloneAniamtion.GetComponent( typeof( OTAnimation ) ); }
 		}
 
-		static public OTAnimationsManager GetInstance()
+		static public MZOTAnimationsManager GetInstance()
 		{
 			if( instance == null )
-				instance = new OTAnimationsManager();
+				instance = new MZOTAnimationsManager();
 
 			return instance;
 		}
@@ -44,7 +43,7 @@ namespace MZGameCore
 			AddAnimations( cloneSpritesheetsContainer, spritesheetPath );
 		}
 
-		private OTAnimationsManager()
+		private MZOTAnimationsManager()
 		{
 
 		}

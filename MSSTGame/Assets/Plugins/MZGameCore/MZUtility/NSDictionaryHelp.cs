@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PlistCS;
 
-namespace MZGameCore
+namespace MZUtility
 {
 	public class NSDictionaryHelp
 	{
