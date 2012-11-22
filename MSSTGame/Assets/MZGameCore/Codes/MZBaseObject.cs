@@ -5,7 +5,6 @@
 using UnityEngine;
 using System.Collections;
 using MZGameCore;
-using MZUnitySupport;
 
 public class MZBaseObject : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class MZBaseObject : MonoBehaviour
 		get{ return GetOTAnimatingSprite().depth; }
 	}
 
-	public float AnimationSpeed
+	public float animationSpeed
 	{
 		set{ GetOTAnimatingSprite().speed = value; }
 	}

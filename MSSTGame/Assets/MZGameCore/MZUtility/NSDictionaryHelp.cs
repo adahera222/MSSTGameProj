@@ -6,9 +6,9 @@ namespace MZUtility
 {
 	public class NSDictionaryHelp
 	{
-		static public Dictionary<string,object> Load(string filePath)
+		static public Dictionary<string,object> Create(byte[] data)
 		{
-			return (Dictionary<string,object>)Plist.readPlist( filePath );
+				return (Dictionary<string,object>)Plist.readPlist( data );
 		}
 
 		static public Dictionary<string,object> GetDictionary(string key, Dictionary<string,object> nsDictionary)
