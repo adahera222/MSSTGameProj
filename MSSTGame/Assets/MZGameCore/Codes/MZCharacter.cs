@@ -29,7 +29,7 @@ public class MZCharacter : MonoBehaviour
 
 	void Update()
 	{
-		gameObject.transform.position = gameObject.transform.position + new Vector3( 100*Time.deltaTime, 100*Time.deltaTime, 0 );
+//		gameObject.transform.position = gameObject.transform.position + new Vector3( 100*Time.deltaTime, 100*Time.deltaTime, 0 );
 
 //		gameObject.transform.Translate( Time.deltaTime, 0, 0 );
 	}

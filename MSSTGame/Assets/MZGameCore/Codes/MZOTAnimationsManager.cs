@@ -8,12 +8,16 @@ public class MZOTAnimationsManager
 {
 	static MZOTAnimationsManager instance;
 	GameObject cloneAniamtion;
-	Dictionary<string,OTContainer> animationsDictionary;
+	Dictionary<string,OTContainer> _spritesheetContainer;
 
 	public OTAnimation otAnimation
 	{
-//		get{ return (OTAnimation)cloneAniamtion.GetComponent( typeof( OTAnimation ) ); }
-		get{ return (OTAnimation)GameObject.Find( "AnimationsCollection" ).GetComponent( typeof( OTAnimation ) ); }
+		get{ return (OTAnimation)cloneAniamtion.GetComponent( typeof( OTAnimation ) ); }
+	}
+
+	public Dictionary<string,OTContainer> spritesheetContainer
+	{
+		get{ return _spritesheetContainer; }
 	}
 
 	static public MZOTAnimationsManager GetInstance()
@@ -39,10 +43,15 @@ public class MZOTAnimationsManager
 
 	private void AddAnimations(OTContainer container)
 	{
+		if( _spritesheetContainer == null )
+			_spritesheetContainer = new Dictionary<string, OTContainer>();
+
+		spritesheetContainer.Add( container.name, container );
+
 		List<OTAnimationFrameset> framesetsList = new List<OTAnimationFrameset>();
 		List<string> frameNamesList = new List<string>();
 
-		SetFramesets( ref framesetsList, ref frameNamesList, /*framesDictionary,*/ container );
+		SetFramesets( ref framesetsList, ref frameNamesList, container );
 
 		if( cloneAniamtion == null )
 		{
@@ -108,14 +117,14 @@ public class MZOTAnimationsManager
 
 			if( currentClearFrameName != preClearFrameName || index == datas.Length - 1 )
 			{
-				endFrameIndex = index - 1;
+				endFrameIndex = ( index == datas.Length - 1 )? index : index - 1;
 
 				OTAnimationFrameset frameset = CreateFrameset( preClearFrameName, container, startFrameIndex, endFrameIndex );
 
 				framesetsList.Add( frameset );
 				frameNamesList.Add( preClearFrameName );
 
-				startFrameIndex = index + 1;
+				startFrameIndex = index;
 				preClearFrameName = currentClearFrameName;
 			}
 

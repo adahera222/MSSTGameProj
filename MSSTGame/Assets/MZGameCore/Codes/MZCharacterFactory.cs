@@ -1,9 +1,10 @@
+using UnityEngine;
 using System.Collections;
 
 public class MZCharacterFactory
 {
 	// depth
-	public enum CharacterType
+	public enum MZCharacterType
 	{
 		Player,
 		PlayerBullet,
@@ -19,6 +20,18 @@ public class MZCharacterFactory
 		if( instance == null )
 			instance = new MZCharacterFactory();
 		return instance;
+	}
+
+	public GameObject CreateCharacter(MZCharacterType type, string name)
+	{
+		switch( type )
+		{
+			case MZCharacterType.Player:
+				return CreatePlayer( name );
+		}
+
+		MZDebug.Assert( false, "undefine character type: " + type.ToString() );
+		return null;
 	}
 
 	public UnityEngine.GameObject _test_create_characterPart()
@@ -53,5 +66,36 @@ public class MZCharacterFactory
 	private MZCharacterFactory()
 	{
 
+	}
+
+	GameObject CreatePlayer(string name)
+	{
+		GameObject player = CreateMZCharacter( "MZCharacter", "MZPlayers" );
+
+		player.AddComponent<MZPlayer>();
+
+		MZCharacterPartSetting partSetting = new MZCharacterPartSetting();
+		partSetting.name = "MainBody";
+//		partSetting.frameName = "[Celestial]_Army_med2_normal0003";
+		partSetting.animationName = "[Celestial]_Army_med2_normal";
+//		partSetting.animationSpeed = 0.1f;
+
+		player.GetComponent<MZCharacter>().AddPart( partSetting );
+		player.transform.position = new Vector3( 0, 0, -30 );
+		player.name = ( name != null )? name : "Player";
+
+		return player;
+	}
+
+	GameObject CreateMZCharacter(string characterName, string gameContainerName)
+	{
+		GameObject character = MZResources.InstantiateMZGameCoreObject( characterName );
+		GameObject gameContainer = GameObject.Find( gameContainerName );
+
+		MZDebug.Assert( gameContainer != null, "gameContainer not found (" + gameContainerName + ")" );
+
+		character.transform.parent = gameContainer.transform;
+
+		return character;
 	}
 }

@@ -8,7 +8,11 @@ public class MZCharacterPart : MZBaseObject
 		name = setting.name;
 		animationSpeed = setting.animationSpeed;
 		position = setting.position;
-		PlayAnimation( setting.animationName );
+
+		if( setting.animationName != null && setting.animationName.Length > 0 )
+			PlayAnimation( setting.animationName );
+		else
+			SetFrame( setting.frameName );
 	}
 
 	void Start()

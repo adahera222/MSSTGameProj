@@ -10,6 +10,7 @@ public class InitGame : MonoBehaviour
 	void Start()
 	{
 		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer();
+		InitPlayer();
 	}
 
 	void Update()
@@ -19,6 +20,8 @@ public class InitGame : MonoBehaviour
 
 	void InitPlayer()
 	{
-
+		GameObject player = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterFactory.MZCharacterType.Player, "Player" );
+//		player.transform.rotation = Quaternion.Euler( 0, 0, 90 );
+//		player.transform.localScale = player.transform.localScale*0.5f;
 	}
 }
