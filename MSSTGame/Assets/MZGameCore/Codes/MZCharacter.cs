@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class MZCharacter : MonoBehaviour
 {
+	public Vector2 position
+	{
+		set{ gameObject.transform.position = new Vector3( value.x, value.y, gameObject.transform.position.z ); }
+		get{ return new Vector2( gameObject.transform.position.x, gameObject.transform.position.y ); }
+	}
+
 	public int AddPart(MZCharacterPartSetting setting)
 	{
 		GameObject part = MZResources.InstantiateMZGameCoreObject( "MZCharacterPart" );
@@ -29,8 +35,6 @@ public class MZCharacter : MonoBehaviour
 
 	void Update()
 	{
-//		gameObject.transform.position = gameObject.transform.position + new Vector3( 100*Time.deltaTime, 100*Time.deltaTime, 0 );
 
-//		gameObject.transform.Translate( Time.deltaTime, 0, 0 );
 	}
 }

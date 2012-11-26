@@ -9,6 +9,7 @@ public class SetCameraByResolution : MonoBehaviour
 
 	void Start()
 	{
+		Camera.mainCamera.transform.position = new Vector3( 0, 0, -100 );
 		Camera.mainCamera.fieldOfView = GetCameraFovFromIPhoneGeneration( iPhone.generation );
 		Camera.mainCamera.orthographicSize = GetOrthographicSizeFromIPhoneModelName( SystemInfo.deviceModel );
 	}
@@ -36,13 +37,16 @@ public class SetCameraByResolution : MonoBehaviour
 		switch( deviceModelName )
 		{
 			case "iPad":
+				MZDebug.Log( "iPad: set size=512.1289f" );
 				return 512.1289f;
 
 			case "iPhone":
 			case "iPod":
+				MZDebug.Log( "iPhone: set size=568.0076f" );
 				return 568.0076f;
 			
 			default:
+				MZDebug.Log( "Editor: size=" + Camera.mainCamera.orthographicSize.ToString() );
 				return Camera.mainCamera.orthographicSize;
 				
 		}
