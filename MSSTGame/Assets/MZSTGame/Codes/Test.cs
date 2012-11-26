@@ -3,26 +3,26 @@ using System.Collections;
 
 public class Test : MonoBehaviour
 {
-	public GameObject testGameObject;
-
+	public float interval = 2.5f;
+	float cd;
+	
 	void Start()
 	{
-//		testGameObject.GetComponent<OTAnimatingSprite>().animation = MZOTAnimationsManager.GetInstance().otAnimation;
+		cd = 0;
 	}
-
-//	float cd = 0;
 
 	void Update()
 	{
-//		cd -= Time.deltaTime;
-//
-//		if( cd <= 0 )
-//		{
-//			GameObject c = MZCharacterFactory.GetInstance()._test_create_character();
-//			GameObject mzGame = GameObject.Find( "MZCharacters" );
-//			c.transform.parent = mzGame.transform;
-//
-//			cd += 1;
-//		}
+		cd -= Time.deltaTime;
+
+		if( cd <= 0 )
+		{
+			GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterFactory.MZCharacterType.EnemyAir, "Enemy" );
+
+			float x = Random.Range( -100, 100 );
+			enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 630 );
+
+			cd += interval;
+		}
 	}
 }
