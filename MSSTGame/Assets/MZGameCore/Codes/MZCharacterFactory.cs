@@ -3,9 +3,9 @@ using System.Collections;
 
 public class MZCharacterFactory
 {
-	// depth
 	public enum MZCharacterType
 	{
+		Unknow,
 		Player,
 		PlayerBullet,
 		EnemyAir,
@@ -20,6 +20,46 @@ public class MZCharacterFactory
 		if( instance == null )
 			instance = new MZCharacterFactory();
 		return instance;
+	}
+
+	static public int GetDepth(MZCharacterType type)
+	{
+		switch( type )
+		{
+			case MZCharacterType.Player:
+				return -30;
+
+			case MZCharacterType.PlayerBullet:
+				return -20;
+
+			case MZCharacterType.EnemyAir:
+				return -50;
+
+			default:
+				return 0;
+		}
+	}
+
+	static public Color GetCollisionColor(MZCharacterType type)
+	{
+		switch( type )
+		{
+			case MZCharacterType.Player:
+				return Color.red;
+
+			case MZCharacterType.PlayerBullet:
+				return Color.cyan;
+
+			case MZCharacterType.EnemyAir:
+			case MZCharacterType.EnemyGround:
+				return Color.green;
+
+			case MZCharacterType.EnemyBullet:
+				return Color.blue;
+
+			default:
+				return Color.white;
+		}
 	}
 
 	public GameObject CreateCharacter(MZCharacterType type, string name)
@@ -38,53 +78,6 @@ public class MZCharacterFactory
 
 		MZDebug.Assert( false, "undefine character type: " + type.ToString() );
 		return null;
-	}
-
-	public int GetDepth(MZCharacterType type)
-	{
-		switch( type )
-		{
-			case MZCharacterType.Player:
-				return -30;
-
-			case MZCharacterType.PlayerBullet:
-				return -20;
-
-			case MZCharacterType.EnemyAir:
-				return -50;
-
-			default:
-				return 0;
-		}
-	}
-
-	public UnityEngine.GameObject _test_create_characterPart()
-	{
-		MZCharacterPartSetting setting = new MZCharacterPartSetting();
-		setting.animationName = "Donut_normal";
-		setting.name = "call me test";
-
-		UnityEngine.GameObject prefab = MZResources.InstantiateMZGameCoreObject( "MZCharacterPart" );
-		MZDebug.Assert( prefab != null, "prefab(" + "MZCharacterPart.prefab" + ") is null" );
-
-		UnityEngine.GameObject clone = (UnityEngine.GameObject)UnityEngine.GameObject.Instantiate( prefab );
-		clone.GetComponent<MZCharacterPart>().Init( setting );
-
-		return clone;
-	}
-
-	public UnityEngine.GameObject _test_create_character()
-	{
-		MZCharacterPartSetting partSetting1 = new MZCharacterPartSetting();
-		partSetting1.animationName = "Donut_normal";
-		partSetting1.name = "Part1";
-		partSetting1.position = new UnityEngine.Vector2( 50, 50 );
-
-		UnityEngine.GameObject character = MZResources.InstantiateMZGameCoreObject( "MZCharacter" );
-		character.GetComponent<MZCharacter>().AddPart( partSetting1 );
-		character.transform.position = new UnityEngine.Vector3( -300, -490, -50 );
-
-		return character;
 	}
 
 	private MZCharacterFactory()
@@ -168,6 +161,10 @@ public class MZCharacterFactory
 
 		character.transform.parent = gameContainer.transform;
 		character.transform.position = new Vector3( 9999, 9999, GetDepth( type ) );
+
+		character.GetComponent<MZCharacter>().characterType = type;
+
+		GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().Add( type, character );
 
 		return character;
 	}

@@ -23,6 +23,9 @@ public class Test : MonoBehaviour
 			enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 630 );
 
 			cd += interval;
+
+//			GameObject t = (GameObject)GameObject.Find( "MZEnemiesAir" );
+//			MZDebug.Log( t.GetComponentsInChildren<MZEnemy>().Length.ToString() );
 		}
 	}
 }

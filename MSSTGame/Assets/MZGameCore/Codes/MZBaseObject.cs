@@ -103,6 +103,15 @@ public class MZBaseObject : MonoBehaviour
 		_originSize = new Vector2( 316, 240 );
 	}
 
+	protected virtual void Update()
+	{
+		// sprite control ... maybe to functional programming ... ><"
+		if( IsAnimatingObject )
+		{
+			GetSprite().size = _scale*GetSprite().oSize;
+		}
+	}
+
 	OTSprite _spriteCache;
 	Vector2 _originSize;
 	float _scale;
@@ -115,14 +124,6 @@ public class MZBaseObject : MonoBehaviour
 
 	}
 
-	void Update()
-	{
-		// sprite control ... maybe to functional programming ... ><"
-		if( IsAnimatingObject )
-		{
-			GetSprite().size = _scale*GetSprite().oSize;
-		}
-	}
 
 	void InitNormalSpriteCache()
 	{

@@ -13,6 +13,6 @@ public class MZPlayerBullet : MonoBehaviour
 		gameObject.GetComponent<MZCharacter>().position += new Vector2( 0, 800*Time.deltaTime );
 
 		if( gameObject.GetComponent<MZCharacter>().position.y >= 600 )
-			DestroyObject( gameObject );
+			gameObject.GetComponent<MZCharacter>().Disable();
 	}
 }
