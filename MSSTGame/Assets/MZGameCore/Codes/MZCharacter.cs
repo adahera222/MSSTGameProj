@@ -15,6 +15,9 @@ public class MZCharacter : MonoBehaviour
 		get{ return _characterType; }
 	}
 
+	public MZCharacterPart[] Parts
+	{ get { return _partsList.ToArray(); } }
+
 	public Vector2 position
 	{
 		set{ gameObject.transform.position = new Vector3( value.x, value.y, gameObject.transform.position.z ); }
