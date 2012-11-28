@@ -22,46 +22,6 @@ public class MZCharacterFactory
 		return instance;
 	}
 
-	static public int GetDepth(MZCharacterType type)
-	{
-		switch( type )
-		{
-			case MZCharacterType.Player:
-				return -30;
-
-			case MZCharacterType.PlayerBullet:
-				return -20;
-
-			case MZCharacterType.EnemyAir:
-				return -50;
-
-			default:
-				return 0;
-		}
-	}
-
-	static public Color GetCollisionColor(MZCharacterType type)
-	{
-		switch( type )
-		{
-			case MZCharacterType.Player:
-				return Color.red;
-
-			case MZCharacterType.PlayerBullet:
-				return Color.cyan;
-
-			case MZCharacterType.EnemyAir:
-			case MZCharacterType.EnemyGround:
-				return Color.green;
-
-			case MZCharacterType.EnemyBullet:
-				return Color.blue;
-
-			default:
-				return Color.white;
-		}
-	}
-
 	public GameObject CreateCharacter(MZCharacterType type, string name)
 	{
 		switch( type )
@@ -74,6 +34,9 @@ public class MZCharacterFactory
 
 			case MZCharacterType.EnemyAir:
 				return CreateEnemyAir( name );
+
+			case MZCharacterType.EnemyBullet:
+				return CreateEnemyBullet( name );
 		}
 
 		MZDebug.Assert( false, "undefine character type: " + type.ToString() );
@@ -87,19 +50,11 @@ public class MZCharacterFactory
 
 	GameObject CreatePlayer(string name)
 	{
-		GameObject player = CreateMZCharacter( "MZCharacter", "MZPlayers", MZCharacterType.Player );
+		GameObject player = CreateGameObjectMZCharacter( "MZCharacter", "MZPlayers", MZCharacterType.Player );
 
 		player.AddComponent<MZPlayer>();
 
-		MZCharacterPartSetting partSetting = new MZCharacterPartSetting();
-		partSetting.name = "MainBody";
-//		partSetting.frameName = "Donut_normal0001";
-		partSetting.scale = 0.5f;
-		partSetting.rotation = 90;
-		partSetting.animationName = "[Celestial]_Army_med2_normal";
-		partSetting.animationSpeed = 1;
-
-		player.GetComponent<MZCharacter>().AddPart( partSetting );
+		player.GetComponent<MZCharacter>().Init( MZCharacterSettingsCollection.GetPlayerType1() );
 		player.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
 		player.name = ( name != null )? name : "Player";
 
@@ -108,21 +63,10 @@ public class MZCharacterFactory
 
 	GameObject CreatePlayerBullet(string name)
 	{
-		GameObject playerBullet = CreateMZCharacter( "MZCharacter", "MZPlayerBullets", MZCharacterType.PlayerBullet );
+		GameObject playerBullet = CreateGameObjectMZCharacter( "MZCharacter", "MZPlayerBullets", MZCharacterType.PlayerBullet );
 
 		playerBullet.AddComponent<MZPlayerBullet>();
-
-		MZCharacterPartSetting partSetting = new MZCharacterPartSetting();
-		partSetting.name = "MainBody";
-		partSetting.frameName = "Donut_normal0001";
-		partSetting.scale = 0.3f;
-//		partSetting.scaleX = 2.0f;
-//		partSetting.scaleY = 0.5f;
-		partSetting.rotation = 90;
-//		partSetting.animationName = "[Celestial]_Army_med2_normal";
-//		partSetting.animationSpeed = 0.1f;
-
-		playerBullet.GetComponent<MZCharacter>().AddPart( partSetting );
+		playerBullet.GetComponent<MZCharacter>().Init( MZCharacterSettingsCollection.GetPlayerBullet001() );
 		playerBullet.name = ( name != null )? name : "PlayerBullet";
 
 		playerBullet.GetComponent<MZCharacter>().position = GameObject.Find( "Player" ).GetComponent<MZCharacter>().position;
@@ -132,27 +76,27 @@ public class MZCharacterFactory
 
 	GameObject CreateEnemyAir(string name)
 	{
-		GameObject enemy = CreateMZCharacter( "MZCharacter", "MZEnemiesAir", MZCharacterType.EnemyAir );
+		GameObject enemy = CreateGameObjectMZCharacter( "MZCharacter", "MZEnemiesAir", MZCharacterType.EnemyAir );
 
 		enemy.AddComponent<MZEnemy>();
-
-		MZCharacterPartSetting partSetting = new MZCharacterPartSetting();
-		partSetting.name = "MainBody";
-//		partSetting.frameName = "Donut_normal0001";
-		partSetting.scale = 0.6f;
-//		partSetting.scaleX = 2.0f;
-//		partSetting.scaleY = 0.5f;
-		partSetting.rotation = 270;
-		partSetting.animationName = "[Celestial]_Army_med3_normal";
-//		partSetting.animationSpeed = 0.1f;
-
-		enemy.GetComponent<MZCharacter>().AddPart( partSetting );
+		enemy.GetComponent<MZCharacter>().Init( MZCharacterSettingsCollection.GetEnemy001() );
 		enemy.name = ( name != null )? name : "Enemy";
 
 		return enemy;
 	}
 
-	GameObject CreateMZCharacter(string characterName, string gameContainerName, MZCharacterType type)
+	GameObject CreateEnemyBullet(string name)
+	{
+		GameObject enemyBullet = CreateGameObjectMZCharacter( "MZCharacter", "MZEnemyBullets", MZCharacterType.EnemyBullet );
+
+		enemyBullet.AddComponent<MZEnemyBullet>();
+		enemyBullet.GetComponent<MZCharacter>().Init( MZCharacterSettingsCollection.GetEnemyBullet001() );
+		enemyBullet.name = ( name != null )? name : "EnemyBullet";
+
+		return enemyBullet;
+	}
+
+	GameObject CreateGameObjectMZCharacter(string characterName, string gameContainerName, MZCharacterType type)
 	{
 		GameObject character = MZResources.InstantiateMZGameCoreObject( characterName );
 		GameObject gameContainer = GameObject.Find( gameContainerName );
@@ -160,7 +104,7 @@ public class MZCharacterFactory
 		MZDebug.Assert( gameContainer != null, "gameContainer not found (" + gameContainerName + ")" );
 
 		character.transform.parent = gameContainer.transform;
-		character.transform.position = new Vector3( 9999, 9999, GetDepth( type ) );
+		character.transform.position = new Vector3( 9999, 9999, MZGameSetting.GetCharacterDepth( type ) );
 
 		character.GetComponent<MZCharacter>().characterType = type;
 

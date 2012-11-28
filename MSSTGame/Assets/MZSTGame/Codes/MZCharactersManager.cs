@@ -27,6 +27,11 @@ public class MZCharactersManager : MonoBehaviour
 		return characterList.Count;
 	}
 
+	public GameObject GetPlayer()
+	{
+		return charactersListByType[ MZCharacterType.Player ][ 0 ];
+	}
+
 	public List<GameObject> GetList(MZCharacterType type)
 	{
 		if( charactersListByType.ContainsKey( type ) == false )

@@ -24,6 +24,14 @@ public class MZCharacter : MonoBehaviour
 		get{ return new Vector2( gameObject.transform.position.x, gameObject.transform.position.y ); }
 	}
 
+	public void Init(MZCharacterSetting setting)
+	{
+		foreach( MZCharacterPartSetting partSetting in setting.partSettings )
+		{
+			AddPart( partSetting );
+		}
+	}
+
 	public int AddPart(MZCharacterPartSetting setting)
 	{
 		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );

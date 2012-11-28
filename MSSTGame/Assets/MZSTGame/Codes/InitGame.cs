@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using PlistCS;
 
 public class InitGame : MonoBehaviour
 {
@@ -25,5 +24,11 @@ public class InitGame : MonoBehaviour
 //		GameObject player = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterFactory.MZCharacterType.Player, "Player" );
 //		player.transform.rotation = Quaternion.Euler( 0, 0, 90 );
 //		player.transform.localScale = player.transform.localScale*0.5f;
+	}
+
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireCube( MZGameSetting.PLAYER_MOVABLE_BOUND_V3CENTER, MZGameSetting.PLAYER_MOVABLE_BOUND_V3SIZE );
 	}
 }

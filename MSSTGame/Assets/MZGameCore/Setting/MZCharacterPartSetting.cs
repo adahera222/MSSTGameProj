@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MZCharacterPartSetting
 {
@@ -12,6 +13,7 @@ public class MZCharacterPartSetting
 	public string frameName;
 	public string animationName;
 	public float animationSpeed;
+	public List<MZCollision> collisions;
 
 	public MZCharacterPartSetting()
 	{
@@ -24,5 +26,6 @@ public class MZCharacterPartSetting
 		frameName = "";
 		animationName = "";
 		animationSpeed = 1.0f;
+		collisions = new List<MZCollision>();
 	}
 }

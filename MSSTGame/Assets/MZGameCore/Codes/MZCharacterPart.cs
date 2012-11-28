@@ -30,8 +30,10 @@ public class MZCharacterPart : MZBaseObject
 			scale = setting.scale;
 		}
 
-		_collisionsList = new List<MZCollision>();
-		_collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 100 ) );
+		_collisionsList = setting.collisions;
+
+//		_collisionsList = new List<MZCollision>();
+//		_collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 100 ) );
 	}
 
 	public MZCollision GetRealCollision(MZCollision origin)
@@ -68,7 +70,7 @@ public class MZCharacterPart : MZBaseObject
 
 	void OnDrawGizmos()
 	{
-		Gizmos.color = MZCharacterFactory.GetCollisionColor( _parentGameObject.GetComponent<MZCharacter>().characterType );
+		Gizmos.color = MZGameSetting.GetCollisionColor( _parentGameObject.GetComponent<MZCharacter>().characterType );
 
 		foreach( MZCollision c in _collisionsList )
 		{
