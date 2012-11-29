@@ -44,15 +44,6 @@ public class MZEnemy : MonoBehaviour
 		{
 			GameObject player = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().GetPlayer();
 
-//			Vector2 vectorToPlayer = ( player.GetComponent<MZCharacter>().position - gameObject.GetComponent<MZCharacter>().position );
-//			vectorToPlayer.;
-//			MZDebug.Log( vectorToPlayer.ToString() );
-
-//			for( int i = 0; i < 3; i++ )
-//			{
-//
-//			}
-
 			GameObject eb = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyBullet, "EnemyBullet" );
 			eb.GetComponent<MZCharacter>().position = gameObject.GetComponent<MZCharacter>().position;
 			eb.GetComponent<MZEnemyBullet>().movingVector = new Vector2( 0, -1 );

@@ -7,7 +7,7 @@ using MZCharacterType = MZCharacterFactory.MZCharacterType;
 public class MZCharacter : MonoBehaviour
 {
 	public bool isActive
-	{ get{ return _isActive; } }
+	{ get { return _isActive; } }
 
 	public MZCharacterType characterType
 	{
@@ -15,8 +15,8 @@ public class MZCharacter : MonoBehaviour
 		get{ return _characterType; }
 	}
 
-	public MZCharacterPart[] Parts
-	{ get { return _partsList.ToArray(); } }
+	public Dictionary<string, MZCharacterPart> partsByNameDictionary
+	{ get { return _partsByNameDictionary; } }
 
 	public Vector2 position
 	{
@@ -42,12 +42,26 @@ public class MZCharacter : MonoBehaviour
 		MZCharacterPart partBehaviour = part.GetComponent<MZCharacterPart>();
 		partBehaviour.Init( setting, gameObject );
 
-		if( _partsList == null )
-			_partsList = new List<MZCharacterPart>();
+		if( _partsByNameDictionary == null )
+			_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
 
-		_partsList.Add( partBehaviour );
+		_partsByNameDictionary.Add( setting.name, partBehaviour );
 
-		return _partsList.Count;
+		return _partsByNameDictionary.Count;
+	}
+
+	public int AddPart(string name, MZCharacterPart part)
+	{
+		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );
+		part.parentGameObject = gameObject;
+
+		if( _partsByNameDictionary == null )
+			_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
+
+		_partsByNameDictionary.Add( name, part );
+
+		return _partsByNameDictionary.Count;
+
 	}
 
 	public void Disable()
@@ -57,9 +71,9 @@ public class MZCharacter : MonoBehaviour
 
 	public bool IsCollide(MZCharacter other)
 	{
-		foreach( MZCharacterPart selfPart in _partsList )
+		foreach( MZCharacterPart selfPart in _partsByNameDictionary.Values )
 		{
-			foreach( MZCharacterPart otherPart in other._partsList )
+			foreach( MZCharacterPart otherPart in other._partsByNameDictionary.Values )
 			{
 				if( selfPart.IsCollide( otherPart ) )
 					return true;
@@ -70,7 +84,7 @@ public class MZCharacter : MonoBehaviour
 	}
 
 	bool _isActive;
-	List<MZCharacterPart> _partsList;
+	Dictionary<string, MZCharacterPart> _partsByNameDictionary;
 	MZCharacterType _characterType = MZCharacterType.Unknow;
 
 	void Start()

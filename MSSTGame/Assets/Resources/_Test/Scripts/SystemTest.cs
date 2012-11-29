@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using System.Reflection;
 
-public class Test : MonoBehaviour
+public class SystemTest : MonoBehaviour
 {
 	public float interval = 2.5f;
 	public GameObject body;
@@ -13,6 +15,17 @@ public class Test : MonoBehaviour
 
 	void Start()
 	{
+		MZPlayer p = (MZPlayer)MZObjectHelp.CreateClass( "MZPlayer" );
+		MZDebug.Log( ( p != null )? "NOT NULL" : "NULL" );
+
+//		GameObject setting = (GameObject)System.Activator.CreateInstance( Type.GetType( "UnityEngine.GameObject" ) );
+//		setting.name = "aaaaa";
+//		MZDebug.Log( setting.name );
+
+
+//		GameObject go = (GameObject)System.Activator.CreateInstance( Type.GetType( "GameObject" ) );
+//		go.name = "AAAAA";
+
 //		Material m = GetMaterial();
 //		iwantMaterial.AddComponent<
 
@@ -46,13 +59,10 @@ public class Test : MonoBehaviour
 		{
 			GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterFactory.MZCharacterType.EnemyAir, "Enemy" );
 
-			float x = Random.Range( -100, 100 );
-			enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 630 );
+			float x = UnityEngine.Random.Range( -100, 100 );
+			enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 650 );
 
 			cd += interval;
-
-//			GameObject t = (GameObject)GameObject.Find( "MZEnemiesAir" );
-//			MZDebug.Log( t.GetComponentsInChildren<MZEnemy>().Length.ToString() );
 		}
 
 		TestSprite();

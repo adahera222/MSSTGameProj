@@ -1,13 +1,14 @@
-/*
- * delete sprite : GameObject ... ok
- * dynamic add/remove OTSprite script ... ok, but frame sprite need more support
- * switch exchange ... zzzz
-*/
 using UnityEngine;
 using System.Collections;
 
 public class MZBaseObject : MonoBehaviour
 {
+	public enum MZShaderType
+	{
+		Additive,
+		AlphaBlended,
+	}
+
 	public bool IsAnimatingObject
 	{
 		get{ return ( _spriteCache.GetType() == typeof( OTAnimatingSprite ) ); }
@@ -31,6 +32,7 @@ public class MZBaseObject : MonoBehaviour
 		{
 			_scale = value;
 			GetSprite().size = _originSize*_scale;
+			anyPropertiesChanged = true;
 		}
 		get
 		{
@@ -45,6 +47,7 @@ public class MZBaseObject : MonoBehaviour
 		{
 			_scaleX = value;
 			GetSprite().size = new Vector2( _originSize.x*_scaleX, GetSprite().size.y );
+			anyPropertiesChanged = true;
 		}
 		get
 		{
@@ -83,8 +86,37 @@ public class MZBaseObject : MonoBehaviour
 		set
 		{
 			if( this.IsAnimatingObject )
+			{
 				GetAnimatingSprite().speed = value;
+				anyPropertiesChanged = true;
+			}
 		}
+	}
+
+	public Color color
+	{
+		set
+		{
+			_color = value;
+			anyPropertiesChanged = true;
+		}
+		get{ return _color; }
+	}
+
+	public new string name
+	{
+		set{ GetSprite().name = value; }
+		get{ return GetSprite().name; }
+	}
+
+	public MZShaderType shaderType
+	{
+		set
+		{
+			_shaderType = value;
+			anyPropertiesChanged = true;
+		}
+		get{ return _shaderType; }
 	}
 
 	public void SetFrame(string frameName)
@@ -105,25 +137,37 @@ public class MZBaseObject : MonoBehaviour
 
 	protected virtual void Update()
 	{
-		// sprite control ... maybe to functional programming ... ><"
-		if( IsAnimatingObject )
+		if( anyPropertiesChanged == true )
 		{
-			GetSprite().size = _scale*GetSprite().oSize;
+			GetSprite().GetComponent<MeshRenderer>().material.SetColor( "_TintColor", _color );
+			GetSprite().GetComponent<MeshRenderer>().material.shader = Shader.Find( GetShaderPath( _shaderType ) );
+
+			if( IsAnimatingObject )
+			{
+				GetSprite().size = _scale*GetSprite().oSize;
+			}
+
+			anyPropertiesChanged = false;
 		}
+
+		if( GetSprite().GetComponent<MeshRenderer>().material.shader.name != GetShaderPath( _shaderType ) )
+			GetSprite().GetComponent<MeshRenderer>().material.shader = Shader.Find( GetShaderPath( _shaderType ) );
 	}
 
-	OTSprite _spriteCache;
-	Vector2 _originSize;
-	float _scale;
-	float _scaleX;
-	float _scaleY;
-	float _rotation;
+	bool anyPropertiesChanged = false;
+	OTSprite _spriteCache = null;
+	Vector2 _originSize = Vector2.zero;
+	float _scale = 1;
+	float _scaleX = 1;
+	float _scaleY = 1;
+	float _rotation = 1;
+	Color _color = new Color( 0.5f, 0.5f, 0.5f );
+	MZShaderType _shaderType = MZShaderType.AlphaBlended;
 
 	void Start()
 	{
 
 	}
-
 
 	void InitNormalSpriteCache()
 	{
@@ -148,5 +192,21 @@ public class MZBaseObject : MonoBehaviour
 	{
 		MZDebug.Assert( _spriteCache != null, "must set frame or aniamtion first" );
 		return ( this.IsAnimatingObject )? (OTAnimatingSprite)_spriteCache : null;
+	}
+
+	string GetShaderPath(MZShaderType shaderType)
+	{
+		switch( shaderType )
+		{
+			case MZShaderType.AlphaBlended:
+				return "Particles/Alpha Blended";
+
+			case MZShaderType.Additive:
+				return "Particles/Additive";
+
+			default:
+				MZDebug.Assert( false, "Unknow shade type" );
+				return "";
+		}
 	}
 }

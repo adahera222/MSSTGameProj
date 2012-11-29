@@ -6,6 +6,22 @@ using MZCharacterType = MZCharacterFactory.MZCharacterType;
 
 public class MZCharacterPart : MZBaseObject
 {
+	public GameObject parentGameObject
+	{
+		set
+		{
+			_parentGameObject = value;
+			gameObject.transform.parent = value.transform;
+		}
+		get{ return _parentGameObject; }
+	}
+
+	public List<MZCollision> collisionsList
+	{
+		set{ _collisionsList = value; }
+		get{ return _collisionsList; }
+	}
+
 	public void Init(MZCharacterPartSetting setting, GameObject parentGameObject)
 	{
 		_parentGameObject = parentGameObject;
@@ -19,6 +35,8 @@ public class MZCharacterPart : MZBaseObject
 		animationSpeed = setting.animationSpeed;
 		position = setting.position;
 		rotation = setting.rotation;
+		color = setting.color;
+		shaderType = setting.shaderType;
 
 		if( setting.scaleX != 1 || setting.scaleY != 1 )
 		{
@@ -31,9 +49,6 @@ public class MZCharacterPart : MZBaseObject
 		}
 
 		_collisionsList = setting.collisions;
-
-//		_collisionsList = new List<MZCollision>();
-//		_collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 100 ) );
 	}
 
 	public MZCollision GetRealCollision(MZCollision origin)
@@ -65,8 +80,8 @@ public class MZCharacterPart : MZBaseObject
 		base.Update();
 	}
 
-	List<MZCollision> _collisionsList;
-	GameObject _parentGameObject;
+	List<MZCollision> _collisionsList = new List<MZCollision>();
+	GameObject _parentGameObject = null;
 
 	void OnDrawGizmos()
 	{

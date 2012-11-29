@@ -84,7 +84,8 @@ public class MZPlayer : MonoBehaviour
 		cd -= Time.deltaTime;
 		if( cd <= 0 )
 		{
-			MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterFactory.MZCharacterType.PlayerBullet, "PB" );
+			GameObject pb = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterFactory.MZCharacterType.PlayerBullet, "PB" );
+			pb.GetComponent<MZCharacter>().position = gameObject.GetComponent<MZCharacter>().position;
 			cd += interval;
 		}
 	}

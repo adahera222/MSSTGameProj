@@ -51,10 +51,8 @@ public class MZCharacterFactory
 	GameObject CreatePlayer(string name)
 	{
 		GameObject player = CreateGameObjectMZCharacter( "MZCharacter", "MZPlayers", MZCharacterType.Player );
+		SetCharacterToSetting( player, "PlayerType01Setting", MZCharacterType.Player );
 
-		player.AddComponent<MZPlayer>();
-
-		player.GetComponent<MZCharacter>().Init( MZCharacterSettingsCollection.GetPlayerType1() );
 		player.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
 		player.name = ( name != null )? name : "Player";
 
@@ -64,12 +62,8 @@ public class MZCharacterFactory
 	GameObject CreatePlayerBullet(string name)
 	{
 		GameObject playerBullet = CreateGameObjectMZCharacter( "MZCharacter", "MZPlayerBullets", MZCharacterType.PlayerBullet );
-
-		playerBullet.AddComponent<MZPlayerBullet>();
-		playerBullet.GetComponent<MZCharacter>().Init( MZCharacterSettingsCollection.GetPlayerBullet001() );
+		SetCharacterToSetting( playerBullet, "PlayerBullet001Setting", MZCharacterType.PlayerBullet );
 		playerBullet.name = ( name != null )? name : "PlayerBullet";
-
-		playerBullet.GetComponent<MZCharacter>().position = GameObject.Find( "Player" ).GetComponent<MZCharacter>().position;
 
 		return playerBullet;
 	}
@@ -77,9 +71,7 @@ public class MZCharacterFactory
 	GameObject CreateEnemyAir(string name)
 	{
 		GameObject enemy = CreateGameObjectMZCharacter( "MZCharacter", "MZEnemiesAir", MZCharacterType.EnemyAir );
-
-		enemy.AddComponent<MZEnemy>();
-		enemy.GetComponent<MZCharacter>().Init( MZCharacterSettingsCollection.GetEnemy001() );
+		SetCharacterToSetting( enemy, "Enemy001Setting", MZCharacterType.EnemyAir );
 		enemy.name = ( name != null )? name : "Enemy";
 
 		return enemy;
@@ -88,14 +80,13 @@ public class MZCharacterFactory
 	GameObject CreateEnemyBullet(string name)
 	{
 		GameObject enemyBullet = CreateGameObjectMZCharacter( "MZCharacter", "MZEnemyBullets", MZCharacterType.EnemyBullet );
-
-		enemyBullet.AddComponent<MZEnemyBullet>();
-		enemyBullet.GetComponent<MZCharacter>().Init( MZCharacterSettingsCollection.GetEnemyBullet001() );
+		SetCharacterToSetting( enemyBullet, "EnemyBullet001Setting", MZCharacterType.EnemyBullet );
 		enemyBullet.name = ( name != null )? name : "EnemyBullet";
 
 		return enemyBullet;
 	}
 
+	// will remove
 	GameObject CreateGameObjectMZCharacter(string characterName, string gameContainerName, MZCharacterType type)
 	{
 		GameObject character = MZResources.InstantiateMZGameCoreObject( characterName );
@@ -111,5 +102,13 @@ public class MZCharacterFactory
 		GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().Add( type, character );
 
 		return character;
+	}
+
+	void SetCharacterToSetting(GameObject characterObject, string settingName, MZCharacterType characterType)
+	{
+		CharacterSettingBase setting = (CharacterSettingBase)MZObjectHelp.CreateClass( settingName );
+		MZDebug.Assert( setting != null, "setting is null, name=" + settingName );
+
+		setting.SetToCharacter( characterObject, characterType );
 	}
 }
