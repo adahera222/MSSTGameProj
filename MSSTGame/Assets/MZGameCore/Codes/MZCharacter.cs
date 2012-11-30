@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using MZCharacterType = MZCharacterFactory.MZCharacterType;
 
-public class MZCharacter : MonoBehaviour
+public class MZCharacter : MonoBehaviour, IMZMove
 {
 	public bool isActive
 	{ get { return _isActive; } }

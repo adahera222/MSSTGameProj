@@ -34,5 +34,36 @@ public class Enemy001Setting : CharacterSettingBase
 		character.AddPart( "L", leftBody );
 		character.AddPart( "R", rightBody );
 		character.AddPart( "M", mainBody );
+
+		MZEnemy enemy = characterObject.GetComponent<MZEnemy>();
+		enemy.healthPoint = 10;
+
+		// mode 1
+		MZMode mode1 = enemy.AddMode( "mode1" );
+		mode1.duration = 3;
+
+		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
+		move1.initVelocity = 250;
+		move1.initMovingVector = new Vector2( -1, -1 );
+		move1.duration = 1.5f;
+
+		MZMove_Base move2 = mode1.AddMove( "m1m2", "Linear" );
+		move2.initVelocity = 250;
+		move2.initMovingVector = new Vector2( 1, -1 );
+		move2.duration = 1.5f;
+
+		// mode2
+		MZMode mode2 = enemy.AddMode( "mode2" );
+		mode2.duration = 3;
+
+		MZMove_Base move3 = mode2.AddMove( "m2m3", "Linear" );
+		move3.initVelocity = 250;
+		move3.initMovingVector = new Vector2( -1, 1 );
+		move3.duration = 1.5f;
+
+		MZMove_Base move4 = mode2.AddMove( "m2m4", "Linear" );
+		move4.initVelocity = 250;
+		move4.initMovingVector = new Vector2( 1, 1 );
+		move4.duration = 1.5f;
 	}
 }

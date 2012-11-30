@@ -62,7 +62,8 @@ public class SystemTest : MonoBehaviour
 			float x = UnityEngine.Random.Range( -100, 100 );
 			enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 650 );
 
-			cd += interval;
+//			cd += interval;
+			cd = 9999999;
 		}
 
 		TestSprite();

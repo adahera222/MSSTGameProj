@@ -10,27 +10,9 @@ public class SetCameraByResolution : MonoBehaviour
 	void Start()
 	{
 		Camera.mainCamera.transform.position = new Vector3( 0, 0, -500 );
-//		Camera.mainCamera.fieldOfView = GetCameraFovFromIPhoneGeneration( iPhone.generation );
 		Camera.mainCamera.orthographicSize = GetOrthographicSizeFromIPhoneModelName( SystemInfo.deviceModel );
 	}
 
-//	float GetCameraFovFromIPhoneGeneration(iPhoneGeneration generation)
-//	{
-//		switch( generation )
-//		{
-//			case iPhoneGeneration.iPhone5:
-//			case iPhoneGeneration.iPodTouch5Gen:
-//				return cameraFovOfIPhone5;
-//
-//			case iPhoneGeneration.iPad1Gen:
-//			case iPhoneGeneration.iPad2Gen:
-//			case iPhoneGeneration.iPad3Gen:
-//				return cameraFovOfIPad;
-//
-//			default:
-//				return Camera.mainCamera.fieldOfView;
-//		}
-//	}
 
 	float GetOrthographicSizeFromIPhoneModelName(string deviceModelName)
 	{
@@ -47,7 +29,7 @@ public class SetCameraByResolution : MonoBehaviour
 			
 			default:
 				MZDebug.Log( "Editor: size=" + Camera.mainCamera.orthographicSize.ToString() );
-				return Camera.mainCamera.orthographicSize;
+				return 568.0076f;
 				
 		}
 	}
