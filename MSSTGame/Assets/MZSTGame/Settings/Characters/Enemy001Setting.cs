@@ -12,6 +12,7 @@ public class Enemy001Setting : CharacterSettingBase
 		leftBody.rotation = 270;
 		leftBody.position = new Vector2( 100, -90 );
 		leftBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
+		leftBody.animationSpeed = 0.5f;
 
 		MZCharacterPart rightBody = CreatePartGameObjectAndGetScript( characterObject );
 		rightBody.PlayAnimation( "Goblet_normal" );
@@ -19,6 +20,7 @@ public class Enemy001Setting : CharacterSettingBase
 		rightBody.rotation = 270;
 		rightBody.position = new Vector2( -100, -90 );
 		rightBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
+		rightBody.animationSpeed = 0.5f;
 
 		MZCharacterPart mainBody = CreatePartGameObjectAndGetScript( characterObject );
 		mainBody.PlayAnimation( "[Celestial]_Army_med3_normal" );

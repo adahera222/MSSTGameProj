@@ -22,35 +22,6 @@ public class MZCharacterPart : MZBaseObject
 		get{ return _collisionsList; }
 	}
 
-	public void Init(MZCharacterPartSetting setting, GameObject parentGameObject)
-	{
-		_parentGameObject = parentGameObject;
-
-		if( setting.animationName != null && setting.animationName.Length > 0 )
-			PlayAnimation( setting.animationName );
-		else
-			SetFrame( setting.frameName );
-		
-		name = setting.name;
-		animationSpeed = setting.animationSpeed;
-		position = setting.position;
-		rotation = setting.rotation;
-		color = setting.color;
-		shaderType = setting.shaderType;
-
-		if( setting.scaleX != 1 || setting.scaleY != 1 )
-		{
-			scaleX = setting.scaleX;
-			scaleY = setting.scaleY;
-		}
-		else
-		{
-			scale = setting.scale;
-		}
-
-		_collisionsList = setting.collisions;
-	}
-
 	public MZCollision GetRealCollision(MZCollision origin)
 	{
 		Vector2 realCenter = _parentGameObject.GetComponent<MZCharacter>().position + this.position + origin.center;

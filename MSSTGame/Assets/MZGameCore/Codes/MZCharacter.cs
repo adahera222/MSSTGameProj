@@ -24,32 +24,6 @@ public class MZCharacter : MonoBehaviour
 		get{ return new Vector2( gameObject.transform.position.x, gameObject.transform.position.y ); }
 	}
 
-	public void Init(MZCharacterSetting setting)
-	{
-		foreach( MZCharacterPartSetting partSetting in setting.partSettings )
-		{
-			AddPart( partSetting );
-		}
-	}
-
-	public int AddPart(MZCharacterPartSetting setting)
-	{
-		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );
-
-		GameObject part = MZResources.InstantiateMZGameCoreObject( "MZCharacterPart" );
-		part.transform.parent = gameObject.transform;
-
-		MZCharacterPart partBehaviour = part.GetComponent<MZCharacterPart>();
-		partBehaviour.Init( setting, gameObject );
-
-		if( _partsByNameDictionary == null )
-			_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
-
-		_partsByNameDictionary.Add( setting.name, partBehaviour );
-
-		return _partsByNameDictionary.Count;
-	}
-
 	public int AddPart(string name, MZCharacterPart part)
 	{
 		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );
