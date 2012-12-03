@@ -20,10 +20,8 @@ public class InitGame : MonoBehaviour
 
 	void InitPlayer()
 	{
-		MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterFactory.MZCharacterType.Player, "Player" );
-//		GameObject player = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterFactory.MZCharacterType.Player, "Player" );
-//		player.transform.rotation = Quaternion.Euler( 0, 0, 90 );
-//		player.transform.localScale = player.transform.localScale*0.5f;
+		GameObject playerObject = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.Player, "Player", "PlayerType01Setting" );
+		playerObject.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
 	}
 
 	void OnDrawGizmos()

@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-using MZCharacterType = MZCharacterFactory.MZCharacterType;
-
 public class MZCharacter : MonoBehaviour, IMZMove
 {
 	public bool isActive
@@ -24,18 +22,24 @@ public class MZCharacter : MonoBehaviour, IMZMove
 		get{ return new Vector2( gameObject.transform.position.x, gameObject.transform.position.y ); }
 	}
 
-	public int AddPart(string name, MZCharacterPart part)
+	public MZCharacterPart AddPart(string name)
 	{
 		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );
-		part.parentGameObject = gameObject;
+
+		GameObject partObject = new GameObject();
+		partObject.transform.parent = gameObject.transform;
+		partObject.AddComponent<MZCharacterPart>();
+
+		MZCharacterPart characterPart = partObject.GetComponent<MZCharacterPart>();
+		characterPart.name = name;
+		characterPart.parentGameObject = gameObject;
 
 		if( _partsByNameDictionary == null )
 			_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
 
-		_partsByNameDictionary.Add( name, part );
+		_partsByNameDictionary.Add( name, characterPart );
 
-		return _partsByNameDictionary.Count;
-
+		return partObject.GetComponent<MZCharacterPart>();
 	}
 
 	public void Disable()

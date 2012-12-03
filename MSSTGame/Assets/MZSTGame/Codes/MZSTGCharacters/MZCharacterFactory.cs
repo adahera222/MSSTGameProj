@@ -3,44 +3,46 @@ using System.Collections;
 
 public class MZCharacterFactory
 {
-	public enum MZCharacterType
-	{
-		Unknow,
-		Player,
-		PlayerBullet,
-		EnemyAir,
-		EnemyGround,
-		EnemyBullet,
-	}
-
-	static MZCharacterFactory instance;
+	static MZCharacterFactory _instance = null;
 
 	static public MZCharacterFactory GetInstance()
 	{
-		if( instance == null )
-			instance = new MZCharacterFactory();
-		return instance;
+		if( _instance == null )
+			_instance = new MZCharacterFactory();
+		return _instance;
 	}
 
-	public GameObject CreateCharacter(MZCharacterType type, string name)
+	public GameObject CreateCharacter(MZCharacterType type, string name, string settingName)
+	{
+		string containerName = GetContainerNameByType( type );
+
+		GameObject characterObject = CreateMZCharacterGameObject( "MZCharacter", containerName, type );
+		SetCharacterToSetting( characterObject, settingName, type );
+		characterObject.name = ( name != null )? name : "DefaultCharacter";
+
+		return characterObject;
+	}
+
+	public string GetContainerNameByType(MZCharacterType type)
 	{
 		switch( type )
 		{
 			case MZCharacterType.Player:
-				return CreatePlayer( name );
+				return "MZPlayers";
 
 			case MZCharacterType.PlayerBullet:
-				return CreatePlayerBullet( name );
+				return "MZPlayerBullets";
 
 			case MZCharacterType.EnemyAir:
-				return CreateEnemyAir( name );
+				return "MZEnemiesAir";
 
 			case MZCharacterType.EnemyBullet:
-				return CreateEnemyBullet( name );
-		}
+				return "MZEnemiesAir";
 
-		MZDebug.Assert( false, "undefine character type: " + type.ToString() );
-		return null;
+			default:
+				MZDebug.Assert( false, "Undefine type: " + type.ToString() );
+				return "";
+		}
 	}
 
 	private MZCharacterFactory()
@@ -48,46 +50,7 @@ public class MZCharacterFactory
 
 	}
 
-	GameObject CreatePlayer(string name)
-	{
-		GameObject player = CreateGameObjectMZCharacter( "MZCharacter", "MZPlayers", MZCharacterType.Player );
-		SetCharacterToSetting( player, "PlayerType01Setting", MZCharacterType.Player );
-
-		player.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
-		player.name = ( name != null )? name : "Player";
-
-		return player;
-	}
-
-	GameObject CreatePlayerBullet(string name)
-	{
-		GameObject playerBullet = CreateGameObjectMZCharacter( "MZCharacter", "MZPlayerBullets", MZCharacterType.PlayerBullet );
-		SetCharacterToSetting( playerBullet, "PlayerBullet001Setting", MZCharacterType.PlayerBullet );
-		playerBullet.name = ( name != null )? name : "PlayerBullet";
-
-		return playerBullet;
-	}
-
-	GameObject CreateEnemyAir(string name)
-	{
-		GameObject enemy = CreateGameObjectMZCharacter( "MZCharacter", "MZEnemiesAir", MZCharacterType.EnemyAir );
-		SetCharacterToSetting( enemy, "Enemy001Setting", MZCharacterType.EnemyAir );
-		enemy.name = ( name != null )? name : "Enemy";
-
-		return enemy;
-	}
-
-	GameObject CreateEnemyBullet(string name)
-	{
-		GameObject enemyBullet = CreateGameObjectMZCharacter( "MZCharacter", "MZEnemyBullets", MZCharacterType.EnemyBullet );
-		SetCharacterToSetting( enemyBullet, "EnemyBullet001Setting", MZCharacterType.EnemyBullet );
-		enemyBullet.name = ( name != null )? name : "EnemyBullet";
-
-		return enemyBullet;
-	}
-
-	// will remove
-	GameObject CreateGameObjectMZCharacter(string characterName, string gameContainerName, MZCharacterType type)
+	GameObject CreateMZCharacterGameObject(string characterName, string gameContainerName, MZCharacterType type)
 	{
 		GameObject character = MZResources.InstantiateMZGameCoreObject( characterName );
 		GameObject gameContainer = GameObject.Find( gameContainerName );

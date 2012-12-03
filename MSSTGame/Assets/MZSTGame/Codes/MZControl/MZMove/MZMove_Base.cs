@@ -14,7 +14,12 @@ public abstract class MZMove_Base : MZControlBase
 {
 	public new IMZMove controlTarget;
 	public float initVelocity = 0;
-	public Vector2 initMovingVector = Vector2.zero;
+
+	public Vector2 initMovingVector
+	{
+		set{ _initMovingVector = MZMath.UnitVectorFromVector( value ); }
+		get{ return _initMovingVector; }
+	}
 
 	public float currentVelocity
 	{ get { return _currentVelocity; } }
@@ -32,6 +37,8 @@ public abstract class MZMove_Base : MZControlBase
 		_currentVelocity = initVelocity;
 		_currentMovingVector = initMovingVector;
 	}
+
+	Vector2 _initMovingVector = Vector2.zero;
 
 	float _currentVelocity = 0;
 	Vector2 _currentMovingVector = Vector2.zero;

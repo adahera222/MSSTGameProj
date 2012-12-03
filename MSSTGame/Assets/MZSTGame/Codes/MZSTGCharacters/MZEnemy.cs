@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using MZCharacterType = MZCharacterFactory.MZCharacterType;
 
 public class MZEnemy : MonoBehaviour, IMZMode
 {

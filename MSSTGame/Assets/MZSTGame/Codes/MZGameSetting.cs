@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-using MZCharacterType = MZCharacterFactory.MZCharacterType;
-
 public class MZGameSetting
 {
 	public static Vector2 PLAYER_MOVABLE_BOUND_CENTER = new Vector2( 0, 0 );

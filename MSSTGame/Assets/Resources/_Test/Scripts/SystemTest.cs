@@ -57,13 +57,15 @@ public class SystemTest : MonoBehaviour
 
 		if( cd <= 0 )
 		{
-			GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterFactory.MZCharacterType.EnemyAir, "Enemy" );
+			string enemySettingName = ( UnityEngine.Random.Range( 0, 2 ) == 0 )? "Enemy001Setting" : "Enemy002Setting";
+
+			GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyAir, "Enemy", enemySettingName );
 
 			float x = UnityEngine.Random.Range( -100, 100 );
 			enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 650 );
 
-//			cd += interval;
-			cd = 9999999;
+			cd += interval;
+//			cd = 9999999;
 		}
 
 		TestSprite();

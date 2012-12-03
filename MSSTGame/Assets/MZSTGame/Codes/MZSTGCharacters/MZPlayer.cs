@@ -84,7 +84,7 @@ public class MZPlayer : MonoBehaviour
 		cd -= Time.deltaTime;
 		if( cd <= 0 )
 		{
-			GameObject pb = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterFactory.MZCharacterType.PlayerBullet, "PB" );
+			GameObject pb = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.PlayerBullet, "PlayerBullet", "PlayerBullet001Setting" );
 			pb.GetComponent<MZCharacter>().position = gameObject.GetComponent<MZCharacter>().position;
 			cd += interval;
 		}
@@ -104,7 +104,7 @@ public class MZPlayer : MonoBehaviour
 		if( nextPosition.y >= playMovableBound.y )
 			nextPosition.y = playMovableBound.y;
 
-		nextPosition.z = MZGameSetting.GetCharacterDepth( MZCharacterFactory.MZCharacterType.Player );
+		nextPosition.z = MZGameSetting.GetCharacterDepth( MZCharacterType.Player );
 
 		return nextPosition;
 	}

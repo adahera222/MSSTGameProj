@@ -2,38 +2,29 @@ using UnityEngine;
 
 public abstract class CharacterSettingBase
 {
-	public virtual void SetToCharacter(GameObject characterObject, MZCharacterFactory.MZCharacterType characterType)
+	public virtual void SetToCharacter(GameObject characterObject, MZCharacterType characterType)
 	{
 		characterObject.AddComponent( GetCharacterScriptNameByType( characterType ) );
 	}
 
-	protected MZCharacterPart CreatePartGameObjectAndGetScript(GameObject parentObject)
-	{
-		GameObject go = new GameObject();
-		go.transform.parent = parentObject.transform;
-		go.AddComponent<MZCharacterPart>();
-
-		return go.GetComponent<MZCharacterPart>();
-	}
-
-	protected string GetCharacterScriptNameByType(MZCharacterFactory.MZCharacterType type)
+	protected string GetCharacterScriptNameByType(MZCharacterType type)
 	{
 		switch( type )
 		{
-			case MZCharacterFactory.MZCharacterType.Player:
+			case MZCharacterType.Player:
 				return "MZPlayer";
 
-			case MZCharacterFactory.MZCharacterType.PlayerBullet:
+			case MZCharacterType.PlayerBullet:
 				return "MZPlayerBullet";
 
-			case MZCharacterFactory.MZCharacterType.EnemyAir:
-			case MZCharacterFactory.MZCharacterType.EnemyGround:
+			case MZCharacterType.EnemyAir:
+			case MZCharacterType.EnemyGround:
 				return "MZEnemy";
 
-			case MZCharacterFactory.MZCharacterType.EnemyBullet:
+			case MZCharacterType.EnemyBullet:
 				return "MZEnemyBullet";
 
-			case MZCharacterFactory.MZCharacterType.Unknow:
+			case MZCharacterType.Unknow:
 			default:
 				MZDebug.Assert( false, "Unknow type: " + type.ToString() );
 				return null;

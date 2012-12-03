@@ -105,8 +105,8 @@ public class MZBaseObject : MonoBehaviour
 
 	public new string name
 	{
-		set{ GetSprite().name = value; }
-		get{ return GetSprite().name; }
+		set{ _name = value;	}
+		get{ return _name; }
 	}
 
 	public MZShaderType shaderType
@@ -163,10 +163,14 @@ public class MZBaseObject : MonoBehaviour
 	float _rotation = 1;
 	Color _color = new Color( 0.5f, 0.5f, 0.5f );
 	MZShaderType _shaderType = MZShaderType.AlphaBlended;
+	string _name = "";
 
 	void Start()
 	{
-
+		if( GetSprite() != null && GetSprite().name != name )
+		{
+			GetSprite().name = name;
+		}
 	}
 
 	void InitNormalSpriteCache()
