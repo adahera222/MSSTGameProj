@@ -81,14 +81,14 @@ public class MZCharactersManager : MonoBehaviour
 		if( guiCharactersInfo == null )
 			return;
 
-		string infoText = "";
-
-		foreach( MZCharacterType type in charactersListByType.Keys )
-		{
-			List<GameObject> list = charactersListByType[ type ];
-			infoText += type.ToString() + ": count=" + list.Count.ToString() + "\n";
-		}
-
-		guiCharactersInfo.text = infoText;
+//		string infoText = "";
+//
+//		foreach( MZCharacterType type in charactersListByType.Keys )
+//		{
+//			List<GameObject> list = charactersListByType[ type ];
+//			infoText += type.ToString() + ": count=" + list.Count.ToString() + "\n";
+//		}
+//
+//		guiCharactersInfo.text = infoText;
 	}
 }

@@ -15,9 +15,6 @@ public class SystemTest : MonoBehaviour
 
 	void Start()
 	{
-		MZPlayer p = (MZPlayer)MZObjectHelp.CreateClass( "MZPlayer" );
-		MZDebug.Log( ( p != null )? "NOT NULL" : "NULL" );
-
 //		GameObject setting = (GameObject)System.Activator.CreateInstance( Type.GetType( "UnityEngine.GameObject" ) );
 //		setting.name = "aaaaa";
 //		MZDebug.Log( setting.name );
@@ -57,24 +54,49 @@ public class SystemTest : MonoBehaviour
 
 		if( cd <= 0 )
 		{
-			string enemySettingName = ( UnityEngine.Random.Range( 0, 2 ) == 0 )? "Enemy001Setting" : "Enemy002Setting";
-
-			GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyAir, "Enemy", enemySettingName );
-
-			float x = UnityEngine.Random.Range( -100, 100 );
-			enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 650 );
-
+//			CreateEnemy();
+//			CreateManySprites();
 			cd += interval;
-//			cd = 9999999;
 		}
 
 		TestSprite();
 	}
 
-	float totalTime = 0.5f;
-	float existedTime = 0.5f;
-	bool dir = true;
-	float timeCount = 0;
+	void CreateEnemy()
+	{
+		string enemySettingName = ( UnityEngine.Random.Range( 0, 2 ) == 0 )? "Enemy001Setting" : "Enemy001Setting";
+
+		GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyAir, "Enemy", enemySettingName );
+		enemy.GetComponent<MZCharacter>().position = new Vector2( 0, 0 );
+
+//		float x = UnityEngine.Random.Range( -100, 100 );
+//		enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 650 );
+		enemy.GetComponent<MZCharacter>().position = Vector2.zero;
+	}
+
+	void CreateManySprites()
+	{
+		for( int i = 0; i < 15; i++ )
+		{
+			GameObject s = (GameObject)MZResources.InstantiateOrthelloSprite( "Sprite" );
+			s.GetComponent<OTSprite>().size = new Vector2( 30, 30 );
+			s.GetComponent<OTSprite>().depth = -30;
+			s.GetComponent<OTSprite>().position = new Vector2( UnityEngine.Random.Range( -300, 300 ), UnityEngine.Random.Range( -300, 300 ) );
+
+			s.GetComponent<OTSprite>().spriteContainer = MZOTFramesManager.GetInstance().GetFrameContainter( "[Celestial]_Army_med2_normal0005" );
+			s.GetComponent<OTSprite>().frameName = "[Celestial]_Army_med2_normal0005";
+			s.GetComponent<OTSprite>().size = new Vector2( 10, 10 );
+			s.GetComponent<OTSprite>().rotation = UnityEngine.Random.Range( 0, 360 );
+
+			s.transform.parent = GameObject.Find( "MZEnemyBullets" ).transform;
+		}
+	}
+
+
+//	float totalTime = 0.5f;
+//	float existedTime = 0.5f;
+//	bool dir = true;
+//	float timeCount = 0;
 
 	void TestSprite()
 	{
@@ -128,60 +150,5 @@ public class SystemTest : MonoBehaviour
 //				t2d.SetPixel( i, j, Color.black );
 //			}
 //		}
-	}
-
-	Mesh GetMesh()
-	{
-		Mesh m = new Mesh();
-		m.vertices = new Vector3[5];
-		m.uv = new Vector2[5];
-		m.normals = new Vector3[5];
-
-		m.normals[ 0 ] = new Vector3( 0, 0, -1 );
-		m.normals[ 1 ] = new Vector3( 0, 0, -1 );
-
-		m.vertices[ 0 ].x = 0;
-		m.vertices[ 0 ].y = 0;
-		m.vertices[ 0 ].z = 0;
-		m.uv[ 0 ] = new Vector2( 0, 0 );
-
-		m.vertices[ 1 ].x = 1;
-		m.vertices[ 1 ].y = 0;
-		m.vertices[ 1 ].z = 0;
-		m.uv[ 1 ] = new Vector2( 1, 0 );
-
-		m.vertices[ 2 ].x = 0;
-		m.vertices[ 2 ].y = -1;
-		m.vertices[ 2 ].z = 0;
-		m.uv[ 2 ] = new Vector2( 0, 1 );
-
-		m.vertices[ 3 ].x = 1;
-		m.vertices[ 3 ].y = -1;
-		m.vertices[ 3 ].z = 0;
-		m.uv[ 3 ] = new Vector2( 1, 1 );
-
-		m.vertices[ 4 ].x = 0;
-		m.vertices[ 4 ].y = 0;
-		m.vertices[ 4 ].z = 0.3f;
-		m.uv[ 4 ] = new Vector2( 1, 1 );
-
-		m.triangles = new int[9];
-		m.triangles[ 0 ] = 0;
-		m.triangles[ 1 ] = 1;
-		m.triangles[ 2 ] = 2;
-		m.triangles[ 3 ] = 2;
-		m.triangles[ 4 ] = 3;
-		m.triangles[ 5 ] = 1;
-		m.triangles[ 6 ] = 1;
-		m.triangles[ 7 ] = 0;
-		m.triangles[ 8 ] = 4;
-		m.RecalculateBounds();
-
-//		MeshFilter mf = (MeshFilter)transform.GetComponent( typeof( MeshFilter ) );
-//		mf.mesh = m;
-//		renderer.material = new Material( Shader.Find( "Diffuse" ) );
-//		mf.renderer.material.mainTexture = tex;
-
-		return m;
 	}
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZEnemy : MonoBehaviour, IMZMode
+public class MZEnemy : MonoBehaviour, IMZMode, IMZAttack // test
 {
 	public int healthPoint = 1;
 
@@ -12,6 +12,19 @@ public class MZEnemy : MonoBehaviour, IMZMode
 	{ get { return gameObject.GetComponentInChildren<MZCharacter>(); } }
 
 	#endregion
+
+	// test
+	#region IMZAttack implementation
+	public Vector2 position
+	{
+		get
+		{
+			return gameObject.GetComponent<MZCharacter>().position;
+		}
+	}
+	#endregion
+
+
 
 	public List<MZMode> modesList
 	{
@@ -35,16 +48,22 @@ public class MZEnemy : MonoBehaviour, IMZMode
 		return mode;
 	}
 
-	MZControlUpdate<MZMode> _modeControlUpdate = null;
+	MZControlUpdate<MZMode> _modeControlUpdate = new MZControlUpdate<MZMode>();
+	MZAttack_Base attactTest;
 
 	void Start()
 	{
-
+		attactTest = new MZAttack_OddWay();
+		attactTest.controlTarget = this;
+		attactTest.numberOfWatys = 12;
+		attactTest.colddown = 5.0f;
+		attactTest.intervalDegrees = 30;
 	}
 
 	void Update()
 	{
 		_modeControlUpdate.Update();
+		attactTest.Update();
 		UpdateCollision();
 	}
 

@@ -3,6 +3,11 @@ using System.Collections;
 
 public class MZMath
 {
+	static public float DegreesToRadians(float degrees)
+	{
+		return UnityEngine.Mathf.Deg2Rad*degrees;
+	}
+
 	static public float DistancePow2(Vector2 p1, Vector2 p2)
 	{
 		return ( p2.x - p1.x )*( p2.x - p1.x ) + ( p2.y - p1.y )*( p2.y - p1.y );
@@ -42,5 +47,18 @@ public class MZMath
 	{
 		float length = LengthOfVector( vector );
 		return new Vector2( vector.x/length, vector.y/length );
+	}
+
+	static public Vector2 unitVectorFromVectorAddDegree(Vector2 vector, float degrees)
+	{
+		float radians = DegreesToRadians( degrees );
+
+		float c = Mathf.Cos( radians );
+		float s = Mathf.Sin( radians );
+
+		Vector2 resultVetor = new Vector2( vector.x*c - vector.y*s, vector.x*s + vector.y*c );
+		Vector2 unitResultVetor = UnitVectorFromVector( resultVetor );
+
+		return unitResultVetor;
 	}
 }

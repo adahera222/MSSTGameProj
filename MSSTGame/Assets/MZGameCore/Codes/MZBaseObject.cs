@@ -9,7 +9,7 @@ public class MZBaseObject : MonoBehaviour
 		AlphaBlended,
 	}
 
-	public bool IsAnimatingObject
+	public bool isAnimatingObject
 	{
 		get{ return ( _spriteCache.GetType() == typeof( OTAnimatingSprite ) ); }
 	}
@@ -85,7 +85,7 @@ public class MZBaseObject : MonoBehaviour
 	{
 		set
 		{
-			if( this.IsAnimatingObject )
+			if( this.isAnimatingObject )
 			{
 				GetAnimatingSprite().speed = value;
 				anyPropertiesChanged = true;
@@ -142,7 +142,7 @@ public class MZBaseObject : MonoBehaviour
 			GetSprite().GetComponent<MeshRenderer>().material.SetColor( "_TintColor", _color );
 			GetSprite().GetComponent<MeshRenderer>().material.shader = Shader.Find( GetShaderPath( _shaderType ) );
 
-			if( IsAnimatingObject )
+			if( isAnimatingObject )
 			{
 				GetSprite().size = _scale*GetSprite().oSize;
 			}
@@ -150,8 +150,8 @@ public class MZBaseObject : MonoBehaviour
 			anyPropertiesChanged = false;
 		}
 
-		if( GetSprite().GetComponent<MeshRenderer>().material.shader.name != GetShaderPath( _shaderType ) )
-			GetSprite().GetComponent<MeshRenderer>().material.shader = Shader.Find( GetShaderPath( _shaderType ) );
+//		if( GetSprite().GetComponent<MeshRenderer>().material.shader.name != GetShaderPath( _shaderType ) )
+//			GetSprite().GetComponent<MeshRenderer>().material.shader = Shader.Find( GetShaderPath( _shaderType ) );
 	}
 
 	bool anyPropertiesChanged = false;
@@ -195,7 +195,7 @@ public class MZBaseObject : MonoBehaviour
 	OTAnimatingSprite GetAnimatingSprite()
 	{
 		MZDebug.Assert( _spriteCache != null, "must set frame or aniamtion first" );
-		return ( this.IsAnimatingObject )? (OTAnimatingSprite)_spriteCache : null;
+		return ( this.isAnimatingObject )? (OTAnimatingSprite)_spriteCache : null;
 	}
 
 	string GetShaderPath(MZShaderType shaderType)

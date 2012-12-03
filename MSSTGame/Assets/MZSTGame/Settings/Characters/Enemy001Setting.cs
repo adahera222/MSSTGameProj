@@ -9,21 +9,24 @@ public class Enemy001Setting : CharacterSettingBase
 		MZCharacter character = characterObject.GetComponent<MZCharacter>();
 
 		MZCharacterPart leftBody = character.AddPart( "LeftBody" );
-		leftBody.PlayAnimation( "Goblet_normal" );
+//		leftBody.PlayAnimation( "Goblet_normal" );
+		leftBody.SetFrame( "Goblet_normal0001" );
 		leftBody.rotation = 270;
 		leftBody.position = new Vector2( 100, -90 );
 		leftBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
 		leftBody.animationSpeed = 0.5f;
 
 		MZCharacterPart rightBody = character.AddPart( "RightBody" );
-		rightBody.PlayAnimation( "Goblet_normal" );
+//		rightBody.PlayAnimation( "Goblet_normal" );
+		rightBody.SetFrame( "Goblet_normal0001" );
 		rightBody.rotation = 270;
 		rightBody.position = new Vector2( -100, -90 );
 		rightBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
 		rightBody.animationSpeed = 0.5f;
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );
-		mainBody.PlayAnimation( "[Celestial]_Army_med3_normal" );
+//		mainBody.PlayAnimation( "[Celestial]_Army_med3_normal" );
+		mainBody.SetFrame( "[Celestial]_Army_med3_normal0001" );
 		mainBody.scale = 1.0f;
 		mainBody.rotation = 270;
 		mainBody.position = Vector2.zero;
@@ -33,18 +36,18 @@ public class Enemy001Setting : CharacterSettingBase
 		enemy.healthPoint = 10;
 
 		// mode 1
-		MZMode mode1 = enemy.AddMode( "mode1" );
-		mode1.duration = -1;
-
-		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
-		move1.initVelocity = 100;
-		move1.initMovingVector = new Vector2( 1, -1 );
-		move1.duration = 1.5f;
-
-		MZMove_Base move2 = mode1.AddMove( "m1m2", "Linear" );
-		move2.initVelocity = 100;
-		move2.initMovingVector = new Vector2( -1, -1 );
-		move2.duration = 1.5f;
+//		MZMode mode1 = enemy.AddMode( "mode1" );
+//		mode1.duration = -1;
+//
+//		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
+//		move1.initVelocity = 100;
+//		move1.initMovingVector = new Vector2( 1, -1 );
+//		move1.duration = 1.5f;
+//
+//		MZMove_Base move2 = mode1.AddMove( "m1m2", "Linear" );
+//		move2.initVelocity = 100;
+//		move2.initMovingVector = new Vector2( -1, -1 );
+//		move2.duration = 1.5f;
 
 		// mode2
 //		MZMode mode2 = enemy.AddMode( "mode2" );
