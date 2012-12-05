@@ -59,6 +59,6 @@ public class MZAttack_OddWay : MZAttack_Base
 	{
 		MZEnemyBullet bullet = bulletObject.GetComponent<MZEnemyBullet>();
 		MZMove_Base bulletMove = bullet.AddMove( "Linear", "Linear" );
-		bulletMove.initVelocity = 30;
+		bulletMove.initVelocity = 100;
 	}
 }

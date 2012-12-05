@@ -54,7 +54,7 @@ public class MZCharactersManager : MonoBehaviour
 
 	}
 
-	void Update()
+	void LateUpdate()
 	{
 		RemoveUnActiveCharacters();
 	}
@@ -68,6 +68,7 @@ public class MZCharactersManager : MonoBehaviour
 				GameObject characterObject = list[ i ];
 				if( characterObject.GetComponent<MZCharacter>().isActive == false )
 				{
+					characterObject.GetComponent<MZCharacter>().BeforeDestory();
 					list.Remove( characterObject );
 					Destroy( characterObject );
 					i--;

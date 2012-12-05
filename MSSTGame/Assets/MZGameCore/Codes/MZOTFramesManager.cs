@@ -38,6 +38,7 @@ public class MZOTFramesManager
 		if( _spritesheetsContainerByFrameName == null )
 			_spritesheetsContainerByFrameName = new Dictionary<string, OTSpriteAtlasCocos2D>();
 
+		MZDebug.Assert( _spritesheetsContainerByFrameName.ContainsKey( frameName ) == false, "Duplicated frame name=" + frameName + "(on add " + spritesheetsContainer.name +")");
 		_spritesheetsContainerByFrameName.Add( frameName, spritesheetsContainer );
 
 		return _spritesheetsContainerByFrameName.Count;

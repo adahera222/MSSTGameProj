@@ -58,7 +58,14 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 
 		GameObject partObject = MZOTSpritesPoolManager.GetInstance().GetSpriteObject( characterType );
 
-		MZCharacterPart characterPart = partObject.AddComponent<MZCharacterPart>();
+
+		MZCharacterPart characterPart = null;
+		if( partObject.GetComponent<MZCharacterPart>() == null )
+			characterPart = partObject.AddComponent<MZCharacterPart>();
+		else
+			characterPart = partObject.GetComponent<MZCharacterPart>();
+
+		characterPart.enabled = true;
 		characterPart.name = name;
 		characterPart.parentGameObject = gameObject;
 
@@ -73,6 +80,15 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 	public void Disable()
 	{
 		_isActive = false;
+	}
+
+	public void BeforeDestory()
+	{
+		foreach( MZCharacterPart characterPart in partsByNameDictionary.Values )
+		{
+			characterPart.enabled = false;
+			MZOTSpritesPoolManager.GetInstance().ReturnSpriteObject( characterPart.gameObject, characterType );
+		}
 	}
 
 	public bool IsCollide(MZCharacter other)
@@ -101,14 +117,5 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 	{
 		_lifeTimeCount += Time.deltaTime;
 		removeOutOfBound.Update();
-	}
-
-	void OnDestroy()
-	{
-		foreach( MZCharacterPart characterPart in partsByNameDictionary.Values )
-		{
-			characterPart.enabled = false;
-			MZOTSpritesPoolManager.GetInstance().ReturnSpriteObject( characterPart.gameObject, characterType );
-		}
 	}
 }

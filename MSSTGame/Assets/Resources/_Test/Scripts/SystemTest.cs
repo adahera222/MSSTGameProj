@@ -7,7 +7,7 @@ using System.Reflection;
 public class SystemTest : MonoBehaviour
 {
 	float interval = 1.5f;
-	float cd = 5.0f;
+	float cd = 1.0f;
 
 	void Start()
 	{
@@ -35,11 +35,10 @@ public class SystemTest : MonoBehaviour
 		string enemySettingName = ( UnityEngine.Random.Range( 0, 2 ) == 0 )? "Enemy001Setting" : "Enemy001Setting";
 
 		GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyAir, "Enemy", enemySettingName );
-		enemy.GetComponent<MZCharacter>().position = new Vector2( 0, 0 );
 
-//		float x = UnityEngine.Random.Range( -100, 100 );
-//		enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 650 );
-		enemy.GetComponent<MZCharacter>().position = Vector2.zero;
+		float x = UnityEngine.Random.Range( -100, 100 );
+		enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 650 );
+//		enemy.GetComponent<MZCharacter>().position = Vector2.zero;
 	}
 
 	List<OTSprite> manySpritesList;

@@ -8,7 +8,6 @@ public class MZMove_Linear : MZMove_Base
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-		MZDebug.Log( "First" );
 		startPosition = controlTarget.position;
 	}
 

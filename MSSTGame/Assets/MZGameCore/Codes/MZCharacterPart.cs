@@ -52,14 +52,16 @@ public class MZCharacterPart : MZBaseObject
 	List<MZCollision> _collisionsList = new List<MZCollision>();
 	GameObject _parentGameObject = null;
 
-//	void OnDrawGizmos()
-//	{
-//		Gizmos.color = MZGameSetting.GetCollisionColor( _parentGameObject.GetComponent<MZCharacter>().characterType );
-//
-//		foreach( MZCollision c in _collisionsList )
-//		{
-//			Vector2 realCenter = _parentGameObject.GetComponent<MZCharacter>().position + position + c.center;
-//			Gizmos.DrawWireSphere( realCenter, c.radius );
-//		}
-//	}
+	void OnDrawGizmos()
+	{
+		if( _parentGameObject == null )
+			return;
+		Gizmos.color = MZGameSetting.GetCollisionColor( _parentGameObject.GetComponent<MZCharacter>().characterType );
+
+		foreach( MZCollision c in _collisionsList )
+		{
+			Vector2 realCenter = _parentGameObject.GetComponent<MZCharacter>().position + position + c.center;
+			Gizmos.DrawWireSphere( realCenter, c.radius );
+		}
+	}
 }

@@ -80,7 +80,6 @@ public class MZEnemy : MonoBehaviour, IMZMode, IMZAttack // test
 
 		if( healthPoint <= 0 )
 			gameObject.GetComponent<MZCharacter>().Disable();
-
 	}
 
 //	float cd = 0;

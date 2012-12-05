@@ -121,8 +121,6 @@ public class MZBaseObject : MonoBehaviour
 
 	public void SetFrame(string frameName)
 	{
-//		InitNormalSpriteCache();
-		GetSprite().spriteContainer = MZOTFramesManager.GetInstance().GetFrameContainterByFrameName( frameName );
 		GetSprite().frameName = frameName;
 		GetSprite().size = MZOTFramesManager.GetInstance().GetAtlasData( frameName ).size;
 		_originSize = GetSprite().size;
@@ -167,12 +165,7 @@ public class MZBaseObject : MonoBehaviour
 
 	void Start()
 	{
-//		_spriteCache = gameObject.GetComponent<OTSprite>(); // temp
-//
-//		if( GetSprite() != null && GetSprite().name != name )
-//		{
-//			GetSprite().name = name;
-//		}
+		GetSprite().name = name;
 	}
 
 //	void InitNormalSpriteCache()
