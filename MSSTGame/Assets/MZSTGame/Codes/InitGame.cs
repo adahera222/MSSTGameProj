@@ -9,7 +9,11 @@ public class InitGame : MonoBehaviour
 	void Start()
 	{
 		MZOTFramesManager.GetInstance().CreateFramesByExistedContainer();
-		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer();
+//		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer(); // disable anmation function
+		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]spritesheet3", MZCharacterType.Player, 10, MZGameSetting.GetCharacterDepth( MZCharacterType.Player ) );
+		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]atlas2", MZCharacterType.EnemyAir, 1000, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyAir ) );
+		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemies_atlas", MZCharacterType.EnemyBullet, 1000, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyBullet ) );
+
 		InitPlayer();
 	}
 

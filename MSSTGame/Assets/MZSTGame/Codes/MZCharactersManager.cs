@@ -65,11 +65,11 @@ public class MZCharactersManager : MonoBehaviour
 		{
 			for( int i = 0; i < list.Count; i++ )
 			{
-				GameObject character = list[ i ];
-				if( character.GetComponent<MZCharacter>().isActive == false )
+				GameObject characterObject = list[ i ];
+				if( characterObject.GetComponent<MZCharacter>().isActive == false )
 				{
-					list.Remove( character );
-					Destroy( character );
+					list.Remove( characterObject );
+					Destroy( characterObject );
 					i--;
 				}
 			}
@@ -81,14 +81,14 @@ public class MZCharactersManager : MonoBehaviour
 		if( guiCharactersInfo == null )
 			return;
 
-//		string infoText = "";
-//
-//		foreach( MZCharacterType type in charactersListByType.Keys )
-//		{
-//			List<GameObject> list = charactersListByType[ type ];
-//			infoText += type.ToString() + ": count=" + list.Count.ToString() + "\n";
-//		}
-//
-//		guiCharactersInfo.text = infoText;
+		string infoText = "";
+
+		foreach( MZCharacterType type in charactersListByType.Keys )
+		{
+			List<GameObject> list = charactersListByType[ type ];
+			infoText += type.ToString() + ": count=" + list.Count.ToString() + "\n";
+		}
+
+		guiCharactersInfo.text = infoText;
 	}
 }

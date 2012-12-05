@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class MZOTFramesManager
 {
 	static MZOTFramesManager _instance;
+	Dictionary<string, OTSpriteAtlasCocos2D> _spritesheetsContainerByFrameName;
+	Dictionary<string, OTSpriteAtlasCocos2D> _spritesheetsContainerByName;
 
 	static public MZOTFramesManager GetInstance()
 	{
@@ -16,8 +18,13 @@ public class MZOTFramesManager
 
 	public void CreateFramesByExistedContainer()
 	{
+		if( _spritesheetsContainerByName == null )
+			_spritesheetsContainerByName = new Dictionary<string, OTSpriteAtlasCocos2D>();
+
 		foreach( OTSpriteAtlasCocos2D container in (OTSpriteAtlasCocos2D[])GameObject.FindObjectsOfType( typeof( OTSpriteAtlasCocos2D ) ) )
 		{
+			_spritesheetsContainerByName.Add( container.name, container );
+
 			OTAtlasData[] datas = container.GetComponent<OTSpriteAtlasCocos2D>().atlasData;
 			foreach( OTAtlasData data in datas )
 			{
@@ -28,25 +35,33 @@ public class MZOTFramesManager
 
 	public int AddSpriteAtlasCocos2DFrame(string frameName, OTSpriteAtlasCocos2D spritesheetsContainer)
 	{
-		if( spritesheetsContainerByFrameName == null )
-			spritesheetsContainerByFrameName = new Dictionary<string, OTSpriteAtlasCocos2D>();
+		if( _spritesheetsContainerByFrameName == null )
+			_spritesheetsContainerByFrameName = new Dictionary<string, OTSpriteAtlasCocos2D>();
 
-		spritesheetsContainerByFrameName.Add( frameName, spritesheetsContainer );
+		_spritesheetsContainerByFrameName.Add( frameName, spritesheetsContainer );
 
-		return spritesheetsContainerByFrameName.Count;
+		return _spritesheetsContainerByFrameName.Count;
 	}
 
-	public OTSpriteAtlasCocos2D GetFrameContainter(string frameName)
+	public OTSpriteAtlasCocos2D GetFrameContainterByFrameName(string frameName)
 	{
-		MZDebug.Assert( spritesheetsContainerByFrameName.ContainsKey( frameName ), "spritesheetContainer by name( " + frameName + " ) is null" );
+		MZDebug.Assert( _spritesheetsContainerByFrameName.ContainsKey( frameName ), "spritesheetContainer by frame name( " + frameName + " ) is null" );
 
-		OTSpriteAtlasCocos2D spritesheetContainer = spritesheetsContainerByFrameName[ frameName ];
+		OTSpriteAtlasCocos2D spritesheetContainer = _spritesheetsContainerByFrameName[ frameName ];
+		return spritesheetContainer;
+	}
+
+	public OTSpriteAtlasCocos2D GetFrameContainterByName(string containerName)
+	{
+		MZDebug.Assert( _spritesheetsContainerByName.ContainsKey( containerName ), "spritesheetContainer by name( " + containerName + " ) is null" );
+
+		OTSpriteAtlasCocos2D spritesheetContainer = _spritesheetsContainerByName[ containerName ];
 		return spritesheetContainer;
 	}
 
 	public OTAtlasData GetAtlasData(string frameName)
 	{
-		OTSpriteAtlasCocos2D spritesheetContainer = GetFrameContainter( frameName );
+		OTSpriteAtlasCocos2D spritesheetContainer = GetFrameContainterByFrameName( frameName );
 
 		int frameIndex = -1;
 
@@ -62,8 +77,6 @@ public class MZOTFramesManager
 		OTAtlasData data = spritesheetContainer.atlasData[ frameIndex ];
 		return data;
 	}
-
-	Dictionary<string, OTSpriteAtlasCocos2D> spritesheetsContainerByFrameName;
 
 	private MZOTFramesManager()
 	{

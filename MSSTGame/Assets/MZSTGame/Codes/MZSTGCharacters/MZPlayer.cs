@@ -32,7 +32,7 @@ public class MZPlayer : MonoBehaviour
 		UpdateOnTouchBegan();
 		UpdateOnTouchMoved();
 		UpdateOnTouchEnded();
-		UpdateAttack();
+//		UpdateAttack();
 
 		UpdateTest();
 	}

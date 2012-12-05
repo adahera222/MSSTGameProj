@@ -10,23 +10,23 @@ public class Enemy001Setting : CharacterSettingBase
 
 		MZCharacterPart leftBody = character.AddPart( "LeftBody" );
 //		leftBody.PlayAnimation( "Goblet_normal" );
-		leftBody.SetFrame( "[Celestial]_Army_med2_normal0001" );
+		leftBody.SetFrame( "[Celestial]_Army_med3_normal0001" );
 		leftBody.rotation = 270;
 		leftBody.position = new Vector2( 100, -90 );
 		leftBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
-		leftBody.animationSpeed = 0.5f;
+//		leftBody.animationSpeed = 0.5f;
 
 		MZCharacterPart rightBody = character.AddPart( "RightBody" );
 //		rightBody.PlayAnimation( "Goblet_normal" );
-		rightBody.SetFrame( "[Celestial]_Army_med2_normal0001" );
+		rightBody.SetFrame( "[Celestial]_Army_med3_normal0001" );
 		rightBody.rotation = 270;
 		rightBody.position = new Vector2( -100, -90 );
 		rightBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
-		rightBody.animationSpeed = 0.5f;
+//		rightBody.animationSpeed = 0.5f;
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );
 //		mainBody.PlayAnimation( "[Celestial]_Army_med3_normal" );
-		mainBody.SetFrame( "[Celestial]_Army_med2_normal0001" );
+		mainBody.SetFrame( "[Celestial]_Army_med3_normal0001" );
 		mainBody.scale = 1.0f;
 		mainBody.rotation = 270;
 		mainBody.position = Vector2.zero;

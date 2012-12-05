@@ -4,31 +4,6 @@ using System.Collections.Generic;
 
 public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 {
-	static int currentPartPoolIndex = 0;
-	static List<GameObject> partPool;
-
-	static public void InitPartPool()
-	{
-		currentPartPoolIndex = 0;
-		if( partPool == null )
-		{
-			partPool = new List<GameObject>();
-
-			for( int i = 0; i < 1000; i++ )
-				partPool.Add( new GameObject() );
-		}
-	}
-
-	static public GameObject GetNewPart()
-	{
-		if( partPool == null )
-			InitPartPool();
-
-		return partPool[ currentPartPoolIndex++ ];
-	}
-
-/// **** /// /// ///
-
 	public bool isActive
 	{ get { return _isActive; } }
 
@@ -81,13 +56,7 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 	{
 		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );
 
-//		GameObject partObject = new GameObject(); // replace new GameObject() to
-//		GameObject partObject = MZResources.InstantiateMZGamePrefab( "MZCharacterPart" );
-//		GameObject partObject = GetNewPart();
-
-		GameObject partObject = MZResources.InstantiateOrthelloSprite( "Sprite" );
-
-//		partObject.transform.parent = gameObject.transform;
+		GameObject partObject = MZOTSpritesPoolManager.GetInstance().GetSpriteObject( characterType );
 
 		MZCharacterPart characterPart = partObject.AddComponent<MZCharacterPart>();
 		characterPart.name = name;
@@ -132,5 +101,14 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 	{
 		_lifeTimeCount += Time.deltaTime;
 		removeOutOfBound.Update();
+	}
+
+	void OnDestroy()
+	{
+		foreach( MZCharacterPart characterPart in partsByNameDictionary.Values )
+		{
+			characterPart.enabled = false;
+			MZOTSpritesPoolManager.GetInstance().ReturnSpriteObject( characterPart.gameObject, characterType );
+		}
 	}
 }

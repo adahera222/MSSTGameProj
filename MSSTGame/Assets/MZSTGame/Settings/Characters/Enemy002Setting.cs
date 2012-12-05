@@ -10,7 +10,7 @@ public class Enemy002Setting : CharacterSettingBase
 		MZCharacter character = characterObject.GetComponent<MZCharacter>();
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );
-		mainBody.PlayAnimation( "[Celestial]_Army_med2_normal0001" );
+		mainBody.SetFrame( "[Celestial]_Army_med3_normal0001" );
 		mainBody.scale = 1.0f;
 		mainBody.rotation = 270;
 		mainBody.position = Vector2.zero;

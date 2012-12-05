@@ -1,4 +1,4 @@
-public enum MZCharacterType
+public enum MZCharacterType // maybe rename to actorType????
 {
 	Unknow,
 	Player,
