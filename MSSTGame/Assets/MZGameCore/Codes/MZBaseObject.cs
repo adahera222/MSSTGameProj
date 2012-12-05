@@ -167,6 +167,8 @@ public class MZBaseObject : MonoBehaviour
 
 	void Start()
 	{
+		_spriteCache = gameObject.GetComponent<OTSprite>(); // temp
+
 		if( GetSprite() != null && GetSprite().name != name )
 		{
 			GetSprite().name = name;

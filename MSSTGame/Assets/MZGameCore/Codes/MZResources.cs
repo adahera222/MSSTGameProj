@@ -30,10 +30,10 @@ public class MZResources
 		return clone;
 	}
 
-	static public GameObject InstantiateMZGameCoreObject(string name)
+	static public GameObject InstantiateMZGamePrefab(string name)
 	{
 		GameObject prefab = (GameObject)Resources.Load( MZGAMECORE_PREFABS_PATH + name, typeof( GameObject ) );
-		
+
 		MZDebug.Assert( prefab != null, "prefab isn null" );
 
 		return (GameObject)GameObject.Instantiate( prefab );

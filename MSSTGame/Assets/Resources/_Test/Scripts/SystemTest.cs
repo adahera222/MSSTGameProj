@@ -6,15 +6,55 @@ using System.Reflection;
 
 public class SystemTest : MonoBehaviour
 {
-	public float interval = 2.5f;
 	public GameObject body;
 	public GameObject wireframe;
 //	public GameObject iwantMaterial;
-	float cd;
+	float interval = 1.5f;
+	float cd = 5.0f;
 //	bool setted = false;
+
+	OTContainer container1;
+	OTContainer container2;
+	string frameName1 = "[Celestial]_Army_med2_normal0001";
+	string frameName2 = "[Celestial]_Army_med2_normal0001";
+
+	List<GameObject> spritesPoolForContainer1;
+	List<GameObject> spritesPoolForContainer2;
+	int currentIndexOfSpritesPool1 = 0;
+	int currentIndexOfSpritesPool2 = 0;
+	int depth1 = -20;
+	int depth2 = -30;
 
 	void Start()
 	{
+		container1 = (OTContainer)GameObject.Find( "[test]enemies_atlas" ).GetComponent<OTSpriteAtlasCocos2D>();  //MZOTFramesManager.GetInstance().GetFrameContainter( frameName1 );
+		container2 = (OTContainer)GameObject.Find( "[test]atlas2" ).GetComponent<OTSpriteAtlasCocos2D>(); //MZOTFramesManager.GetInstance().GetFrameContainter( frameName2 );
+
+		spritesPoolForContainer1 = new List<GameObject>();
+		spritesPoolForContainer2 = new List<GameObject>();
+
+		for( int i = 0; i < 1000; i++ )
+		{
+			GameObject s1 = MZResources.InstantiateOrthelloSprite( "Sprite" );
+			GameObject s2 = MZResources.InstantiateOrthelloSprite( "Sprite" );
+
+			s1.active = false;
+			s2.active = false;
+
+			s1.GetComponent<OTSprite>().spriteContainer = container1;
+			s2.GetComponent<OTSprite>().spriteContainer = container2;
+
+			s1.GetComponent<OTSprite>().depth = depth1;
+			s2.GetComponent<OTSprite>().depth = depth2;
+
+			Vector2 invaildPos = new Vector2( 0, 0 );
+			s1.GetComponent<OTSprite>().position = invaildPos;
+			s2.GetComponent<OTSprite>().position = invaildPos;
+
+			spritesPoolForContainer1.Add( s1 );
+			spritesPoolForContainer2.Add( s2 );
+		}
+
 //		GameObject setting = (GameObject)System.Activator.CreateInstance( Type.GetType( "UnityEngine.GameObject" ) );
 //		setting.name = "aaaaa";
 //		MZDebug.Log( setting.name );
@@ -35,8 +75,6 @@ public class SystemTest : MonoBehaviour
 //			iwantMaterial.AddComponent<MeshRenderer>().renderer.material = new Material( Shader.Find( "Particles/AlphaBlended" ) );
 //		}
 
-		cd = 0;
-
 //		body.GetComponent<OTSprite>().image = (Texture)Resources.Load( "Textures/test_body", typeof( Texture ) );
 //		wireframe.GetComponent<OTSprite>().image = (Texture)Resources.Load( "Textures/test_wireframe", typeof( Texture ) );
 
@@ -50,12 +88,14 @@ public class SystemTest : MonoBehaviour
 
 	void Update()
 	{
+		UpdateManySprites();
+
 		cd -= Time.deltaTime;
 
 		if( cd <= 0 )
 		{
 //			CreateEnemy();
-//			CreateManySprites();
+			CreateManySprites();
 			cd += interval;
 		}
 
@@ -74,22 +114,64 @@ public class SystemTest : MonoBehaviour
 		enemy.GetComponent<MZCharacter>().position = Vector2.zero;
 	}
 
+	List<OTSprite> manySpritesList;
+
 	void CreateManySprites()
 	{
-		for( int i = 0; i < 15; i++ )
-		{
-			GameObject s = (GameObject)MZResources.InstantiateOrthelloSprite( "Sprite" );
-			s.GetComponent<OTSprite>().size = new Vector2( 30, 30 );
-			s.GetComponent<OTSprite>().depth = -30;
-			s.GetComponent<OTSprite>().position = new Vector2( UnityEngine.Random.Range( -300, 300 ), UnityEngine.Random.Range( -300, 300 ) );
+		float rangeValue = 400;
 
-			s.GetComponent<OTSprite>().spriteContainer = MZOTFramesManager.GetInstance().GetFrameContainter( "[Celestial]_Army_med2_normal0005" );
-			s.GetComponent<OTSprite>().frameName = "[Celestial]_Army_med2_normal0005";
-			s.GetComponent<OTSprite>().size = new Vector2( 10, 10 );
+		if( manySpritesList == null )
+			manySpritesList = new List<OTSprite>();
+
+		for( int i = 0; i < 30; i++ )
+		{
+			int currentIndex = -1;
+			List<GameObject> pool = null;
+			string frameName = null;
+			int depth;
+
+			if( UnityEngine.Random.Range( 0, 2 ) == 0 )
+			{
+				pool = spritesPoolForContainer1;
+				frameName = frameName1;
+				currentIndex = currentIndexOfSpritesPool1;
+				currentIndexOfSpritesPool1++;
+				depth = depth1;
+			}
+			else
+			{
+				pool = spritesPoolForContainer2;
+				frameName = frameName2;
+				currentIndex = currentIndexOfSpritesPool2;
+				currentIndexOfSpritesPool2++;
+				depth = depth2;
+			}
+
+			GameObject s = pool[ currentIndex ];  //(GameObject)MZResources.InstantiateOrthelloSprite( "Sprite" );
+			s.active = true;
+			s.GetComponent<OTSprite>().position = new Vector2( UnityEngine.Random.Range( -rangeValue, rangeValue ), UnityEngine.Random.Range( -rangeValue, rangeValue ) );
+
+			s.GetComponent<OTSprite>().frameName = frameName;
 			s.GetComponent<OTSprite>().rotation = UnityEngine.Random.Range( 0, 360 );
 
 			s.transform.parent = GameObject.Find( "MZEnemyBullets" ).transform;
+
+
+			s.AddComponent<MZCharacterPart>();
+
+			manySpritesList.Add( s.GetComponent<OTSprite>() );
 		}
+	}
+
+	void UpdateManySprites()
+	{
+		if( manySpritesList == null )
+			return;
+
+//		foreach( OTSprite s in manySpritesList )
+//		{
+//			s.position += new Vector2( 0, -50*Time.deltaTime );
+//		}
 	}
 
 

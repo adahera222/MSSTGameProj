@@ -4,6 +4,31 @@ using System.Collections.Generic;
 
 public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 {
+	static int currentPartPoolIndex = 0;
+	static List<GameObject> partPool;
+
+	static public void InitPartPool()
+	{
+		currentPartPoolIndex = 0;
+		if( partPool == null )
+		{
+			partPool = new List<GameObject>();
+
+			for( int i = 0; i < 1000; i++ )
+				partPool.Add( new GameObject() );
+		}
+	}
+
+	static public GameObject GetNewPart()
+	{
+		if( partPool == null )
+			InitPartPool();
+
+		return partPool[ currentPartPoolIndex++ ];
+	}
+
+/// **** /// /// ///
+
 	public bool isActive
 	{ get { return _isActive; } }
 
@@ -56,11 +81,15 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 	{
 		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );
 
-		GameObject partObject = new GameObject();
-		partObject.transform.parent = gameObject.transform;
-		partObject.AddComponent<MZCharacterPart>();
+//		GameObject partObject = new GameObject(); // replace new GameObject() to
+//		GameObject partObject = MZResources.InstantiateMZGamePrefab( "MZCharacterPart" );
+//		GameObject partObject = GetNewPart();
 
-		MZCharacterPart characterPart = partObject.GetComponent<MZCharacterPart>();
+		GameObject partObject = MZResources.InstantiateOrthelloSprite( "Sprite" );
+
+//		partObject.transform.parent = gameObject.transform;
+
+		MZCharacterPart characterPart = partObject.AddComponent<MZCharacterPart>();
 		characterPart.name = name;
 		characterPart.parentGameObject = gameObject;
 

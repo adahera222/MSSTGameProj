@@ -5,8 +5,6 @@ using System.Collections.Generic;
 public class MZCharacterFactory
 {
 	static MZCharacterFactory _instance = null;
-//	int currentIndex = 0;
-//	List<GameObject> gameObjectsPool = new List<GameObject>();
 
 	static public MZCharacterFactory GetInstance()
 	{
@@ -55,12 +53,7 @@ public class MZCharacterFactory
 
 	GameObject CreateMZCharacterGameObject(string characterName, string gameContainerName, MZCharacterType type)
 	{
-		if( type == MZCharacterType.EnemyBullet )
-		{
-			return test_sepcial_for_EB(characterName, gameContainerName);
-		}
-
-		GameObject characterObject = new GameObject();
+		GameObject characterObject = new GameObject(); // for character ... not now
 		GameObject gameContainer = GameObject.Find( gameContainerName );
 
 		MZDebug.Assert( gameContainer != null, "gameContainer not found (" + gameContainerName + ")" );
@@ -78,33 +71,9 @@ public class MZCharacterFactory
 
 	void SetCharacterToSetting(GameObject characterObject, string settingName, MZCharacterType characterType)
 	{
-		CharacterSettingBase setting = (CharacterSettingBase)MZObjectHelp.CreateClass( settingName );
+		CharacterSettingBase setting = (CharacterSettingBase)MZObjectHelp.CreateClass( settingName ); // maybe issue ...
 		MZDebug.Assert( setting != null, "setting is null, name=" + settingName );
 
 		setting.SetToCharacter( characterObject, characterType );
-	}
-
-	GameObject test_sepcial_for_EB(string characterName, string gameContainerName)
-	{
-		MZDebug.Log( "sp for eb" );
-
-		GameObject characterObject = MZResources.InstantiateMZGameCoreObject( "EnemyBullet" );
-		if( characterObject == null )
-			MZDebug.Log( "NULL???" );
-
-		GameObject gameContainer = GameObject.Find( gameContainerName );
-
-		characterObject.transform.parent = gameContainer.transform;
-		characterObject.transform.position = new Vector3( 9999, 9999, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyBullet ) );
-
-		characterObject.AddComponent<MZCharacter>();
-		characterObject.GetComponent<MZCharacter>().characterType = MZCharacterType.EnemyBullet;
-
-		GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().Add( MZCharacterType.EnemyBullet, characterObject );
-
-		SetCharacterToSetting( characterObject, "EnemyBullet001Setting", MZCharacterType.EnemyBullet );
-
-		return characterObject;
-
 	}
 }

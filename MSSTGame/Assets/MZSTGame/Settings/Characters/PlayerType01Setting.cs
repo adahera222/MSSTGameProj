@@ -11,7 +11,7 @@ public class PlayerType01Setting : CharacterSettingBase
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );
 //		mainBody.PlayAnimation( "Ika_normal" );
-		mainBody.SetFrame( "Ika_normal0001" );
+		mainBody.SetFrame( "Donut_normal0001" );
 		mainBody.position = Vector2.zero;
 		mainBody.rotation = 90;
 		mainBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 50 ) );
