@@ -42,7 +42,7 @@ public class MZEnemy : MonoBehaviour, IMZMode
 
 	void Start()
 	{
-		
+		gameObject.GetComponent<MZCharacter>().enableRemoveTime = 10.0f;
 	}
 
 	void Update()

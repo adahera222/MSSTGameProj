@@ -24,6 +24,7 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 
 	bool _isActive;
 	float _lifeTimeCount = 0;
+	float _enableRemoveTime = 9999.99f;
 	Dictionary<string, MZCharacterPart> _partsByNameDictionary;
 	MZCharacterType _characterType = MZCharacterType.Unknow;
 	MZRemove_OutOfBound removeOutOfBound = null;
@@ -34,7 +35,11 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 		Disable();
 	}
 
-	public float enableRemoveTime { get { return 10.0f; } }
+	public float enableRemoveTime
+	{
+		set{ _enableRemoveTime = value; }
+		get { return _enableRemoveTime; }
+	}
 
 	public float lifeTimeCount
 	{
@@ -44,6 +49,7 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 		}
 	}
 
+	// framesize for remove, not good now ... maybe need all part to his remove rect ... and remove test class ...
 	public Vector2 frameSize { get { return new Vector2( 10, 10 ); } }
 	#endregion
 

@@ -6,7 +6,7 @@ using System.Reflection;
 
 public class SystemTest : MonoBehaviour
 {
-	float interval = 3.0f;
+	float interval = 10.0f;
 	float cd = 1.0f;
 
 	void Start()

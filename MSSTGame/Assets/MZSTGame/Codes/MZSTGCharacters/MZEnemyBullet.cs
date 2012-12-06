@@ -38,7 +38,7 @@ public class MZEnemyBullet : MonoBehaviour, IMZMove
 
 	void Start()
 	{
-
+		gameObject.GetComponent<MZCharacter>().enableRemoveTime = 0.5f;
 	}
 
 	void Update()
