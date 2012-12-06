@@ -5,9 +5,11 @@ public class MZAttack_OddWay : MZAttack_Base
 {
 	protected override void LaunchBullet()
 	{
+		base.LaunchBullet();
+
 		Vector2 centerMovingVector = GetCenterMovingVector();
 
-		for( int i = 0; i < numberOfWatys; i++ )
+		for( int i = 0; i < currentWays; i++ )
 		{
 			GameObject bullet = GetNewBulletObject();
 			AddLinearMoveToBullet( bullet );
@@ -59,6 +61,6 @@ public class MZAttack_OddWay : MZAttack_Base
 	{
 		MZEnemyBullet bullet = bulletObject.GetComponent<MZEnemyBullet>();
 		MZMove_Base bulletMove = bullet.AddMove( "Linear", "Linear" );
-		bulletMove.initVelocity = initVelocity;
+		bulletMove.initVelocity = currentVelocity;
 	}
 }

@@ -17,10 +17,13 @@ public interface IMZAttack : IMZControl
 public abstract class MZAttack_Base : MZControlBase
 {
 	public new IMZAttack controlTarget = null;
-	public int numberOfWatys = 0;
+	public int numberOfWays = 0;
+	public int additionalWaysPerLaunch = 0;
 	public float colddown = 99;
 	public float intervalDegrees = 0;
 	public float initVelocity = 0;
+	public float additionalVelocityPerLaunch = 0;
+	public float maxVelocity = float.NaN;
 	int _launchCount = 0;
 	float _colddownCount = 0;
 
@@ -44,8 +47,34 @@ public abstract class MZAttack_Base : MZControlBase
 	}
 
 	protected int launchCount
+	{ get { return _launchCount; } }
+
+	protected int currentWays
 	{
-		get{ return _launchCount; }
+		get
+		{
+			int _currentWay = numberOfWays + ( ( launchCount - 1 )*additionalWaysPerLaunch );
+			return ( _currentWay < 0 )? 0 : _currentWay;
+		}
+	}
+
+	protected float currentVelocity
+	{
+		get
+		{
+			float _currentVelocity = initVelocity + ( ( launchCount - 1 )*additionalVelocityPerLaunch );
+
+			if( float.IsNaN( maxVelocity ) )
+				return _currentVelocity;
+
+			if( additionalVelocityPerLaunch < 0 )
+				return ( _currentVelocity < maxVelocity )? maxVelocity : _currentVelocity;
+
+			if( additionalVelocityPerLaunch > 0 )
+				return ( _currentVelocity > maxVelocity )? maxVelocity : _currentVelocity;
+
+			return _currentVelocity;
+		}
 	}
 
 	protected GameObject GetNewBulletObject()

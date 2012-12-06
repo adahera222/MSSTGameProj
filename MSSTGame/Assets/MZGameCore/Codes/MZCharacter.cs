@@ -34,7 +34,7 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 		Disable();
 	}
 
-	public float enableRemoveTime { get { return 1.0f; } }
+	public float enableRemoveTime { get { return 10.0f; } }
 
 	public float lifeTimeCount
 	{
