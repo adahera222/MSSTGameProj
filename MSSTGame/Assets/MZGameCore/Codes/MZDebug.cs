@@ -42,6 +42,7 @@ public class MZDebug
 			string fullMsg = stackFrame.GetMethod().DeclaringType.FullName + "." + stackFrame.GetMethod().Name + "(): " + message;
 
 			UnityEngine.Debug.LogError( fullMsg );
+			UnityEngine.Debug.DebugBreak();
 		}
 	}
 }

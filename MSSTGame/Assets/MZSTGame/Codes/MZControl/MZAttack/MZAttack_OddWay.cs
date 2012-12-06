@@ -26,7 +26,7 @@ public class MZAttack_OddWay : MZAttack_Base
 	Vector2 GetCenterMovingVector()
 	{
 		Vector2 playerPosition = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().GetPlayer().GetComponent<MZCharacter>().position;
-		Vector2 selfPosition = controlTarget.position;
+		Vector2 selfPosition = controlTarget.realPosition;
 
 		return 	MZMath.unitVectorFromP1ToP2( selfPosition, playerPosition );
 	}
@@ -59,6 +59,6 @@ public class MZAttack_OddWay : MZAttack_Base
 	{
 		MZEnemyBullet bullet = bulletObject.GetComponent<MZEnemyBullet>();
 		MZMove_Base bulletMove = bullet.AddMove( "Linear", "Linear" );
-		bulletMove.initVelocity = 100;
+		bulletMove.initVelocity = initVelocity;
 	}
 }

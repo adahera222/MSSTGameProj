@@ -23,6 +23,12 @@ public class MZOTFramesManager
 
 		foreach( OTSpriteAtlasCocos2D container in (OTSpriteAtlasCocos2D[])GameObject.FindObjectsOfType( typeof( OTSpriteAtlasCocos2D ) ) )
 		{
+			if( container.texture == null )
+			{
+				MZDebug.Log( "container(" + container.name + ").texture is null, continue to next" );
+				continue;
+			}
+
 			_spritesheetsContainerByName.Add( container.name, container );
 
 			OTAtlasData[] datas = container.GetComponent<OTSpriteAtlasCocos2D>().atlasData;

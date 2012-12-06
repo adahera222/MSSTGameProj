@@ -34,6 +34,8 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 		Disable();
 	}
 
+	public float enableRemoveTime { get { return 1.0f; } }
+
 	public float lifeTimeCount
 	{
 		get
@@ -42,13 +44,7 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 		}
 	}
 
-	public Vector2 frameSize
-	{
-		get
-		{
-			return new Vector2( 10, 10 );
-		}
-	}
+	public Vector2 frameSize { get { return new Vector2( 10, 10 ); } }
 	#endregion
 
 
@@ -57,7 +53,6 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );
 
 		GameObject partObject = MZOTSpritesPoolManager.GetInstance().GetSpriteObject( characterType );
-
 
 		MZCharacterPart characterPart = null;
 		if( partObject.GetComponent<MZCharacterPart>() == null )

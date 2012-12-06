@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZEnemy : MonoBehaviour, IMZMode, IMZAttack // test
+public class MZEnemy : MonoBehaviour, IMZMode
 {
 	public int healthPoint = 1;
 
@@ -11,20 +11,10 @@ public class MZEnemy : MonoBehaviour, IMZMode, IMZAttack // test
 	public IMZMove moveControlTarget
 	{ get { return gameObject.GetComponentInChildren<MZCharacter>(); } }
 
+	public Dictionary<string, MZCharacterPart> partsByNameDictionary
+	{ get { return gameObject.GetComponent<MZCharacter>().partsByNameDictionary; } }
+
 	#endregion
-
-	// test
-	#region IMZAttack implementation
-	public Vector2 position
-	{
-		get
-		{
-			return gameObject.GetComponent<MZCharacter>().position;
-		}
-	}
-	#endregion
-
-
 
 	public List<MZMode> modesList
 	{
@@ -49,21 +39,15 @@ public class MZEnemy : MonoBehaviour, IMZMode, IMZAttack // test
 	}
 
 	MZControlUpdate<MZMode> _modeControlUpdate = new MZControlUpdate<MZMode>();
-	MZAttack_Base attactTest;
 
 	void Start()
 	{
-		attactTest = new MZAttack_OddWay();
-		attactTest.controlTarget = this;
-		attactTest.numberOfWatys = 12;
-		attactTest.colddown = 5.0f;
-		attactTest.intervalDegrees = 30;
+		
 	}
 
 	void Update()
 	{
 		_modeControlUpdate.Update();
-		attactTest.Update();
 		UpdateCollision();
 	}
 
@@ -81,20 +65,4 @@ public class MZEnemy : MonoBehaviour, IMZMode, IMZAttack // test
 		if( healthPoint <= 0 )
 			gameObject.GetComponent<MZCharacter>().Disable();
 	}
-
-//	float cd = 0;
-//	float interval = 3.0f;
-//
-//	void UpdateAttack()
-//	{
-//		cd -= Time.deltaTime;
-//		if( cd <= 0 )
-//		{
-//			GameObject eb = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyBullet, "EnemyBullet" );
-//			eb.GetComponent<MZCharacter>().position = gameObject.GetComponent<MZCharacter>().position;
-//			eb.GetComponent<MZEnemyBullet>().movingVector = new Vector2( 0, -1 );
-//
-//			cd += interval;
-//		}
-//	}
 }

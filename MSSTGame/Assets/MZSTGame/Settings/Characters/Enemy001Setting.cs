@@ -9,25 +9,20 @@ public class Enemy001Setting : CharacterSettingBase
 		MZCharacter character = characterObject.GetComponent<MZCharacter>();
 
 		MZCharacterPart leftBody = character.AddPart( "LeftBody" );
-//		leftBody.PlayAnimation( "Goblet_normal" );
 		leftBody.SetFrame( "[Celestial]_Army_med2_normal0001" );
 		leftBody.scale = 0.25f;
 		leftBody.rotation = 270;
 		leftBody.position = new Vector2( 100, -90 );
 		leftBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
-//		leftBody.animationSpeed = 0.5f;
 
 		MZCharacterPart rightBody = character.AddPart( "RightBody" );
-//		rightBody.PlayAnimation( "Goblet_normal" );
 		rightBody.SetFrame( "[Celestial]_Army_med2_normal0001" );
 		rightBody.scale = 0.25f;
 		rightBody.rotation = 270;
 		rightBody.position = new Vector2( -100, -90 );
 		rightBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
-//		rightBody.animationSpeed = 0.5f;
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );
-//		mainBody.PlayAnimation( "[Celestial]_Army_med3_normal" );
 		mainBody.SetFrame( "[Celestial]_Army_med3_normal0001" );
 		mainBody.scale = 1.0f;
 		mainBody.rotation = 270;
@@ -42,10 +37,13 @@ public class Enemy001Setting : CharacterSettingBase
 		mode1.duration = -1;
 
 		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
-		move1.initVelocity = 100;
+		move1.initVelocity = 50;
 		move1.initMovingVector = new Vector2( 0, -1 );
 		move1.duration = -1;
-//
+
+		AddOddWay( mode1, leftBody );
+		AddOddWay( mode1, rightBody );
+
 //		MZMove_Base move2 = mode1.AddMove( "m1m2", "Linear" );
 //		move2.initVelocity = 100;
 //		move2.initMovingVector = new Vector2( -1, -1 );
@@ -64,5 +62,31 @@ public class Enemy001Setting : CharacterSettingBase
 //		move4.initVelocity = 250;
 //		move4.initMovingVector = new Vector2( 1, 1 );
 //		move4.duration = 1.5f;
+	}
+
+	void AddOddWay(MZMode mode, MZCharacterPart characterPart)
+	{
+		MZPartControl partControl = new MZPartControl();
+		partControl.controlTarget = characterPart;
+
+		MZAttack_Base attack = partControl.AddAttack( "OddWay" );
+		attack.numberOfWatys = 3;
+		attack.colddown = 0.2f;
+		attack.intervalDegrees = 15;
+		attack.initVelocity = 300;
+		attack.duration = 0.5f;
+
+		MZAttack_Base attack2 = partControl.AddAttack( "OddWay" );
+		attack2.numberOfWatys = 7;
+		attack2.colddown = 0.2f;
+		attack2.intervalDegrees = 45;
+		attack2.initVelocity = 800;
+		attack2.duration = 0.5f;
+
+		MZAttack_Base attack3 = partControl.AddAttack( "Idle" );
+		attack3.duration = 1;
+
+		MZControlUpdate<MZPartControl> partControlTerm = mode.AddPartControlUpdater();
+		partControlTerm.Add( partControl );
 	}
 }

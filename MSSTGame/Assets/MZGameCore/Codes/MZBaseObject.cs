@@ -5,14 +5,10 @@ public class MZBaseObject : MonoBehaviour
 {
 	public enum MZShaderType
 	{
+		OTDefault,
 		Additive,
 		AlphaBlended,
 	}
-
-//	public bool isAnimatingObject
-//	{
-//		get{ return ( _spriteCache.GetType() == typeof( OTAnimatingSprite ) ); }
-//	}
 
 	public Vector2 position
 	{
@@ -20,19 +16,12 @@ public class MZBaseObject : MonoBehaviour
 		get{ return GetSprite().position; }
 	}
 
-//	public int depth
-//	{
-//		set{ GetSprite().depth = value; }
-//		get{ return GetSprite().depth; }
-//	}
-
 	public float scale
 	{
 		set
 		{
 			_scale = value;
 			GetSprite().size = _originSize*_scale;
-//			anyPropertiesChanged = true;
 		}
 		get
 		{
@@ -47,7 +36,6 @@ public class MZBaseObject : MonoBehaviour
 		{
 			_scaleX = value;
 			GetSprite().size = new Vector2( _originSize.x*_scaleX, GetSprite().size.y );
-//			anyPropertiesChanged = true;
 		}
 		get
 		{
@@ -81,24 +69,12 @@ public class MZBaseObject : MonoBehaviour
 		}
 	}
 
-//	public float animationSpeed
-//	{
-//		set
-//		{
-//			if( this.isAnimatingObject )
-//			{
-//				GetAnimatingSprite().speed = value;
-//				anyPropertiesChanged = true;
-//			}
-//		}
-//	}
-
 	public Color color
 	{
 		set
 		{
 			_color = value;
-//			anyPropertiesChanged = true;
+			GetSprite().tintColor = _color;
 		}
 		get{ return _color; }
 	}
@@ -113,8 +89,8 @@ public class MZBaseObject : MonoBehaviour
 	{
 		set
 		{
+			MZDebug.Assert( false, "Not support now" );
 			_shaderType = value;
-//			anyPropertiesChanged = true;
 		}
 		get{ return _shaderType; }
 	}
@@ -126,79 +102,37 @@ public class MZBaseObject : MonoBehaviour
 		_originSize = GetSprite().size;
 	}
 
-//	public void PlayAnimation(string animationName)
-//	{
-//		InitAnimatingSpriteCache();
-//		GetAnimatingSprite().Play( animationName );
-//		_originSize = new Vector2( 316, 240 );
-//	}
+	void Start()
+	{
+		GetSprite().name = name;
+	}
 
 	protected virtual void Update()
 	{
-//		if( anyPropertiesChanged == true )
-//		{
-//			GetSprite().GetComponent<MeshRenderer>().material.SetColor( "_TintColor", _color );
-//			GetSprite().GetComponent<MeshRenderer>().material.shader = Shader.Find( GetShaderPath( _shaderType ) );
-//
-//			if( isAnimatingObject )
-//			{
-//				GetSprite().size = _scale*GetSprite().oSize;
-//			}
-//
-//			anyPropertiesChanged = false;
-//		}
 
-//		if( GetSprite().GetComponent<MeshRenderer>().material.shader.name != GetShaderPath( _shaderType ) )
-//			GetSprite().GetComponent<MeshRenderer>().material.shader = Shader.Find( GetShaderPath( _shaderType ) );
 	}
 
-//	bool anyPropertiesChanged = false;
-//	OTSprite _spriteCache = null;
 	Vector2 _originSize = Vector2.zero;
 	float _scale = 1;
 	float _scaleX = 1;
 	float _scaleY = 1;
 	float _rotation = 1;
 	Color _color = new Color( 0.5f, 0.5f, 0.5f );
-	MZShaderType _shaderType = MZShaderType.AlphaBlended;
+	MZShaderType _shaderType = MZShaderType.OTDefault;
 	string _name = "";
-
-	void Start()
-	{
-		GetSprite().name = name;
-	}
-
-//	void InitNormalSpriteCache()
-//	{
-//		_spriteCache = gameObject.AddComponent<OTSprite>();
-//		_spriteCache.name = "Sprite";
-//	}
-//
-//	void InitAnimatingSpriteCache()
-//	{
-//		_spriteCache = gameObject.AddComponent<OTAnimatingSprite>();
-//		_spriteCache.name = "AnimatingSprite";
-//		( (OTAnimatingSprite)_spriteCache ).animation = MZOTAnimationsManager.GetInstance().otAnimation;
-//	}
 
 	OTSprite GetSprite()
 	{
-//		MZDebug.Assert( _spriteCache != null, "must set frame or aniamtion first" );
-//		return _spriteCache;
-
 		return gameObject.GetComponent<OTSprite>();
 	}
-
-//	OTAnimatingSprite GetAnimatingSprite()
-//	{
-//		MZDebug.Assert( _spriteCache != null, "must set frame or aniamtion first" );
-//		return ( this.isAnimatingObject )? (OTAnimatingSprite)_spriteCache : null;
-//	}
 
 	string GetShaderPath(MZShaderType shaderType)
 	{
 		switch( shaderType )
 		{
+			case MZShaderType.OTDefault:
+				return "Mobile/Particles/Alpha Blended";
+
 			case MZShaderType.AlphaBlended:
 				return "Particles/Alpha Blended";
 

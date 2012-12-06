@@ -3,6 +3,9 @@ using System.Collections;
 
 public interface IMZRemove: IMZControl
 {
+	float enableRemoveTime
+	{ get; }
+
 	float lifeTimeCount
 	{ get; }
 
@@ -21,7 +24,7 @@ public class MZRemove_OutOfBound : MZControlBase
 
 	protected override void UpdateWhenActive()
 	{
-		if( lifeTimeCount <= 5.0f )
+		if( controlTarget.lifeTimeCount <= controlTarget.enableRemoveTime )
 			return;
 
 		Vector2 pos = controlTarget.position;

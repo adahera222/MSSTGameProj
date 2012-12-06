@@ -3,9 +3,13 @@ using System.Collections;
 
 public interface IMZAttack : IMZControl
 {
-	Vector2 position
+	MZCharacterType characterType
 	{
-//		set;
+		get;
+	}
+
+	Vector2 realPosition
+	{
 		get;
 	}
 }
@@ -16,11 +20,14 @@ public abstract class MZAttack_Base : MZControlBase
 	public int numberOfWatys = 0;
 	public float colddown = 99;
 	public float intervalDegrees = 0;
+	public float initVelocity = 0;
 	int _launchCount = 0;
 	float _colddownCount = 0;
 
 	public override void Reset()
 	{
+		base.Reset();
+
 		_launchCount = 0;
 		_colddownCount = 0;
 	}
@@ -43,8 +50,8 @@ public abstract class MZAttack_Base : MZControlBase
 
 	protected GameObject GetNewBulletObject()
 	{
-		GameObject bullet = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyBullet, "Bullet", "EnemyBullet001Setting" );
-		bullet.GetComponent<MZCharacter>().position = controlTarget.position;
+		GameObject bullet = MZCharacterFactory.GetInstance().CreateCharacter( GetBulletTypeByControlTargetType(), "Bullet", "EnemyBullet001Setting" );
+		bullet.GetComponent<MZCharacter>().position = controlTarget.realPosition;
 
 		return bullet;
 	}
@@ -52,5 +59,21 @@ public abstract class MZAttack_Base : MZControlBase
 	protected virtual void LaunchBullet()
 	{
 		_launchCount++;
+	}
+
+	MZCharacterType GetBulletTypeByControlTargetType()
+	{
+		switch( controlTarget.characterType )
+		{
+			case MZCharacterType.EnemyAir:
+			case MZCharacterType.EnemyGround:
+				return MZCharacterType.EnemyBullet;
+
+			case MZCharacterType.Player:
+				return MZCharacterType.PlayerBullet;
+		}
+
+		MZDebug.Assert( false, "Bullet not support this type: " + controlTarget.characterType.ToString() );
+		return MZCharacterType.Unknow;
 	}
 }

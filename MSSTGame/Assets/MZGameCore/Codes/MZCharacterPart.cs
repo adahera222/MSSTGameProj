@@ -2,8 +2,17 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZCharacterPart : MZBaseObject
+public class MZCharacterPart : MZBaseObject, IMZPart
 {
+	#region IMZAttack implementation
+	public MZCharacterType characterType
+	{
+		get{ return _parentGameObject.GetComponent<MZCharacter>().characterType; } }
+
+	public Vector2 realPosition
+	{ get { return _parentGameObject.GetComponent<MZCharacter>().position + this.position; } }
+	#endregion
+
 	public GameObject parentGameObject
 	{
 		set
