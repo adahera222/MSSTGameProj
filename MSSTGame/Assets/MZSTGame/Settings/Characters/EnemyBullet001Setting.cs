@@ -16,5 +16,6 @@ public class EnemyBullet001Setting : CharacterSettingBase
 //		mainBody.color = Color.green/2;
 		mainBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 10 ) );
 		mainBody.position = Vector2.zero;
+		mainBody.faceTo = new MZFaceTo_MovingVector();
 	}
 }

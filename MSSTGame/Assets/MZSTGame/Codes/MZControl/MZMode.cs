@@ -19,9 +19,7 @@ public class MZMode : MZControlBase
 {
 	public new IMZMode controlTarget = null;
 	MZControlUpdate<MZMove_Base> _moveControlUpdate = new MZControlUpdate<MZMove_Base>();
-
 	List<MZControlUpdate<MZPartControl>> _multiPartControlUpdate = new List<MZControlUpdate<MZPartControl>>();
-//	MZControlUpdate<MZPartControl> _partControlUpdate = new MZControlUpdate<MZPartControl>();
 
 	public override void Reset()
 	{
@@ -29,6 +27,11 @@ public class MZMode : MZControlBase
 
 		if( _moveControlUpdate != null )
 			_moveControlUpdate.ResetAll();
+	}
+
+	public Vector2 currentMovingVector
+	{
+		get{ return _moveControlUpdate.currentControl.currentMovingVector; }
 	}
 
 	public List<MZMove_Base> movesList

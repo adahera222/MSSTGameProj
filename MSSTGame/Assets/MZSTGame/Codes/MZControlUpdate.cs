@@ -14,6 +14,11 @@ public class MZControlUpdate<T> where T : MZControlBase
 		}
 	}
 
+	public T currentControl
+	{
+		get{ return controlsList[ _currentIndex ]; }
+	}
+
 	int _currentIndex = -1;
 	List<T> _controlsList = null;
 

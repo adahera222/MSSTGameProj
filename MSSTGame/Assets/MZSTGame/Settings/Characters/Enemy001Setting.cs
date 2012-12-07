@@ -10,17 +10,19 @@ public class Enemy001Setting : CharacterSettingBase
 
 		MZCharacterPart leftBody = character.AddPart( "LeftBody" );
 		leftBody.SetFrame( "[Celestial]_Army_med2_normal0001" );
-		leftBody.scale = 0.25f;
+		leftBody.scale = 0.4f;
 		leftBody.rotation = 270;
 		leftBody.position = new Vector2( 100, -90 );
-		leftBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
+		leftBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 40 ) );
+		leftBody.faceTo = new MZFaceTo_Target();
 
 		MZCharacterPart rightBody = character.AddPart( "RightBody" );
 		rightBody.SetFrame( "[Celestial]_Army_med2_normal0001" );
-		rightBody.scale = 0.25f;
+		rightBody.scale = 0.4f;
 		rightBody.rotation = 270;
 		rightBody.position = new Vector2( -100, -90 );
-		rightBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
+		rightBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 40 ) );
+		rightBody.faceTo = new MZFaceTo_Target();
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );
 		mainBody.SetFrame( "[Celestial]_Army_med3_normal0001" );
@@ -43,6 +45,7 @@ public class Enemy001Setting : CharacterSettingBase
 
 		AddOddWay( mode1, leftBody );
 		AddOddWay( mode1, rightBody );
+		AddOddWay2( mode1, leftBody );
 
 //		MZMove_Base move2 = mode1.AddMove( "m1m2", "Linear" );
 //		move2.initVelocity = 100;
@@ -83,6 +86,7 @@ public class Enemy001Setting : CharacterSettingBase
 
 		MZAttack_Base attack2 = partControl.AddAttack( "OddWay" );
 		attack2.numberOfWays = 9;
+		attack2.additionalVelocityPerLaunch = 100;
 		attack2.additionalWaysPerLaunch = -2;
 		attack2.colddown = 0.2f;
 		attack2.intervalDegrees = 15;
@@ -91,6 +95,26 @@ public class Enemy001Setting : CharacterSettingBase
 
 		MZAttack_Base attack3 = partControl.AddAttack( "Idle" );
 		attack3.duration = 2;
+
+		MZControlUpdate<MZPartControl> partControlTerm = mode.AddPartControlUpdater();
+		partControlTerm.Add( partControl );
+	}
+
+	void AddOddWay2(MZMode mode, MZCharacterPart characterPart)
+	{
+		MZPartControl partControl = new MZPartControl();
+		partControl.controlTarget = characterPart;
+
+		MZAttack_Base attack1 = partControl.AddAttack( "OddWay" );
+		attack1.numberOfWays = 12;
+		attack1.additionalVelocityPerLaunch = 50;
+		attack1.colddown = 0.5f;
+		attack1.intervalDegrees = 30;
+		attack1.initVelocity = 100;
+		attack1.duration = 2.5f;
+
+		MZAttack_Base attack3 = partControl.AddAttack( "Idle" );
+		attack3.duration = 5.0f;
 
 		MZControlUpdate<MZPartControl> partControlTerm = mode.AddPartControlUpdater();
 		partControlTerm.Add( partControl );

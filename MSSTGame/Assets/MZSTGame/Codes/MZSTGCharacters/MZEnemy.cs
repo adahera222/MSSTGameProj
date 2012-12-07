@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class MZEnemy : MonoBehaviour, IMZMode
 {
 	public int healthPoint = 1;
+	MZControlUpdate<MZMode> _modeControlUpdate = new MZControlUpdate<MZMode>();
 
 	#region IMZMode implementation
 
@@ -27,6 +28,11 @@ public class MZEnemy : MonoBehaviour, IMZMode
 		}
 	}
 
+	public Vector2 currentMovingVector
+	{
+		get{ return _modeControlUpdate.currentControl.currentMovingVector;}
+	}
+
 	public MZMode AddMode(string name)
 	{
 		MZMode mode = new MZMode();
@@ -37,8 +43,6 @@ public class MZEnemy : MonoBehaviour, IMZMode
 
 		return mode;
 	}
-
-	MZControlUpdate<MZMode> _modeControlUpdate = new MZControlUpdate<MZMode>();
 
 	void Start()
 	{

@@ -4,13 +4,19 @@ using System.Collections.Generic;
 
 public class MZEnemyBullet : MonoBehaviour, IMZMove
 {
+	public Vector2 movingVector;
+	MZControlUpdate<MZMove_Base> _moveControlUpdate = null;
+
 	public Vector2 position
 	{
 		set{ gameObject.GetComponent<MZCharacter>().position = value; }
 		get{ return gameObject.GetComponent<MZCharacter>().position; }
 	}
 
-	public Vector2 movingVector;
+	public Vector2 currentMovingVector
+	{
+		get{ return _moveControlUpdate.currentControl.currentMovingVector; }
+	}
 
 	public List<MZMove_Base> movesList
 	{
@@ -33,8 +39,6 @@ public class MZEnemyBullet : MonoBehaviour, IMZMove
 
 		return move;
 	}
-
-	MZControlUpdate<MZMove_Base> _moveControlUpdate = null;
 
 	void Start()
 	{

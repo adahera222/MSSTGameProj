@@ -30,7 +30,7 @@ public class MZAttack_OddWay : MZAttack_Base
 		Vector2 playerPosition = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().GetPlayer().GetComponent<MZCharacter>().position;
 		Vector2 selfPosition = controlTarget.realPosition;
 
-		return 	MZMath.unitVectorFromP1ToP2( selfPosition, playerPosition );
+		return 	MZMath.UnitVectorFromP1ToP2( selfPosition, playerPosition );
 	}
 
 	void SetCenterWayToBullet(GameObject bulletObject, Vector2 centerMovingVector)
@@ -48,12 +48,12 @@ public class MZAttack_OddWay : MZAttack_Base
 
 	void SetLeftSideWayToBullet(GameObject bulletObject, Vector2 centerMovingVector, int index)
 	{
-		bulletObject.GetComponent<MZEnemyBullet>().movesList[ 0 ].initMovingVector = MZMath.unitVectorFromVectorAddDegree( centerMovingVector, -( index/2 + 1 )*intervalDegrees );
+		bulletObject.GetComponent<MZEnemyBullet>().movesList[ 0 ].initMovingVector = MZMath.UnitVectorFromVectorAddDegree( centerMovingVector, -( index/2 + 1 )*intervalDegrees );
 	}
 
 	void SetRightSideWayToBullet(GameObject bulletObject, Vector2 centerMovingVector, int index)
 	{
-		bulletObject.GetComponent<MZEnemyBullet>().movesList[ 0 ].initMovingVector = MZMath.unitVectorFromVectorAddDegree( centerMovingVector, ( index/2 )*intervalDegrees );
+		bulletObject.GetComponent<MZEnemyBullet>().movesList[ 0 ].initMovingVector = MZMath.UnitVectorFromVectorAddDegree( centerMovingVector, ( index/2 )*intervalDegrees );
 	}
 
 	// temp

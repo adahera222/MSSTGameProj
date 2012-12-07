@@ -21,6 +21,8 @@ public class MZBaseObject : MonoBehaviour
 		set
 		{
 			_scale = value;
+			_scaleX = _scale;
+			_scaleY = _scale;
 			GetSprite().size = _originSize*_scale;
 		}
 		get
@@ -100,6 +102,14 @@ public class MZBaseObject : MonoBehaviour
 		GetSprite().frameName = frameName;
 		GetSprite().size = MZOTFramesManager.GetInstance().GetAtlasData( frameName ).size;
 		_originSize = GetSprite().size;
+	}
+
+	public float GetMaxEdge()
+	{
+		float w = _originSize.x*_scaleX;
+		float h = _originSize.y*_scaleY;
+
+		return ( w > h )? w : h;
 	}
 
 	void Start()

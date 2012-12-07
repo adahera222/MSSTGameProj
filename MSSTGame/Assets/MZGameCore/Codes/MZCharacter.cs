@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
+public class MZCharacter : MonoBehaviour, IMZMove
 {
 	public bool isActive
 	{ get { return _isActive; } }
@@ -22,37 +22,22 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 		get{ return new Vector2( gameObject.transform.position.x, gameObject.transform.position.y ); }
 	}
 
+	public float enableRemoveTime
+	{
+		set{ _enableRemoveTime = value; }
+		get{ return _enableRemoveTime; }
+	}
+
+	public float lifeTimeCount
+	{
+		get{ return _lifeTimeCount; }
+	}
+
 	bool _isActive;
 	float _lifeTimeCount = 0;
 	float _enableRemoveTime = 9999.99f;
 	Dictionary<string, MZCharacterPart> _partsByNameDictionary;
 	MZCharacterType _characterType = MZCharacterType.Unknow;
-	MZRemove_OutOfBound removeOutOfBound = null;
-
-	#region IMZRemove implementation
-	public void DoRemoveOutOfBound()
-	{
-		Disable();
-	}
-
-	public float enableRemoveTime
-	{
-		set{ _enableRemoveTime = value; }
-		get { return _enableRemoveTime; }
-	}
-
-	public float lifeTimeCount
-	{
-		get
-		{
-			return _lifeTimeCount;
-		}
-	}
-
-	// framesize for remove, not good now ... maybe need all part to his remove rect ... and remove test class ...
-	public Vector2 frameSize { get { return new Vector2( 10, 10 ); } }
-	#endregion
-
 
 	public MZCharacterPart AddPart(string name)
 	{
@@ -110,13 +95,25 @@ public class MZCharacter : MonoBehaviour, IMZMove, IMZRemove
 	{
 		_isActive = true;
 		_lifeTimeCount = 0;
-		removeOutOfBound = new MZRemove_OutOfBound();
-		removeOutOfBound.controlTarget = this;
 	}
 
 	void Update()
 	{
 		_lifeTimeCount += Time.deltaTime;
-		removeOutOfBound.Update();
+		RemoveWhenOutOfBound();
+	}
+
+	void RemoveWhenOutOfBound()
+	{
+		if( lifeTimeCount <= enableRemoveTime )
+			return;
+
+		foreach( MZCharacterPart part in _partsByNameDictionary.Values )
+		{
+			if( part.IsInScreen() == true )
+				return;
+		}
+
+		Disable();
 	}
 }
