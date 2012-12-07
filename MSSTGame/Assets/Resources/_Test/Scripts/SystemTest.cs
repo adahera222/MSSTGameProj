@@ -16,14 +16,11 @@ public class SystemTest : MonoBehaviour
 
 	void Update()
 	{
-		UpdateManySprites();
-
 		cd -= Time.deltaTime;
 
 		if( cd <= 0 )
 		{
 			CreateEnemy();
-//			CreateManySprites();
 			cd += interval;
 		}
 
@@ -39,39 +36,6 @@ public class SystemTest : MonoBehaviour
 		float x = UnityEngine.Random.Range( -100, 100 );
 		enemy.GetComponent<MZCharacter>().position = new Vector2( x*3, 550 );
 //		enemy.GetComponent<MZCharacter>().position = new Vector2( 0, 400 );
-	}
-
-	List<OTSprite> manySpritesList;
-
-	void CreateManySprites()
-	{
-		float rangeValue = 400;
-
-		for( int i = 0; i < 30; i++ )
-		{
-			GameObject s = MZOTSpritesPoolManager.GetInstance().GetSpriteObject( MZCharacterType.EnemyAir );
-//			s.active = true;
-			s.GetComponent<OTSprite>().position = new Vector2( UnityEngine.Random.Range( -rangeValue, rangeValue ), UnityEngine.Random.Range( -rangeValue, rangeValue ) );
-
-			s.GetComponent<OTSprite>().frameName = "[Celestial]_Army_med3_normal0001";
-			s.GetComponent<OTSprite>().rotation = UnityEngine.Random.Range( 0, 360 );
-
-			s.transform.parent = GameObject.Find( "MZEnemyBullets" ).transform;
-
-
-//			s.AddComponent<MZCharacterPart>();
-		}
-	}
-
-	void UpdateManySprites()
-	{
-//		if( manySpritesList == null )
-//			return;
-
-//		foreach( OTSprite s in manySpritesList )
-//		{
-//			s.position += new Vector2( 0, -50*Time.deltaTime );
-//		}
 	}
 
 

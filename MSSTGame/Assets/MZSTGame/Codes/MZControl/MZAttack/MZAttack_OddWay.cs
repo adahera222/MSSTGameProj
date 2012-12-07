@@ -27,7 +27,7 @@ public class MZAttack_OddWay : MZAttack_Base
 
 	Vector2 GetCenterMovingVector()
 	{
-		Vector2 playerPosition = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().GetPlayerPosition();
+		Vector2 playerPosition = MZGameComponents.GetInstance().charactersManager.GetPlayerPosition();
 		Vector2 selfPosition = controlTarget.realPosition;
 
 		return 	MZMath.UnitVectorFromP1ToP2( selfPosition, playerPosition );

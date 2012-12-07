@@ -33,7 +33,7 @@ public class MZCharacterFactory
 		MZCharacter character = (MZCharacter)characterObject.AddComponent( GetCharacterScriptNameByType( type ) );
 		character.characterType = type;
 
-		GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().Add( type, characterObject );
+		MZGameComponents.GetInstance().charactersManager.Add( type, characterObject );
 
 		return characterObject;
 	}

@@ -68,7 +68,7 @@ public class MZOTSpritesPoolManager
 				GameObject spriteObject = MZResources.InstantiateOrthelloSprite( "Sprite" );
 
 				spriteObject.active = false;
-				spriteObject.transform.parent = GameObject.Find( "MZSpritesPool" ).transform;
+				spriteObject.transform.parent = GetSpriteDisableTransform();
 
 				spriteObject.GetComponent<OTSprite>().depth = _depth;
 				spriteObject.GetComponent<OTSprite>().position = invalidPosition;
@@ -104,7 +104,12 @@ public class MZOTSpritesPoolManager
 		public void ReturnSpriteObject(GameObject spriteObject)
 		{
 			spriteObject.active = false;
-			spriteObject.transform.parent = GameObject.Find( "MZSpritesPool" ).transform;
+			spriteObject.transform.parent = GetSpriteDisableTransform();
+		}
+
+		Transform GetSpriteDisableTransform()
+		{
+			return MZGameComponents.GetInstance().spritesPool.transform;
 		}
 	}
 }
