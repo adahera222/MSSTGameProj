@@ -23,7 +23,9 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo
 	#region IMZFaceTo implementation
 
 	public Vector2 targetRealPosition
-	{ get { return GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().GetPlayer().GetComponent<MZCharacter>().position; } }
+	{
+		get{ return GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().GetPlayerPosition(); }
+	}
 
 	public Vector2 parentMovingVector
 	{

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZCharacter : MonoBehaviour, IMZMove
+public class MZCharacter : MonoBehaviour
 {
 	public bool isActive
 	{ get { return _isActive; } }
@@ -91,13 +91,13 @@ public class MZCharacter : MonoBehaviour, IMZMove
 		return false;
 	}
 
-	void Start()
+	protected virtual void Start()
 	{
 		_isActive = true;
 		_lifeTimeCount = 0;
 	}
 
-	void Update()
+	protected virtual void Update()
 	{
 		_lifeTimeCount += Time.deltaTime;
 		RemoveWhenOutOfBound();

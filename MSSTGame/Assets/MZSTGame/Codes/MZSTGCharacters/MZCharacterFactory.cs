@@ -15,35 +15,11 @@ public class MZCharacterFactory
 
 	public GameObject CreateCharacter(MZCharacterType type, string name, string settingName)
 	{
-		string containerName = GetContainerNameByType( type );
-
-		GameObject characterObject = CreateMZCharacterGameObject( "MZCharacter", containerName, type );
+		GameObject characterObject = CreateCharacterGameObject( "MZCharacter", type );
 		SetCharacterToSetting( characterObject, settingName, type );
 		characterObject.name = ( name != null )? name : "DefaultCharacter";
 
 		return characterObject;
-	}
-
-	public string GetContainerNameByType(MZCharacterType type)
-	{
-		switch( type )
-		{
-			case MZCharacterType.Player:
-				return "MZPlayers";
-
-			case MZCharacterType.PlayerBullet:
-				return "MZPlayerBullets";
-
-			case MZCharacterType.EnemyAir:
-				return "MZEnemiesAir";
-
-			case MZCharacterType.EnemyBullet:
-				return "MZEnemyBullets";
-
-			default:
-				MZDebug.Assert( false, "Undefine type: " + type.ToString() );
-				return "";
-		}
 	}
 
 	private MZCharacterFactory()
@@ -51,27 +27,44 @@ public class MZCharacterFactory
 
 	}
 
-	GameObject CreateMZCharacterGameObject(string characterName, string gameContainerName, MZCharacterType type)
+	GameObject CreateCharacterGameObject(string characterName, MZCharacterType type)
 	{
-		GameObject characterObject = new GameObject(); // for character ... not now
-		GameObject gameContainer = GameObject.Find( gameContainerName );
-
-		MZDebug.Assert( gameContainer != null, "gameContainer not found (" + gameContainerName + ")" );
-
-		characterObject.transform.parent = gameContainer.transform;
-		characterObject.transform.position = new Vector3( 9999, 9999, MZGameSetting.GetCharacterDepth( type ) );
-
-		characterObject.AddComponent<MZCharacter>();
-		characterObject.GetComponent<MZCharacter>().characterType = type;
+		GameObject characterObject = new GameObject();
+		MZCharacter character = (MZCharacter)characterObject.AddComponent( GetCharacterScriptNameByType( type ) );
+		character.characterType = type;
 
 		GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>().Add( type, characterObject );
 
 		return characterObject;
 	}
 
+	string GetCharacterScriptNameByType(MZCharacterType type)
+	{
+		switch( type )
+		{
+			case MZCharacterType.Player:
+				return "MZPlayer";
+
+			case MZCharacterType.PlayerBullet:
+				return "MZPlayerBullet";
+
+			case MZCharacterType.EnemyAir:
+			case MZCharacterType.EnemyGround:
+				return "MZEnemy";
+
+			case MZCharacterType.EnemyBullet:
+				return "MZEnemyBullet";
+
+			case MZCharacterType.Unknow:
+			default:
+				MZDebug.Assert( false, "Not support type=" + type.ToString() );
+				return null;
+		}
+	}
+
 	void SetCharacterToSetting(GameObject characterObject, string settingName, MZCharacterType characterType)
 	{
-		CharacterSettingBase setting = (CharacterSettingBase)MZObjectHelp.CreateClass( settingName ); // maybe issue ...
+		CharacterSettingBase setting = (CharacterSettingBase)MZObjectHelp.CreateClass( settingName );
 		MZDebug.Assert( setting != null, "setting is null, name=" + settingName );
 
 		setting.SetToCharacter( characterObject, characterType );

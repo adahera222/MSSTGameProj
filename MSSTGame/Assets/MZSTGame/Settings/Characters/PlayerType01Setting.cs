@@ -5,8 +5,6 @@ public class PlayerType01Setting : CharacterSettingBase
 {
 	public override void SetToCharacter(GameObject characterObject, MZCharacterType characterType)
 	{
-		base.SetToCharacter( characterObject, characterType );
-
 		MZCharacter character = characterObject.GetComponent<MZCharacter>();
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );

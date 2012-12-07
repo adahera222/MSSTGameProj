@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZEnemy : MonoBehaviour, IMZMode
+public class MZEnemy : MZCharacter, IMZMode, IMZMove
 {
 	public int healthPoint = 1;
 	MZControlUpdate<MZMode> _modeControlUpdate = new MZControlUpdate<MZMode>();
@@ -10,10 +10,7 @@ public class MZEnemy : MonoBehaviour, IMZMode
 	#region IMZMode implementation
 
 	public IMZMove moveControlTarget
-	{ get { return gameObject.GetComponentInChildren<MZCharacter>(); } }
-
-	public Dictionary<string, MZCharacterPart> partsByNameDictionary
-	{ get { return gameObject.GetComponent<MZCharacter>().partsByNameDictionary; } }
+	{ get { return this; } }
 
 	#endregion
 
@@ -44,13 +41,17 @@ public class MZEnemy : MonoBehaviour, IMZMode
 		return mode;
 	}
 
-	void Start()
+	protected override void Start()
 	{
-		gameObject.GetComponent<MZCharacter>().enableRemoveTime = 10.0f;
+		base.Start();
+
+		enableRemoveTime = 10.0f;
 	}
 
-	void Update()
+	protected override void Update()
 	{
+		base.Update();
+
 		_modeControlUpdate.Update();
 		UpdateCollision();
 	}
@@ -67,6 +68,6 @@ public class MZEnemy : MonoBehaviour, IMZMode
 		}
 
 		if( healthPoint <= 0 )
-			gameObject.GetComponent<MZCharacter>().Disable();
+			Disable();
 	}
 }

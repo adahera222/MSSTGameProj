@@ -2,16 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZEnemyBullet : MonoBehaviour, IMZMove
+public class MZEnemyBullet : MZCharacter, IMZMove
 {
 	public Vector2 movingVector;
 	MZControlUpdate<MZMove_Base> _moveControlUpdate = null;
-
-	public Vector2 position
-	{
-		set{ gameObject.GetComponent<MZCharacter>().position = value; }
-		get{ return gameObject.GetComponent<MZCharacter>().position; }
-	}
 
 	public Vector2 currentMovingVector
 	{
@@ -33,20 +27,26 @@ public class MZEnemyBullet : MonoBehaviour, IMZMove
 	{
 		MZMove_Base move = (MZMove_Base)MZObjectHelp.CreateClass( "MZMove_" + typeString );
 		move.name = name;
-		move.controlTarget = gameObject.GetComponent<MZCharacter>();
+//		move.controlTarget = gameObject.GetComponent<MZCharacter>();
+		move.controlTarget = this;
 
 		movesList.Add( move );
 
 		return move;
 	}
 
-	void Start()
+	protected override void Start()
 	{
-		gameObject.GetComponent<MZCharacter>().enableRemoveTime = 0.5f;
+		base.Start();
+
+		enableRemoveTime = 0.3f;
+//		gameObject.GetComponent<MZCharacter>().enableRemoveTime = 0.5f;
 	}
 
-	void Update()
+	protected override void Update()
 	{
+		base.Update();
+
 		_moveControlUpdate.Update();
 	}
 }

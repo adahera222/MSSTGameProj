@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MZPlayer : MonoBehaviour
+public class MZPlayer : MZCharacter
 {
 	float interval = 0.2f;
 	float cd = 0;
@@ -20,15 +20,19 @@ public class MZPlayer : MonoBehaviour
 
 	ControlState currentControlState = ControlState.None;
 
-	void Start()
+	protected override void Start()
 	{
+		base.Start();
+
 		dragRange = GameObject.Find( "TestDragableRange" );
 		if( dragRange != null )
 			dragRange.transform.localScale = new Vector3( dragableRadius*2, 0, dragableRadius*2 );
 	}
 
-	void Update()
+	protected override void Update()
 	{
+		base.Update();
+
 		UpdateOnTouchBegan();
 		UpdateOnTouchMoved();
 		UpdateOnTouchEnded();

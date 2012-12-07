@@ -4,8 +4,6 @@ public class Enemy001Setting : CharacterSettingBase
 {
 	public override void SetToCharacter(GameObject characterObject, MZCharacterType characterType)
 	{
-		base.SetToCharacter( characterObject, characterType );
-
 		MZCharacter character = characterObject.GetComponent<MZCharacter>();
 
 		MZCharacterPart leftBody = character.AddPart( "LeftBody" );
