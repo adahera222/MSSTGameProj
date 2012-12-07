@@ -35,10 +35,14 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo
 				parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyGround )
 				return parentGameObject.GetComponent<MZEnemy>().currentMovingVector;
 
-			if( parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyBullet )
-				return parentGameObject.GetComponent<MZEnemyBullet>().currentMovingVector;
+			if( parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyBullet ||
+				parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.PlayerBullet )
+				return parentGameObject.GetComponent<MZBullet>().currentMovingVector;
+//				return parentGameObject.GetComponent<MZEnemyBullet>().currentMovingVector;
 
-			return Vector2.zero;
+				return Vector2.zero;
+
+//			return parentGameObject.GetComponent<MZCharacter>().currentMovingVector; <-- want this... but ???
 		}
 	}
 

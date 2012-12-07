@@ -28,9 +28,14 @@ public interface IMZFaceTo : IMZControl
 		set;
 		get;
 	}
+
+	MZCharacterType characterType
+	{
+		get;
+	}
 }
 
-public abstract class MZFaceTo_Base : MZControlBase
+public abstract class MZFaceTo_Base : MZControlBase, IMZTargetHelp
 {
 	public enum MZMovingVectorType
 	{
@@ -41,4 +46,16 @@ public abstract class MZFaceTo_Base : MZControlBase
 
 	public new IMZFaceTo controlTarget = null;
 	public MZMovingVectorType usingMovingVectorType = MZMovingVectorType.Parent;
+
+	#region IMZTargetHelp implementation
+	public Vector2 selfPosition
+	{
+		get	{ return controlTarget.realPosition; }
+	}
+
+	public MZCharacterType characterType
+	{
+		get	{ return controlTarget.characterType; }
+	}
+	#endregion
 }

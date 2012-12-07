@@ -14,7 +14,7 @@ public interface IMZAttack : IMZControl
 	}
 }
 
-public abstract class MZAttack_Base : MZControlBase
+public abstract class MZAttack_Base : MZControlBase, IMZTargetHelp
 {
 	public new IMZAttack controlTarget = null;
 	public int numberOfWays = 0;
@@ -24,8 +24,54 @@ public abstract class MZAttack_Base : MZControlBase
 	public float initVelocity = 0;
 	public float additionalVelocityPerLaunch = 0;
 	public float maxVelocity = float.NaN;
+	public string bulletSettingName = null;
+	bool _enable = true;
 	int _launchCount = 0;
 	float _colddownCount = 0;
+	MZTargetHelp_Base _targetHelp = null;
+
+	public bool enable
+	{
+		set
+		{
+			_enable = value;
+
+			if( _enable == false )
+				_colddownCount = 0;
+		}
+		get{ return _enable; }
+	}
+
+	#region IMZTargetHelp implementation
+	public Vector2 selfPosition
+	{
+		get { return controlTarget.realPosition; }
+	}
+
+	public MZCharacterType characterType
+	{
+		get { return controlTarget.characterType; }
+	}
+	#endregion
+
+	protected MZTargetHelp_Base targetHelp
+	{
+		get
+		{
+			if( _targetHelp == null )
+				SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
+
+			return _targetHelp;
+		}
+	}
+
+	public MZTargetHelp_Base SetTargetHelp(MZTargetHelp_Base targetHelp)
+	{
+		_targetHelp = targetHelp;
+		_targetHelp.controlObject = this;
+
+		return _targetHelp;
+	}
 
 	public override void Reset()
 	{
@@ -37,6 +83,9 @@ public abstract class MZAttack_Base : MZControlBase
 
 	protected override void UpdateWhenActive()
 	{
+		if( !enable )
+			return;
+
 		_colddownCount -= Time.deltaTime;
 
 		if( _colddownCount <= 0 )
@@ -79,7 +128,9 @@ public abstract class MZAttack_Base : MZControlBase
 
 	protected GameObject GetNewBulletObject()
 	{
-		GameObject bullet = MZCharacterFactory.GetInstance().CreateCharacter( GetBulletTypeByControlTargetType(), "Bullet", "EnemyBullet001Setting" );
+		MZDebug.Assert( bulletSettingName != null, "bulletSettingName is null" );
+
+		GameObject bullet = MZCharacterFactory.GetInstance().CreateCharacter( GetBulletTypeByControlTargetType(), "Bullet", bulletSettingName );
 		bullet.GetComponent<MZCharacter>().position = controlTarget.realPosition;
 
 		return bullet;

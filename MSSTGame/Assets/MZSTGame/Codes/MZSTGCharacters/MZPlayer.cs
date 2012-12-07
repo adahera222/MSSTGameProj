@@ -3,13 +3,14 @@ using System.Collections;
 
 public class MZPlayer : MZCharacter
 {
-	float interval = 0.2f;
-	float cd = 0;
+//	float interval = 0.2f;
+//	float cd = 0;
 	Rect playMovableBound = MZGameSetting.GetPlayerMovableBoundRect();
 	float dragableRadius = 150;
 	GameObject dragRange;
 	Vector3 positonOnTouchBegan;
 	Vector3 playerPositionOnTouchBegan;
+	MZAttack_Base attackTemp = null;
 
 	enum ControlState
 	{
@@ -27,6 +28,17 @@ public class MZPlayer : MZCharacter
 		dragRange = GameObject.Find( "TestDragableRange" );
 		if( dragRange != null )
 			dragRange.transform.localScale = new Vector3( dragableRadius*2, 0, dragableRadius*2 );
+
+		attackTemp = new MZAttack_OddWay();
+		attackTemp.numberOfWays = 3;
+		attackTemp.initVelocity = 500;
+		attackTemp.intervalDegrees = 5;
+		attackTemp.colddown = 0.2f;
+		attackTemp.duration = -1;
+		attackTemp.bulletSettingName = "PlayerBullet001Setting";
+		attackTemp.enable = false;
+		attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
+		attackTemp.SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
 	}
 
 	protected override void Update()
@@ -36,7 +48,7 @@ public class MZPlayer : MZCharacter
 		UpdateOnTouchBegan();
 		UpdateOnTouchMoved();
 		UpdateOnTouchEnded();
-		UpdateAttack();
+		attackTemp.Update();
 
 		UpdateTest();
 	}
@@ -49,6 +61,8 @@ public class MZPlayer : MZCharacter
 		positonOnTouchBegan = Camera.mainCamera.ScreenToWorldPoint( new Vector3( Input.mousePosition.x, Input.mousePosition.y, 0 ) );
 		playerPositionOnTouchBegan = gameObject.gameObject.transform.position;
 		currentControlState = ( MZMath.V3ToV2DistancePow2( positonOnTouchBegan, gameObject.transform.position ) > dragableRadius*dragableRadius )? ControlState.Teleport : ControlState.Move;
+
+		attackTemp.enable = true;
 	}
 
 	void UpdateOnTouchMoved()
@@ -78,20 +92,7 @@ public class MZPlayer : MZCharacter
 			return;
 
 		currentControlState = ControlState.None;
-	}
-
-	void UpdateAttack()
-	{
-		if( !Input.GetMouseButton( 0 ) )
-			return;
-
-		cd -= Time.deltaTime;
-		if( cd <= 0 )
-		{
-			GameObject pb = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.PlayerBullet, "PlayerBullet", "PlayerBullet001Setting" );
-			pb.GetComponent<MZCharacter>().position = gameObject.GetComponent<MZCharacter>().position;
-			cd += interval;
-		}
+		attackTemp.enable = false;
 	}
 
 	Vector3 GetModifyNextPositionInBound(Vector3 nextPosition)

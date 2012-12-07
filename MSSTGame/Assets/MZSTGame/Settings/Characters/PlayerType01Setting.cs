@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerType01Setting : CharacterSettingBase
 {
-	public override void SetToCharacter(GameObject characterObject, MZCharacterType characterType)
+	public override void SetToCharacter(GameObject characterObject)
 	{
 		MZCharacter character = characterObject.GetComponent<MZCharacter>();
 

@@ -16,7 +16,7 @@ public class MZCharacterFactory
 	public GameObject CreateCharacter(MZCharacterType type, string name, string settingName)
 	{
 		GameObject characterObject = CreateCharacterGameObject( "MZCharacter", type );
-		SetCharacterToSetting( characterObject, settingName, type );
+		SetCharacterToSetting( characterObject, settingName );
 		characterObject.name = ( name != null )? name : "DefaultCharacter";
 
 		return characterObject;
@@ -45,15 +45,19 @@ public class MZCharacterFactory
 			case MZCharacterType.Player:
 				return "MZPlayer";
 
-			case MZCharacterType.PlayerBullet:
-				return "MZPlayerBullet";
+//			case MZCharacterType.PlayerBullet:
+//				return "MZPlayerBullet";
 
 			case MZCharacterType.EnemyAir:
 			case MZCharacterType.EnemyGround:
 				return "MZEnemy";
 
+//			case MZCharacterType.EnemyBullet:
+//				return "MZEnemyBullet";
+
+			case MZCharacterType.PlayerBullet:
 			case MZCharacterType.EnemyBullet:
-				return "MZEnemyBullet";
+				return "MZBullet";
 
 			case MZCharacterType.Unknow:
 			default:
@@ -62,11 +66,11 @@ public class MZCharacterFactory
 		}
 	}
 
-	void SetCharacterToSetting(GameObject characterObject, string settingName, MZCharacterType characterType)
+	void SetCharacterToSetting(GameObject characterObject, string settingName)
 	{
 		CharacterSettingBase setting = (CharacterSettingBase)MZObjectHelp.CreateClass( settingName );
 		MZDebug.Assert( setting != null, "setting is null, name=" + settingName );
 
-		setting.SetToCharacter( characterObject, characterType );
+		setting.SetToCharacter( characterObject );
 	}
 }

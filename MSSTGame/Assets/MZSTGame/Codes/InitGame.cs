@@ -11,7 +11,7 @@ public class InitGame : MonoBehaviour
 		MZOTFramesManager.GetInstance().CreateFramesByExistedContainer();
 //		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer(); // disable anmation function
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]player", MZCharacterType.Player, 10, MZGameSetting.GetCharacterDepth( MZCharacterType.Player ) );
-		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]playerBullet", MZCharacterType.PlayerBullet, 10, MZGameSetting.GetCharacterDepth( MZCharacterType.PlayerBullet ) );
+		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]playerBullet", MZCharacterType.PlayerBullet, 500, MZGameSetting.GetCharacterDepth( MZCharacterType.PlayerBullet ) );
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemy", MZCharacterType.EnemyAir, 1000, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyAir ) );
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemyBullet", MZCharacterType.EnemyBullet, 1000, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyBullet ) );
 
