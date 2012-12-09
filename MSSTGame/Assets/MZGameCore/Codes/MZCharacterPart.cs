@@ -99,8 +99,8 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo
 			{
 				MZCollision realOtherCollision = other.GetRealCollision( otherCollision );
 
-				if( realSelfCollision.IsCollision( realOtherCollision ) )
-					return true;
+//				if( realSelfCollision.IsCollision( realOtherCollision ) )
+//					return true;
 			}
 		}
 

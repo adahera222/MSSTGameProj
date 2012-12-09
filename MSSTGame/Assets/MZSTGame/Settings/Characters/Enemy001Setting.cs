@@ -36,10 +36,10 @@ public class Enemy001Setting : CharacterSettingBase
 		MZMode mode1 = enemy.AddMode( "mode1" );
 		mode1.duration = -1;
 
-		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
-		move1.initVelocity = 25;
-		move1.initMovingVector = new Vector2( 0, -1 );
-		move1.duration = -1;
+//		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
+//		move1.initVelocity = 25;
+//		move1.initMovingVector = new Vector2( 0, -1 );
+//		move1.duration = -1;
 
 		AddOddWay( mode1, leftBody );
 		AddOddWay( mode1, rightBody );

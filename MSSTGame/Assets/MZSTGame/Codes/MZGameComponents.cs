@@ -4,6 +4,7 @@ using System.Collections;
 public class MZGameComponents
 {
 	static MZGameComponents _instance = null;
+	MZCharactersManager _charactersManager = null;
 
 	static public MZGameComponents GetInstance()
 	{
@@ -15,7 +16,17 @@ public class MZGameComponents
 
 	public MZCharactersManager charactersManager
 	{
-		get{ return GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>(); }
+//		get
+//		{
+//			if( _charactersManager == null )
+//				_charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();
+//
+//			return _charactersManager;
+//		}
+
+
+		set{ _charactersManager = value; }
+		get{ return _charactersManager; }
 	}
 
 	public GameObject spritesPool

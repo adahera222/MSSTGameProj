@@ -11,7 +11,7 @@ public class SystemTest : MonoBehaviour
 
 	void Start()
 	{
-
+		CreateFourEnemy();
 	}
 
 	void Update()
@@ -20,11 +20,24 @@ public class SystemTest : MonoBehaviour
 
 		if( cd <= 0 )
 		{
-			CreateEnemy();
+//			CreateEnemy();
 			cd += interval;
 		}
 
 		TestSprite();
+	}
+
+	void CreateFourEnemy()
+	{
+		for( int i = 0; i < 4; i++ )
+		{
+			string enemySettingName = ( UnityEngine.Random.Range( 0, 2 ) == 0 )? "Enemy001Setting" : "Enemy001Setting";
+
+			GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyAir, "Enemy", enemySettingName );
+
+			float x = -300 + i*200;
+			enemy.GetComponent<MZCharacter>().position = new Vector2( x, /*550*/100 );
+		}
 	}
 
 	void CreateEnemy()

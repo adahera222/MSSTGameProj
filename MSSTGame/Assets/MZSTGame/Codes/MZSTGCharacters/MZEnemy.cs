@@ -53,21 +53,30 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 		base.Update();
 
 		_modeControlUpdate.Update();
-		UpdateCollision();
+//		UpdateCollision();
+
+		if( healthPoint <= 0 )
+			Disable();
 	}
 
 	void UpdateCollision()
 	{
-		foreach( GameObject pb in GameObject.Find("MZCharactersManager").GetComponent<MZCharactersManager>().GetList( MZCharacterType.PlayerBullet ) )
-		{
-			if( pb.GetComponent<MZCharacter>().IsCollide( gameObject.GetComponent<MZCharacter>() ) )
-			{
-				healthPoint -= 1;
-				pb.GetComponent<MZCharacter>().Disable();
-			}
-		}
+//		foreach( GameObject pb in GameObject.Find("MZCharactersManager").GetComponent<MZCharactersManager>().GetList( MZCharacterType.PlayerBullet ) )
+//		{
+//			if( pb.GetComponent<MZCharacter>().IsCollide( gameObject.GetComponent<MZCharacter>() ) )
+//			{
+//				healthPoint -= 1;
+//				pb.GetComponent<MZCharacter>().Disable();
+//			}
+//		}
 
-		if( healthPoint <= 0 )
-			Disable();
+//		foreach( GameObject playerBullet in MZGameComponents.GetInstance().charactersManager.GetList( MZCharacterType.PlayerBullet ) )
+//		{
+//			if( playerBullet.GetComponent<MZCharacter>().IsCollide( gameObject.GetComponent<MZCharacter>() ) )
+//			{
+////				healthPoint -= 1;
+//				playerBullet.GetComponent<MZCharacter>().Disable();
+//			}
+//		}
 	}
 }

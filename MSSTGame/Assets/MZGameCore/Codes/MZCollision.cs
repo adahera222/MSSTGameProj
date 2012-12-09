@@ -25,6 +25,7 @@ public class MZCollision
 
 	public bool IsCollision(MZCollision other)
 	{
-		return ( MZMath.DistancePow2( center, other.center ) <= Mathf.Pow( radius + other.radius, 2 ) );
+		float radiusPow2 = ( radius + other.radius )*( radius + other.radius );
+		return ( MZMath.DistancePow2( center, other.center ) <= radiusPow2 );
 	}
 }
