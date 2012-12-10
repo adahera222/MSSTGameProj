@@ -8,7 +8,10 @@ public class MZBullet : MZCharacter, IMZMove
 
 	public Vector2 currentMovingVector
 	{
-		get{ return _moveControlUpdate.currentControl.currentMovingVector; }
+		get
+		{
+			return ( _moveControlUpdate != null )? _moveControlUpdate.currentControl.currentMovingVector : Vector2.zero;
+		}
 	}
 
 	public List<MZMove_Base> movesList
@@ -33,25 +36,30 @@ public class MZBullet : MZCharacter, IMZMove
 		return move;
 	}
 
-	protected override void Start()
+	public override void Enable()
 	{
-		base.Start();
-
+		base.Enable();
 		enableRemoveTime = 0.3f;
+	}
+
+	public override void Clear()
+	{
+		base.Clear();
+		_moveControlUpdate = null; // maybe GC? ... SUCK ...
 	}
 
 	protected override void Update()
 	{
 		base.Update();
 
-		_moveControlUpdate.Update();
-//		UpdateWithTarget();
+		if( _moveControlUpdate != null )
+			_moveControlUpdate.Update();
+
+		UpdateWithTarget();
 	}
 
 	void UpdateWithTarget()
 	{
-		MZCharacterType characterType = gameObject.GetComponent<MZCharacter>().characterType;
-
 		switch( characterType )
 		{
 			case MZCharacterType.EnemyBullet:
@@ -66,14 +74,14 @@ public class MZBullet : MZCharacter, IMZMove
 
 	void UpdateWithEnemies()
 	{
-		MZCharacter selfCharacter = gameObject.GetComponent<MZCharacter>();
+//		MZCharacter selfCharacter = gameObject.GetComponent<MZCharacter>();
 
-		MZCharactersManager manager = MZGameComponents.GetInstance().charactersManager;
+		MZCharactersManager charactersManager = MZGameComponents.GetInstance().charactersManager;
 
-//		List<GameObject> list = MZGameComponents.GetInstance().charactersManager.GetList( MZCharacterType.EnemyAir );
+//		List<GameObject> list = charactersManager.GetList( MZCharacterType.EnemyAir );
 
-//		foreach( GameObject enemy in MZGameComponents.GetInstance().charactersManager.GetList( MZCharacterType.EnemyAir ) )
-//		{
+		foreach( GameObject enemy in MZOTSpritesPoolManager.GetInstance().GetSpritesList( MZCharacterType.EnemyAir ) )
+		{
 //			MZCharacter enemyCharacter = enemy.GetComponent<MZCharacter>();
 
 //			if( selfCharacter.IsCollide( enemyCharacter ) )
@@ -81,17 +89,16 @@ public class MZBullet : MZCharacter, IMZMove
 //				// damge to enemy
 //				selfCharacter.Disable();
 //			}
-//		}
+		}
 	}
 
 	void UpdateWithPlayer()
 	{
-//		MZCharacter playerCharacter = MZGameComponents.GetInstance().charactersManager.GetPlayer().GetComponent<MZCharacter>();
-//		MZCharacter selfCharacter = gameObject.GetComponent<MZCharacter>();
+		MZCharacter playerCharacter = MZGameComponents.GetInstance().charactersManager.playerCharacter; //.GetPlayer().GetComponent<MZCharacter>();
 
-//		if( selfCharacter.IsCollide( playerCharacter ) )
-//		{
-//			selfCharacter.Disable();
-//		}
+		if( IsCollide( playerCharacter ) )
+		{
+			Disable();
+		}
 	}
 }

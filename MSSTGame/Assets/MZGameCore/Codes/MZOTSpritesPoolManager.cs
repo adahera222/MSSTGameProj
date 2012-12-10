@@ -23,7 +23,7 @@ public class MZOTSpritesPoolManager
 
 		MZDebug.Assert( _spritesPoolDictionaryByType.ContainsKey( charcterType ) == false, "SORRY, can't use two texture to one type now" ); // one texture one pool now // temp
 
-		MZOTSpritesPool spritesPool = new MZOTSpritesPool( container, number, depth );
+		MZOTSpritesPool spritesPool = new MZOTSpritesPool( charcterType, container, number, depth );
 		_spritesPoolDictionaryByType.Add( charcterType, spritesPool );
 	}
 
@@ -39,6 +39,12 @@ public class MZOTSpritesPoolManager
 		_spritesPoolDictionaryByType[ charcterType ].ReturnSpriteObject( spriteObject );
 	}
 
+	public GameObject[] GetSpritesList(MZCharacterType charcterType)
+	{
+		MZDebug.Assert( _spritesPoolDictionaryByType.ContainsKey( charcterType ) != false, "no pool for type=" + charcterType.ToString() );
+		return _spritesPoolDictionaryByType[ charcterType ].spritesList;
+	}
+
 	private MZOTSpritesPoolManager()
 	{
 	}
@@ -46,12 +52,18 @@ public class MZOTSpritesPoolManager
 	public class MZOTSpritesPool
 	{
 		Vector2 invalidPosition = new Vector2( -9999, -9999 );
-		List<GameObject> _spritesList = null;
+		GameObject[] _spritesList;
 		OTContainer _container = null;
 		int _maxUsingIndex = 0;
+		int _number = 0;
 		int _depth = 0;
 
-		public MZOTSpritesPool(OTContainer container, int number, int depth)
+		public GameObject[] spritesList
+		{
+			get{ return _spritesList; }
+		}
+
+		public MZOTSpritesPool(MZCharacterType characterType, OTContainer container, int number, int depth)
 		{
 			MZDebug.Assert( container != null, "container is null" );
 
@@ -60,10 +72,11 @@ public class MZOTSpritesPoolManager
 
 			_container = container;
 			_depth = depth;
+			_number = number;
 
-			_spritesList = new List<GameObject>();
+			_spritesList = new GameObject[_number];
 
-			for( int i = 0; i < number; i++ )
+			for( int i = 0; i < _number; i++ )
 			{
 				GameObject spriteObject = MZResources.InstantiateOrthelloSprite( "Sprite" );
 
@@ -74,7 +87,7 @@ public class MZOTSpritesPoolManager
 				spriteObject.GetComponent<OTSprite>().position = invalidPosition;
 				spriteObject.GetComponent<OTSprite>().spriteContainer = _container;
 
-				_spritesList.Add( spriteObject );
+				_spritesList[ i ] = spriteObject;
 			}
 		}
 
@@ -82,7 +95,7 @@ public class MZOTSpritesPoolManager
 		{
 			GameObject spriteObject = null;
 
-			for( int i = 0; i < _spritesList.Count; i++ )
+			for( int i = 0; i < _number; i++ )
 			{
 				if( _spritesList[ i ].active == false )
 				{

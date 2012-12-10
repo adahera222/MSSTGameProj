@@ -15,7 +15,12 @@ public class MZMath
 
 	static public float Dot(Vector2 p1, Vector2 p2)
 	{
-		return (p1.x * p2.x) + (p1.y * p2.y);
+		return ( p1.x*p2.x ) + ( p1.y*p2.y );
+	}
+
+	static public float Distance(Vector2 p1, Vector2 p2)
+	{
+		return Vector2.Distance( p1, p2 );
 	}
 
 	static public float DistancePow2(Vector2 p1, Vector2 p2)

@@ -5,6 +5,7 @@ public class MZGameComponents
 {
 	static MZGameComponents _instance = null;
 	MZCharactersManager _charactersManager = null;
+	GameObject spritesPoolObject = null;
 
 	static public MZGameComponents GetInstance()
 	{
@@ -16,22 +17,19 @@ public class MZGameComponents
 
 	public MZCharactersManager charactersManager
 	{
-//		get
-//		{
-//			if( _charactersManager == null )
-//				_charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();
-//
-//			return _charactersManager;
-//		}
-
-
 		set{ _charactersManager = value; }
 		get{ return _charactersManager; }
 	}
 
 	public GameObject spritesPool
 	{
-		get{ return (GameObject)GameObject.Find( "MZSpritesPool" ); }
+		get
+		{
+			if( spritesPoolObject == null )
+				spritesPoolObject = (GameObject)GameObject.Find( "MZSpritesPool" );
+
+			return spritesPoolObject;
+		}
 	}
 
 	private MZGameComponents()

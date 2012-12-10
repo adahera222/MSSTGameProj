@@ -10,7 +10,7 @@ public class MZPlayer : MZCharacter
 	GameObject dragRange;
 	Vector3 positonOnTouchBegan;
 	Vector3 playerPositionOnTouchBegan;
-	MZAttack_Base attackTemp = null;
+//	MZAttack_Base attackTemp = null;
 
 	enum ControlState
 	{
@@ -21,25 +21,39 @@ public class MZPlayer : MZCharacter
 
 	ControlState currentControlState = ControlState.None;
 
-	protected override void Start()
+	public override void Enable()
 	{
-		base.Start();
+		base.Enable();
 
 		dragRange = GameObject.Find( "TestDragableRange" );
 		if( dragRange != null )
 			dragRange.transform.localScale = new Vector3( dragableRadius*2, 0, dragableRadius*2 );
-
-		attackTemp = new MZAttack_OddWay();
-		attackTemp.numberOfWays = 3;
-		attackTemp.initVelocity = 500;
-		attackTemp.intervalDegrees = 5;
-		attackTemp.colddown = 0.2f;
-		attackTemp.duration = -1;
-		attackTemp.bulletSettingName = "PlayerBullet001Setting";
-//		attackTemp.enable = false;
-		attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
-		attackTemp.SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
 	}
+
+	public override void Clear()
+	{
+		base.Clear();
+	}
+
+//	protected override void Start()
+//	{
+//		base.Start();
+//
+//		dragRange = GameObject.Find( "TestDragableRange" );
+//		if( dragRange != null )
+//			dragRange.transform.localScale = new Vector3( dragableRadius*2, 0, dragableRadius*2 );
+//
+//		attackTemp = new MZAttack_OddWay();
+//		attackTemp.numberOfWays = 3;
+//		attackTemp.initVelocity = 500;
+//		attackTemp.intervalDegrees = 5;
+//		attackTemp.colddown = 0.2f;
+//		attackTemp.duration = -1;
+//		attackTemp.bulletSettingName = "PlayerBullet001Setting";
+//		attackTemp.enable = false;
+//		attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
+//		attackTemp.SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
+//	}
 
 	protected override void Update()
 	{
@@ -48,7 +62,7 @@ public class MZPlayer : MZCharacter
 		UpdateOnTouchBegan();
 		UpdateOnTouchMoved();
 		UpdateOnTouchEnded();
-		attackTemp.Update();
+//		attackTemp.Update();
 
 		UpdateTest();
 	}

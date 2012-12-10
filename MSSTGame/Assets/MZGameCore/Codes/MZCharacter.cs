@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class MZCharacter : MonoBehaviour
 {
+	public int poolIndex = -1;
+
 	public bool isActive
 	{ get { return _isActive; } }
 
@@ -39,6 +41,12 @@ public class MZCharacter : MonoBehaviour
 	Dictionary<string, MZCharacterPart> _partsByNameDictionary;
 	MZCharacterType _characterType = MZCharacterType.Unknow;
 
+	public virtual void Enable()
+	{
+		_isActive = true;
+		_lifeTimeCount = 0;
+	}
+
 	public MZCharacterPart AddPart(string name)
 	{
 		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );
@@ -58,6 +66,7 @@ public class MZCharacter : MonoBehaviour
 		if( _partsByNameDictionary == null )
 			_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
 
+		MZDebug.Assert( _partsByNameDictionary.ContainsKey( name ) == false, "Duplicate key=" + name );
 		_partsByNameDictionary.Add( name, characterPart );
 
 		return partObject.GetComponent<MZCharacterPart>();
@@ -68,13 +77,15 @@ public class MZCharacter : MonoBehaviour
 		_isActive = false;
 	}
 
-	public void BeforeDestory()
+	public virtual void Clear()
 	{
 		foreach( MZCharacterPart characterPart in partsByNameDictionary.Values )
 		{
 			characterPart.enabled = false;
 			MZOTSpritesPoolManager.GetInstance().ReturnSpriteObject( characterPart.gameObject, characterType );
 		}
+
+		partsByNameDictionary.Clear();
 	}
 
 	public bool IsCollide(MZCharacter other)
@@ -91,16 +102,24 @@ public class MZCharacter : MonoBehaviour
 		return false;
 	}
 
-	protected virtual void Start()
-	{
-		_isActive = true;
-		_lifeTimeCount = 0;
-	}
+	// set private to start function ... and use custom ReStart() (ref: rest ... ) call by my CharacterObjectManager ...
+//	protected virtual void Start()
+//	{
+//		_isActive = true;
+//		_lifeTimeCount = 0;
+//		Reset(); // ya .. i am re-start() ...
+//	}
+
 
 	protected virtual void Update()
 	{
 		_lifeTimeCount += Time.deltaTime;
 		RemoveWhenOutOfBound();
+	}
+
+	private void Start()
+	{
+		
 	}
 
 	void RemoveWhenOutOfBound()

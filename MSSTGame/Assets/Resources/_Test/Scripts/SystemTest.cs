@@ -6,11 +6,12 @@ using System.Reflection;
 
 public class SystemTest : MonoBehaviour
 {
-	float interval = 10.0f;
+	float interval = 8.0f;
 	float cd = 1.0f;
 
 	void Start()
 	{
+//		CreateManyEnemyBullet();
 		CreateFourEnemy();
 	}
 
@@ -21,22 +22,37 @@ public class SystemTest : MonoBehaviour
 		if( cd <= 0 )
 		{
 //			CreateEnemy();
+//			CreateFourEnemy();
 			cd += interval;
 		}
 
 		TestSprite();
 	}
 
+	void CreateManyEnemyBullet()
+	{
+		Vector2 size = MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE;
+		Vector2 origin = new Vector2( MZGameSetting.PLAYER_MOVABLE_BOUND_CENTER.x - MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE.x/2,
+			MZGameSetting.PLAYER_MOVABLE_BOUND_CENTER.y - MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE.y/2 );
+
+		for( int i = 0; i < 300; i++ )
+		{
+			GameObject eb = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyBullet, "EB", "EnemyBullet001Setting" );
+			eb.GetComponent<MZCharacter>().position = new Vector2( origin.x + UnityEngine.Random.Range( 0, size.x ), origin.y + UnityEngine.Random.Range( 0, size.y ) );
+		}
+	}
+
 	void CreateFourEnemy()
 	{
-		for( int i = 0; i < 4; i++ )
+		for( int i = 0; i < 2; i++ )
 		{
 			string enemySettingName = ( UnityEngine.Random.Range( 0, 2 ) == 0 )? "Enemy001Setting" : "Enemy001Setting";
 
 			GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyAir, "Enemy", enemySettingName );
 
-			float x = -300 + i*200;
-			enemy.GetComponent<MZCharacter>().position = new Vector2( x, /*550*/100 );
+			float x = -150 + i*300;
+			float posY = ( cd != 0 )? 550 : 100;
+			enemy.GetComponent<MZCharacter>().position = new Vector2( x, posY );
 		}
 	}
 

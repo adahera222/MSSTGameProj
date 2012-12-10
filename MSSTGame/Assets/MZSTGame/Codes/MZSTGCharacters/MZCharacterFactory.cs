@@ -29,15 +29,18 @@ public class MZCharacterFactory
 
 	GameObject CreateCharacterGameObject(string characterName, MZCharacterType type)
 	{
-		GameObject characterObject = new GameObject();
-		MZCharacter character = (MZCharacter)characterObject.AddComponent( GetCharacterScriptNameByType( type ) );
-		character.characterType = type;
+		// change
+//		GameObject characterObject = new GameObject();
+//		MZCharacter character = (MZCharacter)characterObject.AddComponent( GetCharacterScriptNameByType( type ) );
+//		character.characterType = type;
+
+		GameObject characterObject = MZCharacterObjectsPoolManager.GetInstance().GetCharacterObject( type );
 
 		MZGameComponents.GetInstance().charactersManager.Add( type, characterObject );
-
 		return characterObject;
 	}
 
+	// remove????
 	string GetCharacterScriptNameByType(MZCharacterType type)
 	{
 		switch( type )
@@ -45,15 +48,9 @@ public class MZCharacterFactory
 			case MZCharacterType.Player:
 				return "MZPlayer";
 
-//			case MZCharacterType.PlayerBullet:
-//				return "MZPlayerBullet";
-
 			case MZCharacterType.EnemyAir:
 			case MZCharacterType.EnemyGround:
 				return "MZEnemy";
-
-//			case MZCharacterType.EnemyBullet:
-//				return "MZEnemyBullet";
 
 			case MZCharacterType.PlayerBullet:
 			case MZCharacterType.EnemyBullet:
