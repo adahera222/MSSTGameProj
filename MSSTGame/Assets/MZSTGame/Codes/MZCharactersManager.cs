@@ -5,9 +5,18 @@ using System.Collections.Generic;
 public class MZCharactersManager : MonoBehaviour
 {
 	public GUIText guiCharactersInfo;
-	Dictionary<MZCharacterType, List<GameObject>> _charactersListByType;
+	public int playerBulletNumber = 0;
+	public int enemyNumber = 0;
+	public int enemyBulletNumber = 0;
+	GameObject _player = null;
 	MZCharacter _playerCharacter = null;
 	Dictionary<MZCharacterType, GameObject> _charactersContainerByType = null;
+
+	public GameObject playerObject
+	{
+		set{ _player = value; }
+		get{ return _player; }
+	}
 
 	public MZCharacter playerCharacter
 	{
@@ -15,48 +24,9 @@ public class MZCharactersManager : MonoBehaviour
 		get{ return _playerCharacter; }
 	}
 
-	public int Add(MZCharacterType characterType, GameObject characterObject)
-	{
-		if( _charactersListByType == null )
-		{
-			_charactersListByType = new Dictionary<MZCharacterType, List<GameObject>>();
-		}
-
-		if( _charactersListByType.ContainsKey( characterType ) == false )
-		{
-			List<GameObject> newCharacterList = new List<GameObject>();
-			_charactersListByType.Add( characterType, newCharacterList );
-		}
-
-//		List<GameObject> characterList = _charactersListByType[ characterType ];
-//		characterList.Add( characterObject );
-//
-//		GameObject charactersContainer = GameObject.Find( GetContainerNameByType( characterType ) );
-//		MZDebug.Assert( charactersContainer != null, "charactersContainer is null, type=" + characterType.ToString() );
-//		characterObject.transform.parent = charactersContainer.transform;
-
-		characterObject.transform.parent = _charactersContainerByType[ characterType ].transform;
-
-		if( characterType == MZCharacterType.Player )
-		{
-			_playerCharacter = characterObject.GetComponent<MZCharacter>();
-		}
-
-//		return characterList.Count;
-		return 0;
-	}
-
-	public GameObject GetPlayer()
-	{
-		if( _charactersListByType.ContainsKey( MZCharacterType.Player ) == false || _charactersListByType[ MZCharacterType.Player ].Count == 0 )
-			return null;
-
-		return _charactersListByType[ MZCharacterType.Player ][ 0 ];
-	}
-
 	public Vector2 GetPlayerPosition()
 	{
-		return _playerCharacter.position;
+		return ( _playerCharacter != null )? _playerCharacter.position : Vector2.zero;
 	}
 
 	public string GetContainerNameByType(MZCharacterType type)
@@ -79,23 +49,6 @@ public class MZCharactersManager : MonoBehaviour
 				MZDebug.Assert( false, "Undefine type: " + type.ToString() );
 				return "";
 		}
-	}
-
-	public List<GameObject> GetList(MZCharacterType type)
-	{
-		if( _charactersListByType.ContainsKey( type ) == false )
-			return new List<GameObject>();
-
-		return _charactersListByType[ type ];
-	}
-
-	public void Remove(MZCharacterType type, GameObject character)
-	{
-		List<GameObject> list = GetList( type );
-		MZDebug.Assert( list.Contains( character ) == true, "character not in list, name=" + character.name + ", type=" + type.ToString() );
-
-		list.Remove( character );
-		Destroy( character );
 	}
 
 	void Awake()
@@ -142,56 +95,18 @@ public class MZCharactersManager : MonoBehaviour
 		}
 	}
 
-
-//	void RemoveUnActiveCharacters()
-//	{
-//		if( _charactersListByType == null || _charactersListByType.Count == 0 )
-//			return;
-
-//		foreach( List<GameObject> list in _charactersListByType.Values )
-//		{
-//			for( int i = 0; i < list.Count; i++ )
-//			{
-//				GameObject characterObject = list[ i ];
-//				if( characterObject.GetComponent<MZCharacter>().isActive == false )
-//				{
-//					characterObject.GetComponent<MZCharacter>().BeforeDestory();
-//					list.Remove( characterObject );
-//					Destroy( characterObject );
-//					i--;
-//				}
-//			}
-//		}
-
-//		GameObject[] ebList = MZOTSpritesPoolManager.GetInstance().GetSpritesList( MZCharacterType.EnemyBullet );
-//		List<GameObject> ebList = _charactersListByType[MZCharacterType.EnemyBullet];
-//		foreach( GameObject eb in ebList )
-//		{
-//			if( eb.GetComponent<MZCharacter>() == null )
-//			{
-//				MZDebug.Log( "????" );
-//			}
-
-//			if( eb.active == true && eb.GetComponent<MZCharacter>().isActive == false )
-//			{
-//				eb.GetComponent<MZCharacter>().BeforeDestory();
-//				eb.active = false;
-//			}
-//		}
-//	}
-
 	void OnGUI()
 	{
-		if( guiCharactersInfo == null || _charactersListByType == null || _charactersListByType.Count == 0 )
+		if( guiCharactersInfo == null /*|| _charactersListByType == null || _charactersListByType.Count == 0*/ )
 			return;
 
 		string infoText = "";
 
-		foreach( MZCharacterType type in _charactersListByType.Keys )
-		{
-			List<GameObject> list = _charactersListByType[ type ];
-			infoText += type.ToString() + ": count=" + list.Count.ToString() + "\n";
-		}
+//		foreach( MZCharacterType type in _charactersListByType.Keys )
+//		{
+//			List<GameObject> list = _charactersListByType[ type ];
+//			infoText += type.ToString() + ": count=" + list.Count.ToString() + "\n";
+//		}
 
 		guiCharactersInfo.text = infoText;
 	}

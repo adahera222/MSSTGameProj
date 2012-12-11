@@ -27,6 +27,13 @@ public class MZControlUpdate<T> where T : MZControlBase
 
 	}
 
+	public void Clear()
+	{
+		_currentIndex = -1;
+		_controlsList.Clear();
+		_controlsList = null;
+	}
+
 	public MZControlUpdate(List<T> controlsList)
 	{
 		_controlsList = controlsList;

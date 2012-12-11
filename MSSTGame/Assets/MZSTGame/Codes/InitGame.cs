@@ -8,13 +8,10 @@ public class InitGame : MonoBehaviour
 
 	void Start()
 	{
-//		Application.targetFrameRate = 60;
-
 		MZOTFramesManager.GetInstance().CreateFramesByExistedContainer();
 		
 		Resources.UnloadUnusedAssets();
 
-//		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer(); // disable anmation function
 		MZCharacterObjectsPoolManager.GetInstance().Init();
 
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]player", MZCharacterType.Player, 10, MZGameSetting.GetCharacterDepth( MZCharacterType.Player ) );
@@ -37,6 +34,7 @@ public class InitGame : MonoBehaviour
 		GameObject playerObject = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.Player, "Player", "PlayerType01Setting" );
 		playerObject.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
 
+		MZGameComponents.GetInstance().charactersManager.playerObject = playerObject;
 		MZGameComponents.GetInstance().charactersManager.playerCharacter = playerObject.GetComponent<MZCharacter>();
 	}
 

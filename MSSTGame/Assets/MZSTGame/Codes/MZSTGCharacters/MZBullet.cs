@@ -40,6 +40,21 @@ public class MZBullet : MZCharacter, IMZMove
 	{
 		base.Enable();
 		enableRemoveTime = 0.3f;
+
+		if( characterType == MZCharacterType.PlayerBullet )
+			MZGameComponents.GetInstance().charactersManager.playerBulletNumber++;
+		else
+			MZGameComponents.GetInstance().charactersManager.enemyBulletNumber++;
+	}
+
+	public override void Disable()
+	{
+		base.Disable();
+
+		if( characterType == MZCharacterType.PlayerBullet )
+			MZGameComponents.GetInstance().charactersManager.playerBulletNumber--;
+		else
+			MZGameComponents.GetInstance().charactersManager.enemyBulletNumber--;
 	}
 
 	public override void Clear()
@@ -94,11 +109,17 @@ public class MZBullet : MZCharacter, IMZMove
 
 	void UpdateWithPlayer()
 	{
-		MZCharacter playerCharacter = MZGameComponents.GetInstance().charactersManager.playerCharacter; //.GetPlayer().GetComponent<MZCharacter>();
+		if( MZGameComponents.GetInstance().charactersManager.playerCharacter == null )
+			return;
 
-		if( IsCollide( playerCharacter ) )
-		{
+		MZCharacter playerCharacter = MZGameComponents.GetInstance().charactersManager.playerCharacter;
+
+//		if( IsCollide( playerCharacter ) )
+//		{
+//			Disable();
+//		}
+
+		if( MZMath.Distance( position, playerCharacter.position ) < 60 )
 			Disable();
-		}
 	}
 }

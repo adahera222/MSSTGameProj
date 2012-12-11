@@ -23,7 +23,7 @@ public class Enemy001Setting : CharacterSettingBase
 		rightBody.faceTo = new MZFaceTo_Target();
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );
-		mainBody.SetFrame( "[Celestial]_Army_med3_normal0001" );
+		mainBody.SetFrame( "[Celestial]_Army_med6_normal0001" );
 		mainBody.scale = 1.0f;
 		mainBody.rotation = 270;
 		mainBody.position = Vector2.zero;

@@ -72,7 +72,7 @@ public class MZCharacter : MonoBehaviour
 		return partObject.GetComponent<MZCharacterPart>();
 	}
 
-	public void Disable()
+	public virtual void Disable()
 	{
 		_isActive = false;
 	}

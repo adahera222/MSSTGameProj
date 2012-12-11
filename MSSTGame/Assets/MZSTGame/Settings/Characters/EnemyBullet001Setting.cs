@@ -8,7 +8,7 @@ public class EnemyBullet001Setting : CharacterSettingBase
 		MZCharacter character = characterObject.GetComponent<MZCharacter>();
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );
-		mainBody.SetFrame( "LittleBee_normal0001" );
+		mainBody.SetFrame( "Donut_normal0001" );
 		mainBody.scale = 0.8f;
 		mainBody.rotation = 270;
 //		mainBody.color = Color.green/2;
