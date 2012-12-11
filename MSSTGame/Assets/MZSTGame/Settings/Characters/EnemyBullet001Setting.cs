@@ -9,10 +9,10 @@ public class EnemyBullet001Setting : CharacterSettingBase
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );
 		mainBody.SetFrame( "Donut_normal0001" );
-		mainBody.scale = 0.8f;
+		mainBody.scale = 0.4f;
 		mainBody.rotation = 270;
 //		mainBody.color = Color.green/2;
-		mainBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 10 ) );
+		mainBody.AddCollision().Set( new Vector2( 0, 0 ), 10 );
 		mainBody.position = Vector2.zero;
 		mainBody.faceTo = new MZFaceTo_MovingVector();
 	}

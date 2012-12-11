@@ -10,7 +10,11 @@ public class MZCharactersManager : MonoBehaviour
 	public int enemyBulletNumber = 0;
 	GameObject _player = null;
 	MZCharacter _playerCharacter = null;
-	Dictionary<MZCharacterType, GameObject> _charactersContainerByType = null;
+
+	// test
+	int enemyBulletCanUpdateNumberPerStep = 100;
+	public int enemyBulletCanUpdateStart = 0;
+	public int enemyBulletCanUpdateEnd = 100;
 
 	public GameObject playerObject
 	{
@@ -53,11 +57,7 @@ public class MZCharactersManager : MonoBehaviour
 
 	void Awake()
 	{
-		_charactersContainerByType = new Dictionary<MZCharacterType, GameObject>();
-		_charactersContainerByType.Add( MZCharacterType.Player, GameObject.Find( "MZPlayers" ) );
-		_charactersContainerByType.Add( MZCharacterType.PlayerBullet, GameObject.Find( "MZPlayerBullets" ) );
-		_charactersContainerByType.Add( MZCharacterType.EnemyAir, GameObject.Find( "MZEnemiesAir" ) );
-		_charactersContainerByType.Add( MZCharacterType.EnemyBullet, GameObject.Find( "MZEnemyBullets" ) );
+
 	}
 
 	void Start()
@@ -67,7 +67,17 @@ public class MZCharactersManager : MonoBehaviour
 
 	void Update()
 	{
+		// test
+		enemyBulletCanUpdateStart += enemyBulletCanUpdateNumberPerStep;
 
+		if( enemyBulletCanUpdateStart + enemyBulletCanUpdateNumberPerStep >= MZCharacterObjectsPoolManager.GetInstance().GetCharacterObjectsListCount( MZCharacterType.EnemyBullet ) )
+		{
+			enemyBulletCanUpdateStart = 0;
+		}
+
+		enemyBulletCanUpdateEnd = enemyBulletCanUpdateStart + enemyBulletCanUpdateNumberPerStep;
+
+		MZDebug.Log( "Update range: " + enemyBulletCanUpdateStart.ToString() + " to " + enemyBulletCanUpdateEnd.ToString() );
 	}
 
 	void LateUpdate()
@@ -100,13 +110,9 @@ public class MZCharactersManager : MonoBehaviour
 		if( guiCharactersInfo == null /*|| _charactersListByType == null || _charactersListByType.Count == 0*/ )
 			return;
 
-		string infoText = "";
-
-//		foreach( MZCharacterType type in _charactersListByType.Keys )
-//		{
-//			List<GameObject> list = _charactersListByType[ type ];
-//			infoText += type.ToString() + ": count=" + list.Count.ToString() + "\n";
-//		}
+		string infoText = "PB: " + playerBulletNumber.ToString() + "\n" +
+			"E: " + enemyNumber.ToString() + "\n" +
+			"EB: " + enemyBulletNumber.ToString();
 
 		guiCharactersInfo.text = infoText;
 	}

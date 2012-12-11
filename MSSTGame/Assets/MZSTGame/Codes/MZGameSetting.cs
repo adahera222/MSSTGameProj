@@ -20,23 +20,25 @@ public class MZGameSetting
 
 	static public int GetCharacterDepth(MZCharacterType type)
 	{
-		switch( type )
-		{
-			case MZCharacterType.Player:
-				return -30;
+		return -100;
 
-			case MZCharacterType.PlayerBullet:
-				return -20;
-
-			case MZCharacterType.EnemyAir:
-				return -50;
-
-			case MZCharacterType.EnemyBullet:
-				return -100;
-		}
-
-		MZDebug.Assert( false, "undefine type: " + type.ToString() );
-		return -1;
+//		switch( type )
+//		{
+//			case MZCharacterType.EnemyAir:
+//				return -30;
+//
+//			case MZCharacterType.Player:
+//				return -50;
+//
+//			case MZCharacterType.PlayerBullet:
+//				return -70;
+//
+//			case MZCharacterType.EnemyBullet:
+//				return -100;
+//		}
+//
+//		MZDebug.Assert( false, "undefine type: " + type.ToString() );
+//		return -1;
 	}
 
 	static public Color GetCollisionColor(MZCharacterType type)

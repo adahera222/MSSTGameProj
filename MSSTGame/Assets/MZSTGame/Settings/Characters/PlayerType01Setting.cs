@@ -11,6 +11,6 @@ public class PlayerType01Setting : CharacterSettingBase
 		mainBody.SetFrame( "Bow_normal0001" );
 		mainBody.position = Vector2.zero;
 		mainBody.rotation = 90;
-		mainBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 50 ) );
+		mainBody.AddCollision().Set( new Vector2( 0, 0 ), 50 );
 	}
 }

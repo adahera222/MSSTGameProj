@@ -89,21 +89,16 @@ public class MZBullet : MZCharacter, IMZMove
 
 	void UpdateWithEnemies()
 	{
-//		MZCharacter selfCharacter = gameObject.GetComponent<MZCharacter>();
-
-		MZCharactersManager charactersManager = MZGameComponents.GetInstance().charactersManager;
-
-//		List<GameObject> list = charactersManager.GetList( MZCharacterType.EnemyAir );
-
-		foreach( GameObject enemy in MZOTSpritesPoolManager.GetInstance().GetSpritesList( MZCharacterType.EnemyAir ) )
+		foreach( MZEnemy enemyCharacter in MZCharacterObjectsPoolManager.GetInstance().GetCharacterList( MZCharacterType.EnemyAir ) )
 		{
-//			MZCharacter enemyCharacter = enemy.GetComponent<MZCharacter>();
+			if( enemyCharacter.isActive == false )
+				continue;
 
-//			if( selfCharacter.IsCollide( enemyCharacter ) )
-//			{
-//				// damge to enemy
-//				selfCharacter.Disable();
-//			}
+			if( IsCollide( enemyCharacter ) )
+			{
+				enemyCharacter.TakenDamage( 1 );
+				Disable();
+			}
 		}
 	}
 
@@ -112,14 +107,18 @@ public class MZBullet : MZCharacter, IMZMove
 		if( MZGameComponents.GetInstance().charactersManager.playerCharacter == null )
 			return;
 
+		// test
+		if( !( MZGameComponents.GetInstance().charactersManager.enemyBulletCanUpdateStart <= poolIndex && poolIndex <=
+			MZGameComponents.GetInstance().charactersManager.enemyBulletCanUpdateStart ) )
+			return;
+
+		MZDebug.Log( "i am " + poolIndex.ToString() );
+
 		MZCharacter playerCharacter = MZGameComponents.GetInstance().charactersManager.playerCharacter;
 
-//		if( IsCollide( playerCharacter ) )
-//		{
-//			Disable();
-//		}
-
-		if( MZMath.Distance( position, playerCharacter.position ) < 60 )
+		if( IsCollide( playerCharacter ) )
+		{
 			Disable();
+		}
 	}
 }

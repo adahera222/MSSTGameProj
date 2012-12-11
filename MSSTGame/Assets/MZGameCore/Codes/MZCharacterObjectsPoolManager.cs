@@ -6,7 +6,7 @@ public class MZCharacterObjectsPoolManager
 {
 	static MZCharacterObjectsPoolManager _instance = null;
 	Dictionary<MZCharacterType, MZCharacterObjectsList> _characterObjectsListByType = null;
-	GameObject _characterObjectsPool = null;
+	Dictionary<MZCharacterType, GameObject> _charactersContainerByType = null;
 
 	public Dictionary<MZCharacterType, MZCharacterObjectsList> characterObjectsListByType
 	{
@@ -23,7 +23,11 @@ public class MZCharacterObjectsPoolManager
 
 	public void Init()
 	{
-		_characterObjectsPool = (GameObject)GameObject.Find( "MZCharacterObjectsPool" );
+		_charactersContainerByType = new Dictionary<MZCharacterType, GameObject>();
+		_charactersContainerByType.Add( MZCharacterType.Player, GameObject.Find( "MZPlayers" ) );
+		_charactersContainerByType.Add( MZCharacterType.PlayerBullet, GameObject.Find( "MZPlayerBullets" ) );
+		_charactersContainerByType.Add( MZCharacterType.EnemyAir, GameObject.Find( "MZEnemiesAir" ) );
+		_charactersContainerByType.Add( MZCharacterType.EnemyBullet, GameObject.Find( "MZEnemyBullets" ) );
 
 		SetGameObjectsArray( MZCharacterType.Player, 1 );
 		SetGameObjectsArray( MZCharacterType.EnemyAir, 500 );
@@ -70,7 +74,7 @@ public class MZCharacterObjectsPoolManager
 		if( _characterObjectsListByType == null )
 			_characterObjectsListByType = new Dictionary<MZCharacterType, MZCharacterObjectsList>();
 
-		_characterObjectsListByType.Add( characterType, new MZCharacterObjectsList( characterType, number, _characterObjectsPool ) );
+		_characterObjectsListByType.Add( characterType, new MZCharacterObjectsList( characterType, number, _charactersContainerByType[ characterType ] ) );
 	}
 
 	public class MZCharacterObjectsList
@@ -131,7 +135,7 @@ public class MZCharacterObjectsPoolManager
 		public void ReturnCharacterObject(GameObject characterObject)
 		{
 			characterObject.active = false;
-			characterObject.transform.parent = _parentObject.transform;
+//			characterObject.transform.parent = _parentObject.transform;
 		}
 
 		string GetCharacterScriptNameByType(MZCharacterType type)

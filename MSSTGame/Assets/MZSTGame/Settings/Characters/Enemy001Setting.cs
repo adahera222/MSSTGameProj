@@ -11,35 +11,36 @@ public class Enemy001Setting : CharacterSettingBase
 		leftBody.scale = 0.4f;
 		leftBody.rotation = 270;
 		leftBody.position = new Vector2( 100, -90 );
-		leftBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 40 ) );
 		leftBody.faceTo = new MZFaceTo_Target();
+		leftBody.AddCollision().Set( new Vector2( 0, 0 ), 40 );
 
 		MZCharacterPart rightBody = character.AddPart( "RightBody" );
 		rightBody.SetFrame( "[Celestial]_Army_med2_normal0001" );
 		rightBody.scale = 0.4f;
 		rightBody.rotation = 270;
 		rightBody.position = new Vector2( -100, -90 );
-		rightBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 40 ) );
 		rightBody.faceTo = new MZFaceTo_Target();
+		rightBody.AddCollision().Set( new Vector2( 0, 0 ), 40 );
 
 		MZCharacterPart mainBody = character.AddPart( "MainBody" );
 		mainBody.SetFrame( "[Celestial]_Army_med6_normal0001" );
 		mainBody.scale = 1.0f;
 		mainBody.rotation = 270;
 		mainBody.position = Vector2.zero;
-		mainBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
+		mainBody.AddCollision().Set( new Vector2( 0, 0 ), 90 );
+
 
 		MZEnemy enemy = characterObject.GetComponent<MZEnemy>();
-		enemy.healthPoint = 10;
+		enemy._healthPoint = 10;
 
 		// mode 1
 		MZMode mode1 = enemy.AddMode( "mode1" );
 		mode1.duration = -1;
 
-//		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
-//		move1.initVelocity = 100;
-//		move1.initMovingVector = new Vector2( 0, -1 );
-//		move1.duration = -1;
+		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
+		move1.initVelocity = 100;
+		move1.initMovingVector = new Vector2( 0, -1 );
+		move1.duration = -1;
 
 		AddOddWay( mode1, leftBody );
 		AddOddWay( mode1, rightBody );

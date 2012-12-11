@@ -3,14 +3,12 @@ using System.Collections;
 
 public class MZPlayer : MZCharacter
 {
-//	float interval = 0.2f;
-//	float cd = 0;
 	Rect playMovableBound = MZGameSetting.GetPlayerMovableBoundRect();
 	float dragableRadius = 150;
 	GameObject dragRange;
 	Vector3 positonOnTouchBegan;
 	Vector3 playerPositionOnTouchBegan;
-//	MZAttack_Base attackTemp = null;
+	MZAttack_Base attackTemp = null;
 
 	enum ControlState
 	{
@@ -28,6 +26,17 @@ public class MZPlayer : MZCharacter
 		dragRange = GameObject.Find( "TestDragableRange" );
 		if( dragRange != null )
 			dragRange.transform.localScale = new Vector3( dragableRadius*2, 0, dragableRadius*2 );
+
+		attackTemp = new MZAttack_OddWay();
+		attackTemp.numberOfWays = 3;
+		attackTemp.initVelocity = 1000;
+		attackTemp.intervalDegrees = 5;
+		attackTemp.colddown = 0.25f;
+		attackTemp.duration = -1;
+		attackTemp.bulletSettingName = "PlayerBullet001Setting";
+		attackTemp.enable = false;
+//		attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
+		attackTemp.SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
 	}
 
 	public override void Clear()
@@ -62,7 +71,7 @@ public class MZPlayer : MZCharacter
 		UpdateOnTouchBegan();
 		UpdateOnTouchMoved();
 		UpdateOnTouchEnded();
-//		attackTemp.Update();
+		attackTemp.Update();
 
 		UpdateTest();
 	}
@@ -76,7 +85,10 @@ public class MZPlayer : MZCharacter
 		playerPositionOnTouchBegan = gameObject.gameObject.transform.position;
 		currentControlState = ( MZMath.V3ToV2DistancePow2( positonOnTouchBegan, gameObject.transform.position ) > dragableRadius*dragableRadius )? ControlState.Teleport : ControlState.Move;
 
-//		attackTemp.enable = true;
+		if( attackTemp.controlTarget == null )
+			attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
+
+		attackTemp.enable = true;
 	}
 
 	void UpdateOnTouchMoved()
@@ -106,7 +118,7 @@ public class MZPlayer : MZCharacter
 			return;
 
 		currentControlState = ControlState.None;
-//		attackTemp.enable = false;
+		attackTemp.enable = false;
 	}
 
 	Vector3 GetModifyNextPositionInBound(Vector3 nextPosition)

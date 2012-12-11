@@ -1,31 +1,36 @@
 using UnityEngine;
 using System.Collections;
 
-[System.Serializable]
+public interface IMZCollision
+{
+	Vector2 realPosition
+	{
+		get;
+	}
+}
+
 public class MZCollision
 {
 	public Vector2 center = new Vector2( 0, 0 );
 	public float radius = 0;
-
-	static public bool IsCollision(MZCollision c1, MZCollision c2)
-	{
-		return ( MZMath.DistancePow2( c1.center, c2.center ) <= Mathf.Pow( c1.radius + c2.radius, 2 ) );
-	}
+	public IMZCollision collisionDelegate = null;
 
 	public MZCollision()
 	{
 
 	}
 
-	public MZCollision(Vector2 center, float radius)
+	public void Set(Vector2 center, float radius)
 	{
 		this.center = center;
 		this.radius = radius;
 	}
 
-	public bool IsCollision(MZCollision other)
+	public bool IsCollision(MZCollision otherCollision)
 	{
-		float radiusPow2 = ( radius + other.radius )*( radius + other.radius );
-		return ( MZMath.DistancePow2( center, other.center ) <= radiusPow2 );
+		MZDebug.Assert( collisionDelegate != null, "collisionDelegate is null" );
+
+		float collisionDistance = radius + otherCollision.radius;
+		return MZMath.Distance( collisionDelegate.realPosition, otherCollision.collisionDelegate.realPosition ) <= collisionDistance;
 	}
 }

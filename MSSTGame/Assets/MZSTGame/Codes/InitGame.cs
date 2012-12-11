@@ -14,9 +14,9 @@ public class InitGame : MonoBehaviour
 
 		MZCharacterObjectsPoolManager.GetInstance().Init();
 
+		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemy", MZCharacterType.EnemyAir, 500, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyAir ) );
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]player", MZCharacterType.Player, 10, MZGameSetting.GetCharacterDepth( MZCharacterType.Player ) );
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]playerBullet", MZCharacterType.PlayerBullet, 500, MZGameSetting.GetCharacterDepth( MZCharacterType.PlayerBullet ) );
-		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemy", MZCharacterType.EnemyAir, 500, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyAir ) );
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemyBullet", MZCharacterType.EnemyBullet, 500, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyBullet ) );
 
 		MZGameComponents.GetInstance().charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();

@@ -2,9 +2,15 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZCharacter : MonoBehaviour
+public class MZCharacter : MonoBehaviour, IMZCollision
 {
 	public int poolIndex = -1;
+	public MZCollision outCollision = new MZCollision();
+
+	#region IMZCollision implementation
+	public Vector2 realPosition
+	{ get {	return position; } }
+	#endregion
 
 	public bool isActive
 	{ get { return _isActive; } }
@@ -45,6 +51,8 @@ public class MZCharacter : MonoBehaviour
 	{
 		_isActive = true;
 		_lifeTimeCount = 0;
+		outCollision.collisionDelegate = this;
+		outCollision.Set( new Vector2( 0, 0 ), 50 );
 	}
 
 	public MZCharacterPart AddPart(string name)
@@ -90,6 +98,9 @@ public class MZCharacter : MonoBehaviour
 
 	public bool IsCollide(MZCharacter other)
 	{
+		if( outCollision.IsCollision( other.outCollision ) == false )
+			return false;
+
 		foreach( MZCharacterPart selfPart in _partsByNameDictionary.Values )
 		{
 			foreach( MZCharacterPart otherPart in other._partsByNameDictionary.Values )
@@ -102,15 +113,6 @@ public class MZCharacter : MonoBehaviour
 		return false;
 	}
 
-	// set private to start function ... and use custom ReStart() (ref: rest ... ) call by my CharacterObjectManager ...
-//	protected virtual void Start()
-//	{
-//		_isActive = true;
-//		_lifeTimeCount = 0;
-//		Reset(); // ya .. i am re-start() ...
-//	}
-
-
 	protected virtual void Update()
 	{
 		_lifeTimeCount += Time.deltaTime;
@@ -120,6 +122,12 @@ public class MZCharacter : MonoBehaviour
 	private void Start()
 	{
 		
+	}
+
+	void OnDrawGizmos()
+	{
+		Gizmos.color = new Color( 0.67f, 0.917f, 0.921f );
+		Gizmos.DrawWireSphere( position, outCollision.radius );
 	}
 
 	void RemoveWhenOutOfBound()

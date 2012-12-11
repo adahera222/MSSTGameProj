@@ -12,6 +12,6 @@ public class PlayerBullet001Setting : CharacterSettingBase
 		mainBody.rotation = 90;
 		mainBody.scale = 0.3f;
 		mainBody.position = Vector2.zero;
-		mainBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 25 ) );
+		mainBody.AddCollision().Set( new Vector2( 0, 0 ), 25 );
 	}
 }

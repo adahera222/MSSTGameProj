@@ -2,21 +2,22 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo
+public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 {
-	List<MZCollision> _collisionsList = new List<MZCollision>();
+	List<MZCollision> _collisionsList = null;
 	GameObject _parentGameObject = null;
+	MZCharacter _parentCharacter = null;
 	MZFaceTo_Base _faceTo = null;
 
-	#region IMZAttack implementation
+	#region IMZAttack, IMZCollision implementation
 
 	public MZCharacterType characterType
 	{
-		get{ return _parentGameObject.GetComponent<MZCharacter>().characterType; }
+		get{ return _parentCharacter.characterType; }
 	}
 
 	public Vector2 realPosition
-	{ get { return _parentGameObject.GetComponent<MZCharacter>().position + this.position; } }
+	{ get { return _parentCharacter.position + this.position; } }
 
 	#endregion
 
@@ -62,6 +63,7 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo
 		{
 			_parentGameObject = value;
 			gameObject.transform.parent = value.transform;
+			_parentCharacter = _parentGameObject.GetComponent<MZCharacter>();
 		}
 		get{ return _parentGameObject; }
 	}
@@ -83,23 +85,25 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo
 		get { return _faceTo; }
 	}
 
-	public MZCollision GetRealCollision(MZCollision origin)
+	public MZCollision AddCollision()
 	{
-		Vector2 realCenter = _parentGameObject.GetComponent<MZCharacter>().position + this.position + origin.center;
-		return new MZCollision( realCenter, origin.radius );
+		if( _collisionsList == null )
+			_collisionsList = new List<MZCollision>();
+
+		MZCollision collision = new MZCollision();
+		collision.collisionDelegate = this;
+		collisionsList.Add( collision );
+
+		return collision;
 	}
 
 	public bool IsCollide(MZCharacterPart other)
 	{
 		foreach( MZCollision selfCollision in _collisionsList )
 		{
-			MZCollision realSelfCollision = GetRealCollision( selfCollision );
-
 			foreach( MZCollision otherCollision in other._collisionsList )
 			{
-				MZCollision realOtherCollision = other.GetRealCollision( otherCollision );
-
-				if( realSelfCollision.IsCollision( realOtherCollision ) )
+				if( selfCollision.IsCollision( otherCollision ) )
 					return true;
 			}
 		}
@@ -148,11 +152,11 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo
 	{
 		if( _parentGameObject == null )
 			return;
-		Gizmos.color = MZGameSetting.GetCollisionColor( _parentGameObject.GetComponent<MZCharacter>().characterType );
+		Gizmos.color = MZGameSetting.GetCollisionColor( _parentCharacter.characterType );
 
 		foreach( MZCollision c in _collisionsList )
 		{
-			Vector2 realCenter = _parentGameObject.GetComponent<MZCharacter>().position + position + c.center;
+			Vector2 realCenter = c.collisionDelegate.realPosition + c.center;
 			Gizmos.DrawWireSphere( realCenter, c.radius );
 		}
 	}

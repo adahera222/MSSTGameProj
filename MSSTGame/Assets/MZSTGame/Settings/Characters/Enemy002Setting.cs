@@ -12,10 +12,10 @@ public class Enemy002Setting : CharacterSettingBase
 		mainBody.scale = 1.0f;
 		mainBody.rotation = 270;
 		mainBody.position = Vector2.zero;
-		mainBody.collisionsList.Add( new MZCollision( new Vector2( 0, 0 ), 90 ) );
+		mainBody.AddCollision().Set( new Vector2( 0, 0 ), 90 );
 
 		MZEnemy enemy = characterObject.GetComponent<MZEnemy>();
-		enemy.healthPoint = 5;
+		enemy._healthPoint = 5;
 
 		MZMode mode1 = enemy.AddMode( "mode1" );
 

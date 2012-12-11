@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class MZEnemy : MZCharacter, IMZMode, IMZMove
 {
-	public int healthPoint = 1;
+	public int _healthPoint = 1;
 	MZControlUpdate<MZMode> _modeControlUpdate = new MZControlUpdate<MZMode>();
 
 	#region IMZMode implementation
@@ -28,8 +28,16 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	public override void Enable()
 	{
 		base.Enable();
-		healthPoint = 1;
+		_healthPoint = 1;
 		enableRemoveTime = 10.0f;
+		MZGameComponents.GetInstance().charactersManager.enemyNumber++;
+	}
+
+	public override void Disable()
+	{
+		base.Disable();
+
+		MZGameComponents.GetInstance().charactersManager.enemyNumber--;
 	}
 
 	public override void Clear()
@@ -54,12 +62,10 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 		return mode;
 	}
 
-//	protected override void Start()
-//	{
-//		base.Start();
-//
-//		enableRemoveTime = 10.0f;
-//	}
+	public void TakenDamage(int damage)
+	{
+		_healthPoint -= damage;
+	}
 
 	protected override void Update()
 	{
@@ -67,7 +73,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 		_modeControlUpdate.Update();
 
-		if( healthPoint <= 0 )
+		if( _healthPoint <= 0 )
 			Disable();
 	}
 }
