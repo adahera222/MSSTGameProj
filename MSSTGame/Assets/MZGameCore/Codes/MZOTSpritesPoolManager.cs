@@ -83,9 +83,11 @@ public class MZOTSpritesPoolManager
 				spriteObject.active = false;
 				spriteObject.transform.parent = GetSpriteDisableTransform();
 
-				spriteObject.GetComponent<OTSprite>().depth = _depth;
+//				spriteObject.GetComponent<OTSprite>().depth = _depth;
 				spriteObject.GetComponent<OTSprite>().position = invalidPosition;
 				spriteObject.GetComponent<OTSprite>().spriteContainer = _container;
+
+				spriteObject.AddComponent<MZCharacterPart>();
 
 				_spritesList[ i ] = spriteObject;
 			}

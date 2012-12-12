@@ -29,7 +29,6 @@ public class Enemy001Setting : CharacterSettingBase
 		mainBody.position = Vector2.zero;
 		mainBody.AddCollision().Set( new Vector2( 0, 0 ), 90 );
 
-
 		MZEnemy enemy = characterObject.GetComponent<MZEnemy>();
 		enemy._healthPoint = 10;
 

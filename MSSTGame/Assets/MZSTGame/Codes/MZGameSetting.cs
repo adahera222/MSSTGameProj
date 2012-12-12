@@ -5,10 +5,14 @@ public class MZGameSetting
 {
 //	static bool DISABLE_ENEMY_ATTACK = false;
 
+	public static bool SHOW_COLLISION_RANGE = false;
+	public static bool SHOW_BULLET_ON_COLLISION_CHECK = false;
+	public static bool SHOW_CHARACTERS_INFO = false;
 	public static Vector2 PLAYER_MOVABLE_BOUND_CENTER = new Vector2( 0, 0 );
 	public static Vector2 PLAYER_MOVABLE_BOUND_SIZE = new Vector2( 640, 850 );
 	public static Vector3 PLAYER_MOVABLE_BOUND_V3CENTER = new Vector3( PLAYER_MOVABLE_BOUND_CENTER.x, PLAYER_MOVABLE_BOUND_CENTER.y, 0 );
 	public static Vector3 PLAYER_MOVABLE_BOUND_V3SIZE = new Vector3( PLAYER_MOVABLE_BOUND_SIZE.x, PLAYER_MOVABLE_BOUND_SIZE.y, 100 );
+
 
 	static public Rect GetPlayerMovableBoundRect()
 	{
@@ -21,7 +25,6 @@ public class MZGameSetting
 	static public int GetCharacterDepth(MZCharacterType type)
 	{
 		return -100;
-
 //		switch( type )
 //		{
 //			case MZCharacterType.EnemyAir:

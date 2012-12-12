@@ -118,7 +118,7 @@ public class MZCharacterObjectsPoolManager
 				if( characterObjectsList[ i ].active == false )
 				{
 					characterObjectsList[ i ].active = true;
-					charactersList[ i ].Enable();
+//					charactersList[ i ].Enable();
 					return characterObjectsList[ i ];
 				}
 			}

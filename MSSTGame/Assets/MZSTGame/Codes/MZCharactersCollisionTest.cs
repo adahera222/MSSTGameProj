@@ -9,7 +9,7 @@ public class MZCharactersCollisionTest
 	public int maxTestPerTime = 100;
 	public List<MZCharacter> splitUpdateList;
 	public List<MZCharacter> fullUpdateList;
-	public OnCollideHandler onCollideHandler;
+	public OnCollideHandler onCollide;
 	//
 	int start = 0;
 	int end = 0;
@@ -40,7 +40,7 @@ public class MZCharactersCollisionTest
 			{
 				if( s.IsCollide( f ) )
 				{
-					onCollideHandler( s, f );
+					onCollide( s, f );
 				}
 			}
 		}

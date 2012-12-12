@@ -28,8 +28,9 @@ public class MZPlayer : MZCharacter
 			dragRange.transform.localScale = new Vector3( dragableRadius*2, 0, dragableRadius*2 );
 
 		attackTemp = new MZAttack_OddWay();
-		attackTemp.numberOfWays = 1;
+		attackTemp.numberOfWays = 5;
 		attackTemp.initVelocity = 1000;
+		attackTemp.strength = 1;
 		attackTemp.intervalDegrees = 5;
 		attackTemp.colddown = 0.25f;
 		attackTemp.duration = -1;
@@ -81,14 +82,12 @@ public class MZPlayer : MZCharacter
 		if( currentControlState == ControlState.Move )
 		{
 			Vector3 nextPosition = playerPositionOnTouchBegan + ( positonOnTouchMoved - positonOnTouchBegan );
-
-			nextPosition = GetModifyNextPositionInBound( nextPosition );
-			gameObject.transform.position = nextPosition;
+			position = GetModifyNextPositionInBound( nextPosition );
 		}
 
 		if( currentControlState == ControlState.Teleport )
 		{
-			gameObject.transform.position = GetModifyNextPositionInBound( positonOnTouchMoved );
+			position = GetModifyNextPositionInBound( positonOnTouchMoved );
 		}
 	}
 
@@ -101,7 +100,7 @@ public class MZPlayer : MZCharacter
 		attackTemp.enable = false;
 	}
 
-	Vector3 GetModifyNextPositionInBound(Vector3 nextPosition)
+	Vector2 GetModifyNextPositionInBound(Vector3 nextPosition)
 	{
 		if( nextPosition.x <= playMovableBound.x )
 			nextPosition.x = playMovableBound.x;
@@ -115,9 +114,7 @@ public class MZPlayer : MZCharacter
 		if( nextPosition.y >= playMovableBound.y )
 			nextPosition.y = playMovableBound.y;
 
-		nextPosition.z = MZGameSetting.GetCharacterDepth( MZCharacterType.Player );
-
-		return nextPosition;
+		return new Vector2( nextPosition.x, nextPosition.y );
 	}
 
 	void UpdateTest()

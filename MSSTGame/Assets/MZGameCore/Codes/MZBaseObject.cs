@@ -112,9 +112,23 @@ public class MZBaseObject : MonoBehaviour
 		return ( w > h )? w : h;
 	}
 
-	void Start()
+	public virtual void Enable()
 	{
-		GetSprite().name = name;
+		enabled = true;
+	}
+
+	public virtual void Disable()
+	{
+		enabled = false;
+
+		_originSize = Vector2.zero;
+		_scale = 1;
+		_scaleX = 1;
+		_scaleY = 1;
+		_rotation = 1;
+		_color = new Color( 0.5f, 0.5f, 0.5f );
+		_shaderType = MZShaderType.OTDefault;
+		_name = "";
 	}
 
 	protected virtual void Update()

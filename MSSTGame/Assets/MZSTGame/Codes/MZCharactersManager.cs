@@ -75,12 +75,12 @@ public class MZCharactersManager : MonoBehaviour
 		_enemyBulletAndPlayerCollisionTest = new MZCharactersCollisionTest();
 		_enemyBulletAndPlayerCollisionTest.splitUpdateList = _dicActiveCharactersListByType[ MZCharacterType.EnemyBullet ];
 		_enemyBulletAndPlayerCollisionTest.fullUpdateList = _dicActiveCharactersListByType[ MZCharacterType.Player ];
-		_enemyBulletAndPlayerCollisionTest.onCollideHandler = new MZCharactersCollisionTest.OnCollideHandler( OnEnemyBulletCollidePlayer );
+		_enemyBulletAndPlayerCollisionTest.onCollide = new MZCharactersCollisionTest.OnCollideHandler( OnEnemyBulletCollidePlayer );
 
 		_playerBulletAndEnemyCollisionTest = new MZCharactersCollisionTest();
 		_playerBulletAndEnemyCollisionTest.splitUpdateList = _dicActiveCharactersListByType[ MZCharacterType.PlayerBullet ];
 		_playerBulletAndEnemyCollisionTest.fullUpdateList = _dicActiveCharactersListByType[ MZCharacterType.EnemyAir ];
-		_playerBulletAndEnemyCollisionTest.onCollideHandler = new MZCharactersCollisionTest.OnCollideHandler( OnPlayerBulletCollideEnemy );
+		_playerBulletAndEnemyCollisionTest.onCollide = new MZCharactersCollisionTest.OnCollideHandler( OnPlayerBulletCollideEnemy );
 	}
 
 	void Start()
@@ -112,7 +112,7 @@ public class MZCharactersManager : MonoBehaviour
 			{
 				charactersList[ i ].Clear();
 				MZCharacterObjectsPoolManager.GetInstance().ReturnCharacterObject( charactersList[ i ].gameObject, type );
-				charactersList.Remove( charactersList[ i ] );
+//				charactersList.Remove( charactersList[ i ] );
 				i--;
 			}
 		}
@@ -120,6 +120,9 @@ public class MZCharactersManager : MonoBehaviour
 
 	void OnGUI()
 	{
+		if( !MZGameSetting.SHOW_CHARACTERS_INFO )
+			return;
+
 		if( guiCharactersInfo == null && _dicActiveCharactersListByType == null )
 			return;
 
@@ -141,7 +144,7 @@ public class MZCharactersManager : MonoBehaviour
 
 	void OnPlayerBulletCollideEnemy(MZCharacter playerBullet, MZCharacter enemy)
 	{
-		enemy.GetComponent<MZEnemy>().TakenDamage( 1 );
+		enemy.GetComponent<MZEnemy>().TakenDamage( playerBullet.GetComponent<MZBullet>().strength );
 		playerBullet.Disable();
 	}
 }

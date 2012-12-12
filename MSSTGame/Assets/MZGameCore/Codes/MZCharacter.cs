@@ -41,6 +41,11 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		get{ return _lifeTimeCount; }
 	}
 
+	public virtual Vector2 currentMovingVector
+	{
+		get{ return Vector2.zero; }
+	}
+
 	bool _isActive;
 	float _lifeTimeCount = 0;
 	float _enableRemoveTime = 9999.99f;
@@ -49,10 +54,17 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 	public virtual void Enable()
 	{
+		enabled = true;
 		_isActive = true;
 		_lifeTimeCount = 0;
 		outCollision.collisionDelegate = this;
 		outCollision.Set( new Vector2( 0, 0 ), 50 );
+	}
+
+	public virtual void Disable()
+	{
+		enabled = false;
+		_isActive = false;
 	}
 
 	public MZCharacterPart AddPart(string name)
@@ -61,13 +73,9 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 		GameObject partObject = MZOTSpritesPoolManager.GetInstance().GetSpriteObject( characterType );
 
-		MZCharacterPart characterPart = null;
-		if( partObject.GetComponent<MZCharacterPart>() == null )
-			characterPart = partObject.AddComponent<MZCharacterPart>();
-		else
-			characterPart = partObject.GetComponent<MZCharacterPart>();
+		MZCharacterPart characterPart = partObject.GetComponent<MZCharacterPart>();
 
-		characterPart.enabled = true;
+		characterPart.Enable();
 		characterPart.name = name;
 		characterPart.parentGameObject = gameObject;
 
@@ -80,23 +88,18 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		return partObject.GetComponent<MZCharacterPart>();
 	}
 
-	public virtual void Disable()
-	{
-		_isActive = false;
-	}
-
 	public virtual void Clear()
 	{
 		foreach( MZCharacterPart characterPart in partsByNameDictionary.Values )
 		{
-			characterPart.enabled = false;
+			characterPart.Disable();
 			MZOTSpritesPoolManager.GetInstance().ReturnSpriteObject( characterPart.gameObject, characterType );
 		}
 
 		partsByNameDictionary.Clear();
 	}
 
-	public bool IsCollide(MZCharacter other)
+	public virtual bool IsCollide(MZCharacter other)
 	{
 		if( outCollision.IsCollision( other.outCollision ) == false )
 			return false;
@@ -129,6 +132,9 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 	void OnDrawGizmos()
 	{
+		if( MZGameSetting.SHOW_COLLISION_RANGE == false || isActive == false )
+			return;
+
 		Gizmos.color = new Color( 0.67f, 0.917f, 0.921f );
 		Gizmos.DrawWireSphere( position, outCollision.radius );
 	}

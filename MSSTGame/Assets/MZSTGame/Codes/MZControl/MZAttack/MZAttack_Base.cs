@@ -19,6 +19,7 @@ public abstract class MZAttack_Base : MZControlBase, IMZTargetHelp
 	public new IMZAttack controlTarget = null;
 	public int numberOfWays = 0;
 	public int additionalWaysPerLaunch = 0;
+	public int strength = 1;
 	public float colddown = 99;
 	public float intervalDegrees = 0;
 	public float initVelocity = 0;
@@ -131,6 +132,7 @@ public abstract class MZAttack_Base : MZControlBase, IMZTargetHelp
 		MZDebug.Assert( bulletSettingName != null, "bulletSettingName is null" );
 
 		GameObject bullet = MZCharacterFactory.GetInstance().CreateCharacter( GetBulletTypeByControlTargetType(), "Bullet", bulletSettingName );
+		bullet.GetComponent<MZBullet>().strength = strength;
 		bullet.GetComponent<MZCharacter>().position = controlTarget.realPosition;
 
 		return bullet;

@@ -30,21 +30,7 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 
 	public Vector2 parentMovingVector
 	{
-		get
-		{
-			if( parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyAir ||
-				parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyGround )
-				return parentGameObject.GetComponent<MZEnemy>().currentMovingVector;
-
-			if( parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyBullet ||
-				parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.PlayerBullet )
-				return parentGameObject.GetComponent<MZBullet>().currentMovingVector;
-//				return parentGameObject.GetComponent<MZEnemyBullet>().currentMovingVector;
-
-				return Vector2.zero;
-
-//			return parentGameObject.GetComponent<MZCharacter>().currentMovingVector; <-- want this... but ???
-		}
+		get{ return _parentCharacter.currentMovingVector; }
 	}
 
 	public Vector2 selfMovingVector
@@ -56,6 +42,17 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 	}
 
 	#endregion
+
+	public override void Disable()
+	{
+		base.Disable();
+
+		enabled = false;
+		_collisionsList = null;
+		_parentGameObject = null;
+		_parentCharacter = null;
+		_faceTo = null;
+	}
 
 	public GameObject parentGameObject
 	{
@@ -150,14 +147,15 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 
 	void OnDrawGizmos()
 	{
-//		if( _parentGameObject == null )
-//			return;
-//		Gizmos.color = MZGameSetting.GetCollisionColor( _parentCharacter.characterType );
-//
-//		foreach( MZCollision c in _collisionsList )
-//		{
-//			Vector2 realCenter = c.collisionDelegate.realPosition + c.center;
-//			Gizmos.DrawWireSphere( realCenter, c.radius );
-//		}
+		if( _parentGameObject == null || MZGameSetting.SHOW_COLLISION_RANGE == false || enabled == false )
+			return;
+
+		Gizmos.color = MZGameSetting.GetCollisionColor( _parentCharacter.characterType );
+
+		foreach( MZCollision c in _collisionsList )
+		{
+			Vector2 realCenter = c.collisionDelegate.realPosition + c.center;
+			Gizmos.DrawWireSphere( realCenter, c.radius );
+		}
 	}
 }

@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 public class MZBullet : MZCharacter, IMZMove
 {
+	public int strength = 0;
+	//
 	MZControlUpdate<MZMove_Base> _moveControlUpdate = null;
 
-	public Vector2 currentMovingVector
+	public override Vector2 currentMovingVector
 	{
 		get
-		{
-			return ( _moveControlUpdate != null )? _moveControlUpdate.currentControl.currentMovingVector : Vector2.zero;
-		}
+		{ return ( _moveControlUpdate != null )? _moveControlUpdate.currentControl.currentMovingVector : Vector2.zero; }
 	}
 
 	public List<MZMove_Base> movesList
@@ -69,65 +69,24 @@ public class MZBullet : MZCharacter, IMZMove
 
 		if( _moveControlUpdate != null )
 			_moveControlUpdate.Update();
-
-//		UpdateWithTarget();
 	}
 
-	public bool drawGiz = false;
+	public override bool IsCollide(MZCharacter other)
+	{
+		_drawCollisionCheck = true;
+		return base.IsCollide( other );
+	}
+
+	bool _drawCollisionCheck = false;
 
 	void OnDrawGizmos()
 	{
-		if( drawGiz == false )
+		if( _drawCollisionCheck == false || !MZGameSetting.SHOW_BULLET_ON_COLLISION_CHECK )
 			return;
 
 		Gizmos.color = Color.green;
-		Gizmos.DrawWireCube( position, new Vector3( 20, 20, 20 ) );
+		Gizmos.DrawWireCube( position, new Vector3( 30, 30, 30 ) );
 
-		drawGiz = false;
-	}
-
-	void UpdateWithTarget()
-	{
-		switch( characterType )
-		{
-			case MZCharacterType.EnemyBullet:
-				UpdateWithPlayer();
-				break;
-
-			case MZCharacterType.PlayerBullet:
-				UpdateWithEnemies();
-				break;
-		}
-	}
-
-	void UpdateWithEnemies()
-	{
-		foreach( MZEnemy enemyCharacter in MZCharacterObjectsPoolManager.GetInstance().GetCharacterList( MZCharacterType.EnemyAir ) )
-		{
-			if( enemyCharacter.isActive == false )
-				continue;
-
-			if( IsCollide( enemyCharacter ) )
-			{
-				enemyCharacter.TakenDamage( 1 );
-				Disable();
-			}
-		}
-	}
-
-	void UpdateWithPlayer()
-	{
-		if( MZGameComponents.GetInstance().charactersManager.playerCharacter == null )
-			return;
-
-		// test
-//		MZDebug.Log( "i am " + poolIndex.ToString() );
-
-		MZCharacter playerCharacter = MZGameComponents.GetInstance().charactersManager.playerCharacter;
-
-		if( IsCollide( playerCharacter ) )
-		{
-			Disable();
-		}
+		_drawCollisionCheck = false;
 	}
 }
