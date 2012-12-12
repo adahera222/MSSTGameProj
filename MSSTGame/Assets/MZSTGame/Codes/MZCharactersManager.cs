@@ -112,7 +112,7 @@ public class MZCharactersManager : MonoBehaviour
 			{
 				charactersList[ i ].Clear();
 				MZCharacterObjectsPoolManager.GetInstance().ReturnCharacterObject( charactersList[ i ].gameObject, type );
-//				charactersList.Remove( charactersList[ i ] );
+				charactersList.Remove( charactersList[ i ] );
 				i--;
 			}
 		}

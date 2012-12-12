@@ -7,7 +7,7 @@ public class MZGameSetting
 
 	public static bool SHOW_COLLISION_RANGE = false;
 	public static bool SHOW_BULLET_ON_COLLISION_CHECK = false;
-	public static bool SHOW_CHARACTERS_INFO = false;
+	public static bool SHOW_CHARACTERS_INFO = true;
 	public static Vector2 PLAYER_MOVABLE_BOUND_CENTER = new Vector2( 0, 0 );
 	public static Vector2 PLAYER_MOVABLE_BOUND_SIZE = new Vector2( 640, 850 );
 	public static Vector3 PLAYER_MOVABLE_BOUND_V3CENTER = new Vector3( PLAYER_MOVABLE_BOUND_CENTER.x, PLAYER_MOVABLE_BOUND_CENTER.y, 0 );
@@ -24,24 +24,24 @@ public class MZGameSetting
 
 	static public int GetCharacterDepth(MZCharacterType type)
 	{
-		return -100;
-//		switch( type )
-//		{
-//			case MZCharacterType.EnemyAir:
-//				return -30;
-//
-//			case MZCharacterType.Player:
-//				return -50;
-//
-//			case MZCharacterType.PlayerBullet:
-//				return -70;
-//
-//			case MZCharacterType.EnemyBullet:
-//				return -100;
-//		}
-//
-//		MZDebug.Assert( false, "undefine type: " + type.ToString() );
-//		return -1;
+//		return -100;
+		switch( type )
+		{
+			case MZCharacterType.EnemyAir:
+				return -30;
+
+			case MZCharacterType.Player:
+				return -50;
+
+			case MZCharacterType.PlayerBullet:
+				return -70;
+
+			case MZCharacterType.EnemyBullet:
+				return -100;
+		}
+
+		MZDebug.Assert( false, "undefine type: " + type.ToString() );
+		return -1;
 	}
 
 	static public Color GetCollisionColor(MZCharacterType type)

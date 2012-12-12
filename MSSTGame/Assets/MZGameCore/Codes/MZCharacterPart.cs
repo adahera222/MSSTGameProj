@@ -43,11 +43,15 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 
 	#endregion
 
+	public override void Enable()
+	{
+		base.Enable();
+	}
+
 	public override void Disable()
 	{
 		base.Disable();
 
-		enabled = false;
 		_collisionsList = null;
 		_parentGameObject = null;
 		_parentCharacter = null;

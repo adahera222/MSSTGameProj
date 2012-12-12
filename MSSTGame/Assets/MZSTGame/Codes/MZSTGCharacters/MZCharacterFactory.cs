@@ -15,7 +15,8 @@ public class MZCharacterFactory
 
 	public GameObject CreateCharacter(MZCharacterType type, string name, string settingName)
 	{
-		GameObject characterObject = CreateCharacterGameObject( "MZCharacter", type );
+		GameObject characterObject = MZCharacterObjectsPoolManager.GetInstance().GetCharacterObject( type );
+
 		SetCharacterToSetting( characterObject, settingName );
 		characterObject.name = ( name != null )? name : "DefaultCharacter";
 
@@ -27,12 +28,6 @@ public class MZCharacterFactory
 	private MZCharacterFactory()
 	{
 
-	}
-
-	GameObject CreateCharacterGameObject(string characterName, MZCharacterType type)
-	{
-		GameObject characterObject = MZCharacterObjectsPoolManager.GetInstance().GetCharacterObject( type );
-		return characterObject;
 	}
 
 	void SetCharacterToSetting(GameObject characterObject, string settingName)

@@ -11,7 +11,7 @@ public class SystemTest : MonoBehaviour
 	void Start()
 	{
 //		CreateManyEnemyBullet();
-		CreateFourEnemy();
+//		CreateFourEnemy();
 	}
 
 	void Update()
@@ -21,7 +21,7 @@ public class SystemTest : MonoBehaviour
 		if( cd <= 0 )
 		{
 //			CreateEnemy();
-//			CreateFourEnemy();
+			CreateFourEnemy();
 //			CreateManyEnemyBullet();
 			cd += interval;
 		}

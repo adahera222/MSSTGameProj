@@ -55,6 +55,9 @@ public class MZBullet : MZCharacter, IMZMove
 			MZGameComponents.GetInstance().charactersManager.playerBulletNumber--;
 		else
 			MZGameComponents.GetInstance().charactersManager.enemyBulletNumber--;
+
+		_moveControlUpdate = null;
+		strength = 0;
 	}
 
 	public override void Clear()

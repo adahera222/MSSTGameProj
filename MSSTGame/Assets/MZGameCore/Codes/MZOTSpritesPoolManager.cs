@@ -56,7 +56,7 @@ public class MZOTSpritesPoolManager
 		OTContainer _container = null;
 		int _maxUsingIndex = 0;
 		int _number = 0;
-		int _depth = 0;
+//		int _depth = 0;
 
 		public GameObject[] spritesList
 		{
@@ -71,7 +71,7 @@ public class MZOTSpritesPoolManager
 				number = 0;
 
 			_container = container;
-			_depth = depth;
+//			_depth = depth;
 			_number = number;
 
 			_spritesList = new GameObject[_number];

@@ -49,6 +49,9 @@ public class MZPlayer : MZCharacter
 	{
 		base.Update();
 
+		if( attackTemp.controlTarget == null )
+			attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
+
 		UpdateOnTouchBegan();
 		UpdateOnTouchMoved();
 		UpdateOnTouchEnded();
