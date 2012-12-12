@@ -150,14 +150,14 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 
 	void OnDrawGizmos()
 	{
-		if( _parentGameObject == null )
-			return;
-		Gizmos.color = MZGameSetting.GetCollisionColor( _parentCharacter.characterType );
-
-		foreach( MZCollision c in _collisionsList )
-		{
-			Vector2 realCenter = c.collisionDelegate.realPosition + c.center;
-			Gizmos.DrawWireSphere( realCenter, c.radius );
-		}
+//		if( _parentGameObject == null )
+//			return;
+//		Gizmos.color = MZGameSetting.GetCollisionColor( _parentCharacter.characterType );
+//
+//		foreach( MZCollision c in _collisionsList )
+//		{
+//			Vector2 realCenter = c.collisionDelegate.realPosition + c.center;
+//			Gizmos.DrawWireSphere( realCenter, c.radius );
+//		}
 	}
 }

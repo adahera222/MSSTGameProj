@@ -28,11 +28,6 @@ public class MZCharacterObjectsPoolManager
 		_charactersContainerByType.Add( MZCharacterType.PlayerBullet, GameObject.Find( "MZPlayerBullets" ) );
 		_charactersContainerByType.Add( MZCharacterType.EnemyAir, GameObject.Find( "MZEnemiesAir" ) );
 		_charactersContainerByType.Add( MZCharacterType.EnemyBullet, GameObject.Find( "MZEnemyBullets" ) );
-
-		SetGameObjectsArray( MZCharacterType.Player, 1 );
-		SetGameObjectsArray( MZCharacterType.EnemyAir, 500 );
-		SetGameObjectsArray( MZCharacterType.PlayerBullet, 1000 );
-		SetGameObjectsArray( MZCharacterType.EnemyBullet, 1000 );
 	}
 
 	public GameObject GetCharacterObject(MZCharacterType characterType)
@@ -53,7 +48,7 @@ public class MZCharacterObjectsPoolManager
 		return _characterObjectsListByType[ characterType ].characterObjectsList;
 	}
 
-	public int GetCharacterObjectsListCount(MZCharacterType characterType)
+	public int GetListCount(MZCharacterType characterType)
 	{
 		MZDebug.Assert( _characterObjectsListByType.ContainsKey( characterType ) == true, "not found type=" + characterType.ToString() );
 		return _characterObjectsListByType[ characterType ].number;
@@ -135,7 +130,6 @@ public class MZCharacterObjectsPoolManager
 		public void ReturnCharacterObject(GameObject characterObject)
 		{
 			characterObject.active = false;
-//			characterObject.transform.parent = _parentObject.transform;
 		}
 
 		string GetCharacterScriptNameByType(MZCharacterType type)

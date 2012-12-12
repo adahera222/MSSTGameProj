@@ -75,9 +75,9 @@ public class Enemy001Setting : CharacterSettingBase
 		attack1.numberOfWays = 1;
 		attack1.additionalWaysPerLaunch = 2;
 		attack1.additionalVelocityPerLaunch = 50;
-		attack1.colddown = 0.05f;
+		attack1.colddown = 0.05f;//0.025f;//;
 		attack1.intervalDegrees = 2.5f;
-		attack1.initVelocity = 300;
+		attack1.initVelocity = 300; //300
 		attack1.duration = 0.25f;
 		attack1.bulletSettingName = "EnemyBullet001Setting";
 		attack1.SetTargetHelp( new MZTargetHelp_Target() );

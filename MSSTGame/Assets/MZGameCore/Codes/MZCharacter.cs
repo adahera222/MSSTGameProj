@@ -9,7 +9,7 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 	#region IMZCollision implementation
 	public Vector2 realPosition
-	{ get {	return position; } }
+	{ get { return position; } }
 	#endregion
 
 	public bool isActive
@@ -99,6 +99,9 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 	public bool IsCollide(MZCharacter other)
 	{
 		if( outCollision.IsCollision( other.outCollision ) == false )
+			return false;
+
+		if( isActive == false )
 			return false;
 
 		foreach( MZCharacterPart selfPart in _partsByNameDictionary.Values )

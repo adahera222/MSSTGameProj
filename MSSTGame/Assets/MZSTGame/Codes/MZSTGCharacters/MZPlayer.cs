@@ -28,7 +28,7 @@ public class MZPlayer : MZCharacter
 			dragRange.transform.localScale = new Vector3( dragableRadius*2, 0, dragableRadius*2 );
 
 		attackTemp = new MZAttack_OddWay();
-		attackTemp.numberOfWays = 3;
+		attackTemp.numberOfWays = 1;
 		attackTemp.initVelocity = 1000;
 		attackTemp.intervalDegrees = 5;
 		attackTemp.colddown = 0.25f;
@@ -43,26 +43,6 @@ public class MZPlayer : MZCharacter
 	{
 		base.Clear();
 	}
-
-//	protected override void Start()
-//	{
-//		base.Start();
-//
-//		dragRange = GameObject.Find( "TestDragableRange" );
-//		if( dragRange != null )
-//			dragRange.transform.localScale = new Vector3( dragableRadius*2, 0, dragableRadius*2 );
-//
-//		attackTemp = new MZAttack_OddWay();
-//		attackTemp.numberOfWays = 3;
-//		attackTemp.initVelocity = 500;
-//		attackTemp.intervalDegrees = 5;
-//		attackTemp.colddown = 0.2f;
-//		attackTemp.duration = -1;
-//		attackTemp.bulletSettingName = "PlayerBullet001Setting";
-//		attackTemp.enable = false;
-//		attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
-//		attackTemp.SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
-//	}
 
 	protected override void Update()
 	{

@@ -9,15 +9,18 @@ public class InitGame : MonoBehaviour
 	void Start()
 	{
 		MZOTFramesManager.GetInstance().CreateFramesByExistedContainer();
-		
 		Resources.UnloadUnusedAssets();
 
-		MZCharacterObjectsPoolManager.GetInstance().Init();
-
-		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemy", MZCharacterType.EnemyAir, 500, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyAir ) );
+		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemy", MZCharacterType.EnemyAir, 200, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyAir ) );
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]player", MZCharacterType.Player, 10, MZGameSetting.GetCharacterDepth( MZCharacterType.Player ) );
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]playerBullet", MZCharacterType.PlayerBullet, 500, MZGameSetting.GetCharacterDepth( MZCharacterType.PlayerBullet ) );
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemyBullet", MZCharacterType.EnemyBullet, 500, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyBullet ) );
+
+		MZCharacterObjectsPoolManager.GetInstance().Init();
+		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.Player, 1 );
+		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.EnemyAir, 500 );
+		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.PlayerBullet, 500 );
+		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.EnemyBullet, 500 );
 
 		MZGameComponents.GetInstance().charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();
 

@@ -8,13 +8,12 @@ public class MZCharactersManager : MonoBehaviour
 	public int playerBulletNumber = 0;
 	public int enemyNumber = 0;
 	public int enemyBulletNumber = 0;
+	//
 	GameObject _player = null;
 	MZCharacter _playerCharacter = null;
-
-	// test
-	int enemyBulletCanUpdateNumberPerStep = 100;
-	public int enemyBulletCanUpdateStart = 0;
-	public int enemyBulletCanUpdateEnd = 100;
+	Dictionary<MZCharacterType, List<MZCharacter>> _dicActiveCharactersListByType = null;
+	MZCharactersCollisionTest _enemyBulletAndPlayerCollisionTest = null;
+	MZCharactersCollisionTest _playerBulletAndEnemyCollisionTest = null;
 
 	public GameObject playerObject
 	{
@@ -26,6 +25,14 @@ public class MZCharactersManager : MonoBehaviour
 	{
 		set{ _playerCharacter = value; }
 		get{ return _playerCharacter; }
+	}
+
+	public void Add(MZCharacterType characterType, MZCharacter chracter)
+	{
+		MZDebug.Assert( _dicActiveCharactersListByType != null, "_dicActiveCharactersListByType is null" );
+		MZDebug.Assert( _dicActiveCharactersListByType.ContainsKey( characterType ) != false, "characterType(" + characterType.ToString() + ") is not support" );
+
+		_dicActiveCharactersListByType[ characterType ].Add( chracter );
 	}
 
 	public Vector2 GetPlayerPosition()
@@ -57,7 +64,23 @@ public class MZCharactersManager : MonoBehaviour
 
 	void Awake()
 	{
+		_dicActiveCharactersListByType = new Dictionary<MZCharacterType, List<MZCharacter>>();
 
+		foreach( MZCharacterType type in System.Enum.GetValues( typeof(MZCharacterType) ) )
+		{
+			List<MZCharacter> list = new List<MZCharacter>();
+			_dicActiveCharactersListByType.Add( type, list );
+		}
+
+		_enemyBulletAndPlayerCollisionTest = new MZCharactersCollisionTest();
+		_enemyBulletAndPlayerCollisionTest.splitUpdateList = _dicActiveCharactersListByType[ MZCharacterType.EnemyBullet ];
+		_enemyBulletAndPlayerCollisionTest.fullUpdateList = _dicActiveCharactersListByType[ MZCharacterType.Player ];
+		_enemyBulletAndPlayerCollisionTest.onCollideHandler = new MZCharactersCollisionTest.OnCollideHandler( OnEnemyBulletCollidePlayer );
+
+		_playerBulletAndEnemyCollisionTest = new MZCharactersCollisionTest();
+		_playerBulletAndEnemyCollisionTest.splitUpdateList = _dicActiveCharactersListByType[ MZCharacterType.PlayerBullet ];
+		_playerBulletAndEnemyCollisionTest.fullUpdateList = _dicActiveCharactersListByType[ MZCharacterType.EnemyAir ];
+		_playerBulletAndEnemyCollisionTest.onCollideHandler = new MZCharactersCollisionTest.OnCollideHandler( OnPlayerBulletCollideEnemy );
 	}
 
 	void Start()
@@ -67,17 +90,8 @@ public class MZCharactersManager : MonoBehaviour
 
 	void Update()
 	{
-		// test
-		enemyBulletCanUpdateStart += enemyBulletCanUpdateNumberPerStep;
-
-		if( enemyBulletCanUpdateStart + enemyBulletCanUpdateNumberPerStep >= MZCharacterObjectsPoolManager.GetInstance().GetCharacterObjectsListCount( MZCharacterType.EnemyBullet ) )
-		{
-			enemyBulletCanUpdateStart = 0;
-		}
-
-		enemyBulletCanUpdateEnd = enemyBulletCanUpdateStart + enemyBulletCanUpdateNumberPerStep;
-
-		MZDebug.Log( "Update range: " + enemyBulletCanUpdateStart.ToString() + " to " + enemyBulletCanUpdateEnd.ToString() );
+		_enemyBulletAndPlayerCollisionTest.CollisionTest();
+		_playerBulletAndEnemyCollisionTest.CollisionTest();
 	}
 
 	void LateUpdate()
@@ -90,30 +104,44 @@ public class MZCharactersManager : MonoBehaviour
 
 	void RemoveDisableCharacterObject(MZCharacterType type)
 	{
-		MZCharacter[] charactersList = MZCharacterObjectsPoolManager.GetInstance().GetCharacterList( type );
-		GameObject[] characterObjectsList = MZCharacterObjectsPoolManager.GetInstance().GetCharacterObjectsList( type );
-		int listCount = MZCharacterObjectsPoolManager.GetInstance().GetCharacterObjectsListCount( type );
+		List<MZCharacter> charactersList = _dicActiveCharactersListByType[ type ];
 
-		for( int i = 0; i < listCount; i++ )
+		for( int i = 0; i < charactersList.Count; i++ )
 		{
-			if( characterObjectsList[ i ].active == true && charactersList[ i ].isActive == false )
+			if( charactersList[ i ].isActive == false )
 			{
 				charactersList[ i ].Clear();
-				MZCharacterObjectsPoolManager.GetInstance().ReturnCharacterObject( characterObjectsList[ i ], type );
-				characterObjectsList[ i ].active = false;
+				MZCharacterObjectsPoolManager.GetInstance().ReturnCharacterObject( charactersList[ i ].gameObject, type );
+				charactersList.Remove( charactersList[ i ] );
+				i--;
 			}
 		}
 	}
 
 	void OnGUI()
 	{
-		if( guiCharactersInfo == null /*|| _charactersListByType == null || _charactersListByType.Count == 0*/ )
+		if( guiCharactersInfo == null && _dicActiveCharactersListByType == null )
 			return;
 
-		string infoText = "PB: " + playerBulletNumber.ToString() + "\n" +
-			"E: " + enemyNumber.ToString() + "\n" +
-			"EB: " + enemyBulletNumber.ToString();
+		string infoText = "";
+
+		foreach( MZCharacterType type in _dicActiveCharactersListByType.Keys )
+		{
+			string info = type.ToString() + ": " + _dicActiveCharactersListByType[ type ].Count + "\n";
+			infoText += info;
+		}
 
 		guiCharactersInfo.text = infoText;
+	}
+
+	void OnEnemyBulletCollidePlayer(MZCharacter enemyBullet, MZCharacter player)
+	{
+		enemyBullet.Disable();
+	}
+
+	void OnPlayerBulletCollideEnemy(MZCharacter playerBullet, MZCharacter enemy)
+	{
+		enemy.GetComponent<MZEnemy>().TakenDamage( 1 );
+		playerBullet.Disable();
 	}
 }

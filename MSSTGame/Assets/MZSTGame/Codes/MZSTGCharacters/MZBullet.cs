@@ -70,7 +70,20 @@ public class MZBullet : MZCharacter, IMZMove
 		if( _moveControlUpdate != null )
 			_moveControlUpdate.Update();
 
-		UpdateWithTarget();
+//		UpdateWithTarget();
+	}
+
+	public bool drawGiz = false;
+
+	void OnDrawGizmos()
+	{
+		if( drawGiz == false )
+			return;
+
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireCube( position, new Vector3( 20, 20, 20 ) );
+
+		drawGiz = false;
 	}
 
 	void UpdateWithTarget()
@@ -108,11 +121,7 @@ public class MZBullet : MZCharacter, IMZMove
 			return;
 
 		// test
-		if( !( MZGameComponents.GetInstance().charactersManager.enemyBulletCanUpdateStart <= poolIndex && poolIndex <=
-			MZGameComponents.GetInstance().charactersManager.enemyBulletCanUpdateStart ) )
-			return;
-
-		MZDebug.Log( "i am " + poolIndex.ToString() );
+//		MZDebug.Log( "i am " + poolIndex.ToString() );
 
 		MZCharacter playerCharacter = MZGameComponents.GetInstance().charactersManager.playerCharacter;
 

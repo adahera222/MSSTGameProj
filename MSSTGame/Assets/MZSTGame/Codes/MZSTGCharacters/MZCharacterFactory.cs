@@ -19,6 +19,9 @@ public class MZCharacterFactory
 		SetCharacterToSetting( characterObject, settingName );
 		characterObject.name = ( name != null )? name : "DefaultCharacter";
 
+		// trust ...
+		MZGameComponents.GetInstance().charactersManager.Add( type, characterObject.GetComponent<MZCharacter>() );
+
 		return characterObject;
 	}
 

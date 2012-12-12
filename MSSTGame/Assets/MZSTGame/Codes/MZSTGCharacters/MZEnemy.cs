@@ -14,6 +14,11 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	#endregion
 
+	public int healthPoint
+	{
+		get{ return _healthPoint; }
+	}
+
 	public List<MZMode> modesList
 	{
 		get
