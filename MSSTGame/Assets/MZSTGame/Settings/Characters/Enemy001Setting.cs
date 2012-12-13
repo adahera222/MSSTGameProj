@@ -78,7 +78,7 @@ public class Enemy001Setting : CharacterSettingBase
 		attack1.intervalDegrees = 2.5f;
 		attack1.initVelocity = 300; //300
 		attack1.duration = 0.25f;
-		attack1.bulletSettingName = "EnemyBullet001Setting";
+		attack1.bulletSettingName = "EnemyBullet002Setting";
 		attack1.SetTargetHelp( new MZTargetHelp_Target() );
 
 		MZAttack_Base attackIdle = partControl.AddAttack( "Idle" );
@@ -92,7 +92,7 @@ public class Enemy001Setting : CharacterSettingBase
 		attack2.intervalDegrees = 15;
 		attack2.initVelocity = 300;
 		attack2.duration = 0.8f;
-		attack2.bulletSettingName = "EnemyBullet001Setting";
+		attack2.bulletSettingName = "EnemyBullet002Setting";
 		attack2.SetTargetHelp( new MZTargetHelp_Target() );
 
 		MZAttack_Base attack3 = partControl.AddAttack( "Idle" );
@@ -114,7 +114,7 @@ public class Enemy001Setting : CharacterSettingBase
 		attack1.intervalDegrees = 30;
 		attack1.initVelocity = 100;
 		attack1.duration = 2.5f;
-		attack1.bulletSettingName = "EnemyBullet001Setting";
+		attack1.bulletSettingName = "EnemyBullet002Setting";
 
 		MZAttack_Base attack3 = partControl.AddAttack( "Idle" );
 		attack3.duration = 5.0f;

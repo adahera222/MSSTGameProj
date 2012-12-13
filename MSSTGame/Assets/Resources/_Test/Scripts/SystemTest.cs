@@ -5,13 +5,14 @@ using System;
 
 public class SystemTest : MonoBehaviour
 {
-	float interval = 2.0f;//0.03f; // 6.0f
+	float interval = 5.0f;//0.03f; // 6.0f
 	float cd = 1.0f;
 
 	void Start()
 	{
 //		CreateManyEnemyBullet();
 //		CreateFourEnemy();
+//		CreateManySprites();
 	}
 
 	void Update()
@@ -23,10 +24,53 @@ public class SystemTest : MonoBehaviour
 //			CreateEnemy();
 			CreateFourEnemy();
 //			CreateManyEnemyBullet();
+//			CreateManySprites();
+//			UpdateManySprite();
 			cd += interval;
 		}
 
 		TestSprite();
+	}
+
+	List<GameObject> otSpriteObjectsArray;
+	int updateCount = 0;
+	void CreateManySprites()
+	{
+		Vector2 size = MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE;
+		Vector2 origin = new Vector2( MZGameSetting.PLAYER_MOVABLE_BOUND_CENTER.x - MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE.x/2,
+			MZGameSetting.PLAYER_MOVABLE_BOUND_CENTER.y - MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE.y/2 );
+
+
+		if( otSpriteObjectsArray == null )
+			otSpriteObjectsArray = new List<GameObject>();
+
+		for( int i = 0; i < 300; i++ )
+		{
+			GameObject otObject = MZResources.InstantiateOrthelloSprite( "Sprite" );
+			OTSprite sprite = otObject.GetComponent<OTSprite>();
+
+			sprite.name = "www";
+			sprite.depth = -100;
+			sprite.position = new Vector2( origin.x + UnityEngine.Random.Range( 0, size.x ), origin.y + UnityEngine.Random.Range( 0, size.y ) );
+
+			sprite.spriteContainer = MZOTFramesManager.GetInstance().GetFrameContainterByName( "[test]playerBullet" );
+			sprite.frameName = "Goblet_normal0001";
+			sprite.size *= 0.1f;
+			sprite.rotation = UnityEngine.Random.Range( 0, 360 );
+
+			otSpriteObjectsArray.Add( otObject );
+		}
+	}
+
+	void UpdateManySprite()
+	{
+		bool _active = ( updateCount%2 == 0 );
+		foreach( GameObject o in otSpriteObjectsArray )
+		{
+			o.active = _active;
+		}
+
+		updateCount++;
 	}
 
 	void CreateManyEnemyBullet()

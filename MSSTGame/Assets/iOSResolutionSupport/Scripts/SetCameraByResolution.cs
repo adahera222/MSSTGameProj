@@ -9,7 +9,7 @@ public class SetCameraByResolution : MonoBehaviour
 
 	void Start()
 	{
-		Camera.mainCamera.transform.position = new Vector3( 0, 0, -500 );
+		Camera.mainCamera.transform.position = new Vector3( 0, 0, -1000 );
 		Camera.mainCamera.orthographicSize = GetOrthographicSizeFromIPhoneModelName( SystemInfo.deviceModel );
 	}
 

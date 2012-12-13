@@ -27,6 +27,14 @@ public class MZOTSpritesPoolManager
 		_spritesPoolDictionaryByType.Add( charcterType, spritesPool );
 	}
 
+	public void SetInactive()
+	{
+		foreach( MZOTSpritesPool pool in _spritesPoolDictionaryByType.Values )
+		{
+			pool.SetInactive();
+		}
+	}
+
 	public GameObject GetSpriteObject(MZCharacterType charcterType)
 	{
 		MZDebug.Assert( _spritesPoolDictionaryByType.ContainsKey( charcterType ) != false, "no pool for type=" + charcterType.ToString() );
@@ -51,12 +59,11 @@ public class MZOTSpritesPoolManager
 
 	public class MZOTSpritesPool
 	{
-		Vector2 invalidPosition = new Vector2( -9999, -9999 );
 		GameObject[] _spritesList;
 		OTContainer _container = null;
 		int _maxUsingIndex = 0;
 		int _number = 0;
-//		int _depth = 0;
+		int _depth = 0;
 
 		public GameObject[] spritesList
 		{
@@ -71,25 +78,17 @@ public class MZOTSpritesPoolManager
 				number = 0;
 
 			_container = container;
-//			_depth = depth;
+			_depth = depth;
 			_number = number;
 
-			_spritesList = new GameObject[_number];
+			InitSprites();
+		}
 
+		public void SetInactive()
+		{
 			for( int i = 0; i < _number; i++ )
 			{
-				GameObject spriteObject = MZResources.InstantiateOrthelloSprite( "Sprite" );
-
-				spriteObject.active = false;
-				spriteObject.transform.parent = GetSpriteDisableTransform();
-
-//				spriteObject.GetComponent<OTSprite>().depth = _depth;
-				spriteObject.GetComponent<OTSprite>().position = invalidPosition;
-				spriteObject.GetComponent<OTSprite>().spriteContainer = _container;
-
-				spriteObject.AddComponent<MZCharacterPart>();
-
-				_spritesList[ i ] = spriteObject;
+				_spritesList[ i ].active = false;
 			}
 		}
 
@@ -113,6 +112,7 @@ public class MZOTSpritesPoolManager
 			MZDebug.Assert( spriteObject != null, "can not get valid sprite in pool, max use=" + _maxUsingIndex.ToString() );
 
 			spriteObject.active = true;
+//			spriteObject.GetComponent<OTSprite>().enabled = true;
 			return spriteObject;
 		}
 
@@ -120,6 +120,29 @@ public class MZOTSpritesPoolManager
 		{
 			spriteObject.active = false;
 			spriteObject.transform.parent = GetSpriteDisableTransform();
+		}
+
+		void InitSprites()
+		{
+			_spritesList = new GameObject[_number];
+
+			for( int i = 0; i < _number; i++ )
+			{
+				GameObject spriteObject = MZResources.InstantiateOrthelloSprite( "Sprite" );
+
+//				spriteObject.active = false;
+				spriteObject.transform.parent = GetSpriteDisableTransform();
+
+				spriteObject.GetComponent<OTSprite>().depth = _depth;
+				spriteObject.transform.position = new Vector3( 0, 0, _depth );
+				spriteObject.GetComponent<OTSprite>().spriteContainer = _container; // multi-texture will change this ...
+//				spriteObject.GetComponent<OTSprite>().ForceUpdate();
+//				spriteObject.GetComponent<OTSprite>().enabled = false;
+
+				spriteObject.AddComponent<MZCharacterPart>();
+
+				_spritesList[ i ] = spriteObject;
+			}
 		}
 
 		Transform GetSpriteDisableTransform()

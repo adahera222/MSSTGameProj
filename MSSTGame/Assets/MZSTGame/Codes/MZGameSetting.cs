@@ -28,16 +28,16 @@ public class MZGameSetting
 		switch( type )
 		{
 			case MZCharacterType.EnemyAir:
-				return -30;
+				return -200;
 
 			case MZCharacterType.Player:
-				return -50;
+				return -400;
 
 			case MZCharacterType.PlayerBullet:
-				return -70;
+				return -600;
 
 			case MZCharacterType.EnemyBullet:
-				return -100;
+				return -800;
 		}
 
 		MZDebug.Assert( false, "undefine type: " + type.ToString() );

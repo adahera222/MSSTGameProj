@@ -22,11 +22,13 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 	}
 
 	public Dictionary<string, MZCharacterPart> partsByNameDictionary
-	{ get { return _partsByNameDictionary; } }
+	{
+		get{ return _partsByNameDictionary; }
+	}
 
 	public Vector2 position
 	{
-		set{ gameObject.transform.position = new Vector3( value.x, value.y, gameObject.transform.position.z ); }
+		set{ gameObject.transform.position = new Vector3( value.x, value.y, gameObject.transform.position.z );	}
 		get{ return new Vector2( gameObject.transform.position.x, gameObject.transform.position.y ); }
 	}
 

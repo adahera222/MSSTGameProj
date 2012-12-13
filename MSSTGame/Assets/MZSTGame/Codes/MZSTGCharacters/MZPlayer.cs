@@ -52,9 +52,11 @@ public class MZPlayer : MZCharacter
 		if( attackTemp.controlTarget == null )
 			attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
 
-		UpdateOnTouchBegan();
-		UpdateOnTouchMoved();
-		UpdateOnTouchEnded();
+		MZDebug.Log( partsByNameDictionary[ "MainBody" ].GetComponent<OTSprite>().depth.ToString() );
+
+//		UpdateOnTouchBegan();
+//		UpdateOnTouchMoved();
+//		UpdateOnTouchEnded();
 		attackTemp.Update();
 
 		UpdateTest();
