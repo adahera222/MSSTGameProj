@@ -5,27 +5,30 @@ using System;
 
 public class SystemTest : MonoBehaviour
 {
-	float interval = 5.0f;//0.03f; // 6.0f
+	float interval = 2.0f;//0.03f; // 6.0f
 	float cd = 1.0f;
 
 	void Start()
 	{
 //		CreateManyEnemyBullet();
 //		CreateFourEnemy();
-//		CreateManySprites();
+		CreateManySprites();
 	}
 
 	void Update()
 	{
 		cd -= Time.deltaTime;
 
+		SetManySpriteToActive();
+
 		if( cd <= 0 )
 		{
 //			CreateEnemy();
-			CreateFourEnemy();
+//			CreateFourEnemy();
 //			CreateManyEnemyBullet();
 //			CreateManySprites();
 //			UpdateManySprite();
+//			SetManySpriteToActive();
 			cd += interval;
 		}
 
@@ -33,7 +36,8 @@ public class SystemTest : MonoBehaviour
 	}
 
 	List<GameObject> otSpriteObjectsArray;
-	int updateCount = 0;
+	int updateCount = -1;
+//	int zCount = 0;
 	void CreateManySprites()
 	{
 		Vector2 size = MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE;
@@ -44,22 +48,78 @@ public class SystemTest : MonoBehaviour
 		if( otSpriteObjectsArray == null )
 			otSpriteObjectsArray = new List<GameObject>();
 
-		for( int i = 0; i < 300; i++ )
+		int zCount = 0;
+
+//		for( int i = 0; i < 10; i++ )
 		{
-			GameObject otObject = MZResources.InstantiateOrthelloSprite( "Sprite" );
-			OTSprite sprite = otObject.GetComponent<OTSprite>();
+			for( int j = 0; j < 100; j++ )
+			{
+				GameObject otObject = MZResources.InstantiateOrthelloSprite( "Sprite" );
+				OTSprite sprite = otObject.GetComponent<OTSprite>();
 
-			sprite.name = "www";
-			sprite.depth = -100;
-			sprite.position = new Vector2( origin.x + UnityEngine.Random.Range( 0, size.x ), origin.y + UnityEngine.Random.Range( 0, size.y ) );
+				sprite.name = "www";
+				sprite.depth = -100 - zCount;
+				sprite.position = new Vector2( origin.x + UnityEngine.Random.Range( 0, size.x ), origin.y + UnityEngine.Random.Range( 0, size.y ) );
+//				sprite.position = new Vector2( -9999, -9999 );
+//				sprite.position = Vector2.zero;
 
-			sprite.spriteContainer = MZOTFramesManager.GetInstance().GetFrameContainterByName( "[test]playerBullet" );
-			sprite.frameName = "Goblet_normal0001";
-			sprite.size *= 0.1f;
-			sprite.rotation = UnityEngine.Random.Range( 0, 360 );
+				sprite.spriteContainer = MZOTFramesManager.GetInstance().GetFrameContainterByName( "[test]playerBullet" );
+				sprite.frameName = "Goblet_normal0001";
+				sprite.rotation = UnityEngine.Random.Range( 0, 360 );
 
-			otSpriteObjectsArray.Add( otObject );
+				otSpriteObjectsArray.Add( otObject );
+//				otObject.active = false;
+			}
+
+			zCount++;
 		}
+
+		zCount++;
+	}
+
+	float scaleValue = 0;
+
+	void SetManySpriteToActive()
+	{
+//		if( updateCount >= 10 )
+//			return;
+
+		if( updateCount == -1 )
+		{
+//			foreach( GameObject go in otSpriteObjectsArray )
+//				go.active = false;
+
+			updateCount++;
+			return;
+		}
+
+		Vector2 size = MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE;
+		Vector2 origin = new Vector2( MZGameSetting.PLAYER_MOVABLE_BOUND_CENTER.x - MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE.x/2,
+			MZGameSetting.PLAYER_MOVABLE_BOUND_CENTER.y - MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE.y/2 );
+
+//		for( int i = updateCount*10; i < (updateCount+1)*10; i++ )
+		scaleValue += Time.deltaTime;
+		float result = 0.1f + scaleValue/3.0f;
+		result = ( result >= 1.0f )? 1.0f : result;
+
+		for( int i = 0; i < otSpriteObjectsArray.Count; i++ )
+		{
+
+			otSpriteObjectsArray[ i ].GetComponent<OTSprite>().position =
+				otSpriteObjectsArray[ i ].GetComponent<OTSprite>().position +
+					MZMath.UnitVectorFromVectorAddDegree( new Vector2( 1,0 ), otSpriteObjectsArray[ i ].GetComponent<OTSprite>().rotation );
+//			otSpriteObjectsArray[ i ].active = ( updateCount%2 == 0 );
+//			otSpriteObjectsArray[ i ].GetComponent<OTSprite>().frameName = ( updateCount%2 == 0 )? "Goblet_normal0001" : "Egg_normal00001";
+//			otSpriteObjectsArray[ i ].GetComponent<OTSprite>().size *= 0.25f;
+//			otSpriteObjectsArray[ i ].GetComponent<OTSprite>().position =
+//				new Vector2( origin.x + UnityEngine.Random.Range( 0, size.x ), origin.y + UnityEngine.Random.Range( 0, size.y ) );
+
+//			otSpriteObjectsArray[ i ].GetComponent<OTSprite>().rotation += Time.deltaTime*720;
+//			Vector2 oSize = otSpriteObjectsArray[ i ].GetComponent<OTSprite>().oSize;
+//			otSpriteObjectsArray[ i ].GetComponent<OTSprite>().size = new Vector2( oSize.x*result, oSize.y*result );
+		}
+
+		updateCount++;
 	}
 
 	void UpdateManySprite()

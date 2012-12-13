@@ -511,28 +511,28 @@ public class OTObject : MonoBehaviour
         set
         {
             _depth = value;
-			if (OT.world2D)
-			{
-				_paintingDepth = (OT.world == OT.World.WorldTopDown2D)?-depth:depth;
-				if (OT.painterAlgorithm)
-            		_paintingDepth += (position.y / 1000) + (position.x / 10000);
-				if (otTransform.parent!=null)
-				{
-					if (OT.world == OT.World.WorldSide2D)
-		            	otTransform.localPosition = new Vector3(otTransform.localPosition.x, otTransform.localPosition.y, _paintingDepth);
-					else			
-		            	otTransform.localPosition = new Vector3(otTransform.localPosition.x, _paintingDepth, otTransform.localPosition.z);
-				}
-				else
-				{
-					if (OT.world == OT.World.WorldSide2D)
-		            	otTransform.position = new Vector3(otTransform.position.x, otTransform.position.y, _paintingDepth);
-					else			
-		            	otTransform.position = new Vector3(otTransform.position.x, _paintingDepth, otTransform.position.z);
-				}
-	            SetCollider();
-			}
-			Passive();
+//			if (OT.world2D)
+//			{
+//				_paintingDepth = (OT.world == OT.World.WorldTopDown2D)?-depth:depth;
+//				if (OT.painterAlgorithm)
+//            		_paintingDepth += (position.y / 1000) + (position.x / 10000);
+//				if (otTransform.parent!=null)
+//				{
+//					if (OT.world == OT.World.WorldSide2D)
+//		            	otTransform.localPosition = new Vector3(otTransform.localPosition.x, otTransform.localPosition.y, _paintingDepth);
+//					else			
+//		            	otTransform.localPosition = new Vector3(otTransform.localPosition.x, _paintingDepth, otTransform.localPosition.z);
+//				}
+//				else
+//				{
+//					if (OT.world == OT.World.WorldSide2D)
+//		            	otTransform.position = new Vector3(otTransform.position.x, otTransform.position.y, _paintingDepth);
+//					else			
+//		            	otTransform.position = new Vector3(otTransform.position.x, _paintingDepth, otTransform.position.z);
+//				}
+//	            SetCollider();
+//			}
+//			Passive();
         }
     }
 

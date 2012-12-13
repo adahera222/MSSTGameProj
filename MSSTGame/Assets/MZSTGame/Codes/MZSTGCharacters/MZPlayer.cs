@@ -54,9 +54,9 @@ public class MZPlayer : MZCharacter
 
 		MZDebug.Log( partsByNameDictionary[ "MainBody" ].GetComponent<OTSprite>().depth.ToString() );
 
-//		UpdateOnTouchBegan();
-//		UpdateOnTouchMoved();
-//		UpdateOnTouchEnded();
+		UpdateOnTouchBegan();
+		UpdateOnTouchMoved();
+		UpdateOnTouchEnded();
 		attackTemp.Update();
 
 		UpdateTest();
