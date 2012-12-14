@@ -9,6 +9,7 @@ public class InitGame : MonoBehaviour
 	void Start()
 	{
 		MZOTFramesManager.GetInstance().CreateFramesByExistedContainer();
+//		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer();
 		Resources.UnloadUnusedAssets();
 
 		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemy", MZCharacterType.EnemyAir, 400, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyAir ) );

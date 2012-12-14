@@ -77,6 +77,11 @@ public class MZMath
 		return unitResultVetor;
 	}
 
+	static public Vector2 UnitVectorFromVectorAddDegree(float degrees)
+	{
+		return UnitVectorFromVectorAddDegree( new Vector2( 1, 0 ), degrees );
+	}
+
 	static public float DegreesFromV1ToV2(Vector2 v1, Vector2 v2)
 	{
 		float v1Dotv2 = Dot( v1, v2 );

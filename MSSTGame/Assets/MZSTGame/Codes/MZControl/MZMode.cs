@@ -15,9 +15,11 @@ public interface IMZMode : IMZControl
 	}
 }
 
+[System.Serializable]
 public class MZMode : MZControlBase
 {
 	public new IMZMode controlTarget = null;
+	//
 	MZControlUpdate<MZMove_Base> _moveControlUpdate = new MZControlUpdate<MZMove_Base>();
 	List<MZControlUpdate<MZPartControl>> _multiPartControlUpdate = new List<MZControlUpdate<MZPartControl>>();
 

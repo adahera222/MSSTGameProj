@@ -36,33 +36,14 @@ public class Enemy001Setting : CharacterSettingBase
 		MZMode mode1 = enemy.AddMode( "mode1" );
 		mode1.duration = -1;
 
-		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
-		move1.initVelocity = 100;
-		move1.initMovingVector = new Vector2( 0, -1 );
-		move1.duration = -1;
+//		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
+//		move1.initVelocity = 100;
+//		move1.initMovingVector = new Vector2( 0, -1 );
+//		move1.duration = -1;
 
 		AddOddWay( mode1, leftBody );
 		AddOddWay( mode1, rightBody );
 		AddOddWay2( mode1, leftBody );
-
-//		MZMove_Base move2 = mode1.AddMove( "m1m2", "Linear" );
-//		move2.initVelocity = 100;
-//		move2.initMovingVector = new Vector2( -1, -1 );
-//		move2.duration = 1.5f;
-
-		// mode2
-//		MZMode mode2 = enemy.AddMode( "mode2" );
-//		mode2.duration = 3;
-//
-//		MZMove_Base move3 = mode2.AddMove( "m2m3", "Linear" );
-//		move3.initVelocity = 250;
-//		move3.initMovingVector = new Vector2( -1, 1 );
-//		move3.duration = 1.5f;
-//
-//		MZMove_Base move4 = mode2.AddMove( "m2m4", "Linear" );
-//		move4.initVelocity = 250;
-//		move4.initMovingVector = new Vector2( 1, 1 );
-//		move4.duration = 1.5f;
 	}
 
 	void AddOddWay(MZMode mode, MZCharacterPart characterPart)

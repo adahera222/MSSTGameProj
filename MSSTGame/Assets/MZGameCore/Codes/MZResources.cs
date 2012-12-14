@@ -33,9 +33,7 @@ public class MZResources
 	static public GameObject InstantiateMZGamePrefab(string name)
 	{
 		GameObject prefab = (GameObject)Resources.Load( MZGAMECORE_PREFABS_PATH + name, typeof( GameObject ) );
-
-		MZDebug.Assert( prefab != null, "prefab isn null" );
-
+		MZDebug.Assert( prefab != null, "prefab is null" );
 		return (GameObject)GameObject.Instantiate( prefab );
 	}
 

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class MZEnemy : MZCharacter, IMZMode, IMZMove
 {
+	public MZMode mode;
+
 	public int _healthPoint = 1;
 	MZControlUpdate<MZMode> _modeControlUpdate = new MZControlUpdate<MZMode>();
 
