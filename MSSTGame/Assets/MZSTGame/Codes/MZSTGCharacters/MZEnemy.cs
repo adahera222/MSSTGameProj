@@ -37,14 +37,11 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 		base.Enable();
 		_healthPoint = 1;
 		enableRemoveTime = 10.0f;
-		MZGameComponents.GetInstance().charactersManager.enemyNumber++;
 	}
 
 	public override void Disable()
 	{
 		base.Disable();
-
-		MZGameComponents.GetInstance().charactersManager.enemyNumber--;
 	}
 
 	public override void Clear()

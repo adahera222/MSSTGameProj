@@ -5,9 +5,6 @@ using System.Collections.Generic;
 public class MZCharactersManager : MonoBehaviour
 {
 	public GUIText guiCharactersInfo;
-	public int playerBulletNumber = 0;
-	public int enemyNumber = 0;
-	public int enemyBulletNumber = 0;
 	//
 	GameObject _player = null;
 	MZCharacter _playerCharacter = null;

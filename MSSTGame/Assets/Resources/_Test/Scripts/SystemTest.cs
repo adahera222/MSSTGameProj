@@ -24,15 +24,15 @@ public class SystemTest : MonoBehaviour
 	void UpdateEveryCD()
 	{
 //		CreateEnemies();
-		UpdateOTPreFabricate();
+//		UpdateOTPreFabricate();
 	}
 
 	#region OT Prototype
 
 	int otPrototypeUpdateCount = 0;
-	int updateNumberPerTime = 50;
+	int updateNumberPerTime = 10;
 	int numberOfOTPreFab = 300;
-	string prefabName = "Bullet";
+	string prefabName = "EnemyHollow";//"DonutsBullet";
 	List<GameObject> otPrefabsList;
 
 	void InitOTPreFabricate()
@@ -51,7 +51,7 @@ public class SystemTest : MonoBehaviour
 		if( otPrototypeUpdateCount*updateNumberPerTime >= numberOfOTPreFab )
 			return;
 
-		for( int i = otPrototypeUpdateCount*50; i < (otPrototypeUpdateCount+1)*50 && i < numberOfOTPreFab; i++ )
+		for( int i = otPrototypeUpdateCount*updateNumberPerTime; i < (otPrototypeUpdateCount+1)*updateNumberPerTime && i < numberOfOTPreFab; i++ )
 		{
 			GameObject b = otPrefabsList[ i ];
 			b.GetComponent<MZCharacter>().position = GetPositionV2Random();
@@ -61,6 +61,8 @@ public class SystemTest : MonoBehaviour
 	}
 
 	#endregion
+
+	#region Create Enemy
 
 	bool hasCreated = false;
 
@@ -75,7 +77,7 @@ public class SystemTest : MonoBehaviour
 		for( int i = 0; i < numberOfEnemies; i++ )
 		{
 			GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyAir, "E1", "Enemy001Setting" );
-//			enemy.GetComponent<MZCharacter>().position = new Vector2( -intervalOfEnemies*( numberOfEnemies - 1 )/2 + i*intervalOfEnemies, 500 );
+			enemy.GetComponent<MZCharacter>().position = new Vector2( -intervalOfEnemies*( numberOfEnemies - 1 )/2 + i*intervalOfEnemies, 500 );
 		}
 
 		hasCreated = true;
@@ -93,6 +95,8 @@ public class SystemTest : MonoBehaviour
 			cd += interval;
 		}
 	}
+
+	#endregion
 
 	Vector2 GetPositionV2Random()
 	{

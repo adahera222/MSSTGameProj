@@ -32,8 +32,14 @@ public class MZCharacterObjectsPoolManager
 
 	public GameObject GetCharacterObject(MZCharacterType characterType)
 	{
-		MZDebug.Assert( _characterObjectsListByType.ContainsKey( characterType ) == true, "not found type=" + characterType.ToString() );
-		return _characterObjectsListByType[ characterType ].GetCharacterObject();
+//		MZDebug.Assert( _characterObjectsListByType.ContainsKey( characterType ) == true, "not found type=" + characterType.ToString() );
+//		return _characterObjectsListByType[ characterType ].GetCharacterObject();
+
+		GameObject characterObject = new GameObject();
+		MZCharacter character = characterObject.AddComponent( MZCharacterObjectsList.GetCharacterScriptNameByType( characterType ) ) as MZCharacter;
+		character.characterType = characterType;
+
+		return characterObject;
 	}
 
 	public void ReturnCharacterObject(GameObject characterObject, MZCharacterType characterType)
@@ -66,10 +72,10 @@ public class MZCharacterObjectsPoolManager
 
 	public void SetGameObjectsArray(MZCharacterType characterType, int number)
 	{
-		if( _characterObjectsListByType == null )
-			_characterObjectsListByType = new Dictionary<MZCharacterType, MZCharacterObjectsList>();
-
-		_characterObjectsListByType.Add( characterType, new MZCharacterObjectsList( characterType, number, _charactersContainerByType[ characterType ] ) );
+//		if( _characterObjectsListByType == null )
+//			_characterObjectsListByType = new Dictionary<MZCharacterType, MZCharacterObjectsList>();
+//
+//		_characterObjectsListByType.Add( characterType, new MZCharacterObjectsList( characterType, number, _charactersContainerByType[ characterType ] ) );
 	}
 
 	public class MZCharacterObjectsList
@@ -132,7 +138,7 @@ public class MZCharacterObjectsPoolManager
 			characterObject.active = false;
 		}
 
-		string GetCharacterScriptNameByType(MZCharacterType type)
+		static public string GetCharacterScriptNameByType(MZCharacterType type)
 		{
 			switch( type )
 			{

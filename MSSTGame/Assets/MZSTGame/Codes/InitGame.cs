@@ -12,21 +12,50 @@ public class InitGame : MonoBehaviour
 //		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer();
 		Resources.UnloadUnusedAssets();
 
-		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemy", MZCharacterType.EnemyAir, 400, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyAir ) );
-		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]player", MZCharacterType.Player, 10, MZGameSetting.GetCharacterDepth( MZCharacterType.Player ) );
-		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]playerBullet", MZCharacterType.PlayerBullet, 1000, MZGameSetting.GetCharacterDepth( MZCharacterType.PlayerBullet ) );
-		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemyBullet", MZCharacterType.EnemyBullet, 1000, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyBullet ) );
+		// it's suck ... = =||||
+//		MZCharacterPartsListInEditorManager.instance.CreateListByOTContainer( "[test]enemyBullet", "ebDonut", "Donut_normal0001", MZCharacterType.EnemyBullet );
+//
+//		MZCharacterPartsListInEditorManager.instance.CreateListByOTContainer( "[test]enemy", "EnemyThin", "[Celestial]_Army_med2_normal0001", MZCharacterType.EnemyAir );
+//		MZCharacterPartsListInEditorManager.instance.CreateListByOTContainer( "[test]enemy", "EnemyHollow", "[Celestial]_Army_med3_normal0001", MZCharacterType.EnemyAir );
+//		MZCharacterPartsListInEditorManager.instance.CreateListByOTContainer( "[test]enemy", "EnemyFat", "[Celestial]_Army_med6_normal0001", MZCharacterType.EnemyAir );
 
-		MZCharacterObjectsPoolManager.GetInstance().Init();
-		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.EnemyAir, 200 );
-		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.Player, 1 );
-		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.PlayerBullet, 500 );
-		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.EnemyBullet, 1000 );
-
+//		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemy", MZCharacterType.EnemyAir, 400, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyAir ) );
+//		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]player", MZCharacterType.Player, 10, MZGameSetting.GetCharacterDepth( MZCharacterType.Player ) );
+//		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]playerBullet", MZCharacterType.PlayerBullet, 1000, MZGameSetting.GetCharacterDepth( MZCharacterType.PlayerBullet ) );
+//		MZOTSpritesPoolManager.GetInstance().AddPool( "[test]enemyBullet", MZCharacterType.EnemyBullet, 1000, MZGameSetting.GetCharacterDepth( MZCharacterType.EnemyBullet ) );
+//
+//		MZCharacterObjectsPoolManager.GetInstance().Init();
+//		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.EnemyAir, 200 );
+//		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.Player, 1 );
+//		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.PlayerBullet, 500 );
+//		MZCharacterObjectsPoolManager.GetInstance().SetGameObjectsArray( MZCharacterType.EnemyBullet, 1000 );
+//
+//		// test
+//		GameObject otPrototypes = GameObject.Find( "Prototypes" );
+//		MZDebug.Alert( otPrototypes == null, "otPrototypes is null" );
+//
+//		GameObject objectToPrototype = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyAir, "Enemy001", "Enemy001Setting" );
+//		objectToPrototype.transform.parent = otPrototypes.transform;
+////		test.GetComponent<OTSprite>().spriteContainer = MZOTFramesManager.GetInstance().GetFrameContainterByName( "[test]enemy" );
+//
+//		for( int i = 0; i < objectToPrototype.transform.GetChildCount(); i++ )
+//		{
+//			OTSprite childOTSprite = objectToPrototype.transform.GetChild( i ).gameObject.GetComponent<OTSprite>();
+//			childOTSprite.spriteContainer = MZOTFramesManager.GetInstance().GetFrameContainterByName( "[test]enemy" );
+//		}
+//
+//		objectToPrototype.active = false;
+//
+//		// use this to create object
+//		OT.PreFabricate( "Enemy001", 100 );
+//
+//		// test end
+//
+//
 		MZGameComponents.GetInstance().charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();
-
-		MZOTSpritesPoolManager.GetInstance().SetInactive();
-		InitPlayer();
+//
+//		MZOTSpritesPoolManager.GetInstance().SetInactive();
+//		InitPlayer();
 	}
 
 	void Update()

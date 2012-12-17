@@ -99,6 +99,7 @@ public class MZBaseObject : MonoBehaviour
 
 	public void SetFrame(string frameName)
 	{
+		GetSprite().spriteContainer = MZOTFramesManager.instance.GetFrameContainterByFrameName( frameName );
 		GetSprite().frameName = frameName;
 		GetSprite().size = MZOTFramesManager.GetInstance().GetAtlasData( frameName ).size;
 		_originSize = GetSprite().size;

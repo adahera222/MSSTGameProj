@@ -2,19 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZOTFramesManager
+public class MZOTFramesManager : MZSingleton<MZOTFramesManager>
 {
-	static MZOTFramesManager _instance;
 	Dictionary<string, OTSpriteAtlasCocos2D> _spritesheetsContainerByFrameName;
 	Dictionary<string, OTSpriteAtlasCocos2D> _spritesheetsContainerByName;
-
-	static public MZOTFramesManager GetInstance()
-	{
-		if( _instance == null )
-			_instance = new MZOTFramesManager();
-
-		return _instance;
-	}
 
 	public void CreateFramesByExistedContainer()
 	{
@@ -83,10 +74,5 @@ public class MZOTFramesManager
 
 		OTAtlasData data = spritesheetContainer.atlasData[ frameIndex ];
 		return data;
-	}
-
-	private MZOTFramesManager()
-	{
-
 	}
 }

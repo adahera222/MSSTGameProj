@@ -40,21 +40,11 @@ public class MZBullet : MZCharacter, IMZMove
 	{
 		base.Enable();
 		enableRemoveTime = 0.3f;
-
-		if( characterType == MZCharacterType.PlayerBullet )
-			MZGameComponents.GetInstance().charactersManager.playerBulletNumber++;
-		else
-			MZGameComponents.GetInstance().charactersManager.enemyBulletNumber++;
 	}
 
 	public override void Disable()
 	{
 		base.Disable();
-
-		if( characterType == MZCharacterType.PlayerBullet )
-			MZGameComponents.GetInstance().charactersManager.playerBulletNumber--;
-		else
-			MZGameComponents.GetInstance().charactersManager.enemyBulletNumber--;
 
 		_moveControlUpdate = null;
 		strength = 0;

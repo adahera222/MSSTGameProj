@@ -16,15 +16,15 @@ public class MZOTSpritesPoolManager
 
 	public void AddPool(string containerName, MZCharacterType charcterType, int number, int depth)
 	{
-		if( _spritesPoolDictionaryByType == null )
-			_spritesPoolDictionaryByType = new Dictionary<MZCharacterType, MZOTSpritesPool>();
-
-		OTContainer container = MZOTFramesManager.GetInstance().GetFrameContainterByName( containerName );
-
-		MZDebug.Assert( _spritesPoolDictionaryByType.ContainsKey( charcterType ) == false, "SORRY, can't use two texture to one type now" ); // one texture one pool now // temp
-
-		MZOTSpritesPool spritesPool = new MZOTSpritesPool( charcterType, container, number, depth );
-		_spritesPoolDictionaryByType.Add( charcterType, spritesPool );
+//		if( _spritesPoolDictionaryByType == null )
+//			_spritesPoolDictionaryByType = new Dictionary<MZCharacterType, MZOTSpritesPool>();
+//
+//		OTContainer container = MZOTFramesManager.GetInstance().GetFrameContainterByName( containerName );
+//
+//		MZDebug.Assert( _spritesPoolDictionaryByType.ContainsKey( charcterType ) == false, "SORRY, can't use two texture to one type now" ); // one texture one pool now // temp
+//
+//		MZOTSpritesPool spritesPool = new MZOTSpritesPool( charcterType, container, number, depth );
+//		_spritesPoolDictionaryByType.Add( charcterType, spritesPool );
 	}
 
 	public void SetInactive()
@@ -37,8 +37,13 @@ public class MZOTSpritesPoolManager
 
 	public GameObject GetSpriteObject(MZCharacterType charcterType)
 	{
-		MZDebug.Assert( _spritesPoolDictionaryByType.ContainsKey( charcterType ) != false, "no pool for type=" + charcterType.ToString() );
-		return _spritesPoolDictionaryByType[ charcterType ].GetSpriteObject();
+//		MZDebug.Assert( _spritesPoolDictionaryByType.ContainsKey( charcterType ) != false, "no pool for type=" + charcterType.ToString() );
+//		return _spritesPoolDictionaryByType[ charcterType ].GetSpriteObject();
+
+		GameObject spriteObject = MZResources.InstantiateOrthelloSprite( "Sprite" );
+		spriteObject.AddComponent<MZCharacterPart>();
+
+		return spriteObject;
 	}
 
 	public void ReturnSpriteObject(GameObject spriteObject, MZCharacterType charcterType)
