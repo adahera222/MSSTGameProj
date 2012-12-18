@@ -12,6 +12,10 @@ public class InitGame : MonoBehaviour
 //		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer();
 		Resources.UnloadUnusedAssets();
 
+		MZCharacterObjectsFactory.instance.Init();
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyHollow", 10 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "DonutsBullet", 100 );
+
 		// it's suck ... = =||||
 //		MZCharacterPartsListInEditorManager.instance.CreateListByOTContainer( "[test]enemyBullet", "ebDonut", "Donut_normal0001", MZCharacterType.EnemyBullet );
 //
@@ -65,11 +69,11 @@ public class InitGame : MonoBehaviour
 
 	void InitPlayer()
 	{
-		GameObject playerObject = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.Player, "Player", "PlayerType01Setting" );
-		playerObject.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
-
-		MZGameComponents.GetInstance().charactersManager.playerObject = playerObject;
-		MZGameComponents.GetInstance().charactersManager.playerCharacter = playerObject.GetComponent<MZCharacter>();
+//		GameObject playerObject = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.Player, "Player", "PlayerType01Setting" );
+//		playerObject.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
+//
+//		MZGameComponents.GetInstance().charactersManager.playerObject = playerObject;
+//		MZGameComponents.GetInstance().charactersManager.playerCharacter = playerObject.GetComponent<MZCharacter>();
 	}
 
 	void OnDrawGizmos()

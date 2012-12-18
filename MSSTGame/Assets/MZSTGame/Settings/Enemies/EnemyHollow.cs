@@ -7,6 +7,6 @@ public class EnemyHollow : MZEnemy
 	{
 		base.Update();
 
-		position += new Vector2( 0, -20*Time.deltaTime );
+		position += new Vector2( 0, -100*Time.deltaTime );
 	}
 }

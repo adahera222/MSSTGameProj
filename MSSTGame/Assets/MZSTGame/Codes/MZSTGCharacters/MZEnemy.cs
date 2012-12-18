@@ -75,7 +75,8 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	{
 		base.Update();
 
-		_modeControlUpdate.Update();
+		if( _modeControlUpdate != null )
+			_modeControlUpdate.Update();
 
 		if( _healthPoint <= 0 )
 			Disable();

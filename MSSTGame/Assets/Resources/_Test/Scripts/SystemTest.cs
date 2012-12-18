@@ -13,7 +13,7 @@ public class SystemTest : MonoBehaviour
 
 	void Start()
 	{
-		InitOTPreFabricate();
+//		InitOTPreFabricate();
 	}
 
 	void UpdateEveryFrame()
@@ -23,7 +23,7 @@ public class SystemTest : MonoBehaviour
 
 	void UpdateEveryCD()
 	{
-//		CreateEnemies();
+		CreateEnemies();
 //		UpdateOTPreFabricate();
 	}
 
@@ -76,7 +76,8 @@ public class SystemTest : MonoBehaviour
 
 		for( int i = 0; i < numberOfEnemies; i++ )
 		{
-			GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyAir, "E1", "Enemy001Setting" );
+//			GameObject enemy = MZCharacterFactory.GetInstance().CreateCharacter( MZCharacterType.EnemyAir, "E1", "Enemy001Setting" );
+			GameObject enemy = MZCharacterObjectsFactory.instance.Get( MZCharacterType.EnemyAir, "EnemyHollow" );
 			enemy.GetComponent<MZCharacter>().position = new Vector2( -intervalOfEnemies*( numberOfEnemies - 1 )/2 + i*intervalOfEnemies, 500 );
 		}
 

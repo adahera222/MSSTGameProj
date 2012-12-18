@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 public class MZCharactersCollisionTest
 {
-	public delegate void OnCollideHandler(MZCharacter c1 ,MZCharacter c2);
+	public delegate void OnCollide(MZCharacter c1 ,MZCharacter c2);
 	//
 	public int maxTestPerTime = 100;
 	public List<MZCharacter> splitUpdateList;
 	public List<MZCharacter> fullUpdateList;
-	public OnCollideHandler onCollide;
+	public OnCollide onCollideHandler;
 	//
 	int start = 0;
 	int end = 0;
@@ -40,7 +40,7 @@ public class MZCharactersCollisionTest
 			{
 				if( s.IsCollide( f ) )
 				{
-					onCollide( s, f );
+					onCollideHandler( s, f );
 				}
 			}
 		}

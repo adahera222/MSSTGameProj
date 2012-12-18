@@ -45,4 +45,9 @@ public class MZDebug
 			UnityEngine.Debug.DebugBreak();
 		}
 	}
+
+	static public void AssertFalse(string message)
+	{
+		Assert( false, message );
+	}
 }

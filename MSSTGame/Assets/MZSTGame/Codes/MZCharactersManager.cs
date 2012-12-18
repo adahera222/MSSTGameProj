@@ -24,12 +24,14 @@ public class MZCharactersManager : MonoBehaviour
 		get{ return _playerCharacter; }
 	}
 
-	public void Add(MZCharacterType characterType, MZCharacter chracter)
+	public void Add(MZCharacterType characterType, MZCharacter character)
 	{
 		MZDebug.Assert( _dicActiveCharactersListByType != null, "_dicActiveCharactersListByType is null" );
 		MZDebug.Assert( _dicActiveCharactersListByType.ContainsKey( characterType ) != false, "characterType(" + characterType.ToString() + ") is not support" );
 
-		_dicActiveCharactersListByType[ characterType ].Add( chracter );
+		character.gameObject.active = true;
+		character.Enable();
+		_dicActiveCharactersListByType[ characterType ].Add( character );
 	}
 
 	public Vector2 GetPlayerPosition()
@@ -72,12 +74,12 @@ public class MZCharactersManager : MonoBehaviour
 		_enemyBulletAndPlayerCollisionTest = new MZCharactersCollisionTest();
 		_enemyBulletAndPlayerCollisionTest.splitUpdateList = _dicActiveCharactersListByType[ MZCharacterType.EnemyBullet ];
 		_enemyBulletAndPlayerCollisionTest.fullUpdateList = _dicActiveCharactersListByType[ MZCharacterType.Player ];
-		_enemyBulletAndPlayerCollisionTest.onCollide = new MZCharactersCollisionTest.OnCollideHandler( OnEnemyBulletCollidePlayer );
+		_enemyBulletAndPlayerCollisionTest.onCollideHandler = new MZCharactersCollisionTest.OnCollide( OnEnemyBulletCollidePlayer );
 
 		_playerBulletAndEnemyCollisionTest = new MZCharactersCollisionTest();
 		_playerBulletAndEnemyCollisionTest.splitUpdateList = _dicActiveCharactersListByType[ MZCharacterType.PlayerBullet ];
 		_playerBulletAndEnemyCollisionTest.fullUpdateList = _dicActiveCharactersListByType[ MZCharacterType.EnemyAir ];
-		_playerBulletAndEnemyCollisionTest.onCollide = new MZCharactersCollisionTest.OnCollideHandler( OnPlayerBulletCollideEnemy );
+		_playerBulletAndEnemyCollisionTest.onCollideHandler = new MZCharactersCollisionTest.OnCollide( OnPlayerBulletCollideEnemy );
 	}
 
 	void Start()
@@ -108,7 +110,7 @@ public class MZCharactersManager : MonoBehaviour
 			if( charactersList[ i ].isActive == false )
 			{
 				charactersList[ i ].Clear();
-				MZCharacterObjectsPoolManager.GetInstance().ReturnCharacterObject( charactersList[ i ].gameObject, type );
+				MZCharacterObjectsFactory.instance.Remove( type, charactersList[ i ].name, charactersList[ i ].gameObject );
 				charactersList.Remove( charactersList[ i ] );
 				i--;
 			}

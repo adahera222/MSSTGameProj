@@ -129,13 +129,14 @@ public abstract class MZAttack_Base : MZControlBase, IMZTargetHelp
 
 	protected GameObject GetNewBulletObject()
 	{
-		MZDebug.Assert( bulletSettingName != null, "bulletSettingName is null" );
-
-		GameObject bullet = MZCharacterFactory.GetInstance().CreateCharacter( GetBulletTypeByControlTargetType(), "Bullet", bulletSettingName );
-		bullet.GetComponent<MZBullet>().strength = strength;
-		bullet.GetComponent<MZCharacter>().position = controlTarget.realPosition;
-
-		return bullet;
+//		MZDebug.Assert( bulletSettingName != null, "bulletSettingName is null" );
+//
+//		GameObject bullet = MZCharacterFactory.GetInstance().CreateCharacter( GetBulletTypeByControlTargetType(), "Bullet", bulletSettingName );
+//		bullet.GetComponent<MZBullet>().strength = strength;
+//		bullet.GetComponent<MZCharacter>().position = controlTarget.realPosition;
+//
+//		return bullet;
+		return null;
 	}
 
 	protected virtual void LaunchBullet()
