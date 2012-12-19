@@ -9,12 +9,13 @@ public class InitGame : MonoBehaviour
 	void Start()
 	{
 		MZOTFramesManager.GetInstance().CreateFramesByExistedContainer();
+
 //		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer();
-		Resources.UnloadUnusedAssets();
+//		Resources.UnloadUnusedAssets();
 
 		MZCharacterObjectsFactory.instance.Init();
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyHollow", 10 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "DonutsBullet", 500 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "DonutsBullet", 1000 );
 
 		// it's suck ... = =||||
 //		MZCharacterPartsListInEditorManager.instance.CreateListByOTContainer( "[test]enemyBullet", "ebDonut", "Donut_normal0001", MZCharacterType.EnemyBullet );

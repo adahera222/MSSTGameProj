@@ -29,8 +29,9 @@ public class MZCharactersManager : MonoBehaviour
 		MZDebug.Assert( _dicActiveCharactersListByType != null, "_dicActiveCharactersListByType is null" );
 		MZDebug.Assert( _dicActiveCharactersListByType.ContainsKey( characterType ) != false, "characterType(" + characterType.ToString() + ") is not support" );
 
-		character.gameObject.active = true;
+		character.renderEnable = true;
 		character.Enable();
+
 		_dicActiveCharactersListByType[ characterType ].Add( character );
 	}
 

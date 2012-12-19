@@ -12,7 +12,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 
 	public void Init()
 	{
-		// maybe someday ... remove in hierarchy, and create it by code ... :D
+		// maybe someday ... we can remove in hierarchy, and create it by code ... :D
 		_charactersParentTransformByType = new Dictionary<MZCharacterType, Transform>();
 		_charactersParentTransformByType.Add( MZCharacterType.Player, GameObject.Find( "MZPlayers" ).transform );
 		_charactersParentTransformByType.Add( MZCharacterType.PlayerBullet, GameObject.Find( "MZPlayerBullets" ).transform );
@@ -23,6 +23,8 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 	public void Add(MZCharacterType type, string name, int number)
 	{
 		MZDebug.Assert( _charactersParentTransformByType != null, "You should call Init() first" );
+
+		OT.PreFabricate( name, number );
 
 		if( _charactersPoolsDictionaryByType == null )
 			_charactersPoolsDictionaryByType = new Dictionary<MZCharacterType, Dictionary<string, MZPool<GameObject>>>();
@@ -57,6 +59,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		GameObject characterObject = _charactersPoolsDictionaryByType[ type ][ name ].GetValidItem();
 		MZDebug.Assert( characterObject != null, "characterObject is null" );
 
+		characterObject.active = true;
 		MZGameComponents.instance.charactersManager.Add( type, characterObject.GetComponent<MZCharacter>() );
 
 		return characterObject;
@@ -92,6 +95,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 
 		MZCharacter character = newObject.GetComponent<MZCharacter>();
 		character.InitValues();
+
 		character.depth = MZGameSetting.GetDepthOfCharacter( _onCreateCharacterType );
 		character.position = MZGameSetting.INVALID_POSITIONV2;
 		character.name = _onCreateObjectName;
@@ -99,9 +103,30 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		return newObject;
 	}
 
+	void SetObjectAtCreateContent(GameObject characterObject)
+	{
+		characterObject.active = true;
+
+		MZCharacter character = characterObject.GetComponent<MZCharacter>();
+		character.InitValues();
+
+		character.depth = MZGameSetting.GetDepthOfCharacter( _onCreateCharacterType );
+		character.position = MZGameSetting.INVALID_POSITIONV2;
+		character.name = _onCreateObjectName;
+
+		MZDebug.Log( character.partsByNameDictionary.Values.Count.ToString() );
+
+		foreach( MZCharacterPart p in character.partsByNameDictionary.Values )
+		{
+			p.gameObject.active = true;
+//			p.gameObject.GetComponent<MeshRenderer>().enabled = false;
+			p.gameObject.renderer.enabled = true;
+		}
+	}
+
 	void OnCharacterObjectBecomeVaild(GameObject characterObject)
 	{
-//		characterObject.active = true;
+
 	}
 
 	void OnCharacterObjectRemove(GameObject characterObject)

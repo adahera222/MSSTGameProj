@@ -31,6 +31,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	public override void Enable()
 	{
 		base.Enable();
+		_modeControlUpdate.ResetAll();
 		_currentHealthPoint = healthPoint;
 		enableRemoveTime = 3.0f;
 	}
@@ -43,7 +44,6 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	public override void OnRemoving()
 	{
 		base.OnRemoving();
-		_modeControlUpdate = null;
 	}
 
 	public override Vector2 currentMovingVector

@@ -22,6 +22,11 @@ public class MZPool <T> where T : class
 	List<T> _items;
 	List<bool> _actives;
 
+	public List<T> items
+	{
+		get{ return _items; }
+	}
+
 	public void CreateContent(int number)
 	{
 		_number = number;

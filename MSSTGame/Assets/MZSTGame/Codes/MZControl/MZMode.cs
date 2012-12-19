@@ -15,7 +15,6 @@ public interface IMZMode : IMZControl
 	}
 }
 
-[System.Serializable]
 public class MZMode : MZControlBase
 {
 	public new IMZMode controlTarget = null;
@@ -29,6 +28,12 @@ public class MZMode : MZControlBase
 
 		if( _moveControlUpdate != null )
 			_moveControlUpdate.ResetAll();
+
+		if( _multiPartControlUpdate != null )
+		{
+			foreach( MZControlUpdate<MZPartControl> pcUpdate in _multiPartControlUpdate )
+				pcUpdate.ResetAll();
+		}
 	}
 
 	public Vector2 currentMovingVector
@@ -59,20 +64,6 @@ public class MZMode : MZControlBase
 		return move;
 	}
 
-//	public MZPartControl AddPartControl(string partName)
-//	{
-//		MZDebug.Assert( controlTarget.partsByNameDictionary.ContainsKey( partName ), "part(" + partName + ") not found" );
-//
-//		MZPartControl partControl = new MZPartControl();
-//		partControl.controlTarget = controlTarget.partsByNameDictionary[ partName ];
-//
-//		_partControlUpdate.Add( partControl );
-//
-//		MZDebug.Log( _partControlUpdate.controlsList.Count.ToString() );
-//
-//		return partControl;
-//	}
-
 	public MZControlUpdate<MZPartControl> AddPartControlUpdater()
 	{
 		if( _multiPartControlUpdate == null )
@@ -90,11 +81,6 @@ public class MZMode : MZControlBase
 		{
 			_moveControlUpdate.Update();
 		}
-
-//		if( _partControlUpdate != null )
-//		{
-//			_partControlUpdate.Update();
-//		}
 
 		if( _multiPartControlUpdate != null )
 		{

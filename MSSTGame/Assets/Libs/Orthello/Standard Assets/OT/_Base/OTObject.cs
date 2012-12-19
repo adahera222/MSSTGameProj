@@ -1030,55 +1030,57 @@ public class OTObject : MonoBehaviour
     /// All children of this object, that have renderers, will be automaticly hidden as well.
     /// </remarks>
     public bool visible
-    {
-        get
-        {
-            return otRenderer.enabled;
-        }
-        set
-        {
-			if (!value && (this is OTSprite) && (this as OTSprite).isInvalid)
-				(this as OTSprite).IsValid();
-			
-            if (value != otRenderer.enabled)
-            {
-				otRenderer.enabled = value;
-                if (!value)
-                {
-                    if (otTransform.childCount > 0)
-                    {
-						hiddenRenderers.Clear();
-                        Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer>();
-                        for (int r = 0; r < renderers.Length; r++)
-                        {
-							if (renderers[r].enabled)
-                            	hiddenRenderers.Add(renderers[r]);
-                            renderers[r].enabled = false;
-                        }
-                    }
-                }
-                else
-                {
-                    if (hiddenRenderers.Count > 0)
-                    {
-                        for (int r = 0; r < hiddenRenderers.Count; r++)
-                            hiddenRenderers[r].enabled = true;
-                        hiddenRenderers.Clear();
-                    }
-					else
-					{
-	                    if (otTransform.childCount > 0)
-	                    {
-	                        Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer>();
-	                        for (int r = 0; r < renderers.Length; r++)
-	                            renderers[r].enabled = true;
-	                    }
-					}
-                }
-				Passive();
-            }
-        }
-    }
+	{
+		set{}
+		get{ return false; }
+//        get
+//        {
+//            return otRenderer.enabled;
+//        }
+//        set
+//        {
+//			if (!value && (this is OTSprite) && (this as OTSprite).isInvalid)
+//				(this as OTSprite).IsValid();
+//			
+//            if (value != otRenderer.enabled)
+//            {
+//				otRenderer.enabled = value;
+//                if (!value)
+//                {
+//                    if (otTransform.childCount > 0)
+//                    {
+//						hiddenRenderers.Clear();
+//                        Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer>();
+//                        for (int r = 0; r < renderers.Length; r++)
+//                        {
+//							if (renderers[r].enabled)
+//                            	hiddenRenderers.Add(renderers[r]);
+//                            renderers[r].enabled = false;
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    if (hiddenRenderers.Count > 0)
+//                    {
+//                        for (int r = 0; r < hiddenRenderers.Count; r++)
+//                            hiddenRenderers[r].enabled = true;
+//                        hiddenRenderers.Clear();
+//                    }
+//					else
+//					{
+//	                    if (otTransform.childCount > 0)
+//	                    {
+//	                        Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer>();
+//	                        for (int r = 0; r < renderers.Length; r++)
+//	                            renderers[r].enabled = true;
+//	                    }
+//					}
+//                }
+//				Passive();
+//            }
+//        }
+	}
 	
     //-----------------------------------------------------------------------------
     // private and protected fields
@@ -1935,8 +1937,8 @@ public class OTObject : MonoBehaviour
 				if (baseName!="")
 				{
 	                int baseIdx = 1;
-	                while (GameObject.Find(baseName + "-" + baseIdx))
-	                    baseIdx++;
+//	                while (GameObject.Find(baseName + "-" + baseIdx))
+//	                    baseIdx++;
 	                name = baseName + "-" + baseIdx;
 #if UNITY_EDITOR
 					if (!Application.isPlaying)
@@ -2101,20 +2103,20 @@ public class OTObject : MonoBehaviour
 
     void OnBecameVisible()
     {
-        inView = true;
-        if (onIntoView != null)
-            onIntoView(this);
-        if (!CallBack("onIntoView", callBackParams))
-            CallBack("OnIntoView", callBackParams);
+//        inView = true;
+//        if (onIntoView != null)
+//            onIntoView(this);
+//        if (!CallBack("onIntoView", callBackParams))
+//            CallBack("OnIntoView", callBackParams);
     }
 
     void OnBecameInvisible()
     {
-        inView = false;
-        if (onOutOfView != null)
-            onOutOfView(this);
-        if (!CallBack("onOutOfView", callBackParams))
-            CallBack("OnOutOfView", callBackParams);
+//        inView = false;
+//        if (onOutOfView != null)
+//            onOutOfView(this);
+//        if (!CallBack("onOutOfView", callBackParams))
+//            CallBack("OnOutOfView", callBackParams);
     }
 
     /// <summary>
