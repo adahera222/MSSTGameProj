@@ -50,15 +50,15 @@ public class MZBullet : MZCharacter, IMZMove
 		strength = 0;
 	}
 
-	public override void Clear()
+	public override void OnRemoving()
 	{
-		base.Clear();
-		_moveControlUpdate = null; // maybe GC? ... SUCK ...
+		base.OnRemoving();
+		_moveControlUpdate = null;
 	}
 
-	protected override void Update()
+	protected override void UpdateWhenActive()
 	{
-		base.Update();
+		base.UpdateWhenActive();
 
 		if( _moveControlUpdate != null )
 			_moveControlUpdate.Update();

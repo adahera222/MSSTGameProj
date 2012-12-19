@@ -91,6 +91,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		newObject.transform.parent = _charactersParentTransformByType[ _onCreateCharacterType ];
 
 		MZCharacter character = newObject.GetComponent<MZCharacter>();
+		character.InitValues();
 		character.depth = MZGameSetting.GetDepthOfCharacter( _onCreateCharacterType );
 		character.position = MZGameSetting.INVALID_POSITIONV2;
 		character.name = _onCreateObjectName;

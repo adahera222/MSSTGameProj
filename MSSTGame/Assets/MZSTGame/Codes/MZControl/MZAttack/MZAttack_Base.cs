@@ -25,7 +25,7 @@ public abstract class MZAttack_Base : MZControlBase, IMZTargetHelp
 	public float initVelocity = 0;
 	public float additionalVelocityPerLaunch = 0;
 	public float maxVelocity = float.NaN;
-	public string bulletSettingName = null;
+	public string bulletName = null;
 	bool _enable = true;
 	int _launchCount = 0;
 	float _colddownCount = 0;
@@ -129,14 +129,13 @@ public abstract class MZAttack_Base : MZControlBase, IMZTargetHelp
 
 	protected GameObject GetNewBulletObject()
 	{
-//		MZDebug.Assert( bulletSettingName != null, "bulletSettingName is null" );
-//
+		MZDebug.Assert( bulletName != null, "bulletName is null" );
 //		GameObject bullet = MZCharacterFactory.GetInstance().CreateCharacter( GetBulletTypeByControlTargetType(), "Bullet", bulletSettingName );
-//		bullet.GetComponent<MZBullet>().strength = strength;
-//		bullet.GetComponent<MZCharacter>().position = controlTarget.realPosition;
-//
-//		return bullet;
-		return null;
+		GameObject bullet = MZCharacterObjectsFactory.instance.Get( /*GetBulletTypeByControlTargetType()*/ MZCharacterType.EnemyBullet, bulletName );
+		bullet.GetComponent<MZBullet>().strength = strength;
+		bullet.GetComponent<MZCharacter>().position = controlTarget.realPosition;
+
+		return bullet;
 	}
 
 	protected virtual void LaunchBullet()

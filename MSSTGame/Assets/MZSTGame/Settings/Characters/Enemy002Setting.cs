@@ -15,7 +15,7 @@ public class Enemy002Setting : CharacterSettingBase
 		mainBody.AddCollision().Set( new Vector2( 0, 0 ), 90 );
 
 		MZEnemy enemy = characterObject.GetComponent<MZEnemy>();
-		enemy._healthPoint = 5;
+		enemy.healthPoint = 5;
 
 		MZMode mode1 = enemy.AddMode( "mode1" );
 

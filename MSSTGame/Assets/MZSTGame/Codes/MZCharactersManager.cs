@@ -109,7 +109,7 @@ public class MZCharactersManager : MonoBehaviour
 		{
 			if( charactersList[ i ].isActive == false )
 			{
-				charactersList[ i ].Clear();
+				charactersList[ i ].OnRemoving();
 				MZCharacterObjectsFactory.instance.Remove( type, charactersList[ i ].name, charactersList[ i ].gameObject );
 				charactersList.Remove( charactersList[ i ] );
 				i--;

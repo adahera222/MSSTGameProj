@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 {
-	List<MZCollision> _collisionsList = null;
+	public List<MZCollision> collisionsList = new List<MZCollision>();
+	//
 	GameObject _parentGameObject = null;
 	MZCharacter _parentCharacter = null;
 	MZFaceTo_Base _faceTo = null;
@@ -51,11 +52,6 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 	public override void Disable()
 	{
 		base.Disable();
-
-		_collisionsList = null;
-		_parentGameObject = null;
-		_parentCharacter = null;
-		_faceTo = null;
 	}
 
 	public GameObject parentGameObject
@@ -69,12 +65,6 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 		get{ return _parentGameObject; }
 	}
 
-	public List<MZCollision> collisionsList
-	{
-		set{ _collisionsList = value; }
-		get{ return _collisionsList; }
-	}
-
 	public MZFaceTo_Base faceTo
 	{
 		set
@@ -86,23 +76,24 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 		get { return _faceTo; }
 	}
 
-	public MZCollision AddCollision()
+	public MZCollision AddCollision() //delete
 	{
-		if( _collisionsList == null )
-			_collisionsList = new List<MZCollision>();
-
-		MZCollision collision = new MZCollision();
-		collision.collisionDelegate = this;
-		collisionsList.Add( collision );
-
-		return collision;
+//		if( collisionsList == null )
+//			collisionsList = new List<MZCollision>();
+//
+//		MZCollision collision = new MZCollision();
+//		collision.collisionDelegate = this;
+//		collisionsList.Add( collision );
+//
+//		return collision;
+		return null;
 	}
 
 	public bool IsCollide(MZCharacterPart other)
 	{
-		foreach( MZCollision selfCollision in _collisionsList )
+		foreach( MZCollision selfCollision in collisionsList )
 		{
-			foreach( MZCollision otherCollision in other._collisionsList )
+			foreach( MZCollision otherCollision in other.collisionsList )
 			{
 				if( selfCollision.IsCollision( otherCollision ) )
 					return true;
@@ -146,7 +137,11 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 
 	void Start()
 	{
+		if( collisionsList == null )
+			return;
 
+		foreach( MZCollision c in collisionsList )
+			c.collisionDelegate = this;
 	}
 
 	void OnDrawGizmos()
@@ -156,7 +151,7 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 
 		Gizmos.color = MZGameSetting.GetCollisionColor( _parentCharacter.characterType );
 
-		foreach( MZCollision c in _collisionsList )
+		foreach( MZCollision c in collisionsList )
 		{
 			Vector2 realCenter = c.collisionDelegate.realPosition + c.center;
 			Gizmos.DrawWireSphere( realCenter, c.radius );

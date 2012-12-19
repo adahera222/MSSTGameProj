@@ -6,6 +6,12 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 {
 	public MZCollision outCollision = new MZCollision();
 	public new string name = "";
+	//
+	bool _isActive;
+	float _lifeTimeCount = 0;
+	float _enableRemoveTime = 9999.99f;
+	Dictionary<string, MZCharacterPart> _partsByNameDictionary;
+	MZCharacterType _characterType = MZCharacterType.Unknow;
 
 	#region IMZCollision implementation
 	public Vector2 realPosition
@@ -54,28 +60,41 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		get{ return Vector2.zero; }
 	}
 
-	bool _isActive;
-	float _lifeTimeCount = 0;
-	float _enableRemoveTime = 9999.99f;
-	Dictionary<string, MZCharacterPart> _partsByNameDictionary;
-	MZCharacterType _characterType = MZCharacterType.Unknow;
+	public virtual void InitValues()
+	{
+		outCollision.collisionDelegate = this;
+		outCollision.Set( new Vector2( 0, 0 ), 50 );
+
+		InitPartsInfoFromChild();
+		InitMode();
+
+		_isActive = false;
+	}
 
 	public virtual void Enable()
 	{
-		enabled = true;
 		_isActive = true;
 		_lifeTimeCount = 0;
-		outCollision.collisionDelegate = this;
-		outCollision.Set( new Vector2( 0, 0 ), 50 );
+
+		if( partsByNameDictionary != null )
+		{
+			foreach( MZCharacterPart part in partsByNameDictionary.Values )
+				part.Enable();
+		}
 	}
 
 	public virtual void Disable()
 	{
-		enabled = false;
 		_isActive = false;
+
+		if( partsByNameDictionary != null )
+		{
+			foreach( MZCharacterPart part in partsByNameDictionary.Values )
+				part.Disable();
+		}
 	}
 
-	public MZCharacterPart AddPart(string name)
+	public MZCharacterPart AddPart(string name) // delete
 	{
 //		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );
 //
@@ -98,18 +117,17 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		return null;
 	}
 
-	public virtual void Clear()
+	public virtual void OnRemoving()
 	{
-		if( partsByNameDictionary == null )
-			return;
+//		if( partsByNameDictionary == null )
+//			return;
 
-		foreach( MZCharacterPart characterPart in partsByNameDictionary.Values )
-		{
-			characterPart.Disable();
-//			MZOTSpritesPoolManager.GetInstance().ReturnSpriteObject( characterPart.gameObject, characterType );
-		}
+//		foreach( MZCharacterPart characterPart in partsByNameDictionary.Values )
+//		{
+//			characterPart.Disable();
+//		}
 
-		partsByNameDictionary.Clear();
+//		partsByNameDictionary.Clear();
 	}
 
 	public virtual bool IsCollide(MZCharacter other)
@@ -136,11 +154,27 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 	{
 		_lifeTimeCount += Time.deltaTime;
 		RemoveWhenOutOfBound();
+
+		if( _isActive )
+		{
+			UpdateWhenActive();
+		}
 	}
 
-	private void Start()
+	protected virtual void InitMode()
 	{
-		// get self part info ... and setting????
+
+	}
+
+	// not conside how to design this function
+	protected virtual void CheckActive()
+	{
+		MZDebug.AssertFalse( "not conside how to design this function" );
+	}
+
+	protected virtual void UpdateWhenActive()
+	{
+
 	}
 
 	void OnDrawGizmos()
@@ -152,10 +186,35 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		Gizmos.DrawWireSphere( position, outCollision.radius );
 	}
 
+	void InitPartsInfoFromChild()
+	{
+		_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
+
+		for( int i = 0; i < gameObject.transform.childCount; i++ )
+		{
+			GameObject partObject = gameObject.transform.GetChild( i ).gameObject;
+			string partName = GetClearPartName( partObject.name );
+
+			MZCharacterPart part = partObject.GetComponent<MZCharacterPart>();
+			part.name = partName;
+			part.parentGameObject = gameObject;
+
+			MZDebug.Assert( _partsByNameDictionary.ContainsKey( partName ) == false, "Duplicate key=" + partName );
+			_partsByNameDictionary.Add( partName, part );
+		}
+	}
+
+	string GetClearPartName(string origin)
+	{
+		return origin.Split( '-' )[ 0 ];
+	}
+
 	void RemoveWhenOutOfBound()
 	{
 		if( lifeTimeCount <= enableRemoveTime )
+		{
 			return;
+		}
 
 		if( _partsByNameDictionary != null )
 		{

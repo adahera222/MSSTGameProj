@@ -107,8 +107,8 @@ public class MZBaseObject : MonoBehaviour
 
 	public float GetMaxEdge()
 	{
-		float w = _originSize.x*_scaleX;
-		float h = _originSize.y*_scaleY;
+		float w = GetSprite().size.x;
+		float h = GetSprite().size.y;
 
 		return ( w > h )? w : h;
 	}
@@ -122,14 +122,14 @@ public class MZBaseObject : MonoBehaviour
 	{
 		enabled = false;
 
-		_originSize = Vector2.zero;
-		_scale = 1;
-		_scaleX = 1;
-		_scaleY = 1;
-		_rotation = 1;
-		_color = new Color( 0.5f, 0.5f, 0.5f );
-		_shaderType = MZShaderType.OTDefault;
-		_name = "";
+//		_originSize = Vector2.zero;
+//		_scale = 1;
+//		_scaleX = 1;
+//		_scaleY = 1;
+//		_rotation = 1;
+//		_color = new Color( 0.5f, 0.5f, 0.5f );
+//		_shaderType = MZShaderType.OTDefault;
+//		_name = "";
 	}
 
 	protected virtual void Update()

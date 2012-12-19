@@ -46,24 +46,6 @@ public class MZPool <T> where T : class
 		if( _items == null )
 			return null;
 
-//		for( int  i = 0; i < _list.Count; i++ )
-//		{
-//			if( _actives[ i ] == false )
-//			{
-//				if( i > _maxUseIndex )
-//					_maxUseIndex = i;
-//
-//				if( onGetHandle != null )
-//					onGetHandle( _list[ i ] );
-//
-//				_actives[ i ] = true;
-//				return _list[ i ];
-//			}
-//		}
-//
-//		MZDebug.AssertFalse( "no more vaild item" );
-//		return null;
-
 		int searchIndex = _currentIndex;
 		int loopCount = 0;
 

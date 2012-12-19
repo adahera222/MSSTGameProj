@@ -30,7 +30,7 @@ public class Enemy001Setting : CharacterSettingBase
 		mainBody.AddCollision().Set( new Vector2( 0, 0 ), 90 );
 
 		MZEnemy enemy = characterObject.GetComponent<MZEnemy>();
-		enemy._healthPoint = 10;
+		enemy.healthPoint = 10;
 
 		// mode 1
 		MZMode mode1 = enemy.AddMode( "mode1" );
@@ -59,7 +59,7 @@ public class Enemy001Setting : CharacterSettingBase
 		attack1.intervalDegrees = 2.5f;
 		attack1.initVelocity = 300; //300
 		attack1.duration = 0.25f;
-		attack1.bulletSettingName = "EnemyBullet002Setting";
+		attack1.bulletName = "EnemyBullet002Setting";
 		attack1.SetTargetHelp( new MZTargetHelp_Target() );
 
 		MZAttack_Base attackIdle = partControl.AddAttack( "Idle" );
@@ -73,7 +73,7 @@ public class Enemy001Setting : CharacterSettingBase
 		attack2.intervalDegrees = 15;
 		attack2.initVelocity = 300;
 		attack2.duration = 0.8f;
-		attack2.bulletSettingName = "EnemyBullet002Setting";
+		attack2.bulletName = "EnemyBullet002Setting";
 		attack2.SetTargetHelp( new MZTargetHelp_Target() );
 
 		MZAttack_Base attack3 = partControl.AddAttack( "Idle" );
@@ -95,7 +95,7 @@ public class Enemy001Setting : CharacterSettingBase
 		attack1.intervalDegrees = 30;
 		attack1.initVelocity = 100;
 		attack1.duration = 2.5f;
-		attack1.bulletSettingName = "EnemyBullet002Setting";
+		attack1.bulletName = "EnemyBullet002Setting";
 
 		MZAttack_Base attack3 = partControl.AddAttack( "Idle" );
 		attack3.duration = 5.0f;

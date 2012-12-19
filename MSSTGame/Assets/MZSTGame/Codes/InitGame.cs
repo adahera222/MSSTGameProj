@@ -14,7 +14,7 @@ public class InitGame : MonoBehaviour
 
 		MZCharacterObjectsFactory.instance.Init();
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyHollow", 10 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "DonutsBullet", 100 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "DonutsBullet", 500 );
 
 		// it's suck ... = =||||
 //		MZCharacterPartsListInEditorManager.instance.CreateListByOTContainer( "[test]enemyBullet", "ebDonut", "Donut_normal0001", MZCharacterType.EnemyBullet );
