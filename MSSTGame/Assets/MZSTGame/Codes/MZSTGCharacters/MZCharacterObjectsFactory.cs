@@ -6,7 +6,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 {
 	Dictionary<MZCharacterType, Dictionary<string, MZPool<GameObject>>> _charactersPoolsDictionaryByType = null;
 	Dictionary<MZCharacterType, Transform> _charactersParentTransformByType = null;
-	OnCreatedCharacterStates onCreatedCharacterStates = new OnCreatedCharacterStates();
+	MZOnCreatedCharacterStates onCreatedCharacterStates = new MZOnCreatedCharacterStates();
 
 	public void Init()
 	{
@@ -78,6 +78,8 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		MZDebug.Assert( onCreatedCharacterStates != null && onCreatedCharacterStates.hasSet == true, "must set create state first" );
 
 		GameObject newObject = OT.CreateObject( onCreatedCharacterStates.name );
+		MZDebug.Assert( newObject != null, "create newObject fail, name=" + onCreatedCharacterStates.name );
+
 		newObject.active = false;
 		newObject.transform.parent = _charactersParentTransformByType[ onCreatedCharacterStates.type ];
 
@@ -106,7 +108,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 	#endregion
 
 	//
-	class OnCreatedCharacterStates
+	class MZOnCreatedCharacterStates
 	{
 		bool _hasSet = false;
 		string _name = null;

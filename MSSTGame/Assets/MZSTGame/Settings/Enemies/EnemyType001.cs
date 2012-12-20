@@ -20,7 +20,7 @@ public class EnemyType001 : MZEnemy
 		m1move.initMovingVector = new Vector2( 0, -1 );
 		m1move.initVelocity = 50;
 
-		SetMainBodyAttack( mode1 );
+//		SetMainBodyAttack( mode1 );
 //		SetCannonAttack( mode1 );
 	}
 

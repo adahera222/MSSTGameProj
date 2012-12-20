@@ -6,8 +6,8 @@ public class MZDebug
 {
 	static public void Log(string message)
 	{
-		if( Application.platform != RuntimePlatform.OSXEditor )
-			return;
+//		if( Application.platform != RuntimePlatform.OSXEditor )
+//			return;
 
 		StackTrace stackTrace = new System.Diagnostics.StackTrace( 1 );
 		StackFrame stackFrame = stackTrace.GetFrame( 0 );

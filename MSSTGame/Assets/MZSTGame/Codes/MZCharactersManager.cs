@@ -123,7 +123,7 @@ public class MZCharactersManager : MonoBehaviour
 		if( !MZGameSetting.SHOW_CHARACTERS_INFO )
 			return;
 
-		if( guiCharactersInfo == null && _dicActiveCharactersListByType == null )
+		if( guiCharactersInfo == null || _dicActiveCharactersListByType == null )
 			return;
 
 		string infoText = "";

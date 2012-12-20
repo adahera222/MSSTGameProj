@@ -235,16 +235,25 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 		_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
 
-		for( int i = 0; i < gameObject.transform.childCount; i++ )
+		foreach( OTSprite s in gameObject.transform.GetComponentsInChildren<OTSprite>() )
+		{
+			MZDebug.Log( "+" + s.name + "+" );
+		}
+
+		for( int i = 0; i < gameObject.transform.GetChildCount(); i++ )
 		{
 			GameObject partObject = gameObject.transform.GetChild( i ).gameObject;
 			string partName = GetClearPartName( partObject.name );
+
+			MZDebug.Log( "Now add: " + partName + " at " + i.ToString() );
 
 			MZCharacterPart part = partObject.GetComponent<MZCharacterPart>();
 			part.name = partName;
 			part.parentGameObject = gameObject;
 
 			MZDebug.Assert( _partsByNameDictionary.ContainsKey( partName ) == false, "Duplicate key=" + partName );
+			MZDebug.Assert( _partsByNameDictionary.ContainsValue( part ) == false, "Duplicate part=" + partName );
+
 			_partsByNameDictionary.Add( partName, part );
 		}
 

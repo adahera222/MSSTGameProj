@@ -23,7 +23,7 @@ public class SystemTest : MonoBehaviour
 
 	void UpdateEveryCD()
 	{
-		CreateEnemies();
+//		CreateEnemies();
 //		CreateBullets();
 //		UpdateOTPreFabricate();
 	}
