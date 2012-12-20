@@ -6,9 +6,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 {
 	Dictionary<MZCharacterType, Dictionary<string, MZPool<GameObject>>> _charactersPoolsDictionaryByType = null;
 	Dictionary<MZCharacterType, Transform> _charactersParentTransformByType = null;
-	// create object states
-	string _onCreateObjectName = null;
-	MZCharacterType _onCreateCharacterType = MZCharacterType.Unknow;
+	OnCreatedCharacterStates onCreatedCharacterStates = new OnCreatedCharacterStates();
 
 	public void Init()
 	{
@@ -39,7 +37,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 
 		MZDebug.Assert( poolDict.ContainsKey( name ) == false, "already have this, name=" + name );
 
-		SetCreateObjectState( name, type );
+		onCreatedCharacterStates.Set( name, type );
 
 		MZPool<GameObject> newPool = new MZPool<GameObject>();
 		newPool.createNewObjectHandle = new MZPool<GameObject>.CreateNewObject( CreateNewGameObject );
@@ -47,7 +45,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		newPool.onReturnItemHandle = new MZPool<UnityEngine.GameObject>.OnReturnItem( OnCharacterObjectRemove );
 		newPool.CreateContent( number );
 
-		RestoreCreateObjectState();
+		onCreatedCharacterStates.Restore();
 
 		poolDict.Add( name, newPool );
 	}
@@ -73,57 +71,25 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		_charactersPoolsDictionaryByType[ type ][ name ].Return( characterObject );
 	}
 
-	void SetCreateObjectState(string name, MZCharacterType type)
-	{
-		_onCreateObjectName = name;
-		_onCreateCharacterType = type;
-	}
-
-	void RestoreCreateObjectState()
-	{
-		_onCreateObjectName = null;
-		_onCreateCharacterType = MZCharacterType.Unknow;
-	}
-
 	#region handle function of MZPool<GameObject>
 
 	GameObject CreateNewGameObject()
 	{
-		MZDebug.Assert( _onCreateObjectName != null && _onCreateCharacterType != MZCharacterType.Unknow, "must set create state first" );
+		MZDebug.Assert( onCreatedCharacterStates != null && onCreatedCharacterStates.hasSet == true, "must set create state first" );
 
-		GameObject newObject = OT.CreateObject( _onCreateObjectName );
+		GameObject newObject = OT.CreateObject( onCreatedCharacterStates.name );
 		newObject.active = false;
-		newObject.transform.parent = _charactersParentTransformByType[ _onCreateCharacterType ];
+		newObject.transform.parent = _charactersParentTransformByType[ onCreatedCharacterStates.type ];
 
 		MZCharacter character = newObject.GetComponent<MZCharacter>();
 		character.InitValues();
 
-		character.depth = MZGameSetting.GetDepthOfCharacter( _onCreateCharacterType );
+		character.characterType = onCreatedCharacterStates.type;
+		character.depth = MZGameSetting.GetDepthOfCharacter( onCreatedCharacterStates.type );
 		character.position = MZGameSetting.INVALID_POSITIONV2;
-		character.name = _onCreateObjectName;
+		character.name = onCreatedCharacterStates.name;
 
 		return newObject;
-	}
-
-	void SetObjectAtCreateContent(GameObject characterObject)
-	{
-		characterObject.active = true;
-
-		MZCharacter character = characterObject.GetComponent<MZCharacter>();
-		character.InitValues();
-
-		character.depth = MZGameSetting.GetDepthOfCharacter( _onCreateCharacterType );
-		character.position = MZGameSetting.INVALID_POSITIONV2;
-		character.name = _onCreateObjectName;
-
-		MZDebug.Log( character.partsByNameDictionary.Values.Count.ToString() );
-
-		foreach( MZCharacterPart p in character.partsByNameDictionary.Values )
-		{
-			p.gameObject.active = true;
-//			p.gameObject.GetComponent<MeshRenderer>().enabled = false;
-			p.gameObject.renderer.enabled = true;
-		}
 	}
 
 	void OnCharacterObjectBecomeVaild(GameObject characterObject)
@@ -138,4 +104,37 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 	}
 
 	#endregion
+
+	//
+	class OnCreatedCharacterStates
+	{
+		bool _hasSet = false;
+		string _name = null;
+		MZCharacterType _type = MZCharacterType.Unknow;
+
+		public bool hasSet
+		{ get { return _hasSet; } }
+
+		public string name
+		{ get { return _name; } }
+
+		public MZCharacterType type
+		{ get { return _type; } }
+
+		public void Set(string name, MZCharacterType type)
+		{
+			_name = name;
+			_type = type;
+
+			_hasSet = true;
+		}
+
+		public void Restore()
+		{
+			_name = null;
+			_type = MZCharacterType.Unknow;
+
+			_hasSet = false;
+		}
+	}
 }

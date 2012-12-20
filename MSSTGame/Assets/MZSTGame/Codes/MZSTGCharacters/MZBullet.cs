@@ -11,7 +11,9 @@ public class MZBullet : MZCharacter, IMZMove
 	public override Vector2 currentMovingVector
 	{
 		get
-		{ return ( _moveControlUpdate != null )? _moveControlUpdate.currentControl.currentMovingVector : Vector2.zero; }
+		{
+			return ( _moveControlUpdate != null )? _moveControlUpdate.currentControl.currentMovingVector : Vector2.zero;
+		}
 	}
 
 	public List<MZMove> movesList
@@ -54,6 +56,25 @@ public class MZBullet : MZCharacter, IMZMove
 	{
 		base.OnRemoving();
 		_moveControlUpdate = null;
+	}
+
+
+	// test
+	public void SetRotation(float rotation)
+	{
+		foreach( MZCharacterPart p in partsByNameDictionary.Values )
+		{
+			p.rotation = rotation;
+		}
+	}
+
+	// test
+	public void UpdateFaceToOnce()
+	{
+		foreach( MZCharacterPart p in partsByNameDictionary.Values )
+		{
+			p.faceTo.Update();
+		}
 	}
 
 	protected override void UpdateWhenActive()

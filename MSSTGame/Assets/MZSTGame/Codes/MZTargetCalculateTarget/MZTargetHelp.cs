@@ -14,8 +14,21 @@ public interface IMZTargetHelp
 	}
 }
 
-public abstract class MZTargetHelp_Base
+public abstract class MZTargetHelp
 {
+	static public MZTargetHelp Create(Type type, IMZTargetHelp controlObject)
+	{
+		MZTargetHelp targetHelp = (MZTargetHelp)MZObjectHelp.CreateClass( "MZTargetHelp_" + type.ToString() );
+		targetHelp.controlObject = controlObject;
+		return targetHelp;
+	}
+
+	public enum Type
+	{
+		Target,
+		AssignMovingVector,
+	}
+
 	public IMZTargetHelp controlObject = null;
 
 	public Vector2 GetMovingVector()
@@ -32,7 +45,7 @@ public abstract class MZTargetHelp_Base
 	}
 }
 
-public class MZTargetHelp_Target : MZTargetHelp_Base
+public class MZTargetHelp_Target : MZTargetHelp
 {
 	protected override Vector2 CalculateMovingVector()
 	{
@@ -45,6 +58,7 @@ public class MZTargetHelp_Target : MZTargetHelp_Base
 		{
 			case MZCharacterType.EnemyAir:
 			case MZCharacterType.EnemyGround:
+			case MZCharacterType.EnemyBullet:
 				return GetPlayerPosition();
 
 			default:
@@ -54,17 +68,12 @@ public class MZTargetHelp_Target : MZTargetHelp_Base
 	}
 }
 
-public class MZTargetHelp_AssignMovingVector : MZTargetHelp_Base
+public class MZTargetHelp_AssignMovingVector : MZTargetHelp
 {
-	Vector2 _movingVector = Vector2.zero;
-
-	public MZTargetHelp_AssignMovingVector(Vector2 movingVector)
-	{
-		_movingVector = movingVector;
-	}
+	public Vector2 movingVector = Vector2.zero;
 
 	protected override Vector2 CalculateMovingVector()
 	{
-		return _movingVector;
+		return movingVector;
 	}
 }

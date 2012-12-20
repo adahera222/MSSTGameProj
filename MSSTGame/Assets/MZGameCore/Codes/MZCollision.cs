@@ -15,7 +15,7 @@ public class MZCollision
 	public Vector2 center = new Vector2( 0, 0 );
 	public float radius = 0;
 	public IMZCollision collisionDelegate = null;
-
+	
 	public MZCollision()
 	{
 

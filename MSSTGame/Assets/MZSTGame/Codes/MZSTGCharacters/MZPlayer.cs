@@ -37,7 +37,9 @@ public class MZPlayer : MZCharacter
 		attackTemp.bulletName = "PlayerBullet001Setting";
 		attackTemp.enable = false;
 //		attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
-		attackTemp.SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
+//		attackTemp.SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
+		attackTemp.targetHelp = new MZTargetHelp_AssignMovingVector();
+		( attackTemp.targetHelp as MZTargetHelp_AssignMovingVector ).movingVector = new Vector2( 0, 1 );
 	}
 
 	public override void OnRemoving()

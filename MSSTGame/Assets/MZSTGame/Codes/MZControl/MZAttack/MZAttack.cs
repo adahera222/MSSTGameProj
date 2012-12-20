@@ -45,10 +45,12 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	public float additionalVelocityPerLaunch = 0;
 	public float maxVelocity = float.NaN;
 	public string bulletName = null;
+	public MZFaceTo.Type bulletFaceToType = MZFaceTo.Type.MovingVector;
+	//
 	bool _enable = true;
 	int _launchCount = 0;
 	float _colddownCount = 0;
-	MZTargetHelp_Base _targetHelp = null;
+	MZTargetHelp _targetHelp = null;
 
 	public bool enable
 	{
@@ -74,23 +76,23 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	}
 	#endregion
 
-	protected MZTargetHelp_Base targetHelp
+	public MZTargetHelp targetHelp
 	{
+		set
+		{
+			_targetHelp = value;
+			_targetHelp.controlObject = this;
+		}
 		get
 		{
 			if( _targetHelp == null )
-				SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
+			{
+				_targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.AssignMovingVector, this );
+				( _targetHelp as MZTargetHelp_AssignMovingVector ).movingVector = new Vector2( 0, 1 );
+			}
 
 			return _targetHelp;
 		}
-	}
-
-	public MZTargetHelp_Base SetTargetHelp(MZTargetHelp_Base targetHelp)
-	{
-		_targetHelp = targetHelp;
-		_targetHelp.controlObject = this;
-
-		return _targetHelp;
 	}
 
 	public override void Reset()
@@ -149,10 +151,13 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	protected GameObject GetNewBulletObject()
 	{
 		MZDebug.Assert( bulletName != null, "bulletName is null" );
-//		GameObject bullet = MZCharacterFactory.GetInstance().CreateCharacter( GetBulletTypeByControlTargetType(), "Bullet", bulletSettingName );
-		GameObject bullet = MZCharacterObjectsFactory.instance.Get( /*GetBulletTypeByControlTargetType()*/ MZCharacterType.EnemyBullet, bulletName );
-		bullet.GetComponent<MZBullet>().strength = strength;
-		bullet.GetComponent<MZCharacter>().position = controlTarget.realPosition;
+
+		GameObject bullet = MZCharacterObjectsFactory.instance.Get( GetBulletType(), bulletName );
+		MZBullet bulletScript = bullet.GetComponent<MZBullet>();
+
+		bulletScript.strength = strength;
+		bulletScript.position = controlTarget.realPosition;
+		bulletScript.faceToType = bulletFaceToType;
 
 		return bullet;
 	}
@@ -162,7 +167,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		_launchCount++;
 	}
 
-	MZCharacterType GetBulletTypeByControlTargetType()
+	MZCharacterType GetBulletType()
 	{
 		switch( controlTarget.characterType )
 		{

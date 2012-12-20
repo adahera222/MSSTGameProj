@@ -14,6 +14,7 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 	float _enableRemoveTime = 9999.99f;
 	Dictionary<string, MZCharacterPart> _partsByNameDictionary;
 	MZCharacterType _characterType = MZCharacterType.Unknow;
+	MZFaceTo.Type _faceToType;
 
 	#region IMZCollision implementation
 	public Vector2 realPosition
@@ -72,6 +73,20 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 	{
 		set{ _enableRemoveTime = value; }
 		get{ return _enableRemoveTime; }
+	}
+
+	public MZFaceTo.Type faceToType
+	{
+		set
+		{
+			_faceToType = value;
+			foreach( MZCharacterPart p in partsByNameDictionary.Values )
+				p.SetFaceTo( faceToType );
+		}
+		get
+		{
+			return _faceToType;
+		}
 	}
 
 	public float lifeTimeCount

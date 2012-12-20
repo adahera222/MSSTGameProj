@@ -48,7 +48,10 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	public override Vector2 currentMovingVector
 	{
-		get{ return _modeControlUpdate.currentControl.currentMovingVector; }
+		get
+		{
+			return _modeControlUpdate.currentControl.currentMovingVector;
+		}
 	}
 
 	public MZMode AddMode(string name)

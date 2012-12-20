@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class MZFaceTo_Target : MZFaceTo_Base
+public class MZFaceTo_Target : MZFaceTo
 {
 	protected override void UpdateWhenActive()
 	{
-		MZTargetHelp_Base targetHelp = new MZTargetHelp_Target();
+		MZTargetHelp targetHelp = new MZTargetHelp_Target();
 		targetHelp.controlObject = this;
 		float rotation = MZMath.DegreesFromXAxisToVector( targetHelp.GetMovingVector() );
 

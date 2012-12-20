@@ -4,11 +4,12 @@ using System.Collections.Generic;
 
 public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 {
+	public MZFaceTo.Type faceToType = MZFaceTo.Type.None;
 	public List<MZCollision> collisionsList = new List<MZCollision>();
 	//
 	GameObject _parentGameObject = null;
 	MZCharacter _parentCharacter = null;
-	MZFaceTo_Base _faceTo = null;
+	MZFaceTo _faceTo = null;
 
 	#region IMZAttack, IMZCollision implementation
 
@@ -31,7 +32,10 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 
 	public Vector2 parentMovingVector
 	{
-		get{ return _parentCharacter.currentMovingVector; }
+		get
+		{
+			return _parentCharacter.currentMovingVector;
+		}
 	}
 
 	public Vector2 selfMovingVector
@@ -44,9 +48,22 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 
 	#endregion
 
+	public MZFaceTo faceTo
+	{
+		get{ return _faceTo; }
+	}
+
+	public void SetFaceTo(MZFaceTo.Type faceToType)
+	{
+		this.faceToType = faceToType;
+		_faceTo = MZFaceTo.Create( faceToType, this );
+	}
+
 	public override void Enable()
 	{
 		base.Enable();
+
+		SetFaceTo( faceToType );
 	}
 
 	public override void Disable()
@@ -63,30 +80,6 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 			_parentCharacter = _parentGameObject.GetComponent<MZCharacter>();
 		}
 		get{ return _parentGameObject; }
-	}
-
-	public MZFaceTo_Base faceTo
-	{
-		set
-		{
-			_faceTo = value;
-			if( _faceTo != null )
-				_faceTo.controlTarget = this;
-		}
-		get { return _faceTo; }
-	}
-
-	public MZCollision AddCollision() //delete
-	{
-//		if( collisionsList == null )
-//			collisionsList = new List<MZCollision>();
-//
-//		MZCollision collision = new MZCollision();
-//		collision.collisionDelegate = this;
-//		collisionsList.Add( collision );
-//
-//		return collision;
-		return null;
 	}
 
 	public bool IsCollide(MZCharacterPart other)

@@ -16,7 +16,14 @@ public class MZControlUpdate<T> where T : MZControlBase
 
 	public T currentControl
 	{
-		get{ return controlsList[ _currentIndex ]; }
+		get
+		{
+			MZDebug.Assert( controlsList != null, "controlsList is null" );
+
+			int index = ( _currentIndex < 0 )? 0 : _currentIndex;
+
+			return controlsList[ index ];
+		}
 	}
 
 	int _currentIndex = -1;
