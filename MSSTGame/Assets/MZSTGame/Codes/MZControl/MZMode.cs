@@ -19,7 +19,7 @@ public class MZMode : MZControlBase
 {
 	public new IMZMode controlTarget = null;
 	//
-	MZControlUpdate<MZMove_Base> _moveControlUpdate = new MZControlUpdate<MZMove_Base>();
+	MZControlUpdate<MZMove> _moveControlUpdate = new MZControlUpdate<MZMove>();
 	List<MZControlUpdate<MZPartControl>> _multiPartControlUpdate = new List<MZControlUpdate<MZPartControl>>();
 
 	public override void Reset()
@@ -41,24 +41,20 @@ public class MZMode : MZControlBase
 		get{ return _moveControlUpdate.currentControl.currentMovingVector; }
 	}
 
-	public List<MZMove_Base> movesList
+	public List<MZMove> movesList
 	{
 		get
 		{
 			if( _moveControlUpdate == null )
-				_moveControlUpdate = new MZControlUpdate<MZMove_Base>();
+				_moveControlUpdate = new MZControlUpdate<MZMove>();
 
 			return _moveControlUpdate.controlsList;
 		}
 	}
 
-	public MZMove_Base AddMove(string name, string typeString)
+	public MZMove AddMove(string name, MZMove.Type type)
 	{
-		MZMove_Base move = (MZMove_Base)MZObjectHelp.CreateClass( "MZMove_" + typeString );
-
-		move.name = name;
-		move.controlTarget = controlTarget.moveControlTarget;
-
+		MZMove move = MZMove.Create( type, name, controlTarget.moveControlTarget );
 		movesList.Add( move );
 
 		return move;

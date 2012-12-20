@@ -55,6 +55,8 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 	public GameObject Get(MZCharacterType type, string name)
 	{
 		MZDebug.Assert( _charactersPoolsDictionaryByType != null && _charactersPoolsDictionaryByType.ContainsKey( type ) == true, "null not contain key(" + name + ")" );
+		MZDebug.Assert( _charactersPoolsDictionaryByType.ContainsKey( type ) == true, "type not exist, type=" + type.ToString() );
+		MZDebug.Assert( _charactersPoolsDictionaryByType[ type ].ContainsKey( name ) == true, "name not exist, name=" + name );
 
 		GameObject characterObject = _charactersPoolsDictionaryByType[ type ][ name ].GetValidItem();
 		MZDebug.Assert( characterObject != null, "characterObject is null" );

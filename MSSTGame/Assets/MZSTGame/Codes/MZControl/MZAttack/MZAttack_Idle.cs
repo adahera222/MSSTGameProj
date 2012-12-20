@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MZAttack_Idle : MZAttack_Base
+public class MZAttack_Idle : MZAttack
 {
 
 }

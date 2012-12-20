@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MZMove_Linear : MZMove_Base
+public class MZMove_Linear : MZMove
 {
 	Vector2 startPosition = Vector2.zero;
 

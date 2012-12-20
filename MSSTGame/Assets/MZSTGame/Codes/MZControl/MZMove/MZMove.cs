@@ -10,8 +10,26 @@ public interface IMZMove : IMZControl
 	}
 }
 
-public abstract class MZMove_Base : MZControlBase
+public abstract class MZMove : MZControlBase
 {
+	static public MZMove Create(Type type, string name, IMZMove controlTarget)
+	{
+		MZDebug.Assert( controlTarget != null, "controlTarget is null" );
+
+		MZMove move = (MZMove)MZObjectHelp.CreateClass( "MZMove_" + type.ToString() );
+		MZDebug.Assert( move != null, "create fail, type=" + type.ToString() );
+
+		move.name = name;
+		move.controlTarget = controlTarget;
+
+		return move;
+	}
+
+	public enum Type
+	{
+		Linear,
+	}
+
 	public new IMZMove controlTarget;
 	public float initVelocity = 0;
 

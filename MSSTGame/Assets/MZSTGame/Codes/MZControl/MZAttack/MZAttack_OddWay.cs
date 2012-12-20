@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MZAttack_OddWay : MZAttack_Base
+public class MZAttack_OddWay : MZAttack
 {
 	protected override void LaunchBullet()
 	{
@@ -52,7 +52,7 @@ public class MZAttack_OddWay : MZAttack_Base
 	void AddLinearMoveToBullet(GameObject bulletObject)
 	{
 		MZBullet bullet = bulletObject.GetComponent<MZBullet>();
-		MZMove_Base bulletMove = bullet.AddMove( "Linear", "Linear" );
+		MZMove bulletMove = bullet.AddMove( "Linear", "Linear" );
 		bulletMove.initVelocity = currentVelocity;
 	}
 }

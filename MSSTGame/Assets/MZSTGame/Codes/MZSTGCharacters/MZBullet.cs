@@ -6,7 +6,7 @@ public class MZBullet : MZCharacter, IMZMove
 {
 	public int strength = 0;
 	//
-	MZControlUpdate<MZMove_Base> _moveControlUpdate = null;
+	MZControlUpdate<MZMove> _moveControlUpdate = null;
 
 	public override Vector2 currentMovingVector
 	{
@@ -14,20 +14,20 @@ public class MZBullet : MZCharacter, IMZMove
 		{ return ( _moveControlUpdate != null )? _moveControlUpdate.currentControl.currentMovingVector : Vector2.zero; }
 	}
 
-	public List<MZMove_Base> movesList
+	public List<MZMove> movesList
 	{
 		get
 		{
 			if( _moveControlUpdate == null )
-				_moveControlUpdate = new MZControlUpdate<MZMove_Base>();
+				_moveControlUpdate = new MZControlUpdate<MZMove>();
 
 			return _moveControlUpdate.controlsList;
 		}
 	}
 
-	public MZMove_Base AddMove(string name, string typeString)
+	public MZMove AddMove(string name, string typeString)
 	{
-		MZMove_Base move = (MZMove_Base)MZObjectHelp.CreateClass( "MZMove_" + typeString );
+		MZMove move = (MZMove)MZObjectHelp.CreateClass( "MZMove_" + typeString );
 		move.name = name;
 		move.controlTarget = this;
 

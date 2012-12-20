@@ -29,7 +29,6 @@ public class MZControlUpdate<T> where T : MZControlBase
 
 	public void Clear()
 	{
-		MZDebug.Log( ">M<" );
 		_currentIndex = -1;
 		_controlsList.Clear();
 		_controlsList = null;

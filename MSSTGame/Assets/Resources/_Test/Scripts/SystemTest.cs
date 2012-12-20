@@ -66,6 +66,7 @@ public class SystemTest : MonoBehaviour
 	#region Create Enemy
 
 	bool hasCreatedEnemies = false;
+	int createdEnemiesCount = 0;
 
 	void CreateEnemies()
 	{
@@ -74,13 +75,16 @@ public class SystemTest : MonoBehaviour
 
 		int numberOfEnemies = 3;
 		float intervalOfEnemies = 200;
+		string enemyName = ( createdEnemiesCount%2 == 0 )? "EnemyHollow" : "EnemyType001";
 
 		for( int i = 0; i < numberOfEnemies; i++ )
 		{
-			GameObject enemy = MZCharacterObjectsFactory.instance.Get( MZCharacterType.EnemyAir, "EnemyHollow" );
+			GameObject enemy = MZCharacterObjectsFactory.instance.Get( MZCharacterType.EnemyAir, enemyName );
 //			enemy.GetComponent<MZCharacter>().position = new Vector2( -intervalOfEnemies*( numberOfEnemies - 1 )/2 + i*intervalOfEnemies, 550 );
 			enemy.GetComponent<MZCharacter>().position = new Vector2( -intervalOfEnemies*( numberOfEnemies - 1 )/2 + i*intervalOfEnemies, 0 );
 		}
+
+		createdEnemiesCount++;
 
 //		hasCreatedEnemies = true;
 	}

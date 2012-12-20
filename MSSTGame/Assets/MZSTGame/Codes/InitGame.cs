@@ -14,8 +14,10 @@ public class InitGame : MonoBehaviour
 //		Resources.UnloadUnusedAssets();
 
 		MZCharacterObjectsFactory.instance.Init();
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyType001", 10 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyHollow", 10 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "DonutsBullet", 1000 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "DonutsBullet", 500 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "BeeBullet", 500 );
 
 		// it's suck ... = =||||
 //		MZCharacterPartsListInEditorManager.instance.CreateListByOTContainer( "[test]enemyBullet", "ebDonut", "Donut_normal0001", MZCharacterType.EnemyBullet );

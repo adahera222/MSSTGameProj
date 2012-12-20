@@ -10,8 +10,19 @@ public interface IMZPart : IMZAttack, IMZMove
 public class MZPartControl : MZControlBase
 {
 	public new IMZPart controlTarget = null;
-	MZControlUpdate<MZMove_Base> _moveControlUpdate = null;
-	MZControlUpdate<MZAttack_Base> _attackControlUpdate = null;
+	MZControlUpdate<MZMove> _moveControlUpdate = null;
+	MZControlUpdate<MZAttack> _attackControlUpdate = null;
+
+	public MZPartControl()
+	{
+
+	}
+
+	public MZPartControl(IMZPart controlTarget)
+	{
+		MZDebug.Assert( controlTarget != null, "controlTarget is null" );
+		this.controlTarget = controlTarget;
+	}
 
 	public override void Reset()
 	{
@@ -24,31 +35,31 @@ public class MZPartControl : MZControlBase
 			_attackControlUpdate.ResetAll();
 	}
 
-	public List<MZMove_Base> movesList
+	public List<MZMove> movesList
 	{
 		get
 		{
 			if( _moveControlUpdate == null )
-				_moveControlUpdate = new MZControlUpdate<MZMove_Base>();
+				_moveControlUpdate = new MZControlUpdate<MZMove>();
 
 			return _moveControlUpdate.controlsList;
 		}
 	}
 
-	public List<MZAttack_Base> attacksList
+	public List<MZAttack> attacksList
 	{
 		get
 		{
 			if( _attackControlUpdate == null )
-				_attackControlUpdate = new MZControlUpdate<MZAttack_Base>();
+				_attackControlUpdate = new MZControlUpdate<MZAttack>();
 
 			return _attackControlUpdate.controlsList;
 		}
 	}
 
-	public MZMove_Base AddMove(string name, string typeString)
+	public MZMove AddMove(string name, string typeString)
 	{
-		MZMove_Base move = (MZMove_Base)MZObjectHelp.CreateClass( "MZMove_" + typeString );
+		MZMove move = (MZMove)MZObjectHelp.CreateClass( "MZMove_" + typeString );
 
 		move.name = name;
 		move.controlTarget = controlTarget;
@@ -58,13 +69,22 @@ public class MZPartControl : MZControlBase
 		return move;
 	}
 
-	public MZAttack_Base AddAttack(string typeString)
+	// delete
+	public MZAttack AddAttack(string typeString)
 	{
-		MZAttack_Base attack = (MZAttack_Base)MZObjectHelp.CreateClass( "MZAttack_" + typeString );
+		MZAttack attack = (MZAttack)MZObjectHelp.CreateClass( "MZAttack_" + typeString );
 
 		attack.name = "attack";
 		attack.controlTarget = controlTarget;
 
+		attacksList.Add( attack );
+
+		return attack;
+	}
+
+	public MZAttack AddAttack(MZAttack.Type type)
+	{
+		MZAttack attack = MZAttack.Create( "attack", type, controlTarget );
 		attacksList.Add( attack );
 
 		return attack;

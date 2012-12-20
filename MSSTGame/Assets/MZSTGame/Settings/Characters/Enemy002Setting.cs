@@ -19,12 +19,12 @@ public class Enemy002Setting : CharacterSettingBase
 
 		MZMode mode1 = enemy.AddMode( "mode1" );
 
-		MZMove_Base move1 = mode1.AddMove( "m1m1", "Linear" );
+		MZMove move1 = mode1.AddMove( "m1m1", MZMove.Type.Linear );
 		move1.initMovingVector = new Vector2( 0, -1 );
 		move1.initVelocity = 100;
 		move1.duration = 2;
 
-		MZMove_Base move2 = mode1.AddMove( "m1m2", "Linear" );
+		MZMove move2 = mode1.AddMove( "m1m2", MZMove.Type.Linear );
 		move2.initMovingVector = new Vector2( 1, 0 );
 		move2.initVelocity = 100;
 		move2.duration = 2;

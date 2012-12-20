@@ -14,8 +14,27 @@ public interface IMZAttack : IMZControl
 	}
 }
 
-public abstract class MZAttack_Base : MZControlBase, IMZTargetHelp
+public abstract class MZAttack : MZControlBase, IMZTargetHelp
 {
+	static public MZAttack Create(string name, Type type, IMZAttack controlTarget)
+	{
+		MZDebug.Assert( controlTarget != null, "controlTarget is null" );
+
+		MZAttack attack = (MZAttack)MZObjectHelp.CreateClass( "MZAttack_" + type.ToString() );
+		MZDebug.Assert( attack != null, "create fail, type=" + type.ToString() );
+
+		attack.name = name;
+		attack.controlTarget = controlTarget;
+
+		return attack;
+	}
+
+	public enum Type
+	{
+		Idle,
+		OddWay,
+	}
+
 	public new IMZAttack controlTarget = null;
 	public int numberOfWays = 0;
 	public int additionalWaysPerLaunch = 0;

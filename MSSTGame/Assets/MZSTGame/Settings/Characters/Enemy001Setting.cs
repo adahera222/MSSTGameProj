@@ -51,7 +51,7 @@ public class Enemy001Setting : CharacterSettingBase
 		MZPartControl partControl = new MZPartControl();
 		partControl.controlTarget = characterPart;
 
-		MZAttack_Base attack1 = partControl.AddAttack( "OddWay" );
+		MZAttack attack1 = partControl.AddAttack( "OddWay" );
 		attack1.numberOfWays = 1;
 		attack1.additionalWaysPerLaunch = 2;
 		attack1.additionalVelocityPerLaunch = 50;
@@ -62,10 +62,10 @@ public class Enemy001Setting : CharacterSettingBase
 		attack1.bulletName = "EnemyBullet002Setting";
 		attack1.SetTargetHelp( new MZTargetHelp_Target() );
 
-		MZAttack_Base attackIdle = partControl.AddAttack( "Idle" );
+		MZAttack attackIdle = partControl.AddAttack( "Idle" );
 		attackIdle.duration = 3;
 
-		MZAttack_Base attack2 = partControl.AddAttack( "OddWay" );
+		MZAttack attack2 = partControl.AddAttack( "OddWay" );
 		attack2.numberOfWays = 9;
 		attack2.additionalVelocityPerLaunch = 100;
 		attack2.additionalWaysPerLaunch = -2;
@@ -76,7 +76,7 @@ public class Enemy001Setting : CharacterSettingBase
 		attack2.bulletName = "EnemyBullet002Setting";
 		attack2.SetTargetHelp( new MZTargetHelp_Target() );
 
-		MZAttack_Base attack3 = partControl.AddAttack( "Idle" );
+		MZAttack attack3 = partControl.AddAttack( "Idle" );
 		attack3.duration = 2;
 
 		MZControlUpdate<MZPartControl> partControlTerm = mode.AddPartControlUpdater();
@@ -88,7 +88,7 @@ public class Enemy001Setting : CharacterSettingBase
 		MZPartControl partControl = new MZPartControl();
 		partControl.controlTarget = characterPart;
 
-		MZAttack_Base attack1 = partControl.AddAttack( "OddWay" );
+		MZAttack attack1 = partControl.AddAttack( "OddWay" );
 		attack1.numberOfWays = 12;
 		attack1.additionalVelocityPerLaunch = 50;
 		attack1.colddown = 0.5f;
@@ -97,7 +97,7 @@ public class Enemy001Setting : CharacterSettingBase
 		attack1.duration = 2.5f;
 		attack1.bulletName = "EnemyBullet002Setting";
 
-		MZAttack_Base attack3 = partControl.AddAttack( "Idle" );
+		MZAttack attack3 = partControl.AddAttack( "Idle" );
 		attack3.duration = 5.0f;
 
 		MZControlUpdate<MZPartControl> partControlTerm = mode.AddPartControlUpdater();

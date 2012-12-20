@@ -8,7 +8,7 @@ public class MZPlayer : MZCharacter
 	GameObject dragRange;
 	Vector3 positonOnTouchBegan;
 	Vector3 playerPositionOnTouchBegan;
-	MZAttack_Base attackTemp = null;
+	MZAttack attackTemp = null;
 
 	enum ControlState
 	{
