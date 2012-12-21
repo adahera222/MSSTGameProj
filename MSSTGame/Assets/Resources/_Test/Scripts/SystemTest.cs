@@ -23,7 +23,7 @@ public class SystemTest : MonoBehaviour
 
 	void UpdateEveryCD()
 	{
-//		CreateEnemies();
+		CreateEnemies();
 //		CreateBullets();
 //		UpdateOTPreFabricate();
 	}
@@ -76,7 +76,7 @@ public class SystemTest : MonoBehaviour
 		int numberOfEnemies = 3;
 		float intervalOfEnemies = 200;
 		string enemyName = ( createdEnemiesCount%2 == 0 )? "EnemyHollow" : "EnemyType001";
-		enemyName = "EnemyHollow";
+//		enemyName = "EnemyType001";
 
 		for( int i = 0; i < numberOfEnemies; i++ )
 		{

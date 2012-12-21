@@ -76,7 +76,6 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 		set
 		{
 			_parentGameObject = value;
-			gameObject.transform.parent = value.transform;
 			_parentCharacter = _parentGameObject.GetComponent<MZCharacter>();
 		}
 		get{ return _parentGameObject; }

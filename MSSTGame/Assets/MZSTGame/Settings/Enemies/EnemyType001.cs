@@ -20,14 +20,14 @@ public class EnemyType001 : MZEnemy
 		m1move.initMovingVector = new Vector2( 0, -1 );
 		m1move.initVelocity = 50;
 
-//		SetMainBodyAttack( mode1 );
+		SetMainBodyAttack( mode1 );
 //		SetCannonAttack( mode1 );
 	}
 
 	void SetMainBodyAttack(MZMode mode)
 	{
 		MZControlUpdate<MZPartControl> partControlControlUpdate = mode.AddPartControlUpdater();
-		MZPartControl partControl = new MZPartControl( partsByNameDictionary[ "MainBody" ] );
+		MZPartControl partControl = new MZPartControl( partsByNameDictionary[ "Cannon" ] );
 		partControlControlUpdate.Add( partControl );
 
 		MZAttack attack1 = partControl.AddAttack( MZAttack.Type.OddWay );

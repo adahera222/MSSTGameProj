@@ -136,29 +136,6 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		}
 	}
 
-	public MZCharacterPart AddPart(string name) // delete
-	{
-//		MZDebug.Assert( characterType != MZCharacterType.Unknow, "character type is unknow, must assgn it first" );
-//
-//		GameObject partObject = MZOTSpritesPoolManager.GetInstance().GetSpriteObject( characterType );
-//
-//		MZCharacterPart characterPart = partObject.GetComponent<MZCharacterPart>();
-//
-//		characterPart.Enable();
-//		characterPart.name = name;
-//		characterPart.parentGameObject = gameObject;
-//
-//		if( _partsByNameDictionary == null )
-//			_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
-//
-//		MZDebug.Assert( _partsByNameDictionary.ContainsKey( name ) == false, "Duplicate key=" + name );
-//		_partsByNameDictionary.Add( name, characterPart );
-//
-//		return partObject.GetComponent<MZCharacterPart>();
-
-		return null;
-	}
-
 	public virtual void OnRemoving()
 	{
 		if( partsByNameDictionary == null )
@@ -235,17 +212,12 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 		_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
 
-		foreach( OTSprite s in gameObject.transform.GetComponentsInChildren<OTSprite>() )
+//		for( int i = 0; i < gameObject.transform.GetChildCount(); i++ )
+		foreach( Transform childTransform in gameObject.transform )
 		{
-			MZDebug.Log( "+" + s.name + "+" );
-		}
-
-		for( int i = 0; i < gameObject.transform.GetChildCount(); i++ )
-		{
-			GameObject partObject = gameObject.transform.GetChild( i ).gameObject;
+//			GameObject partObject = gameObject.transform.GetChild( i ).gameObject;
+			GameObject partObject = childTransform.gameObject;
 			string partName = GetClearPartName( partObject.name );
-
-			MZDebug.Log( "Now add: " + partName + " at " + i.ToString() );
 
 			MZCharacterPart part = partObject.GetComponent<MZCharacterPart>();
 			part.name = partName;
