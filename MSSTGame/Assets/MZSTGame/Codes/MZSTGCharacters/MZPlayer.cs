@@ -34,7 +34,7 @@ public class MZPlayer : MZCharacter
 		attackTemp.intervalDegrees = 5;
 		attackTemp.colddown = 0.25f;
 		attackTemp.duration = -1;
-		attackTemp.bulletName = "PlayerBullet001Setting";
+		attackTemp.bulletName = "PlayerMainBullet";
 		attackTemp.enable = false;
 //		attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
 //		attackTemp.SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
@@ -70,9 +70,6 @@ public class MZPlayer : MZCharacter
 		positonOnTouchBegan = Camera.mainCamera.ScreenToWorldPoint( new Vector3( Input.mousePosition.x, Input.mousePosition.y, 0 ) );
 		playerPositionOnTouchBegan = gameObject.gameObject.transform.position;
 		currentControlState = ( MZMath.V3ToV2DistancePow2( positonOnTouchBegan, gameObject.transform.position ) > dragableRadius*dragableRadius )? ControlState.Teleport : ControlState.Move;
-
-		if( attackTemp.controlTarget == null )
-			attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
 
 		attackTemp.enable = true;
 	}

@@ -151,11 +151,14 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 	public virtual bool IsCollide(MZCharacter other)
 	{
-		if( outCollision.IsCollision( other.outCollision ) == false )
-			return false;
-
 		if( isActive == false )
 			return false;
+
+		if( outCollision.radius != 0 )
+		{
+			if( outCollision.IsCollision( other.outCollision ) == false )
+				return false;
+		}
 
 		foreach( MZCharacterPart selfPart in _partsByNameDictionary.Values )
 		{

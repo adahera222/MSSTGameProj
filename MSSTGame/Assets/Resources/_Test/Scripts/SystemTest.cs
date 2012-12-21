@@ -14,6 +14,7 @@ public class SystemTest : MonoBehaviour
 	void Start()
 	{
 //		InitOTPreFabricate();
+//		CreateEnemies();
 	}
 
 	void UpdateEveryFrame()
@@ -65,18 +66,17 @@ public class SystemTest : MonoBehaviour
 
 	#region Create Enemy
 
-	bool hasCreatedEnemies = false;
+//	bool hasCreatedEnemies = false;
 	int createdEnemiesCount = 0;
 
 	void CreateEnemies()
 	{
-		if( hasCreatedEnemies )
-			return;
+//		if( hasCreatedEnemies )
+//			return;
 
 		int numberOfEnemies = 3;
 		float intervalOfEnemies = 200;
 		string enemyName = ( createdEnemiesCount%2 == 0 )? "EnemyHollow" : "EnemyType001";
-//		enemyName = "EnemyType001";
 
 		for( int i = 0; i < numberOfEnemies; i++ )
 		{

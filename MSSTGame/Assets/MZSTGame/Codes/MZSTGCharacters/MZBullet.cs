@@ -6,6 +6,7 @@ public class MZBullet : MZCharacter, IMZMove
 {
 	public int strength = 0;
 	//
+	bool _drawCollisionCheck = false;
 	MZControlUpdate<MZMove> _moveControlUpdate = null;
 
 	public override Vector2 currentMovingVector
@@ -58,25 +59,6 @@ public class MZBullet : MZCharacter, IMZMove
 		_moveControlUpdate = null;
 	}
 
-
-	// test
-	public void SetRotation(float rotation)
-	{
-		foreach( MZCharacterPart p in partsByNameDictionary.Values )
-		{
-			p.rotation = rotation;
-		}
-	}
-
-	// test
-	public void UpdateFaceToOnce()
-	{
-		foreach( MZCharacterPart p in partsByNameDictionary.Values )
-		{
-			p.faceTo.Update();
-		}
-	}
-
 	protected override void UpdateWhenActive()
 	{
 		base.UpdateWhenActive();
@@ -90,8 +72,6 @@ public class MZBullet : MZCharacter, IMZMove
 		_drawCollisionCheck = true;
 		return base.IsCollide( other );
 	}
-
-	bool _drawCollisionCheck = false;
 
 	void OnDrawGizmos()
 	{

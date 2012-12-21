@@ -6,7 +6,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 {
 	public MZMode mode;
 	public int healthPoint = 10;
-
+	//
 	int _currentHealthPoint = 1;
 	MZControlUpdate<MZMode> _modeControlUpdate = new MZControlUpdate<MZMode>();
 
