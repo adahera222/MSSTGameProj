@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class InitGame : MonoBehaviour
+public class MZMainGame : MonoBehaviour
 {
 	public List<string> spritesheetNames = new List<string>();
 
@@ -24,11 +24,13 @@ public class InitGame : MonoBehaviour
 		MZGameComponents.GetInstance().charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();
 
 		InitPlayer();
+
+		MZTime.instance.Reset();
 	}
 
 	void Update()
 	{
-
+		MZTime.instance.Update();
 	}
 
 	void InitPlayer()
