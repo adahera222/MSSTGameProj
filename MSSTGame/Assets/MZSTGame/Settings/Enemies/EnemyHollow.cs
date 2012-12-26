@@ -29,6 +29,32 @@ public class EnemyHollow : MZEnemy
 		AddOddWay2( mode1, partsByNameDictionary[ "MainBody" ] );
 	}
 
+	int valueDir = -1;
+//	float changeColorTimeCount = 0;
+//	bool cType = false;
+//	Color c1 = Color.white;
+//	Color c2 = Color.red;
+	protected override void UpdateWhenActive()
+	{
+		base.UpdateWhenActive();
+
+		MZCharacterPart part = partsByNameDictionary[ "MainBody" ];
+		float nextValue = part.scale + valueDir*MZTime.instance.deltaTime*0.5f;
+
+		if( nextValue > 1 )
+		{
+			nextValue = 1;
+			valueDir = -1;
+		}
+		else if( nextValue < 0 )
+			{
+				nextValue = 0;
+				valueDir = 1;
+			}
+
+		part.scale = nextValue;
+	}
+
 	void AddOddWay2(MZMode mode, MZCharacterPart characterPart)
 	{
 		MZPartControl partControl = new MZPartControl();

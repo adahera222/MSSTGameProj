@@ -10,6 +10,18 @@ public class MZBaseObject : MonoBehaviour
 		AlphaBlended,
 	}
 
+	//
+//	Vector2 _originSize = Vector2.zero;
+	float _scale = 1;
+	float _scaleX = 1;
+	float _scaleY = 1;
+	float _rotation = 1;
+	float _alpha = 1;
+	Color _color = new Color( 0.5f, 0.5f, 0.5f );
+	MZShaderType _shaderType = MZShaderType.OTDefault;
+	string _name = "";
+	//
+
 	public Vector2 position
 	{
 		set{ GetSprite().position = value; }
@@ -23,11 +35,11 @@ public class MZBaseObject : MonoBehaviour
 			_scale = value;
 			_scaleX = _scale;
 			_scaleY = _scale;
-			GetSprite().size = _originSize*_scale;
+			GetSprite().size = GetSprite().oSize*_scale;
 		}
 		get
 		{
-			MZDebug.Assert( _scaleX != _scaleY, "_scaleX != _scaleY" );
+			MZDebug.Assert( _scaleX == _scaleY, "_scaleX != _scaleY" );
 			return _scale;
 		}
 	}
@@ -37,7 +49,7 @@ public class MZBaseObject : MonoBehaviour
 		set
 		{
 			_scaleX = value;
-			GetSprite().size = new Vector2( _originSize.x*_scaleX, GetSprite().size.y );
+			GetSprite().size = new Vector2( GetSprite().oSize.x*_scaleX, GetSprite().size.y );
 		}
 		get
 		{
@@ -50,7 +62,7 @@ public class MZBaseObject : MonoBehaviour
 		set
 		{
 			_scaleY = value;
-			GetSprite().size = new Vector2( GetSprite().size.x, _originSize.y*_scaleY );
+			GetSprite().size = new Vector2( GetSprite().size.x, GetSprite().oSize.y*_scaleY );
 		}
 		get
 		{
@@ -81,6 +93,17 @@ public class MZBaseObject : MonoBehaviour
 		get{ return _color; }
 	}
 
+	public float alpha
+	{
+		set
+		{
+			_alpha = value;
+			GetSprite().alpha = _alpha;
+		}
+		get{ return _alpha; }
+
+	}
+
 	public new string name
 	{
 		set{ _name = value;	}
@@ -102,7 +125,6 @@ public class MZBaseObject : MonoBehaviour
 		GetSprite().spriteContainer = MZOTFramesManager.instance.GetFrameContainterByFrameName( frameName );
 		GetSprite().frameName = frameName;
 		GetSprite().size = MZOTFramesManager.GetInstance().GetAtlasData( frameName ).size;
-		_originSize = GetSprite().size;
 	}
 
 	public float GetMaxEdge()
@@ -136,15 +158,6 @@ public class MZBaseObject : MonoBehaviour
 	{
 
 	}
-
-	Vector2 _originSize = Vector2.zero;
-	float _scale = 1;
-	float _scaleX = 1;
-	float _scaleY = 1;
-	float _rotation = 1;
-	Color _color = new Color( 0.5f, 0.5f, 0.5f );
-	MZShaderType _shaderType = MZShaderType.OTDefault;
-	string _name = "";
 
 	OTSprite GetSprite()
 	{
