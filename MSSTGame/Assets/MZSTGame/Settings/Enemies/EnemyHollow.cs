@@ -6,7 +6,7 @@ public class EnemyHollow : MZEnemy
 	public override void InitValues()
 	{
 		base.InitValues();
-		healthPoint = 100;
+		healthPoint = 30;
 	}
 
 	protected override void InitMode()
@@ -37,9 +37,9 @@ public class EnemyHollow : MZEnemy
 		MZAttack attack1 = partControl.AddAttack( "OddWay" );
 		attack1.numberOfWays = 24;
 		attack1.additionalVelocityPerLaunch = 50;
-		attack1.colddown = 0.5f;
+		attack1.colddown = 0.25f;
 		attack1.intervalDegrees = 15;
-		attack1.initVelocity = 100;
+		attack1.initVelocity = 50;
 		attack1.duration = 2.5f;
 		attack1.bulletName = "DonutsBullet";
 

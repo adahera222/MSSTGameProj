@@ -75,6 +75,7 @@ public class MZCharactersManager : MonoBehaviour
 		}
 
 		_enemyBulletAndPlayerCollisionTest = new MZCharactersCollisionTest();
+		_enemyBulletAndPlayerCollisionTest.maxTestPerTime = 50;
 		_enemyBulletAndPlayerCollisionTest.splitUpdateList = _dicActiveCharactersListByType[ MZCharacterType.EnemyBullet ];
 		_enemyBulletAndPlayerCollisionTest.fullUpdateList = _dicActiveCharactersListByType[ MZCharacterType.Player ];
 		_enemyBulletAndPlayerCollisionTest.onCollideHandler = new MZCharactersCollisionTest.OnCollide( OnEnemyBulletCollidePlayer );

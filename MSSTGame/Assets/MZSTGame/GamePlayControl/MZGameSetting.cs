@@ -5,10 +5,10 @@ public class MZGameSetting
 {
 //	static bool DISABLE_ENEMY_ATTACK = false;
 
-	public static bool SHOW_COLLISION_RANGE = true;
+	public static bool SHOW_COLLISION_RANGE = false;
 	public static bool SHOW_BULLET_ON_COLLISION_CHECK = true;
-	public static bool SHOW_CHARACTERS_INFO = true;
-	public static Vector2 INVALID_POSITIONV2 = new Vector2( 0, 330 ); //Vector2.zero;// new Vector2( -9999, -9999 );
+	public static bool SHOW_CHARACTERS_INFO = false;
+	public static Vector2 INVALID_POSITIONV2 = new Vector2( 0, 330 );//new Vector2( -999, -999 );// new Vector2( 0, 330 ); //Vector2.zero;// new Vector2( -9999, -9999 );
 	public static Vector2 PLAYER_MOVABLE_BOUND_CENTER = new Vector2( 0, 0 );
 	public static Vector2 PLAYER_MOVABLE_BOUND_SIZE = new Vector2( 640, 850 );
 	public static Vector3 PLAYER_MOVABLE_BOUND_V3CENTER = new Vector3( PLAYER_MOVABLE_BOUND_CENTER.x, PLAYER_MOVABLE_BOUND_CENTER.y, 0 );

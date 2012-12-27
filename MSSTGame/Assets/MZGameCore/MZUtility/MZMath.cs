@@ -3,6 +3,11 @@ using System.Collections;
 
 public class MZMath
 {
+	static public int RandomFromRange(int min, int max)
+	{
+		return Random.Range( min, max + 1 );
+	}
+
 	static public float DegreesToRadians(float degrees)
 	{
 		return UnityEngine.Mathf.Deg2Rad*degrees;

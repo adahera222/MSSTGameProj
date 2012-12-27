@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class MZMainGame : MonoBehaviour
 {
-	public List<string> spritesheetNames = new List<string>();
+	MZFormationsManager formationsManager;
 
 	void Start()
 	{
@@ -13,6 +13,7 @@ public class MZMainGame : MonoBehaviour
 //		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer();
 //		Resources.UnloadUnusedAssets();
 
+		// extract out to other class ... 
 		MZCharacterObjectsFactory.instance.Init();
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyType001", 10 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyHollow", 10 );
@@ -26,11 +27,13 @@ public class MZMainGame : MonoBehaviour
 		InitPlayer();
 
 		MZTime.instance.Reset();
+		formationsManager = new MZFormationsManager();
 	}
 
 	void Update()
 	{
 		MZTime.instance.Update();
+		formationsManager.Update();
 	}
 
 	void InitPlayer()

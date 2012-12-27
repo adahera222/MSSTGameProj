@@ -59,7 +59,6 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		GameObject characterObject = _charactersPoolsDictionaryByType[ type ][ name ].GetValidItem();
 		MZDebug.Assert( characterObject != null, "characterObject is null" );
 
-		characterObject.active = true;
 		MZGameComponents.instance.charactersManager.Add( type, characterObject.GetComponent<MZCharacter>() );
 
 		return characterObject;
@@ -90,18 +89,21 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		character.depth = MZGameSetting.GetDepthOfCharacter( onCreatedCharacterStates.type );
 		character.position = MZGameSetting.INVALID_POSITIONV2;
 		character.name = onCreatedCharacterStates.name;
+		character.renderEnable = false;
 
 		return newObject;
 	}
 
 	void OnCharacterObjectBecomeVaild(GameObject characterObject)
 	{
-
+		characterObject.active = true;
+		characterObject.GetComponent<MZCharacter>().renderEnable = true;
 	}
 
 	void OnCharacterObjectRemove(GameObject characterObject)
 	{
 		characterObject.active = false;
+		characterObject.GetComponent<MZCharacter>().renderEnable = false;
 		characterObject.GetComponent<MZCharacter>().position = MZGameSetting.INVALID_POSITIONV2;
 	}
 

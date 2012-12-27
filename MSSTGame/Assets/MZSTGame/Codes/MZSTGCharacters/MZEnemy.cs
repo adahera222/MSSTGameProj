@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class MZEnemy : MZCharacter, IMZMode, IMZMove
 {
+	public MZFormation belongFormation = null;
 	public MZMode mode;
 	public int healthPoint = 10;
 	//
@@ -78,6 +79,14 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 			_modeControlUpdate.Update();
 		
 		if( _currentHealthPoint <= 0 )
-			Disable();
+			OnDie();
+	}
+
+	protected void OnDie()
+	{
+		if( belongFormation != null )
+			belongFormation.Remove( this );
+		
+		Disable();
 	}
 }

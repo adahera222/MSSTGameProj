@@ -219,6 +219,10 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 			string partName = GetClearPartName( partObject.name );
 
 			MZCharacterPart part = partObject.GetComponent<MZCharacterPart>();
+
+			if( part == null )
+				continue;
+
 			part.name = partName;
 			part.parentGameObject = gameObject;
 

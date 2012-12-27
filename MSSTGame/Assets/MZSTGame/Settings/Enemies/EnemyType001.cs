@@ -21,7 +21,6 @@ public class EnemyType001 : MZEnemy
 		m1move.initVelocity = 50;
 
 		SetMainBodyAttack( mode1 );
-//		SetCannonAttack( mode1 );
 	}
 
 	void SetMainBodyAttack(MZMode mode)
@@ -32,23 +31,15 @@ public class EnemyType001 : MZEnemy
 
 		MZAttack attack1 = partControl.AddAttack( MZAttack.Type.OddWay );
 		attack1.bulletName = "BeeBullet";
-		attack1.numberOfWays = 3;
-		attack1.colddown = 0.6f;
-		attack1.intervalDegrees = 25;
-		attack1.initVelocity = 200;
-		attack1.targetHelp = new MZTargetHelp_Target();
-	}
-
-	void SetCannonAttack(MZMode mode)
-	{
-		MZControlUpdate<MZPartControl> partControlControlUpdate = mode.AddPartControlUpdater();
-		MZPartControl partControl = new MZPartControl( partsByNameDictionary[ "Cannon" ] );
-		partControlControlUpdate.Add( partControl );
-
-		MZAttack attack1 = partControl.AddAttack( MZAttack.Type.OddWay );
-		attack1.bulletName = "DonutsBullet";
 		attack1.numberOfWays = 1;
-		attack1.colddown = 1.0f;
-		attack1.initVelocity = 100;
+		attack1.colddown = 0.5f;
+		attack1.intervalDegrees = 10;
+		attack1.initVelocity = 200;
+		attack1.duration = 2.5f;
+		attack1.additionalWaysPerLaunch = 2;
+		attack1.targetHelp = new MZTargetHelp_Target();
+
+		MZAttack idle = partControl.AddAttack( MZAttack.Type.Idle );
+		idle.duration = 1.0f;
 	}
 }

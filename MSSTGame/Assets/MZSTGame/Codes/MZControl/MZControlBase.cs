@@ -12,6 +12,9 @@ public abstract class MZControlBase
 	public bool isRunOnce = false;
 	public float duration = -1;
 	public IMZControl controlDelegate = null;
+	//
+	bool _isActive = true;
+	float _lifeTimeCount = 0;
 
 	public bool isActive
 	{ get { return _isActive; } }
@@ -46,9 +49,6 @@ public abstract class MZControlBase
 
 		return ( _lifeTimeCount <= duration );
 	}
-
-	bool _isActive = true;
-	float _lifeTimeCount = -1;
 
 	protected abstract void UpdateWhenActive();
 

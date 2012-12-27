@@ -5,7 +5,7 @@ using System;
 
 public class SystemTest : MonoBehaviour
 {
-	float interval = 5.0f;
+	float interval = 8.0f;
 	float cd = 1.5f;
 	Vector2 size = MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE;
 	Vector2 origin = new Vector2( MZGameSetting.PLAYER_MOVABLE_BOUND_CENTER.x - MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE.x/2,
@@ -24,7 +24,7 @@ public class SystemTest : MonoBehaviour
 
 	void UpdateEveryCD()
 	{
-		CreateEnemies();
+//		CreateEnemies();
 //		CreateBullets();
 //		UpdateOTPreFabricate();
 	}
