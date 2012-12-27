@@ -3,10 +3,10 @@ using System.Collections;
 
 public class MZTime : MZSingleton<MZTime>
 {
-	float _deltaTime;
+	static float _deltaTime;
 	//
 
-	public float deltaTime
+	static public float deltaTime
 	{
 		get{ return _deltaTime; }
 	}

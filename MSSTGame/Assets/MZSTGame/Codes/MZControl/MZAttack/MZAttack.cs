@@ -108,7 +108,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		if( !enable )
 			return;
 
-		_colddownCount -= Time.deltaTime;
+		_colddownCount -= MZTime.deltaTime;
 
 		if( _colddownCount <= 0 )
 		{

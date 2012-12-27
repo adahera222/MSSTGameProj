@@ -101,7 +101,7 @@ public class SystemTest : MonoBehaviour
 
 	void Update()
 	{
-		cd -= Time.deltaTime;
+		cd -= MZTime.deltaTime;
 
 		UpdateEveryFrame();
 

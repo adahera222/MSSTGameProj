@@ -171,7 +171,8 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 	protected virtual void Update()
 	{
-		_lifeTimeCount += Time.deltaTime;
+		_lifeTimeCount += MZTime.deltaTime;
+
 		RemoveWhenOutOfBound();
 
 		if( _isActive )

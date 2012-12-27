@@ -24,7 +24,7 @@ public abstract class MZControlBase
 		if( _lifeTimeCount == 0 )
 			FirstUpdate();
 
-		_lifeTimeCount += Time.deltaTime;
+		_lifeTimeCount += MZTime.deltaTime;
 		_isActive = ActiveCondition();
 
 		if( _isActive == false )

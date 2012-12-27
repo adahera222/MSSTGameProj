@@ -124,7 +124,7 @@ public class MZPlayer : MZCharacter
 		if( dragRange == null )
 			return;
 
-		dragRange.transform.Rotate( 0, 45*Time.deltaTime, 0 );
+		dragRange.transform.Rotate( 0, 45*MZTime.deltaTime, 0 );
 		dragRange.transform.position = gameObject.transform.position;
 	}
 
