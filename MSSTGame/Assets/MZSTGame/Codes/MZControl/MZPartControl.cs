@@ -9,7 +9,7 @@ public interface IMZPart : IMZAttack, IMZMove
 
 public class MZPartControl : MZControlBase
 {
-	public new IMZPart controlTarget = null;
+	public new IMZPart controlDelegate = null;
 	MZControlUpdate<MZMove> _moveControlUpdate = null;
 	MZControlUpdate<MZAttack> _attackControlUpdate = null;
 
@@ -21,7 +21,7 @@ public class MZPartControl : MZControlBase
 	public MZPartControl(IMZPart controlTarget)
 	{
 		MZDebug.Assert( controlTarget != null, "controlTarget is null" );
-		this.controlTarget = controlTarget;
+		this.controlDelegate = controlTarget;
 	}
 
 	public override void Reset()
@@ -62,7 +62,7 @@ public class MZPartControl : MZControlBase
 		MZMove move = (MZMove)MZObjectHelp.CreateClass( "MZMove_" + typeString );
 
 		move.name = name;
-		move.controlTarget = controlTarget;
+		move.controlDelegate = controlDelegate;
 
 		movesList.Add( move );
 
@@ -75,7 +75,7 @@ public class MZPartControl : MZControlBase
 		MZAttack attack = (MZAttack)MZObjectHelp.CreateClass( "MZAttack_" + typeString );
 
 		attack.name = "attack";
-		attack.controlTarget = controlTarget;
+		attack.controlDelegate = controlDelegate;
 
 		attacksList.Add( attack );
 
@@ -84,7 +84,7 @@ public class MZPartControl : MZControlBase
 
 	public MZAttack AddAttack(MZAttack.Type type)
 	{
-		MZAttack attack = MZAttack.Create( "attack", type, controlTarget );
+		MZAttack attack = MZAttack.Create( "attack", type, controlDelegate );
 		attacksList.Add( attack );
 
 		return attack;

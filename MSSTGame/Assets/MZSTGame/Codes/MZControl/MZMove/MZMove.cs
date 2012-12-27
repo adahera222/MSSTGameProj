@@ -20,7 +20,7 @@ public abstract class MZMove : MZControlBase
 		MZDebug.Assert( move != null, "create fail, type=" + type.ToString() );
 
 		move.name = name;
-		move.controlTarget = controlTarget;
+		move.controlDelegate = controlTarget;
 
 		return move;
 	}
@@ -30,7 +30,7 @@ public abstract class MZMove : MZControlBase
 		Linear,
 	}
 
-	public new IMZMove controlTarget;
+	public new IMZMove controlDelegate;
 	public float initVelocity = 0;
 
 	public Vector2 initMovingVector

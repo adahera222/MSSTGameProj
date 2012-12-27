@@ -17,7 +17,7 @@ public interface IMZMode : IMZControl
 
 public class MZMode : MZControlBase
 {
-	public new IMZMode controlTarget = null;
+	public new IMZMode controlDelegate = null;
 	//
 	MZControlUpdate<MZMove> _moveControlUpdate = new MZControlUpdate<MZMove>();
 	List<MZControlUpdate<MZPartControl>> _multiPartControlUpdate = new List<MZControlUpdate<MZPartControl>>();
@@ -54,7 +54,7 @@ public class MZMode : MZControlBase
 
 	public MZMove AddMove(string name, MZMove.Type type)
 	{
-		MZMove move = MZMove.Create( type, name, controlTarget.moveControlTarget );
+		MZMove move = MZMove.Create( type, name, controlDelegate.moveControlTarget );
 		movesList.Add( move );
 
 		return move;

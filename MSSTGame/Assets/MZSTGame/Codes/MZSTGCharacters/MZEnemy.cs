@@ -58,7 +58,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	{
 		MZMode mode = new MZMode();
 		mode.name = name;
-		mode.controlTarget = this;
+		mode.controlDelegate = this;
 
 		modesList.Add( mode );
 

@@ -8,11 +8,11 @@ public class MZMove_Linear : MZMove
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-		startPosition = controlTarget.position;
+		startPosition = controlDelegate.position;
 	}
 
 	protected override void UpdateWhenActive()
 	{
-		controlTarget.position = startPosition + currentMovingVector*currentVelocity*lifeTimeCount;
+		controlDelegate.position = startPosition + currentMovingVector*currentVelocity*lifeTimeCount;
 	}
 }

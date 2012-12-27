@@ -24,7 +24,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		MZDebug.Assert( attack != null, "create fail, type=" + type.ToString() );
 
 		attack.name = name;
-		attack.controlTarget = controlTarget;
+		attack.controlDelegate = controlTarget;
 
 		return attack;
 	}
@@ -35,7 +35,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		OddWay,
 	}
 
-	public new IMZAttack controlTarget = null;
+	public new IMZAttack controlDelegate = null;
 	public int numberOfWays = 0;
 	public int additionalWaysPerLaunch = 0;
 	public int strength = 1;
@@ -67,12 +67,12 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	#region IMZTargetHelp implementation
 	public Vector2 selfPosition
 	{
-		get { return controlTarget.realPosition; }
+		get { return controlDelegate.realPosition; }
 	}
 
 	public MZCharacterType characterType
 	{
-		get { return controlTarget.characterType; }
+		get { return controlDelegate.characterType; }
 	}
 	#endregion
 
@@ -156,7 +156,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		MZBullet bulletScript = bullet.GetComponent<MZBullet>();
 
 		bulletScript.strength = strength;
-		bulletScript.position = controlTarget.realPosition;
+		bulletScript.position = controlDelegate.realPosition;
 		bulletScript.faceToType = bulletFaceToType;
 
 		return bullet;
@@ -169,7 +169,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 	MZCharacterType GetBulletType()
 	{
-		switch( controlTarget.characterType )
+		switch( controlDelegate.characterType )
 		{
 			case MZCharacterType.EnemyAir:
 			case MZCharacterType.EnemyGround:
@@ -179,7 +179,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 				return MZCharacterType.PlayerBullet;
 		}
 
-		MZDebug.Assert( false, "Bullet not support this type: " + controlTarget.characterType.ToString() );
+		MZDebug.Assert( false, "Bullet not support this type: " + controlDelegate.characterType.ToString() );
 		return MZCharacterType.Unknow;
 	}
 }

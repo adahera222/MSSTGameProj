@@ -6,7 +6,7 @@ public class MZCharactersManager : MonoBehaviour
 {
 	public GUIText guiCharactersInfo;
 	//
-	GameObject _player = null;
+	GameObject _playerObject = null;
 	MZCharacter _playerCharacter = null;
 	Dictionary<MZCharacterType, List<MZCharacter>> _dicActiveCharactersListByType = null;
 	MZCharactersCollisionTest _enemyBulletAndPlayerCollisionTest = null;
@@ -14,13 +14,11 @@ public class MZCharactersManager : MonoBehaviour
 
 	public GameObject playerObject
 	{
-		set{ _player = value; }
-		get{ return _player; }
+		get{ return _playerObject; }
 	}
 
 	public MZCharacter playerCharacter
 	{
-		set{ _playerCharacter = value; }
 		get{ return _playerCharacter; }
 	}
 
@@ -29,10 +27,14 @@ public class MZCharactersManager : MonoBehaviour
 		MZDebug.Assert( _dicActiveCharactersListByType != null, "_dicActiveCharactersListByType is null" );
 		MZDebug.Assert( _dicActiveCharactersListByType.ContainsKey( characterType ) != false, "characterType(" + characterType.ToString() + ") is not support" );
 
-		character.renderEnable = true;
 		character.Enable();
 
 		_dicActiveCharactersListByType[ characterType ].Add( character );
+
+		if( characterType == MZCharacterType.Player )
+		{
+			AddPlayerCacheInfo( character );
+		}
 	}
 
 	public Vector2 GetPlayerPosition()
@@ -81,6 +83,12 @@ public class MZCharactersManager : MonoBehaviour
 		_playerBulletAndEnemyCollisionTest.splitUpdateList = _dicActiveCharactersListByType[ MZCharacterType.PlayerBullet ];
 		_playerBulletAndEnemyCollisionTest.fullUpdateList = _dicActiveCharactersListByType[ MZCharacterType.EnemyAir ];
 		_playerBulletAndEnemyCollisionTest.onCollideHandler = new MZCharactersCollisionTest.OnCollide( OnPlayerBulletCollideEnemy );
+	}
+
+	void AddPlayerCacheInfo(MZCharacter character)
+	{
+		_playerCharacter = character;
+		_playerObject = character.gameObject;
 	}
 
 	void Start()

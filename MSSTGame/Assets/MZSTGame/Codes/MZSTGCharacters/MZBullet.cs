@@ -32,7 +32,7 @@ public class MZBullet : MZCharacter, IMZMove
 	{
 		MZMove move = (MZMove)MZObjectHelp.CreateClass( "MZMove_" + typeString );
 		move.name = name;
-		move.controlTarget = this;
+		move.controlDelegate = this;
 
 		movesList.Add( move );
 

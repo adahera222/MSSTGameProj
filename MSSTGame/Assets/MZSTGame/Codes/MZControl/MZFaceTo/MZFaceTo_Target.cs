@@ -9,6 +9,6 @@ public class MZFaceTo_Target : MZFaceTo
 		targetHelp.controlObject = this;
 		float rotation = MZMath.DegreesFromXAxisToVector( targetHelp.GetMovingVector() );
 
-		controlTarget.rotation = rotation;
+		controlDelegate.rotation = rotation;
 	}
 }

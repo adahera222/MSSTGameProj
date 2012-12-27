@@ -11,7 +11,7 @@ public abstract class MZControlBase
 	public string name = "";
 	public bool isRunOnce = false;
 	public float duration = -1;
-	public IMZControl controlTarget = null;
+	public IMZControl controlDelegate = null;
 
 	public bool isActive
 	{ get { return _isActive; } }

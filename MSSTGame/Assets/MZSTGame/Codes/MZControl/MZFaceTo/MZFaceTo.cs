@@ -40,7 +40,7 @@ public abstract class MZFaceTo : MZControlBase, IMZTargetHelp
 	static public MZFaceTo Create(Type type, IMZFaceTo controlTarget)
 	{
 		MZFaceTo faceTo = (MZFaceTo)MZObjectHelp.CreateClass( "MZFaceTo_" + type.ToString() );
-		faceTo.controlTarget = controlTarget;
+		faceTo.controlDelegate = controlTarget;
 
 		return faceTo;
 	}
@@ -59,18 +59,18 @@ public abstract class MZFaceTo : MZControlBase, IMZTargetHelp
 		Parent,
 	}
 
-	public new IMZFaceTo controlTarget = null;
+	public new IMZFaceTo controlDelegate = null;
 	public MZMovingVectorType usingMovingVectorType = MZMovingVectorType.Parent;
 
 	#region IMZTargetHelp implementation
 	public Vector2 selfPosition
 	{
-		get	{ return controlTarget.realPosition; }
+		get	{ return controlDelegate.realPosition; }
 	}
 
 	public MZCharacterType characterType
 	{
-		get	{ return controlTarget.characterType; }
+		get	{ return controlDelegate.characterType; }
 	}
 	#endregion
 }

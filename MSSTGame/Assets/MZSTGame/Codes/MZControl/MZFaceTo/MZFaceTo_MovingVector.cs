@@ -7,9 +7,9 @@ public class MZFaceTo_MovingVector : MZFaceTo
 	{
 		MZDebug.Assert( usingMovingVectorType != MZFaceTo.MZMovingVectorType.None, "usingMovingVectorType must be set" );
 
-		Vector2 movingVector = ( usingMovingVectorType == MZFaceTo.MZMovingVectorType.Self )? controlTarget.selfMovingVector : controlTarget.parentMovingVector;
+		Vector2 movingVector = ( usingMovingVectorType == MZFaceTo.MZMovingVectorType.Self )? controlDelegate.selfMovingVector : controlDelegate.parentMovingVector;
 		float rotation = MZMath.DegreesFromXAxisToVector( movingVector );
 
-		controlTarget.rotation = rotation;
+		controlDelegate.rotation = rotation;
 	}
 }

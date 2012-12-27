@@ -16,6 +16,12 @@ public class MZDebug
 
 		UnityEngine.Debug.Log( fullMsg );
 	}
+
+	static public void LogBreak(string message)
+	{
+		Log( message );
+		UnityEngine.Debug.Break();
+	}
 		
 	static public bool Alert(bool condition, string message)
 	{

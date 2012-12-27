@@ -37,9 +37,6 @@ public class MZMainGame : MonoBehaviour
 	{
 		GameObject playerObject = MZCharacterObjectsFactory.instance.Get( MZCharacterType.Player, "PlayerType01" );
 		playerObject.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
-
-//		MZGameComponents.GetInstance().charactersManager.playerObject = playerObject;
-//		MZGameComponents.GetInstance().charactersManager.playerCharacter = playerObject.GetComponent<MZCharacter>();
 	}
 
 	void OnDrawGizmos()

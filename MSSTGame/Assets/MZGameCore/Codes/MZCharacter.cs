@@ -115,7 +115,6 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 	public virtual void Enable()
 	{
 		_isActive = true;
-//		renderEnable = true;
 		_lifeTimeCount = 0;
 
 		if( partsByNameDictionary != null )
@@ -145,8 +144,6 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		{
 			characterPart.Disable(); // wrong this
 		}
-
-		renderEnable = false;
 	}
 
 	public virtual bool IsCollide(MZCharacter other)
@@ -215,10 +212,8 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 		_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
 
-//		for( int i = 0; i < gameObject.transform.GetChildCount(); i++ )
 		foreach( Transform childTransform in gameObject.transform )
 		{
-//			GameObject partObject = gameObject.transform.GetChild( i ).gameObject;
 			GameObject partObject = childTransform.gameObject;
 			string partName = GetClearPartName( partObject.name );
 
