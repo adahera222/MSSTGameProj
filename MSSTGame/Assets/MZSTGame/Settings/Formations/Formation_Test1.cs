@@ -8,11 +8,6 @@ using System.Collections;
 
 public class Formation_Test1 : MZFormation
 {
-	public override bool ActiveCondition()
-	{
-		return base.ActiveCondition();
-	}
-
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();

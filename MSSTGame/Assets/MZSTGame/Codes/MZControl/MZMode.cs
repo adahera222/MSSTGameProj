@@ -38,7 +38,8 @@ public class MZMode : MZControlBase
 
 	public Vector2 currentMovingVector
 	{
-		get{ return _moveControlUpdate.currentControl.currentMovingVector; }
+		get
+		{ return _moveControlUpdate.currentControl.currentMovingVector; }
 	}
 
 	public List<MZMove> movesList
@@ -58,6 +59,11 @@ public class MZMode : MZControlBase
 		movesList.Add( move );
 
 		return move;
+	}
+
+	public MZMove AddMove(MZMove.Type type)
+	{
+		return AddMove( "", type );
 	}
 
 	public MZControlUpdate<MZPartControl> AddPartControlUpdater()

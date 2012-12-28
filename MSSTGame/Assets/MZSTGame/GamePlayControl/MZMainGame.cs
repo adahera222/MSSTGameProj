@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class MZMainGame : MonoBehaviour
 {
+	float delayUpdate = 3;
 	MZFormationsManager formationsManager;
+	MZRankControl rankControl;
 
 	void Start()
 	{
@@ -15,25 +17,38 @@ public class MZMainGame : MonoBehaviour
 
 		// extract out to other class ... 
 		MZCharacterObjectsFactory.instance.Init();
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyType001", 10 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyM000", 10 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyHollow", 10 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyS000", 50 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.Player, "PlayerType01", 1 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.PlayerBullet, "PlayerMainBullet", 200 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "DonutsBullet", 500 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "BeeBullet", 500 );
 
-		MZGameComponents.GetInstance().charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();
-
-		InitPlayer();
-
 		MZTime.instance.Reset();
 		formationsManager = new MZFormationsManager();
+		rankControl = new MZRankControl();
+
+		MZGameComponents.instance.charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();
+		MZGameComponents.instance.rankControl = rankControl;
+
+		InitPlayer();
 	}
 
 	void Update()
 	{
 		MZTime.instance.Update();
-		formationsManager.Update();
+
+		delayUpdate -= MZTime.deltaTime;
+
+		if( delayUpdate >= 0 )
+			return;
+
+		if( formationsManager != null )
+			formationsManager.Update();
+
+		if( rankControl != null )
+			rankControl.Update();
 	}
 
 	void InitPlayer()

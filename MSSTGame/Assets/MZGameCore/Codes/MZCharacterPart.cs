@@ -138,7 +138,7 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 
 	void OnDrawGizmos()
 	{
-		if( _parentGameObject == null || MZGameSetting.SHOW_COLLISION_RANGE == false || enabled == false )
+		if( _parentGameObject == null || MZGameSetting.SHOW_COLLISION_RANGE == false || MZGameSetting.SHOW_GIZMOS == false || enabled == false )
 			return;
 
 		Gizmos.color = MZGameSetting.GetCollisionColor( _parentCharacter.characterType );

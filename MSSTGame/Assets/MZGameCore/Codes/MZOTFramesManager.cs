@@ -12,7 +12,8 @@ public class MZOTFramesManager : MZSingleton<MZOTFramesManager>
 		if( _spritesheetsContainerByName == null )
 			_spritesheetsContainerByName = new Dictionary<string, OTSpriteAtlasCocos2D>();
 
-		foreach( OTSpriteAtlasCocos2D container in (OTSpriteAtlasCocos2D[])GameObject.FindObjectsOfType( typeof( OTSpriteAtlasCocos2D ) ) )
+		OTSpriteAtlasCocos2D[] containers = (OTSpriteAtlasCocos2D[])GameObject.FindObjectsOfType( typeof( OTSpriteAtlasCocos2D ) );
+		foreach( OTSpriteAtlasCocos2D container in containers )
 		{
 			if( container.texture == null )
 			{

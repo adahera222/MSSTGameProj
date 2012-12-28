@@ -75,7 +75,7 @@ public class MZBullet : MZCharacter, IMZMove
 
 	void OnDrawGizmos()
 	{
-		if( _drawCollisionCheck == false || !MZGameSetting.SHOW_BULLET_ON_COLLISION_CHECK )
+		if( _drawCollisionCheck == false || MZGameSetting.SHOW_BULLET_ON_COLLISION_CHECK == false || MZGameSetting.SHOW_GIZMOS == false )
 			return;
 
 		Gizmos.color = Color.green;

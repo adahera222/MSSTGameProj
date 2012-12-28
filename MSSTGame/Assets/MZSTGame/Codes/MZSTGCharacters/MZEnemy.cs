@@ -5,11 +5,10 @@ using System.Collections.Generic;
 public class MZEnemy : MZCharacter, IMZMode, IMZMove
 {
 	public MZFormation belongFormation = null;
-	public MZMode mode;
 	public int healthPoint = 10;
 	//
 	int _currentHealthPoint = 1;
-	MZControlUpdate<MZMode> _modeControlUpdate = new MZControlUpdate<MZMode>();
+	MZControlUpdate<MZMode> _modeControlUpdate = null;
 
 	#region IMZMode implementation
 
@@ -22,9 +21,6 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	{
 		get
 		{
-			if( _modeControlUpdate == null )
-				_modeControlUpdate = new MZControlUpdate<MZMode>();
-
 			return _modeControlUpdate.controlsList;
 		}
 	}
@@ -32,7 +28,6 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	public override void Enable()
 	{
 		base.Enable();
-		_modeControlUpdate.ResetAll();
 		_currentHealthPoint = healthPoint;
 		enableRemoveTime = 3.0f;
 	}
@@ -49,10 +44,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	public override Vector2 currentMovingVector
 	{
-		get
-		{
-			return _modeControlUpdate.currentControl.currentMovingVector;
-		}
+		get { return ( _modeControlUpdate != null )? _modeControlUpdate.currentControl.currentMovingVector : new Vector2( 1, 0 ); }
 	}
 
 	public MZMode AddMode(string name)
@@ -69,6 +61,12 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	public void TakenDamage(int damage)
 	{
 		_currentHealthPoint -= damage;
+	}
+
+	protected override void InitMode()
+	{
+		base.InitMode();
+		_modeControlUpdate = new MZControlUpdate<MZMode>();
 	}
 
 	protected override void UpdateWhenActive()

@@ -31,15 +31,16 @@ public class MZFormationsManager : MZControlBase
 		nextTimeCount = 0;
 
 		currentFormations = new List<MZFormation>();
-		currentFormations.Add( new Formation_Test1() );
-		currentFormations.Add( new Formation_Test2() );
+//		currentFormations.Add( new Formation_Test1() );
+		currentFormations.Add( new Formation_FromSide() );
+		currentFormations.Add( new Formation_EnemyM001() );
 	}
 
 	protected override void UpdateWhenActive()
 	{
 		nextTimeCount += MZTime.deltaTime;
 
-		if( currentFormation == null || nextTimeCount >= 4 )
+		if( currentFormation == null || nextTimeCount >= 10 )
 		{
 			int index = MZMath.RandomFromRange( 0, currentFormations.Count - 1 );
 			currentFormation = currentFormations[ index ];

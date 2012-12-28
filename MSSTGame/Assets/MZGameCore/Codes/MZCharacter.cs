@@ -27,12 +27,9 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		{
 			_renderEnable = value;
 
-			if( partsByNameDictionary == null )
-				return;
-
-			foreach( MZCharacterPart p in partsByNameDictionary.Values )
+			foreach( Transform t in gameObject.transform )
 			{
-				p.gameObject.renderer.enabled = value;
+				t.renderer.enabled = _renderEnable;
 			}
 		}
 		get
@@ -103,11 +100,8 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 	{
 		MZDebug.Assert( _hasInitValues == false, "Don't call me twice, you suck!!!" );
 
-		outCollision.collisionDelegate = this;
-		outCollision.Set( new Vector2( 0, 0 ), 50 );
-
+		InitOutCollision();
 		InitPartsInfoFromChild();
-		InitMode();
 
 		_isActive = false;
 	}
@@ -151,7 +145,7 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		if( isActive == false )
 			return false;
 
-		if( outCollision.radius != 0 )
+		if( outCollision != null && outCollision.radius != 0 && other.outCollision != null )
 		{
 			if( outCollision.IsCollision( other.outCollision ) == false )
 				return false;
@@ -168,9 +162,17 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 		return false;
 	}
+	//
+	protected virtual void InitMode()
+	{
+
+	}
 
 	protected virtual void Update()
 	{
+		if( _lifeTimeCount == 0 )
+			FirstUpdate();
+
 		_lifeTimeCount += MZTime.deltaTime;
 
 		RemoveWhenOutOfBound();
@@ -181,15 +183,15 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		}
 	}
 
-	protected virtual void InitMode()
-	{
-
-	}
-
 	// not conside how to design this function
 	protected virtual void CheckActive()
 	{
 		MZDebug.AssertFalse( "not conside how to design this function" );
+	}
+
+	protected virtual void FirstUpdate()
+	{
+		InitMode();
 	}
 
 	protected virtual void UpdateWhenActive()
@@ -199,18 +201,21 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 	void OnDrawGizmos()
 	{
-		if( MZGameSetting.SHOW_COLLISION_RANGE == false || isActive == false )
+		if( MZGameSetting.SHOW_GIZMOS == false || MZGameSetting.SHOW_COLLISION_RANGE == false || isActive == false )
 			return;
 
 		Gizmos.color = new Color( 0.67f, 0.917f, 0.921f );
 		Gizmos.DrawWireSphere( position, outCollision.radius );
 	}
 
+	void InitOutCollision()
+	{
+		outCollision.collisionDelegate = this;
+		outCollision.Set( new Vector2( 0, 0 ), 50 );
+	}
+
 	void InitPartsInfoFromChild()
 	{
-		if( _partsByNameDictionary != null )
-			return;
-
 		_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
 
 		foreach( Transform childTransform in gameObject.transform )

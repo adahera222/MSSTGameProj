@@ -28,10 +28,10 @@ public class MZPlayer : MZCharacter
 			dragRange.transform.localScale = new Vector3( dragableRadius*2, 0, dragableRadius*2 );
 
 		attackTemp = new MZAttack_OddWay();
-		attackTemp.numberOfWays = 5;
+		attackTemp.numberOfWays = 3;
 		attackTemp.initVelocity = 1000;
 		attackTemp.strength = 1;
-		attackTemp.intervalDegrees = 5;
+		attackTemp.intervalDegrees = 2.5f;
 		attackTemp.colddown = 0.25f;
 		attackTemp.duration = -1;
 		attackTemp.bulletName = "PlayerMainBullet";
@@ -130,6 +130,9 @@ public class MZPlayer : MZCharacter
 
 	void OnDrawGizmos()
 	{
+		if( MZGameSetting.SHOW_GIZMOS == false )
+			return;
+		
 		Gizmos.color = Color.magenta;
 		Gizmos.DrawWireSphere( gameObject.transform.position, dragableRadius );
 	}
