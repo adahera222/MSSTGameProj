@@ -7,6 +7,9 @@ public class Formation_FromSide : MZFormation
 	float _createTimeCount;
 	float _createInterval;
 
+	public override float nextCreatedTime
+	{ get { return 1; } }
+
 	public override void Reset()
 	{
 		base.Reset();

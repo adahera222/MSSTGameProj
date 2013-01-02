@@ -28,7 +28,7 @@ public class EnemyS000 : MZEnemy
 		attack.colddown = 0.3f;
 		attack.duration = 0.1f;
 		attack.initVelocity = 500;
-		attack.bulletName = "DonutsBullet";
+		attack.bulletName = "EBDonuts";
 		attack.targetHelp = new MZTargetHelp_Target();
 
 		MZAttack idle = partControl.AddAttack( MZAttack.Type.Idle );

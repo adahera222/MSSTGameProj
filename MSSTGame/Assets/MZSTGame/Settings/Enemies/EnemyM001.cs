@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyHollow : MZEnemy
+public class EnemyM001 : MZEnemy
 {
 	public override void InitValues()
 	{
@@ -41,7 +41,7 @@ public class EnemyHollow : MZEnemy
 		attack1.intervalDegrees = 15;
 		attack1.initVelocity = 50;
 		attack1.duration = 2.5f;
-		attack1.bulletName = "DonutsBullet";
+		attack1.bulletName = "EBDonuts";
 
 		MZAttack attack3 = partControl.AddAttack( "Idle" );
 		attack3.duration = 5.0f;

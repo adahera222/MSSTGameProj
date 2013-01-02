@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyM000 : MZEnemy
+public class EnemyL000 : MZEnemy
 {
 	public override void InitValues()
 	{
 		base.InitValues();
-		healthPoint = 25;
+		healthPoint = 90;
 	}
 
 	protected override void InitMode()
@@ -30,7 +30,7 @@ public class EnemyM000 : MZEnemy
 		m1Left.duration = -1;
 
 		SetMainBodyAttack( mode1 );
-		SetSubCannonAttack( "Cannon", mode1 );
+		SetSubCannonAttack( "CannonM", mode1 );
 		SetSubCannonAttack( "CannonL", mode1 );
 		SetSubCannonAttack( "CannonR", mode1 );
 	}

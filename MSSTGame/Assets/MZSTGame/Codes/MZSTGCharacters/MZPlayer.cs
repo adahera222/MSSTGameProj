@@ -34,7 +34,7 @@ public class MZPlayer : MZCharacter
 		attackTemp.intervalDegrees = 2.5f;
 		attackTemp.colddown = 0.25f;
 		attackTemp.duration = -1;
-		attackTemp.bulletName = "PlayerMainBullet";
+		attackTemp.bulletName = "PB000";
 		attackTemp.enable = false;
 //		attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
 //		attackTemp.SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );

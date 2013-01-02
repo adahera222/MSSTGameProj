@@ -1,13 +1,11 @@
-/*
- * three mid enemy attack
- *
- **/
-
 using UnityEngine;
 using System.Collections;
 
 public class Formation_Test1 : MZFormation
 {
+	public override float nextCreatedTime
+	{ get { return 10; } }
+
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();

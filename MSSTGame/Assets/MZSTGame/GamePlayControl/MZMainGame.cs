@@ -17,13 +17,14 @@ public class MZMainGame : MonoBehaviour
 
 		// extract out to other class ... 
 		MZCharacterObjectsFactory.instance.Init();
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyL000", 3 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyM000", 10 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyHollow", 10 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyS000", 50 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyM001", 10 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.Player, "PlayerType01", 1 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.PlayerBullet, "PlayerMainBullet", 200 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "DonutsBullet", 500 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "BeeBullet", 500 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.PlayerBullet, "PB000", 200 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "EBDonuts", 500 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "EBBee", 500 );
 
 		MZTime.instance.Reset();
 		formationsManager = new MZFormationsManager();
