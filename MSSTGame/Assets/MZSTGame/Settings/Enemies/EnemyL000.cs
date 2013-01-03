@@ -6,7 +6,7 @@ public class EnemyL000 : MZEnemy
 	public override void InitValues()
 	{
 		base.InitValues();
-		healthPoint = 90;
+		healthPoint = 190;
 	}
 
 	protected override void InitMode()
@@ -17,12 +17,12 @@ public class EnemyL000 : MZEnemy
 
 		MZMove m1show = mode1.AddMove( MZMove.Type.Linear );
 		m1show.initMovingVector = new Vector2( 0, -1 );
-		m1show.initVelocity = 700;
-		m1show.duration = 0.2f;
+		m1show.initVelocity = 150;
+		m1show.duration = 1.0f;
 
 		MZMove m1Idle = mode1.AddMove( MZMove.Type.Linear );
 		m1Idle.initVelocity = 0;
-		m1Idle.duration = 5;
+		m1Idle.duration = 60;
 
 		MZMove m1Left = mode1.AddMove( MZMove.Type.Linear );
 		m1Left.initMovingVector = new Vector2( 0, -1 );

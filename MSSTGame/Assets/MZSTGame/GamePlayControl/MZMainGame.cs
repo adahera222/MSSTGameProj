@@ -48,8 +48,8 @@ public class MZMainGame : MonoBehaviour
 		if( formationsManager != null )
 			formationsManager.Update();
 
-		if( rankControl != null )
-			rankControl.Update();
+//		if( rankControl != null )
+//			rankControl.Update();
 	}
 
 	void InitPlayer()

@@ -32,6 +32,7 @@ public class MZCollision
 		MZDebug.Assert( collisionDelegate != null, "collisionDelegate is null" );
 
 		float collisionDistance = radius + otherCollision.radius;
-		return MZMath.Distance( collisionDelegate.realPosition, otherCollision.collisionDelegate.realPosition ) <= collisionDistance;
+
+		return MZMath.Distance( collisionDelegate.realPosition + center, otherCollision.collisionDelegate.realPosition + otherCollision.center ) <= collisionDistance;
 	}
 }

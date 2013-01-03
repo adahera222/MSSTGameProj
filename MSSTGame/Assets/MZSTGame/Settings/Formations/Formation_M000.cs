@@ -1,19 +1,23 @@
 using UnityEngine;
 using System.Collections;
 
-public class Formation_EnemyM001 : MZFormation
+public class Formation_M000 : MZFormation
 {
 	public override float nextCreatedTime
-	{ get {	return 5; } }
+	{ get { return 3; } }
 
 	//
+
+	public Formation_M000() : base()
+	{
+		duration = 2.5f;
+	}
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
 
 		int rank = GetSelfRank();
-//		float width = MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE.x;
 		float interval = MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE.x/( rank + 2 );
 
 		for( int i = 0; i < rank + 1; i++ )

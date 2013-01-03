@@ -19,7 +19,9 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 	}
 
 	public Vector2 realPosition
-	{ get { return _parentCharacter.position + this.position; } }
+	{
+		get	{ return _parentCharacter.position + this.position;	}
+	}
 
 	#endregion
 
@@ -88,7 +90,9 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 			foreach( MZCollision otherCollision in other.collisionsList )
 			{
 				if( selfCollision.IsCollision( otherCollision ) )
+				{
 					return true;
+				}
 			}
 		}
 

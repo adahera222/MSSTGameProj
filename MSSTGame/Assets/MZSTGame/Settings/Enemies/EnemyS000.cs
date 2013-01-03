@@ -16,7 +16,7 @@ public class EnemyS000 : MZEnemy
 		MZMode mode = AddMode( "Mode" );
 
 		MZMove move = mode.AddMove( "move", MZMove.Type.Linear );
-		move.initMovingVector = ( position.x > 0 )? new Vector2( -1, -0.5f ) : new Vector2( 1, -0.5f );
+		move.initMovingVector = ( position.x > 0 )? new Vector2( -1, -0.5f ) : ( position.x < 0 )? new Vector2( 1, -0.5f ) : new Vector2( 0, -1 );
 		move.initVelocity = 300;
 
 		MZControlUpdate<MZPartControl> partControlUpdate = mode.AddPartControlUpdater();

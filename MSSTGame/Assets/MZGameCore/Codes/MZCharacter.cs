@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class MZCharacter : MonoBehaviour, IMZCollision
 {
-	public MZCollision outCollision = new MZCollision();
 	public new string name = "";
 	//
 	bool _isActive;
@@ -100,7 +99,6 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 	{
 		MZDebug.Assert( _hasInitValues == false, "Don't call me twice, you suck!!!" );
 
-		InitOutCollision();
 		InitPartsInfoFromChild();
 
 		_isActive = false;
@@ -145,27 +143,26 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		if( isActive == false )
 			return false;
 
-		if( outCollision != null && outCollision.radius != 0 && other.outCollision != null )
-		{
-			if( outCollision.IsCollision( other.outCollision ) == false )
-				return false;
-		}
-
 		foreach( MZCharacterPart selfPart in _partsByNameDictionary.Values )
 		{
 			foreach( MZCharacterPart otherPart in other._partsByNameDictionary.Values )
 			{
 				if( selfPart.IsCollide( otherPart ) )
+				{
 					return true;
+				}
 			}
 		}
 
 		return false;
 	}
+
 	//
+
 	protected virtual void InitMode()
 	{
-
+		if( _partsByNameDictionary == null )
+			InitPartsInfoFromChild();
 	}
 
 	protected virtual void Update()
@@ -205,13 +202,6 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 			return;
 
 		Gizmos.color = new Color( 0.67f, 0.917f, 0.921f );
-		Gizmos.DrawWireSphere( position, outCollision.radius );
-	}
-
-	void InitOutCollision()
-	{
-		outCollision.collisionDelegate = this;
-		outCollision.Set( new Vector2( 0, 0 ), 50 );
 	}
 
 	void InitPartsInfoFromChild()

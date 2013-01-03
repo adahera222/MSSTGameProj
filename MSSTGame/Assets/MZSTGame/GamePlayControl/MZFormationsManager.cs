@@ -6,14 +6,34 @@ public class MZFormationsManager : MZControlBase
 {
 	void SetFormationStates()
 	{
-		MZFormationState s000 = AddFormationState();
-		s000.SetProbability( MZFormation.Type.Small, 1 );
+		MZFormationState s0 = AddFormationState( "s0" );
+		s0.SetProbability( MZFormation.Type.Small, 1 );
+
+		MZFormationState s1 = AddFormationState( "s1" );
+		s1.SetProbability( MZFormation.Type.Small, 1 );
+		s1.SetProbability( MZFormation.Type.Mid, 2 );
+
+		MZFormationState s3 = AddFormationState( "s3" );
+		s3.SetProbability( MZFormation.Type.Large, 3 );
 	}
 
 	void SetFormations()
 	{
-		AddFormation( MZFormation.Type.Small, new Formation_FromSide() );
-		AddFormation( MZFormation.Type.Mid, new Formation_EnemyM001() );
+		Formation_S000 sf1 = new Formation_S000();
+		sf1.sideType = MZFormation.SideType.Mid;
+		AddFormation( MZFormation.Type.Small, sf1 );
+
+		Formation_S000 sf2 = new Formation_S000();
+		sf2.sideType = MZFormation.SideType.Left;
+		AddFormation( MZFormation.Type.Small, sf2 );
+
+		Formation_S000 sf3 = new Formation_S000();
+		sf3.sideType = MZFormation.SideType.Right;
+		AddFormation( MZFormation.Type.Small, sf3 );
+
+		AddFormation( MZFormation.Type.Mid, new Formation_M000() );
+
+		AddFormation( MZFormation.Type.Large, new Formation_L000() );
 	}
 
 	//
@@ -44,7 +64,7 @@ public class MZFormationsManager : MZControlBase
 
 		_nextCreateTimeCount = 0;
 		_currentFormationStatesIndex = 0;
-		_currentFormationsList = new List<MZFormation>(); // temp
+		_currentFormationsList = new List<MZFormation>();
 	}
 
 	//
@@ -58,12 +78,12 @@ public class MZFormationsManager : MZControlBase
 
 	//
 
-	MZFormationState AddFormationState()
+	MZFormationState AddFormationState(string name)
 	{
 		if( _formationStatesList == null )
 			_formationStatesList = new List<MZFormationState>();
 
-		MZFormationState state = new MZFormationState();
+		MZFormationState state = new MZFormationState( name );
 		_formationStatesList.Add( state );
 
 		return state;
@@ -79,18 +99,21 @@ public class MZFormationsManager : MZControlBase
 			_formationsDictionary.Add( type, new List<MZFormation>() );
 		}
 
+		formation.type = type;
 		_formationsDictionary[ type ].Add( formation );
 	}
 
 	void UpdateFormationState()
 	{
-		if( _currentFormationState.hasSwitchToNext == true )
+		if( _currentFormationState.hasExpToLimited == true )
 		{
 			_currentFormationStatesIndex++;
 			if( _currentFormationStatesIndex >= _formationStatesList.Count )
 				_currentFormationStatesIndex = 0;
 
 			_currentFormationState.Reset();
+
+			MZDebug.Log( "Formation State Level Up = " + _currentFormationState.name );
 		}
 	}
 
@@ -107,16 +130,18 @@ public class MZFormationsManager : MZControlBase
 			List<MZFormation> formationsList = _formationsDictionary[ createType ];
 			int choiceIndex = MZMath.RandomFromRange( 0, formationsList.Count - 1 );
 
-			// test exist ... not yet ... bcuz, less foramtion now.
+			MZFormation newFormation = formationsList[ choiceIndex ];
 
-			MZFormation f = formationsList[ choiceIndex ];
-			f.Reset();
+			if( _currentFormationsList.Count != 0 && _currentFormationsList.Contains( newFormation ) )
+				return;
 
-			if( f.nextCreatedTime >= _nextCreateTimeCount )
-				_nextCreateTimeCount = f.nextCreatedTime;
+			newFormation.Reset();
 
-			if( _currentFormationsList.Contains( f ) == false )
-				_currentFormationsList.Add( f );
+			if( newFormation.nextCreatedTime >= _nextCreateTimeCount )
+				_nextCreateTimeCount = newFormation.nextCreatedTime;
+
+			if( _currentFormationsList.Contains( newFormation ) == false )
+				_currentFormationsList.Add( newFormation );
 		}
 	}
 
@@ -129,5 +154,15 @@ public class MZFormationsManager : MZControlBase
 		{
 			f.Update();
 		}
+
+		for( int i = 0; i < _currentFormationsList.Count; i++ )
+		{
+			if( _currentFormationsList[ i ].isActive == false )
+			{
+				_currentFormationState.exp += _currentFormationsList[ i ].stateExp;
+				_currentFormationsList.RemoveAt( i );
+			}
+		}
+
 	}
 }

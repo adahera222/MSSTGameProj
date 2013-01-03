@@ -4,17 +4,22 @@ using System.Collections.Generic;
 
 public class MZFormationState
 {
-	public int switchToNext = 10;
+	public int exp = 0;
+	public int expLimited = 10;
 	//
-	int _switchToNextCount = 0;
 	int _probabilitiesDenominator = 0;
+	string _name;
 	Dictionary<MZFormation.Type,int> _probabilitiesDictionary;
 	//
-	public bool hasSwitchToNext
-	{ get { return ( _switchToNextCount >= switchToNext ); } }
+	public bool hasExpToLimited
+	{ get { return ( exp >= expLimited ); } }
+
+	public string name
+	{ get { return _name; } }
 	//
-	public MZFormationState()
+	public MZFormationState(string name)
 	{
+		_name = name;
 		_probabilitiesDictionary = new Dictionary<MZFormation.Type,int>();
 	}
 
@@ -44,7 +49,7 @@ public class MZFormationState
 		foreach( MZFormation.Type type in _probabilitiesDictionary.Keys )
 		{
 			int p = _probabilitiesDictionary[ type ];
-			int next = p - i;
+			int next = i - p;
 
 			if( next <= 0 )
 				return type;
@@ -52,12 +57,17 @@ public class MZFormationState
 			i = next;
 		}
 
-		MZDebug.Assert( false, "you cannot pass" );
+		foreach( MZFormation.Type t in _probabilitiesDictionary.Keys )
+		{
+			MZDebug.Log( t.ToString() );
+		}
+
+		MZDebug.Assert( false, "you cannot pass, i/d=" + i.ToString() + "/" + _probabilitiesDenominator );
 		return MZFormation.Type.Unknow;
 	}
 
 	public void Reset()
 	{
-		_switchToNextCount = 0;
+		exp = 0;
 	}
 }
