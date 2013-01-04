@@ -54,6 +54,7 @@ public class EnemyM000 : MZEnemy
 		nWay.duration = 1.0f;
 		nWay.additionalWaysPerLaunch = -2;
 		nWay.targetHelp = new MZTargetHelp_Target();
+		nWay.targetHelp.calcuteEveryTime = false;
 
 		MZAttack cd = partControl.AddAttack( MZAttack.Type.Idle );
 		cd.duration = 4.0f;
@@ -77,6 +78,7 @@ public class EnemyM000 : MZEnemy
 		attack.bulletName = "EBDonuts";
 		attack.initVelocity = 250;
 		attack.targetHelp = new MZTargetHelp_Target();
+		attack.targetHelp.calcuteEveryTime = true;
 		attack.colddown = 0.05f;
 		attack.additionalVelocityPerLaunch = 50;
 		attack.duration = 0.5f;

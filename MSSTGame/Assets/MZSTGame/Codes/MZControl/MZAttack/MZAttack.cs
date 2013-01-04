@@ -35,6 +35,8 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		OddWay,
 	}
 
+	//
+
 	public new IMZAttack controlDelegate = null;
 	public int numberOfWays = 0;
 	public int additionalWaysPerLaunch = 0;
@@ -46,7 +48,9 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	public float maxVelocity = float.NaN;
 	public string bulletName = null;
 	public MZFaceTo.Type bulletFaceToType = MZFaceTo.Type.MovingVector;
+
 	//
+
 	bool _enable = true;
 	int _launchCount = 0;
 	float _colddownCount = 0;
@@ -101,6 +105,9 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 		_launchCount = 0;
 		_colddownCount = 0;
+
+		if( targetHelp != null )
+			targetHelp.Reset();
 	}
 
 	protected override void UpdateWhenActive()
@@ -115,6 +122,8 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 			LaunchBullet();
 			_colddownCount += colddown;
 		}
+
+		targetHelp.EndOneTime();
 	}
 
 	protected int launchCount

@@ -23,21 +23,51 @@ public abstract class MZTargetHelp
 		return targetHelp;
 	}
 
+
 	public enum Type
 	{
 		Target,
 		AssignMovingVector,
 	}
 
+	//
+
+	public bool calcuteEveryTime = false;
 	public IMZTargetHelp controlObject = null;
+
+	//
+
+	bool _needCalcute = true;
+	Vector2 _movingVectorResult = Vector2.zero;
+
+	//
+
+	public void Reset()
+	{
+		_needCalcute = true;
+		_movingVectorResult = Vector2.zero;
+	}
 
 	public Vector2 GetMovingVector()
 	{
 		MZDebug.Assert( controlObject != null, "controlObject is null" );
-		return CalculateMovingVector();
+
+		if( _needCalcute == true )
+			_movingVectorResult = CalculateMovingVector();
+
+		return _movingVectorResult;
 	}
 
+	public void EndOneTime()
+	{
+		_needCalcute = calcuteEveryTime;
+	}
+
+	//
+
 	protected abstract Vector2 CalculateMovingVector();
+
+	//
 
 	protected Vector2 GetPlayerPosition()
 	{
