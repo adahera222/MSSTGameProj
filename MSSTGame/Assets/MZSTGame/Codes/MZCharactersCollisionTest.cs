@@ -2,15 +2,23 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZCharactersCollisionTest
+public class MZCharactersCollisionTest<S, F>
+	where S : MZCharacter
+	where F : MZCharacter
 {
-	public delegate void OnCollide(MZCharacter c1 ,MZCharacter c2);
+	public delegate void OnCollide(S split ,F full);
+	public delegate bool PreTest(S split ,F full);
+
 	//
+
 	public int maxTestPerTime = 100;
 	public List<MZCharacter> splitUpdateList;
 	public List<MZCharacter> fullUpdateList;
-	public OnCollide onCollideHandler;
+	public OnCollide onCollide;
+	public PreTest preTest;
+
 	//
+
 	int start = 0;
 	int end = 0;
 
@@ -35,12 +43,18 @@ public class MZCharactersCollisionTest
 			}
 
 			MZCharacter s = splitUpdateList[ i ];
+			S _s = (S)s;
 
 			foreach( MZCharacter f in fullUpdateList )
 			{
+				F _f = (F)f;
+
+				if( preTest( _s, _f ) == false )
+					continue;
+
 				if( s.IsCollide( f ) )
 				{
-					onCollideHandler( s, f );
+					onCollide( _s, _f );
 				}
 			}
 		}

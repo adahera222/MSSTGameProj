@@ -9,8 +9,8 @@ public class MZCharactersManager : MonoBehaviour
 	GameObject _playerObject = null;
 	MZCharacter _playerCharacter = null;
 	Dictionary<MZCharacterType, List<MZCharacter>> _dicActiveCharactersListByType = null;
-	MZCharactersCollisionTest _enemyBulletAndPlayerCollisionTest = null;
-	MZCharactersCollisionTest _playerBulletAndEnemyCollisionTest = null;
+	MZCharactersCollisionTest<MZBullet, MZPlayer> _enemyBulletAndPlayerCollisionTest = null;
+	MZCharactersCollisionTest<MZBullet, MZEnemy> _playerBulletAndEnemyCollisionTest = null;
 
 	public GameObject playerObject
 	{
@@ -74,16 +74,18 @@ public class MZCharactersManager : MonoBehaviour
 			_dicActiveCharactersListByType.Add( type, list );
 		}
 
-		_enemyBulletAndPlayerCollisionTest = new MZCharactersCollisionTest();
+		_enemyBulletAndPlayerCollisionTest = new MZCharactersCollisionTest<MZBullet, MZPlayer>();
 		_enemyBulletAndPlayerCollisionTest.maxTestPerTime = 50;
 		_enemyBulletAndPlayerCollisionTest.splitUpdateList = _dicActiveCharactersListByType[ MZCharacterType.EnemyBullet ];
 		_enemyBulletAndPlayerCollisionTest.fullUpdateList = _dicActiveCharactersListByType[ MZCharacterType.Player ];
-		_enemyBulletAndPlayerCollisionTest.onCollideHandler = new MZCharactersCollisionTest.OnCollide( OnEnemyBulletCollidePlayer );
+		_enemyBulletAndPlayerCollisionTest.preTest = new MZCharactersCollisionTest<MZBullet, MZPlayer>.PreTest( PreTestEnemyBulletCollidePlayer );
+		_enemyBulletAndPlayerCollisionTest.onCollide = new MZCharactersCollisionTest<MZBullet, MZPlayer>.OnCollide( OnEnemyBulletCollidePlayer );
 
-		_playerBulletAndEnemyCollisionTest = new MZCharactersCollisionTest();
+		_playerBulletAndEnemyCollisionTest = new MZCharactersCollisionTest<MZBullet, MZEnemy>();
 		_playerBulletAndEnemyCollisionTest.splitUpdateList = _dicActiveCharactersListByType[ MZCharacterType.PlayerBullet ];
 		_playerBulletAndEnemyCollisionTest.fullUpdateList = _dicActiveCharactersListByType[ MZCharacterType.EnemyAir ];
-		_playerBulletAndEnemyCollisionTest.onCollideHandler = new MZCharactersCollisionTest.OnCollide( OnPlayerBulletCollideEnemy );
+		_playerBulletAndEnemyCollisionTest.preTest = new MZCharactersCollisionTest<MZBullet, MZEnemy>.PreTest( PreTestPlayerBulletCollideEnemy );
+		_playerBulletAndEnemyCollisionTest.onCollide = new MZCharactersCollisionTest<MZBullet, MZEnemy>.OnCollide( OnPlayerBulletCollideEnemy );
 	}
 
 	void AddPlayerCacheInfo(MZCharacter character)
@@ -146,12 +148,22 @@ public class MZCharactersManager : MonoBehaviour
 		guiCharactersInfo.text = infoText;
 	}
 
-	void OnEnemyBulletCollidePlayer(MZCharacter enemyBullet, MZCharacter player)
+	bool PreTestEnemyBulletCollidePlayer(MZBullet enemyBullet, MZPlayer player)
+	{
+		return true;
+	}
+
+	bool PreTestPlayerBulletCollideEnemy(MZBullet playerBullet, MZEnemy enemy)
+	{
+		return !( enemy.isActive == false || enemy.currentHealthPoint <= 0 );
+	}
+
+	void OnEnemyBulletCollidePlayer(MZBullet enemyBullet, MZPlayer player)
 	{
 		enemyBullet.Disable();
 	}
 
-	void OnPlayerBulletCollideEnemy(MZCharacter playerBullet, MZCharacter enemy)
+	void OnPlayerBulletCollideEnemy(MZBullet playerBullet, MZEnemy enemy)
 	{
 		enemy.GetComponent<MZEnemy>().TakenDamage( playerBullet.GetComponent<MZBullet>().strength );
 		playerBullet.Disable();
