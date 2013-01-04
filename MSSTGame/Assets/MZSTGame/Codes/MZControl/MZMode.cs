@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public interface IMZMode : IMZControl
 {
-	IMZMove moveControlTarget
+	IMZMove moveDelegate
 	{
 		get;
 	}
@@ -55,7 +55,7 @@ public class MZMode : MZControlBase
 
 	public MZMove AddMove(string name, MZMove.Type type)
 	{
-		MZMove move = MZMove.Create( type, name, controlDelegate.moveControlTarget );
+		MZMove move = MZMove.Create( type, name, controlDelegate.moveDelegate );
 		movesList.Add( move );
 
 		return move;

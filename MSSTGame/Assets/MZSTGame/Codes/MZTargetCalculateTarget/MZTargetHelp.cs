@@ -16,10 +16,18 @@ public interface IMZTargetHelp
 
 public abstract class MZTargetHelp
 {
-	static public MZTargetHelp Create(Type type, IMZTargetHelp controlObject)
+	static public MZTargetHelp Create(Type type)
 	{
 		MZTargetHelp targetHelp = (MZTargetHelp)MZObjectHelp.CreateClass( "MZTargetHelp_" + type.ToString() );
-		targetHelp.controlObject = controlObject;
+		return targetHelp;
+	}
+
+	static public MZTargetHelp Create(Type type, IMZTargetHelp controlDelegate)
+	{
+		MZDebug.Assert( controlDelegate != null, "controlDelegate is null" );
+
+		MZTargetHelp targetHelp = (MZTargetHelp)MZObjectHelp.CreateClass( "MZTargetHelp_" + type.ToString() );
+		targetHelp.controlDelegate = controlDelegate;
 		return targetHelp;
 	}
 
@@ -28,12 +36,13 @@ public abstract class MZTargetHelp
 	{
 		Target,
 		AssignMovingVector,
+		AssignPosition,
 	}
 
 	//
 
 	public bool calcuteEveryTime = false;
-	public IMZTargetHelp controlObject = null;
+	public IMZTargetHelp controlDelegate = null;
 
 	//
 
@@ -50,7 +59,7 @@ public abstract class MZTargetHelp
 
 	public Vector2 GetMovingVector()
 	{
-		MZDebug.Assert( controlObject != null, "controlObject is null" );
+		MZDebug.Assert( controlDelegate != null, "controlObject is null" );
 
 		if( _needCalcute == true )
 			_movingVectorResult = CalculateMovingVector();
@@ -58,7 +67,12 @@ public abstract class MZTargetHelp
 		return _movingVectorResult;
 	}
 
-	public void EndOneTime()
+	public virtual void BeginOneTime()
+	{
+
+	}
+
+	public virtual void EndOneTime()
 	{
 		_needCalcute = calcuteEveryTime;
 	}
@@ -79,12 +93,12 @@ public class MZTargetHelp_Target : MZTargetHelp
 {
 	protected override Vector2 CalculateMovingVector()
 	{
-		return MZMath.UnitVectorFromP1ToP2( controlObject.selfPosition, GetTargetPosition() );
+		return MZMath.UnitVectorFromP1ToP2( controlDelegate.selfPosition, GetTargetPosition() );
 	}
 
 	Vector2 GetTargetPosition()
 	{
-		switch( controlObject.characterType )
+		switch( controlDelegate.characterType )
 		{
 			case MZCharacterType.EnemyAir:
 			case MZCharacterType.EnemyGround:
@@ -92,7 +106,7 @@ public class MZTargetHelp_Target : MZTargetHelp
 				return GetPlayerPosition();
 
 			default:
-				MZDebug.Assert( false, "SORRY, not support this type=" + controlObject.characterType.ToString() );
+				MZDebug.Assert( false, "SORRY, not support this type=" + controlDelegate.characterType.ToString() );
 				return Vector2.zero;
 		}
 	}
@@ -105,5 +119,31 @@ public class MZTargetHelp_AssignMovingVector : MZTargetHelp
 	protected override Vector2 CalculateMovingVector()
 	{
 		return movingVector;
+	}
+}
+
+public class MZTargetHelp_AssignPosition : MZTargetHelp
+{
+	public enum AssignType
+	{
+		Absolute,
+		Relative,
+	}
+
+	public AssignType assignType = AssignType.Absolute;
+	public Vector2 assignPosition = Vector2.zero;
+
+	Vector2 _absolutePosition;
+
+	public override void BeginOneTime()
+	{
+		base.BeginOneTime();
+		_absolutePosition = ( assignType == AssignType.Relative )? controlDelegate.selfPosition + assignPosition : assignPosition;
+	}
+
+	protected override Vector2 CalculateMovingVector()
+	{
+		Vector2 mvTotargetPos = MZMath.UnitVectorFromP1ToP2( controlDelegate.selfPosition, _absolutePosition );
+		return mvTotargetPos;
 	}
 }

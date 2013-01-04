@@ -36,11 +36,11 @@ public class EnemyL000 : MZEnemy
 //		( mToPosByTime as MZMove_ToPosition ).destinationPosition = Vector2.zero;
 
 		// ToPosition ... velocity ver
-		MZMove m1ToPosByVelocity = mode1.AddMove( MZMove.Type.ToPosition );
-		m1ToPosByVelocity.isRunOnce = true;
-		( m1ToPosByVelocity as MZMove_ToPosition ).totalMoveTime = 3;
-		( m1ToPosByVelocity as MZMove_ToPosition ).destinationPosition = Vector2.zero;
-		m1ToPosByVelocity.initVelocity = 300;
+//		MZMove m1ToPosByVelocity = mode1.AddMove( MZMove.Type.ToPosition );
+//		m1ToPosByVelocity.isRunOnce = true;
+//		( m1ToPosByVelocity as MZMove_ToPosition ).totalMoveTime = 3;
+//		( m1ToPosByVelocity as MZMove_ToPosition ).destinationPosition = Vector2.zero;
+//		m1ToPosByVelocity.initVelocity = 300;
 
 		SetMainBodyAttack( mode1 );
 		SetSubCannonAttack( "CannonM", mode1 );

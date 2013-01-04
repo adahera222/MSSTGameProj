@@ -6,7 +6,7 @@ public class MZFaceTo_Target : MZFaceTo
 	protected override void UpdateWhenActive()
 	{
 		MZTargetHelp targetHelp = new MZTargetHelp_Target();
-		targetHelp.controlObject = this;
+		targetHelp.controlDelegate = this;
 		float rotation = MZMath.DegreesFromXAxisToVector( targetHelp.GetMovingVector() );
 
 		controlDelegate.rotation = rotation;

@@ -1,16 +1,56 @@
 using UnityEngine;
 using System.Collections;
 
-public class MZMove_ToPosition : MZMove
+public class MZMove_ToPosition : MZMove, IMZTargetHelp
 {
 	public float totalMoveTime = -1;
 	public Vector2 destinationPosition = Vector2.zero;
+
+	public MZTargetHelp targetHelp
+	{
+		set
+		{
+			_targetHelp = value;
+			_targetHelp.controlDelegate = this;
+		}
+		get
+		{
+			if( _targetHelp == null )
+			{
+				_targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.Target, this );
+			}
+
+			return _targetHelp;
+		}
+	}
 
 	//
 
 	float _distance;
 	Vector2 _startPosition;
 	Vector2 _movingVector;
+	MZTargetHelp _targetHelp = null;
+	//
+
+	#region IMZTargetHelp implementation
+
+	public Vector2 selfPosition
+	{
+		get
+		{
+			return controlDelegate.position;
+		}
+	}
+
+	public MZCharacterType characterType
+	{
+		get
+		{
+			return controlDelegate.characterType;
+		}
+	}
+
+	#endregion
 
 	//
 

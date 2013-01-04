@@ -85,7 +85,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		set
 		{
 			_targetHelp = value;
-			_targetHelp.controlObject = this;
+			_targetHelp.controlDelegate = this;
 		}
 		get
 		{
@@ -119,11 +119,13 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 		if( _colddownCount <= 0 )
 		{
+			targetHelp.BeginOneTime();
+
 			LaunchBullet();
 			_colddownCount += colddown;
-		}
 
-		targetHelp.EndOneTime();
+			targetHelp.EndOneTime();
+		}
 	}
 
 	protected int launchCount

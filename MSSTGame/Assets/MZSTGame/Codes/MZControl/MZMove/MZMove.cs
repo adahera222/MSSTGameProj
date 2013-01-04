@@ -8,19 +8,24 @@ public interface IMZMove : IMZControl
 		set;
 		get;
 	}
+
+	MZCharacterType characterType
+	{
+		get;
+	}
 }
 
 public abstract class MZMove : MZControlBase
 {
-	static public MZMove Create(Type type, string name, IMZMove controlTarget)
+	static public MZMove Create(Type type, string name, IMZMove controlDelegate)
 	{
-		MZDebug.Assert( controlTarget != null, "controlTarget is null" );
+		MZDebug.Assert( controlDelegate != null, "controlTarget is null" );
 
 		MZMove move = (MZMove)MZObjectHelp.CreateClass( "MZMove_" + type.ToString() );
 		MZDebug.Assert( move != null, "create fail, type=" + type.ToString() );
 
 		move.name = name;
-		move.controlDelegate = controlTarget;
+		move.controlDelegate = controlDelegate;
 
 		return move;
 	}
@@ -30,6 +35,7 @@ public abstract class MZMove : MZControlBase
 		Idle,
 		Linear,
 		ToPosition,
+		ToTarget,
 	}
 
 	public new IMZMove controlDelegate;

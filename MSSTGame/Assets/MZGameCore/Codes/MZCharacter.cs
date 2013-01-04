@@ -140,7 +140,7 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 	public virtual bool IsCollide(MZCharacter other)
 	{
-		if( isActive == false )
+		if( isActive == false || other.isActive == false )
 			return false;
 
 		foreach( MZCharacterPart selfPart in _partsByNameDictionary.Values )

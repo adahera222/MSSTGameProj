@@ -12,7 +12,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	#region IMZMode implementation
 
-	public IMZMove moveControlTarget
+	public IMZMove moveDelegate
 	{ get { return this; } }
 
 	#endregion
@@ -24,6 +24,11 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 			return _modeControlUpdate.controlsList;
 		}
 	}
+
+	public int currentHealthPoint
+	{ get { return _currentHealthPoint; } }
+
+	//
 
 	public override void Enable()
 	{
@@ -63,6 +68,8 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 		_currentHealthPoint -= damage;
 	}
 
+	//
+
 	protected override void InitMode()
 	{
 		base.InitMode();
@@ -77,10 +84,10 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 			_modeControlUpdate.Update();
 		
 		if( _currentHealthPoint <= 0 )
-			OnDie();
+			DieAction();
 	}
 
-	protected void OnDie()
+	protected void DieAction()
 	{
 		if( belongFormation != null )
 			belongFormation.Remove( this );
