@@ -15,19 +15,32 @@ public class EnemyL000 : MZEnemy
 
 		MZMode mode1 = AddMode( "m1" );
 
-		MZMove m1show = mode1.AddMove( MZMove.Type.Linear );
-		m1show.initMovingVector = new Vector2( 0, -1 );
-		m1show.initVelocity = 150;
-		m1show.duration = 1.0f;
+//		MZMove m1show = mode1.AddMove( MZMove.Type.Linear );
+//		m1show.initMovingVector = new Vector2( 0, -1 );
+//		m1show.initVelocity = 150;
+//		m1show.duration = 1.0f;
 
-		MZMove m1Idle = mode1.AddMove( MZMove.Type.Linear );
-		m1Idle.initVelocity = 0;
-		m1Idle.duration = 60;
+//		MZMove m1Idle = mode1.AddMove( MZMove.Type.Linear );
+//		m1Idle.initVelocity = 0;
+//		m1Idle.duration = 60;
 
-		MZMove m1Left = mode1.AddMove( MZMove.Type.Linear );
-		m1Left.initMovingVector = new Vector2( 0, -1 );
-		m1Left.initVelocity = 100;
-		m1Left.duration = -1;
+//		MZMove m1Left = mode1.AddMove( MZMove.Type.Linear );
+//		m1Left.initMovingVector = new Vector2( 0, -1 );
+//		m1Left.initVelocity = 100;
+//		m1Left.duration = -1;
+
+		// ToPosition:: time ver
+//		MZMove mToPosByTime = mode1.AddMove( MZMove.Type.ToPosition );
+//		mToPosByTime.isRunOnce = true;
+//		( mToPosByTime as MZMove_ToPosition ).totalMoveTime = 3;
+//		( mToPosByTime as MZMove_ToPosition ).destinationPosition = Vector2.zero;
+
+		// ToPosition ... velocity ver
+		MZMove m1ToPosByVelocity = mode1.AddMove( MZMove.Type.ToPosition );
+		m1ToPosByVelocity.isRunOnce = true;
+		( m1ToPosByVelocity as MZMove_ToPosition ).totalMoveTime = 3;
+		( m1ToPosByVelocity as MZMove_ToPosition ).destinationPosition = Vector2.zero;
+		m1ToPosByVelocity.initVelocity = 300;
 
 		SetMainBodyAttack( mode1 );
 		SetSubCannonAttack( "CannonM", mode1 );

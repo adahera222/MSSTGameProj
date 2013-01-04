@@ -17,6 +17,12 @@ public class MZDebug
 		UnityEngine.Debug.Log( fullMsg );
 	}
 
+	static public void Log(string format, params object[] args)
+	{
+		string message = string.Format( format, args );
+		Log( message );
+	}
+
 	static public void LogBreak(string message)
 	{
 		Log( message );

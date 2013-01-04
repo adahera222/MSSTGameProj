@@ -27,7 +27,9 @@ public abstract class MZMove : MZControlBase
 
 	public enum Type
 	{
+		Idle,
 		Linear,
+		ToPosition,
 	}
 
 	public new IMZMove controlDelegate;

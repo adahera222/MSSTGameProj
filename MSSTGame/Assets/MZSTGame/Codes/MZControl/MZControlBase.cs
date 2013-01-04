@@ -22,6 +22,11 @@ public abstract class MZControlBase
 	public float lifeTimeCount
 	{ get { return _lifeTimeCount; } }
 
+	public virtual void Disable()
+	{
+		_isActive = false;
+	}
+
 	public void Update()
 	{
 		if( _lifeTimeCount == 0 )

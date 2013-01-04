@@ -83,6 +83,9 @@ public class MZControlUpdate<T> where T : MZControlBase
 				_currentIndex--;
 			}
 
+			if( _controlsList.Count == 0 )
+				return;
+
 			_currentIndex = ( _currentIndex >= _controlsList.Count - 1 )? 0 : _currentIndex + 1;
 			_controlsList[ _currentIndex ].Reset();
 		}
