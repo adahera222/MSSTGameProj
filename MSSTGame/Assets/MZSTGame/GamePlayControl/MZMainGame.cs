@@ -4,9 +4,15 @@ using System.Collections.Generic;
 
 public class MZMainGame : MonoBehaviour
 {
-	float delayUpdate = 3;
-	MZFormationsManager formationsManager;
-	MZRankControl rankControl;
+	public MZTest test = new MZTest();
+
+	//
+
+	float _delayUpdate = 3;
+	MZFormationsManager _formationsManager;
+	MZRankControl _rankControl;
+
+	//
 
 	void Start()
 	{
@@ -15,23 +21,14 @@ public class MZMainGame : MonoBehaviour
 //		MZOTAnimationsManager.GetInstance().CreateAnimationsByExistedContainer();
 //		Resources.UnloadUnusedAssets();
 
-		// extract out to other class ... 
-		MZCharacterObjectsFactory.instance.Init();
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyL000", 3 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyM000", 10 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyS000", 50 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyM001", 10 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.Player, "PlayerType01", 1 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.PlayerBullet, "PB000", 200 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "EBDonuts", 500 );
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "EBBee", 500 );
+		MZCharacterObjectsLoad.Load();
 
 		MZTime.instance.Reset();
-		formationsManager = new MZFormationsManager();
-		rankControl = new MZRankControl();
+		_formationsManager = new MZFormationsManager();
+		_rankControl = new MZRankControl();
 
 		MZGameComponents.instance.charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();
-		MZGameComponents.instance.rankControl = rankControl;
+		MZGameComponents.instance.rankControl = _rankControl;
 
 		InitPlayer();
 	}
@@ -40,13 +37,21 @@ public class MZMainGame : MonoBehaviour
 	{
 		MZTime.instance.Update();
 
-		delayUpdate -= MZTime.deltaTime;
+		_delayUpdate -= MZTime.deltaTime;
 
-		if( delayUpdate >= 0 )
+		if( _delayUpdate >= 0 )
 			return;
 
-		if( formationsManager != null )
-			formationsManager.Update();
+		if( test.testType == MZTest.Type.None )
+			UpdateNormal();
+		else
+			test.Update();
+	}
+
+	void UpdateNormal()
+	{
+		if( _formationsManager != null )
+			_formationsManager.Update();
 
 //		if( rankControl != null )
 //			rankControl.Update();

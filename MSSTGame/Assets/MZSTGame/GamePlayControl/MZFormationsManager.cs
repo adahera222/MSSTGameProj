@@ -6,12 +6,12 @@ public class MZFormationsManager : MZControlBase
 {
 	void SetFormationStates()
 	{
-//		MZFormationState s0 = AddFormationState( "s0" );
-//		s0.SetProbability( MZFormation.Type.Small, 1 );
+		MZFormationState s0 = AddFormationState( "s0" );
+		s0.SetProbability( MZFormation.Type.Small, 1 );
 
-//		MZFormationState s1 = AddFormationState( "s1" );
-//		s1.SetProbability( MZFormation.Type.Small, 1 );
-//		s1.SetProbability( MZFormation.Type.Mid, 2 );
+		MZFormationState s1 = AddFormationState( "s1" );
+		s1.SetProbability( MZFormation.Type.Small, 1 );
+		s1.SetProbability( MZFormation.Type.Mid, 2 );
 
 		MZFormationState s3 = AddFormationState( "s3" );
 		s3.SetProbability( MZFormation.Type.Large, 3 );
