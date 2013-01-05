@@ -123,11 +123,11 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 
 		if( _faceTo != null )
 		{
-			if( parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyAir ||
-				parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyBullet ) // need fix
-			{
+//			if( parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyAir ||
+//				parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyBullet ) // need fix
+//			{
 				_faceTo.Update();
-			}
+//			}
 		}
 	}
 

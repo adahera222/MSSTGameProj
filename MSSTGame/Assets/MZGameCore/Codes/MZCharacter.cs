@@ -76,8 +76,8 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		set
 		{
 			_faceToType = value;
-			foreach( MZCharacterPart p in partsByNameDictionary.Values )
-				p.SetFaceTo( faceToType );
+			foreach( MZCharacterPart part in partsByNameDictionary.Values )
+				part.SetFaceTo( faceToType );
 		}
 		get
 		{

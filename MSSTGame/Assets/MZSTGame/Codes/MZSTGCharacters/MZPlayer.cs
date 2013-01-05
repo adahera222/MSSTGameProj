@@ -3,13 +3,6 @@ using System.Collections;
 
 public class MZPlayer : MZCharacter
 {
-	Rect playMovableBound = MZGameSetting.GetPlayerMovableBoundRect();
-	float dragableRadius = 150;
-	GameObject dragRange;
-	Vector3 positonOnTouchBegan;
-	Vector3 playerPositionOnTouchBegan;
-	MZAttack attackTemp = null;
-
 	enum ControlState
 	{
 		None,
@@ -17,7 +10,17 @@ public class MZPlayer : MZCharacter
 		Teleport,
 	}
 
+	Rect playMovableBound = MZGameSetting.GetPlayerMovableBoundRect();
+	float dragableRadius = 150;
+	GameObject dragRange;
+	Vector3 positonOnTouchBegan;
+	Vector3 playerPositionOnTouchBegan;
 	ControlState currentControlState = ControlState.None;
+	MZAttack[] _sideAttacks = new MZAttack[6];
+	MZMove sideMoveL;
+	MZMove sideMoveR;
+
+	//
 
 	public override void Enable()
 	{
@@ -26,20 +29,6 @@ public class MZPlayer : MZCharacter
 		dragRange = GameObject.Find( "TestDragableRange" );
 		if( dragRange != null )
 			dragRange.transform.localScale = new Vector3( dragableRadius*2, 0, dragableRadius*2 );
-
-		attackTemp = new MZAttack_OddWay();
-		attackTemp.numberOfWays = 3;
-		attackTemp.initVelocity = 1000;
-		attackTemp.strength = 1;
-		attackTemp.intervalDegrees = 2.5f;
-		attackTemp.colddown = 0.25f;
-		attackTemp.duration = -1;
-		attackTemp.bulletName = "PB000";
-		attackTemp.enable = false;
-//		attackTemp.controlTarget = partsByNameDictionary[ "MainBody" ];
-//		attackTemp.SetTargetHelp( new MZTargetHelp_AssignMovingVector( new Vector2( 0, 1 ) ) );
-		attackTemp.targetHelp = new MZTargetHelp_AssignMovingVector();
-		( attackTemp.targetHelp as MZTargetHelp_AssignMovingVector ).movingVector = new Vector2( 0, 1 );
 	}
 
 	public override void OnRemoving()
@@ -47,17 +36,34 @@ public class MZPlayer : MZCharacter
 		base.OnRemoving();
 	}
 
+	protected override void FirstUpdate()
+	{
+		base.FirstUpdate();
+		_sideAttacks[ 0 ] = GetAttackToPart( "Option1", new Vector2( 0, 1 ), 1 );
+		_sideAttacks[ 1 ] = GetAttackToPart( "Option2", new Vector2( 0, 1 ), 1 );
+
+		_sideAttacks[ 2 ] = GetAttackToPart( "Option3", MZMath.UnitVectorFromDegrees( 120 ), 1 );
+		_sideAttacks[ 3 ] = GetAttackToPart( "Option4", MZMath.UnitVectorFromDegrees( 130 ), 1 );
+		_sideAttacks[ 4 ] = GetAttackToPart( "Option5", MZMath.UnitVectorFromDegrees( 50 ), 1 );
+		_sideAttacks[ 5 ] = GetAttackToPart( "Option6", MZMath.UnitVectorFromDegrees( 60 ), 1 );
+
+		sideMoveL = GetMoveToPart( "Option1", true );
+		sideMoveR = GetMoveToPart( "Option2", false );
+	}
+
 	protected override void Update()
 	{
 		base.Update();
 
-		if( attackTemp.controlDelegate == null )
-			attackTemp.controlDelegate = partsByNameDictionary[ "MainBody" ];
-
 		UpdateOnTouchBegan();
 		UpdateOnTouchMoved();
 		UpdateOnTouchEnded();
-		attackTemp.Update();
+
+		sideMoveL.Update();
+		sideMoveR.Update();
+
+		for( int i = 0; i < 6; i++ )
+			_sideAttacks[ i ].Update();
 
 		UpdateTest();
 	}
@@ -71,7 +77,8 @@ public class MZPlayer : MZCharacter
 		playerPositionOnTouchBegan = gameObject.gameObject.transform.position;
 		currentControlState = ( MZMath.V3ToV2DistancePow2( positonOnTouchBegan, gameObject.transform.position ) > dragableRadius*dragableRadius )? ControlState.Teleport : ControlState.Move;
 
-		attackTemp.enable = true;
+		for( int i = 0; i < 6; i++ )
+			_sideAttacks[ i ].enable = true;
 	}
 
 	void UpdateOnTouchMoved()
@@ -99,7 +106,8 @@ public class MZPlayer : MZCharacter
 			return;
 
 		currentControlState = ControlState.None;
-		attackTemp.enable = false;
+		for( int i = 0; i < 6; i++ )
+			_sideAttacks[ i ].enable = false;
 	}
 
 	Vector2 GetModifyNextPositionInBound(Vector3 nextPosition)
@@ -117,6 +125,36 @@ public class MZPlayer : MZCharacter
 			nextPosition.y = playMovableBound.y;
 
 		return new Vector2( nextPosition.x, nextPosition.y );
+	}
+
+	MZAttack GetAttackToPart(string partName, Vector2 mv, int way)
+	{
+		MZAttack attack = new MZAttack_OddWay();
+		attack.numberOfWays = way;
+		attack.initVelocity = 1500;
+		attack.strength = 1;
+		attack.intervalDegrees = 15.0f;
+		attack.colddown = 0.1f;
+		attack.duration = -1;
+		attack.bulletName = "PB000";
+		attack.enable = false;
+		attack.controlDelegate = partsByNameDictionary[ partName ];
+		attack.targetHelp = new MZTargetHelp_AssignMovingVector();
+		( attack.targetHelp as MZTargetHelp_AssignMovingVector ).movingVector = mv;
+
+		return attack;
+	}
+
+	MZMove GetMoveToPart(string partName, bool angularVelocityFlag)
+	{
+		MZCharacterPart part = partsByNameDictionary[ partName ];
+
+		float angularVelocityBase = 270;
+		MZMove_Rotation move = MZMove.Create( MZMove.Type.Rotation, "r", part ) as MZMove_Rotation;
+		move.targetHelp.assignPosition = Vector2.zero;
+		move.angularVelocity = angularVelocityBase*( ( angularVelocityFlag )? -1 : 1 );
+
+		return move;
 	}
 
 	void UpdateTest()
