@@ -60,7 +60,10 @@ public class MZMainGame : MonoBehaviour
 	void InitPlayer()
 	{
 		GameObject playerObject = MZCharacterObjectsFactory.instance.Get( MZCharacterType.Player, "PlayerType01" );
+		playerObject.GetComponent<MZCharacter>().InitDefaultMode();
 		playerObject.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
+
+		MZGameComponents.instance.charactersManager.Add( MZCharacterType.Player, playerObject.GetComponent<MZCharacter>() );
 	}
 
 	void OnDrawGizmos()

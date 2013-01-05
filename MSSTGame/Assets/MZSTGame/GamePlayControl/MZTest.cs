@@ -61,6 +61,8 @@ public class MZTestEnemySetting
 
 		GameObject enemy = MZCharacterObjectsFactory.instance.Get( MZCharacterType.EnemyAir, testEnemyName );
 		enemy.GetComponent<MZEnemy>().position = testEnemyStartPosition;
+		enemy.GetComponent<MZEnemy>().InitDefaultMode();
+		MZGameComponents.instance.charactersManager.Add( MZCharacterType.EnemyAir, enemy.GetComponent<MZCharacter>() );
 
 		MZDebug.Log( testEnemyName + " at " + testEnemyStartPosition.ToString() );
 

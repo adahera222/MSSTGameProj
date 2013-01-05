@@ -22,6 +22,8 @@ public class MZAttack_OddWay : MZAttack
 			{
 				SetSideWayToBullet( bullet, centerMovingVector, i );
 			}
+
+			EnableBullet( bullet.GetComponent<MZBullet>() );
 		}
 	}
 

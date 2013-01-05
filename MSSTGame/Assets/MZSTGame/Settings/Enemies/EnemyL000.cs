@@ -9,16 +9,17 @@ public class EnemyL000 : MZEnemy
 		healthPoint = 190;
 	}
 
-	protected override void InitMode()
+	public override void InitDefaultMode()
 	{
-		base.InitMode();
+		base.InitDefaultMode();
 
 		MZMode mode1 = AddMode( "m1" );
 
-//		MZMove m1show = mode1.AddMove( MZMove.Type.Linear );
-//		m1show.initMovingVector = new Vector2( 0, -1 );
-//		m1show.initVelocity = 150;
-//		m1show.duration = 1.0f;
+		MZMove m1show = mode1.AddMove( MZMove.Type.Linear );
+		m1show.initMovingVector = new Vector2( 0, -1 );
+		m1show.initVelocity = 150;
+		m1show.duration = 1.0f;
+		m1show.isRunOnce = true;
 
 //		MZMove m1Idle = mode1.AddMove( MZMove.Type.Linear );
 //		m1Idle.initVelocity = 0;
@@ -42,16 +43,17 @@ public class EnemyL000 : MZEnemy
 //		( m1ToPosByVelocity as MZMove_ToPosition ).destinationPosition = Vector2.zero;
 //		m1ToPosByVelocity.initVelocity = 300;
 
-		SetMainBodyAttack( mode1 );
+		SetMainAttack( "CannonL", mode1 );
+		SetMainAttack( "CannonR", mode1 );
 		SetSubCannonAttack( "CannonM", mode1 );
 		SetSubCannonAttack( "CannonL", mode1 );
 		SetSubCannonAttack( "CannonR", mode1 );
 	}
 
-	void SetMainBodyAttack(MZMode mode)
+	void SetMainAttack(string partName, MZMode mode)
 	{
 		MZControlUpdate<MZPartControl> partControlUpdate = mode.AddPartControlUpdater();
-		MZPartControl partControl = new MZPartControl( partsByNameDictionary[ "MainBody" ] );
+		MZPartControl partControl = new MZPartControl( partsByNameDictionary[ partName ] );
 		partControlUpdate.Add( partControl );
 
 		MZAttack show = partControl.AddAttack( MZAttack.Type.Idle );
@@ -72,10 +74,10 @@ public class EnemyL000 : MZEnemy
 		cd.duration = 4.0f;
 	}
 
-	void SetSubCannonAttack(string cannonName, MZMode mode)
+	void SetSubCannonAttack(string partName, MZMode mode)
 	{
 		MZControlUpdate<MZPartControl> partControlUpdate = mode.AddPartControlUpdater();
-		MZPartControl partControl = new MZPartControl( partsByNameDictionary[ cannonName ] );
+		MZPartControl partControl = new MZPartControl( partsByNameDictionary[ partName ] );
 		partControlUpdate.Add( partControl );
 
 		MZAttack show = partControl.AddAttack( MZAttack.Type.Idle );

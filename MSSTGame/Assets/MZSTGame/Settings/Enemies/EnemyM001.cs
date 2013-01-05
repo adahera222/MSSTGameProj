@@ -9,9 +9,9 @@ public class EnemyM001 : MZEnemy
 		healthPoint = 30;
 	}
 
-	protected override void InitMode()
+	public override void InitDefaultMode()
 	{
-		base.InitMode();
+		base.InitDefaultMode();
 
 		MZMode mode1 = AddMode( "mode1" );
 		mode1.duration = -1;

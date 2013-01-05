@@ -59,7 +59,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		GameObject characterObject = _charactersPoolsDictionaryByType[ type ][ name ].GetValidItem();
 		MZDebug.Assert( characterObject != null, "characterObject is null" );
 
-		MZGameComponents.instance.charactersManager.Add( type, characterObject.GetComponent<MZCharacter>() );
+//		MZGameComponents.instance.charactersManager.Add( type, characterObject.GetComponent<MZCharacter>() );
 
 		return characterObject;
 	}

@@ -43,11 +43,15 @@ public class Formation_S000 : MZFormation
 
 		if( _createTimeCount < 0 )
 		{
-			GameObject enemy = MZCharacterObjectsFactory.instance.Get( MZCharacterType.EnemyAir, "EnemyS000" );
-			enemy.GetComponent<MZEnemy>().position = _initPosition;
-
+			AddNewEnemy( MZCharacterType.EnemyAir, "EnemyS000", false );
 			_createTimeCount += _createInterval;
 		}
+	}
+
+	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
+	{
+		enemy.position = _initPosition;
+		enemy.InitDefaultMode();
 	}
 
 	//

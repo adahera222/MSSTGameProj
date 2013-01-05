@@ -17,7 +17,11 @@ public class Formation_L000 : MZFormation
 	{
 		base.FirstUpdate();
 
-		GameObject enemy = MZCharacterObjectsFactory.instance.Get( MZCharacterType.EnemyAir, "EnemyL000" );
+		AddNewEnemy( MZCharacterType.EnemyAir, "EnemyL000", true );
+	}
+
+	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
+	{
 		enemy.GetComponent<MZEnemy>().position = new Vector2( 0, 500 );
 	}
 

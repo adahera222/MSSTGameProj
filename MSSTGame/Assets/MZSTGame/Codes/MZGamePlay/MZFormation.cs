@@ -14,6 +14,7 @@ public abstract class MZFormation : MZControlBase
 
 	public enum SideType
 	{
+		Any,
 		Left,
 		Right,
 		Mid,
@@ -57,23 +58,6 @@ public abstract class MZFormation : MZControlBase
 		base.Reset();
 	}
 
-	//
-	protected MZEnemy Add(MZCharacterType type, string name)
-	{
-		GameObject enemyObject = MZCharacterObjectsFactory.instance.Get( type, name );
-		MZEnemy enemy = enemyObject.GetComponent<MZEnemy>();
-		enemy.belongFormation = this;
-
-		if( _enemiesList == null )
-			_enemiesList = new List<MZEnemy>();
-
-		_enemiesList.Add( enemy );
-
-		return enemy;
-	}
-
-	//
-
 	public int GetDefaultStateExp(Type _type)
 	{
 		switch( _type )
@@ -88,4 +72,33 @@ public abstract class MZFormation : MZControlBase
 				return 0;
 		}
 	}
+
+	//
+	protected MZEnemy AddNewEnemy(MZCharacterType type, string name, bool initDefaultMode)
+	{
+		GameObject enemyObject = MZCharacterObjectsFactory.instance.Get( type, name );
+		MZEnemy enemy = enemyObject.GetComponent<MZEnemy>();
+		enemy.belongFormation = this;
+
+		if( initDefaultMode )
+			enemy.InitDefaultMode();
+
+		NewEnemyBeforeEnable( enemy );
+
+		if( _enemiesList == null )
+			_enemiesList = new List<MZEnemy>();
+		_enemiesList.Add( enemy );
+
+		MZGameComponents.instance.charactersManager.Add( type, enemy.GetComponent<MZCharacter>() );
+
+		return enemy;
+	}
+
+	/// <summary>
+	/// set new enemy before enable, such like position, override default mode ... etc
+	/// </summary>
+	/// <param name='enemy'>
+	/// Enemy.
+	/// </param>
+	protected abstract void NewEnemyBeforeEnable(MZEnemy enemy);
 }

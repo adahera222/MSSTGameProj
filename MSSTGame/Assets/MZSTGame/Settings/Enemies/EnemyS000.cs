@@ -9,9 +9,9 @@ public class EnemyS000 : MZEnemy
 		healthPoint = 1;
 	}
 
-	protected override void InitMode()
+	public override void InitDefaultMode()
 	{
-		base.InitMode();
+		base.InitDefaultMode();
 
 		MZMode mode = AddMode( "Mode" );
 
@@ -34,5 +34,6 @@ public class EnemyS000 : MZEnemy
 
 		MZAttack idle = partControl.AddAttack( MZAttack.Type.Idle );
 		idle.duration = 3;
+
 	}
 }

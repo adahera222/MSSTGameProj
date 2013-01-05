@@ -21,6 +21,9 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	{
 		get
 		{
+			if( _modeControlUpdate == null )
+				_modeControlUpdate = new MZControlUpdate<MZMode>();
+
 			return _modeControlUpdate.controlsList;
 		}
 	}
@@ -70,16 +73,16 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	//
 
-	protected override void InitMode()
+	public override void InitDefaultMode()
 	{
-		base.InitMode();
+		base.InitDefaultMode();
 		_modeControlUpdate = new MZControlUpdate<MZMode>();
 	}
 
 	protected override void UpdateWhenActive()
 	{
 		base.UpdateWhenActive();
-		
+
 		if( _modeControlUpdate != null )
 			_modeControlUpdate.Update();
 		

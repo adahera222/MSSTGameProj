@@ -100,8 +100,12 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		MZDebug.Assert( _hasInitValues == false, "Don't call me twice, you suck!!!" );
 
 		InitPartsInfoFromChild();
-
 		_isActive = false;
+	}
+
+	public virtual void InitDefaultMode()
+	{
+		MZDebug.Assert( partsByNameDictionary != null, "must set partsByNameDictionary first" );
 	}
 
 	public virtual void Enable()
@@ -159,12 +163,6 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 	//
 
-	protected virtual void InitMode()
-	{
-		if( _partsByNameDictionary == null )
-			InitPartsInfoFromChild();
-	}
-
 	protected virtual void Update()
 	{
 		if( _lifeTimeCount == 0 )
@@ -188,7 +186,7 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 
 	protected virtual void FirstUpdate()
 	{
-		InitMode();
+
 	}
 
 	protected virtual void UpdateWhenActive()

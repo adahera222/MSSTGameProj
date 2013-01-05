@@ -178,6 +178,13 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		_launchCount++;
 	}
 
+	protected void EnableBullet(MZBullet bullet)
+	{
+		MZGameComponents.instance.charactersManager.Add( GetBulletType(), bullet );
+	}
+
+	//
+
 	MZCharacterType GetBulletType()
 	{
 		switch( controlDelegate.characterType )
