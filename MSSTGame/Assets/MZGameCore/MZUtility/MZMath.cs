@@ -87,6 +87,23 @@ public class MZMath
 		return UnitVectorFromVectorAddDegree( new Vector2( 1, 0 ), degrees );
 	}
 
+	static public Vector2 UnitVectorFromDegrees(float degrees)
+	{
+		float degrees_ = ( (int)degrees )%360;
+
+		if( degrees_ == 90 )
+			return new Vector2( 0, 1 );
+		if( degrees_ == 270 )
+			return new Vector2( 0, -1 );
+		if( degrees_ == 0 )
+			return new Vector2( 1, 0 );
+		if( degrees_ == 180 )
+			return new Vector2( -1, 0 );
+
+		float radians = MZMath.DegreesToRadians( degrees );
+		return new Vector2( Mathf.Cos( radians ), Mathf.Sin( radians ) );
+	}
+
 	static public float DegreesFromV1ToV2(Vector2 v1, Vector2 v2)
 	{
 		float v1Dotv2 = Dot( v1, v2 );

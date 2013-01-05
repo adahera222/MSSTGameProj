@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Formation_S000 : MZFormation
 {
-	public MZFormation.SideType sideType = MZFormation.SideType.Mid;
+	public MZFormation.SideType sideType = MZFormation.SideType.Any;
 
 	//
 

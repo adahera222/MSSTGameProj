@@ -36,6 +36,7 @@ public abstract class MZMove : MZControlBase
 		Linear,
 		ToPosition,
 		ToTarget,
+		Rotation,
 	}
 
 	public new IMZMove controlDelegate;
@@ -50,7 +51,7 @@ public abstract class MZMove : MZControlBase
 	public float currentVelocity
 	{ get { return _currentVelocity; } }
 
-	public Vector2 currentMovingVector
+	public virtual Vector2 currentMovingVector
 	{
 		set { _currentMovingVector = value; }
 		get { return _currentMovingVector; }

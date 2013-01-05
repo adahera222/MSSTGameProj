@@ -15,10 +15,9 @@ public class EnemyS000 : MZEnemy
 
 		MZMode mode = AddMode( "Mode" );
 
-		MZMove move = mode.AddMove( "move", MZMove.Type.Linear );
-//		MZMove move = mode.AddMove( "move", MZMove.Type.ToTarget );
-		move.initMovingVector = ( position.x > 0 )? new Vector2( -1, -0.5f ) : ( position.x < 0 )? new Vector2( 1, -0.5f ) : new Vector2( 0, -1 );
-		move.initVelocity = 300;
+//		AddMove_Linear( mode );
+//		AddMove_ToTarget( mode );
+		AddMove_Rotation( mode );
 
 		MZControlUpdate<MZPartControl> partControlUpdate = mode.AddPartControlUpdater();
 		MZPartControl partControl = new MZPartControl( partsByNameDictionary[ "MainBody" ] );
@@ -34,6 +33,29 @@ public class EnemyS000 : MZEnemy
 
 		MZAttack idle = partControl.AddAttack( MZAttack.Type.Idle );
 		idle.duration = 3;
+	}
 
+	//
+
+	void AddMove_Linear(MZMode mode)
+	{
+		MZMove move = mode.AddMove( "move", MZMove.Type.Linear );
+		move.initMovingVector = ( position.x > 0 )? new Vector2( -1, -0.5f ) : ( position.x < 0 )? new Vector2( 1, -0.5f ) : new Vector2( 0, -1 );
+		move.initVelocity = 300;
+	}
+
+	void AddMove_ToTarget(MZMode mode)
+	{
+		MZMove move = mode.AddMove( "move", MZMove.Type.ToTarget );
+		move.initVelocity = 300;
+	}
+
+	void AddMove_Rotation(MZMode mode)
+	{
+		MZMove_Rotation move = mode.AddMove( "move", MZMove.Type.Rotation ) as MZMove_Rotation;
+		move.angularVelocity = -100;
+		move.variationOfRadians = -10;
+		move.radiansLimited = 100;
+		move.targetHelp.assignPosition = new Vector2( 0, 0 );
 	}
 }
