@@ -36,7 +36,7 @@ public class EnemyM001 : MZEnemy
 
 		MZAttack attack1 = partControl.AddAttack( "OddWay" );
 		attack1.numberOfWays = 24;
-		attack1.additionalVelocityPerLaunch = 50;
+		attack1.additionalVelocity = 50;
 		attack1.colddown = 0.25f;
 		attack1.intervalDegrees = 15;
 		attack1.initVelocity = 50;

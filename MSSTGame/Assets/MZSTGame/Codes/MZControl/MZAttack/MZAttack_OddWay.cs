@@ -25,6 +25,8 @@ public class MZAttack_OddWay : MZAttack
 
 			EnableBullet( bullet.GetComponent<MZBullet>() );
 		}
+
+		UpdateAdditionalVelocity();
 	}
 
 	void SetCenterWayToBullet(GameObject bulletObject, Vector2 centerMovingVector)

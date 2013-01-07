@@ -33,6 +33,8 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	{
 		Idle,
 		OddWay,
+		EvenWay,
+		Vortex,
 	}
 
 	//
@@ -44,7 +46,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	public float colddown = 99;
 	public float intervalDegrees = 0;
 	public float initVelocity = 0;
-	public float additionalVelocityPerLaunch = 0;
+	public float additionalVelocity = 0;
 	public float maxVelocity = float.NaN;
 	public string bulletName = null;
 	public MZFaceTo.Type bulletFaceToType = MZFaceTo.Type.MovingVector;
@@ -54,7 +56,10 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	bool _enable = true;
 	int _launchCount = 0;
 	float _colddownCount = 0;
+	float _currentAdditionalVelocity = 0;
 	MZTargetHelp _targetHelp = null;
+
+	bool _mustCalledsFlag = false;
 
 	public bool enable
 	{
@@ -105,6 +110,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 		_launchCount = 0;
 		_colddownCount = 0;
+		_currentAdditionalVelocity = 0;
 
 		if( targetHelp != null )
 			targetHelp.Reset();
@@ -114,6 +120,8 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	{
 		if( !enable )
 			return;
+
+		_mustCalledsFlag = false;
 
 		_colddownCount -= MZTime.deltaTime;
 
@@ -125,6 +133,9 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 			_colddownCount += colddown;
 
 			targetHelp.EndOneTime();
+
+			// fail to check ????
+//			MZDebug.Assert( _mustCalledsFlag == true, "some methods must call in sub class implement, plz check" );
 		}
 	}
 
@@ -144,20 +155,40 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	{
 		get
 		{
-			float _currentVelocity = initVelocity + ( ( launchCount - 1 )*additionalVelocityPerLaunch );
+			float _currentVelocity = initVelocity + currentAdditionalVelocity;
 
 			if( float.IsNaN( maxVelocity ) )
 				return _currentVelocity;
 
-			if( additionalVelocityPerLaunch < 0 )
+			if( additionalVelocity < 0 )
 				return ( _currentVelocity < maxVelocity )? maxVelocity : _currentVelocity;
 
-			if( additionalVelocityPerLaunch > 0 )
+			if( additionalVelocity > 0 )
 				return ( _currentVelocity > maxVelocity )? maxVelocity : _currentVelocity;
 
 			return _currentVelocity;
 		}
 	}
+
+	protected float currentAdditionalVelocity
+	{
+		set{ _currentAdditionalVelocity = value; }
+		get{ return _currentAdditionalVelocity; }
+	}
+
+	#region methods that subClass need to assign call timing
+
+	protected void UpdateAdditionalVelocity()
+	{
+		_mustCalledsFlag = true;
+
+		if( additionalVelocity == 0 )
+			return;
+
+		_currentAdditionalVelocity += additionalVelocity;
+	}
+
+	#endregion
 
 	protected GameObject GetNewBulletObject()
 	{

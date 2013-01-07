@@ -93,7 +93,7 @@ public class EnemyL000 : MZEnemy
 		attack.initVelocity = 250;
 		attack.targetHelp = new MZTargetHelp_Target();
 		attack.colddown = 0.05f;
-		attack.additionalVelocityPerLaunch = 50;
+		attack.additionalVelocity = 50;
 		attack.duration = 0.5f;
 
 		MZAttack wait2 = partControl.AddAttack( MZAttack.Type.Idle );
