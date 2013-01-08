@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public abstract class MZFormation : MZControlBase
 {
-	public enum Type
+	public enum SizeType
 	{
 		Unknow,
 		Large,
@@ -12,8 +12,9 @@ public abstract class MZFormation : MZControlBase
 		Small,
 	}
 
-	public enum SideType
+	public enum PositionType
 	{
+		Unknow,
 		Any,
 		Left,
 		Right,
@@ -23,23 +24,30 @@ public abstract class MZFormation : MZControlBase
 	//
 
 	int _stateExp = int.MinValue;
-	Type _type = Type.Unknow;
+	SizeType _sizeType = SizeType.Unknow;
+	PositionType _positionType = PositionType.Unknow;
 	List<MZEnemy> _enemiesList = null;
 	//
 
 	public abstract float nextCreatedTime
 	{ get; }
 
-	public Type type
+	public SizeType sizeType
 	{
-		set { _type = value; }
-		get { return _type; }
+		set { _sizeType = value; }
+		get { return _sizeType; }
+	}
+
+	public PositionType positionType
+	{
+		set{ _positionType = value; }
+		get{ return _positionType; }
 	}
 
 	public int stateExp
 	{
 		set{ _stateExp = value; }
-		get{ return ( _stateExp != int.MinValue )? _stateExp : GetDefaultStateExp( type ); }
+		get{ return ( _stateExp != int.MinValue )? _stateExp : GetDefaultStateExp( sizeType ); }
 	}
 
 	public int belongEnemiesCount
@@ -58,15 +66,15 @@ public abstract class MZFormation : MZControlBase
 		base.Reset();
 	}
 
-	public int GetDefaultStateExp(Type _type)
+	public int GetDefaultStateExp(SizeType _type)
 	{
 		switch( _type )
 		{
-			case Type.Small:
+			case SizeType.Small:
 				return 1;
-			case Type.Mid:
+			case SizeType.Mid:
 				return 2;
-			case Type.Large:
+			case SizeType.Large:
 				return 11;
 			default:
 				return 0;

@@ -21,8 +21,7 @@ public class MZControlUpdate<T> where T : MZControlBase
 			MZDebug.Assert( controlsList != null, "controlsList is null" );
 
 			int index = ( _currentIndex < 0 )? 0 : _currentIndex;
-
-			return controlsList[ index ];
+			return ( 0 <= index && index < controlsList.Count)? controlsList[ index ] : null;
 		}
 	}
 

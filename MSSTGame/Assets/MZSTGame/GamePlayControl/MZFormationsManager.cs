@@ -2,45 +2,59 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using PositionType = MZFormation.PositionType;
+using SizeType = MZFormation.SizeType;
+
 public class MZFormationsManager : MZControlBase
 {
 	void SetFormationStates()
 	{
 		MZFormationState s0 = AddFormationState( "s0" );
-		s0.SetProbability( MZFormation.Type.Small, 1 );
+		s0.SetProbability( MZFormation.SizeType.Small, 1 );
 
 		MZFormationState s1 = AddFormationState( "s1" );
-		s1.SetProbability( MZFormation.Type.Small, 1 );
-		s1.SetProbability( MZFormation.Type.Mid, 2 );
+		s1.SetProbability( MZFormation.SizeType.Small, 8 );
+		s1.SetProbability( MZFormation.SizeType.Mid, 2 );
+
+		MZFormationState s2 = AddFormationState( "s2" );
+		s2.SetProbability( MZFormation.SizeType.Small, 5 );
+		s2.SetProbability( MZFormation.SizeType.Mid, 5 );
 
 		MZFormationState s3 = AddFormationState( "s3" );
-		s3.SetProbability( MZFormation.Type.Large, 3 );
+		s3.SetProbability( MZFormation.SizeType.Small, 2 );
+		s3.SetProbability( MZFormation.SizeType.Mid, 8 );
+
+		MZFormationState s4 = AddFormationState( "s4" );
+		s4.SetProbability( MZFormation.SizeType.Large, 10 );
 	}
 
 	void SetFormations()
 	{
-		Formation_S000 sf1 = new Formation_S000();
-		sf1.sideType = MZFormation.SideType.Mid;
-		AddFormation( MZFormation.Type.Small, sf1 );
+		TestAddFormation( PositionType.Mid, SizeType.Small, new Formation_S000() );
+		TestAddFormation( PositionType.Left, SizeType.Small, new Formation_S000() );
+		TestAddFormation( PositionType.Right, SizeType.Small, new Formation_S000() );
 
-		Formation_S000 sf2 = new Formation_S000();
-		sf2.sideType = MZFormation.SideType.Left;
-		AddFormation( MZFormation.Type.Small, sf2 );
+		TestAddFormation( PositionType.Mid, SizeType.Small, new Formation_S001() );
+		TestAddFormation( PositionType.Left, SizeType.Small, new Formation_S001() );
+		TestAddFormation( PositionType.Right, SizeType.Small, new Formation_S001() );
 
-		Formation_S000 sf3 = new Formation_S000();
-		sf3.sideType = MZFormation.SideType.Right;
-		AddFormation( MZFormation.Type.Small, sf3 );
+		TestAddFormation( PositionType.Left, SizeType.Mid, new Formation_M000() );
+		TestAddFormation( PositionType.Mid, SizeType.Mid, new Formation_M000() );
+		TestAddFormation( PositionType.Right, SizeType.Mid, new Formation_M000() );
 
-		AddFormation( MZFormation.Type.Mid, new Formation_M000() );
+		TestAddFormation( PositionType.Left, SizeType.Mid, new Formation_M001() );
+		TestAddFormation( PositionType.Mid, SizeType.Mid, new Formation_M001() );
+		TestAddFormation( PositionType.Right, SizeType.Mid, new Formation_M001() );
 
-		AddFormation( MZFormation.Type.Large, new Formation_L000() );
+		TestAddFormation( PositionType.Any, SizeType.Large, new Formation_L000() );
 	}
 
 	//
 
 	float _nextCreateTimeCount;
 	List<MZFormation> _currentFormationsList;
-	Dictionary<MZFormation.Type, List<MZFormation>> _formationsDictionary;
+	Dictionary<MZFormation.SizeType, List<MZFormation>> _formationsDictionary; // old
+	Dictionary<MZFormation.PositionType, Dictionary<MZFormation.SizeType, List<MZFormation>>> _formationByPostionDictionary;
 	int _currentFormationStatesIndex;
 	List<MZFormationState> _formationStatesList;
 
@@ -89,18 +103,44 @@ public class MZFormationsManager : MZControlBase
 		return state;
 	}
 
-	void AddFormation(MZFormation.Type type, MZFormation formation)
+	void TestAddFormation(PositionType positionType, SizeType sizeType, MZFormation formation) // delete
 	{
 		if( _formationsDictionary == null )
-			_formationsDictionary = new Dictionary<MZFormation.Type, List<MZFormation>>();
+			_formationsDictionary = new Dictionary<MZFormation.SizeType, List<MZFormation>>();
 
-		if( _formationsDictionary.ContainsKey( type ) == false )
+		if( _formationsDictionary.ContainsKey( sizeType ) == false )
 		{
-			_formationsDictionary.Add( type, new List<MZFormation>() );
+			_formationsDictionary.Add( sizeType, new List<MZFormation>() );
 		}
 
-		formation.type = type;
-		_formationsDictionary[ type ].Add( formation );
+		formation.sizeType = sizeType;
+		formation.positionType = positionType;
+		_formationsDictionary[ sizeType ].Add( formation );
+	}
+
+	void AddFormation(PositionType positionType, SizeType sizeType, MZFormation formation)
+	{
+		if( _formationByPostionDictionary == null )
+			_formationByPostionDictionary = new Dictionary<PositionType, Dictionary<SizeType, List<MZFormation>>>();
+
+		if( _formationByPostionDictionary.ContainsKey( positionType ) == false )
+		{
+			Dictionary<SizeType, List<MZFormation>> _formationBySizeDictionary = new Dictionary<SizeType, List<MZFormation>>();
+			_formationByPostionDictionary.Add( positionType, _formationBySizeDictionary );
+		}
+
+		Dictionary<SizeType, List<MZFormation>> formationBySizeDic = _formationByPostionDictionary[ positionType ];
+
+		if( formationBySizeDic.ContainsKey( sizeType ) == false )
+		{
+			List<MZFormation> _foramtions = new List<MZFormation>();
+			formationBySizeDic.Add( sizeType, _foramtions );
+		}
+
+		formation.positionType = positionType;
+		formation.sizeType = sizeType;
+
+		formationBySizeDic[ sizeType ].Add( formation );
 	}
 
 	void UpdateFormationState()
@@ -123,7 +163,7 @@ public class MZFormationsManager : MZControlBase
 
 		if( _nextCreateTimeCount <= 0 )
 		{
-			MZFormation.Type createType = _currentFormationState.GetNewFormationType();
+			MZFormation.SizeType createType = _currentFormationState.GetNewFormationType();
 
 			MZDebug.Assert( _formationsDictionary.ContainsKey( createType ), "not contain this type: " + createType.ToString() );
 

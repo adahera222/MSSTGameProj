@@ -64,7 +64,11 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 	public override void Enable()
 	{
 		base.Enable();
-
+		if( parentGameObject.GetComponent<MZEnemy>() != null )
+		{
+			MZDebug.Log( "...." + faceToType.ToString() );
+		}
+	
 		SetFaceTo( faceToType );
 	}
 
@@ -126,7 +130,7 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 //			if( parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyAir ||
 //				parentGameObject.GetComponent<MZCharacter>().characterType == MZCharacterType.EnemyBullet ) // need fix
 //			{
-				_faceTo.Update();
+			_faceTo.Update();
 //			}
 		}
 	}

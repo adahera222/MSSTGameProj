@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Formation_S000 : MZFormation
+public class Formation_S001 : MZFormation
 {
 	//
 
@@ -16,9 +16,9 @@ public class Formation_S000 : MZFormation
 
 	//
 
-	public Formation_S000() : base()
+	public Formation_S001() : base()
 	{
-		duration = 1.3f;
+		duration = 4.0f;
 	}
 
 	public override void Reset()
@@ -26,7 +26,7 @@ public class Formation_S000 : MZFormation
 		base.Reset();
 
 		_createTimeCount = 0;
-		_createInterval = 0.8f;
+		_createInterval = 0.6f;
 	}
 
 	protected override void FirstUpdate()
@@ -41,23 +41,41 @@ public class Formation_S000 : MZFormation
 
 		if( _createTimeCount < 0 )
 		{
-			AddNewEnemy( MZCharacterType.EnemyAir, "EnemyS000", false );
+			AddNewEnemy( MZCharacterType.EnemyAir, "EnemyS001", false );
 			_createTimeCount += _createInterval;
 		}
 	}
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
+		enemy.healthPoint = 4;
 		enemy.position = _initPosition;
-		enemy.InitDefaultMode();
+
+		MZMode mode = enemy.AddMode( "mode" );
+
+		MZMove move = mode.AddMove( "GoDie", MZMove.Type.ToTarget );
+		move.initVelocity = 200;
+
+		MZPartControl partControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
+		mode.AddPartControlUpdater().Add( partControl );
+
+		MZAttack attack = partControl.AddAttack( MZAttack.Type.OddWay );
+		attack.numberOfWays = 3;
+		attack.colddown = 10;
+		attack.duration = -1;
+		attack.intervalDegrees = 15;
+		attack.initVelocity = 500;
+		attack.bulletName = "EBDonuts";
+		attack.targetHelp = new MZTargetHelp_Target();
+		attack.isRunOnce = true;
 	}
 
 	//
 
 	Vector2 GetInitPosition(PositionType sideType)
 	{
-		float xValue = 280;
-		float yValue = 400;
+		float xValue = -400;
+		float yValue = 500;
 
 		switch( sideType )
 		{
@@ -67,7 +85,7 @@ public class Formation_S000 : MZFormation
 				return new Vector3( xValue, yValue );
 			case PositionType.Mid:
 			default:
-				return new Vector3( 0, yValue + 90 );
+				return new Vector3( 0, yValue );
 		}
 	}
 }

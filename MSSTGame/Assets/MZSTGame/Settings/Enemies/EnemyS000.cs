@@ -15,13 +15,13 @@ public class EnemyS000 : MZEnemy
 
 		MZMode mode = AddMode( "Mode" );
 
-//		AddMove_Linear( mode );
+		AddMove_Linear( mode );
 //		AddMove_ToTarget( mode );
 //		AddMove_Rotation( mode );
 
-//		AddOddWayAttack( partsByNameDictionary[ "MainBody" ], mode );
-		AddVortexAttack( partsByNameDictionary[ "MainBody" ], mode, true );
-		AddVortexAttack( partsByNameDictionary[ "MainBody" ], mode, false );
+		AddOddWayAttack( partsByNameDictionary[ "MainBody" ], mode );
+//		AddVortexAttack( partsByNameDictionary[ "MainBody" ], mode, true );
+//		AddVortexAttack( partsByNameDictionary[ "MainBody" ], mode, false );
 	}
 
 	//
@@ -61,40 +61,6 @@ public class EnemyS000 : MZEnemy
 		attack.initVelocity = 500;
 		attack.bulletName = "EBDonuts";
 		attack.targetHelp = new MZTargetHelp_Target();
-
-		MZAttack idle = partControl.AddAttack( MZAttack.Type.Idle );
-		idle.duration = 3;
-	}
-
-	void AddVortexAttack(MZCharacterPart part, MZMode mode, bool flag)
-	{
-		MZPartControl partControl = new MZPartControl( part );
-		MZControlUpdate<MZPartControl> partControlUpdate = mode.AddPartControlUpdater();
-		partControlUpdate.Add( partControl );
-
-		MZAttack_Vortex attack = partControl.AddAttack( MZAttack.Type.Vortex ) as MZAttack_Vortex;
-		attack.colddown = 0.05f;
-		attack.duration = -1;
-		attack.initVelocity = 200;
-		attack.additionalVelocity = 50;
-		attack.bulletName = "EBDonuts";
-		attack.intervalDegrees = 12*( ( flag )? 1 : -1 );
-
-		// target test 1
-		attack.targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.Target );
-
-		// target test 2
-//		attack.targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.AssignPosition );
-//		( attack.targetHelp as MZTargetHelp_AssignPosition ).assignPosition = new Vector2( -20, 400 );
-
-//		target test 3
-//		attack.targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.AssignMovingVector );
-//		( attack.targetHelp as MZTargetHelp_AssignMovingVector ).movingVector = new Vector2( 0, 1 );
-
-
-		attack.resetAdditionalVelocityPerWave = true;
-		attack.timePerWave = 0.3f;
-		attack.resetTime = 0.15f;
 
 		MZAttack idle = partControl.AddAttack( MZAttack.Type.Idle );
 		idle.duration = 3;

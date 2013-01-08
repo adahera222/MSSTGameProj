@@ -43,9 +43,9 @@ public class MZMove_ToTarget : MZMove, IMZTargetHelp
 		// mv not change
 
 		// mv always change
-		Vector2 mv = _targetHelp.GetMovingVector();
+		currentMovingVector = _targetHelp.GetMovingVector();
 		float movement = currentVelocity*MZTime.deltaTime;
-		controlDelegate.position = controlDelegate.position + new Vector2( mv.x*movement, mv.y*movement );
+		controlDelegate.position = controlDelegate.position + new Vector2( currentMovingVector.x*movement, currentMovingVector.y*movement );
 
 		_targetHelp.EndOneTime();
 	}
