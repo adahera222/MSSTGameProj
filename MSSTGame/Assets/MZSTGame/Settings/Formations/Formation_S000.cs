@@ -59,6 +59,8 @@ public class Formation_S000 : MZFormation
 		float xValue = 280;
 		float yValue = 400;
 
+		MZDebug.Log( sideType.ToString() );
+
 		switch( sideType )
 		{
 			case PositionType.Left:

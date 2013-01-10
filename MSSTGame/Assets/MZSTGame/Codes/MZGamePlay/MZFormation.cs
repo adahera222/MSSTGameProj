@@ -22,7 +22,7 @@ public abstract class MZFormation : MZControlBase
 	}
 
 	//
-
+	 
 	int _stateExp = int.MinValue;
 	SizeType _sizeType = SizeType.Unknow;
 	PositionType _positionType = PositionType.Unknow;

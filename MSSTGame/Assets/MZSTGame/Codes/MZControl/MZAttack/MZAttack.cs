@@ -59,8 +59,6 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	float _currentAdditionalVelocity = 0;
 	MZTargetHelp _targetHelp = null;
 
-	bool _mustCalledsFlag = false;
-
 	public bool enable
 	{
 		set
@@ -121,8 +119,6 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		if( !enable )
 			return;
 
-		_mustCalledsFlag = false;
-
 		_colddownCount -= MZTime.deltaTime;
 
 		if( _colddownCount <= 0 )
@@ -180,8 +176,6 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 	protected void UpdateAdditionalVelocity()
 	{
-		_mustCalledsFlag = true;
-
 		if( additionalVelocity == 0 )
 			return;
 

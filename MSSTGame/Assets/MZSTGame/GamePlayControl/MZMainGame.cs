@@ -24,8 +24,16 @@ public class MZMainGame : MonoBehaviour
 		MZCharacterObjectsLoad.Load();
 
 		MZTime.instance.Reset();
+
 		_formationsManager = new MZFormationsManager();
 		_rankControl = new MZRankControl();
+
+		if( test.testType != MZTest.Type.None )
+		{
+			_formationsManager.enableUpdateState = false;
+		}
+
+		test.SetForamtions( _formationsManager.formations, _formationsManager );
 
 		MZGameComponents.instance.charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();
 		MZGameComponents.instance.rankControl = _rankControl;
@@ -42,19 +50,11 @@ public class MZMainGame : MonoBehaviour
 		if( _delayUpdate >= 0 )
 			return;
 
-		if( test.testType == MZTest.Type.None )
-			UpdateNormal();
-		else
+		if( test.testType != MZTest.Type.None )
 			test.Update();
-	}
 
-	void UpdateNormal()
-	{
 		if( _formationsManager != null )
 			_formationsManager.Update();
-
-//		if( rankControl != null )
-//			rankControl.Update();
 	}
 
 	void InitPlayer()

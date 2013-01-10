@@ -51,9 +51,32 @@ public class MZFormationsManager : MZControlBase
 
 	//
 
+	public bool enableUpdateState = true;
+
+	public List<MZFormation> formations
+	{
+		get
+		{
+			if( _formationsDictionary == null )
+				return null;
+
+			List<MZFormation> formations = new List<MZFormation>();
+
+			foreach( List<MZFormation> list in _formationsDictionary.Values )
+			{
+				foreach( MZFormation f in list )
+					formations.Add( f );
+			}
+
+			return formations;
+		}
+	}
+
+	//
+
 	float _nextCreateTimeCount;
 	List<MZFormation> _currentFormationsList;
-	Dictionary<MZFormation.SizeType, List<MZFormation>> _formationsDictionary; // old
+	Dictionary<MZFormation.SizeType, List<MZFormation>> _formationsDictionary; // old, but on using ...
 	Dictionary<MZFormation.PositionType, Dictionary<MZFormation.SizeType, List<MZFormation>>> _formationByPostionDictionary;
 	int _currentFormationStatesIndex;
 	List<MZFormationState> _formationStatesList;
@@ -81,12 +104,29 @@ public class MZFormationsManager : MZControlBase
 		_currentFormationsList = new List<MZFormation>();
 	}
 
+	public void ExecuteFormation(PositionType posType, SizeType sizeType, string name)
+	{
+		List<MZFormation> list = _formationsDictionary[ sizeType ];
+		foreach( MZFormation f in list )
+		{
+			if( f.GetType().ToString() == name && posType == f.positionType )
+			{
+				ExecuteFormation( f );
+				break;
+			}
+		}
+	}
+
 	//
 
 	protected override void UpdateWhenActive()
 	{
-		UpdateFormationState();
-		UpdateFormationCreate();
+		if( enableUpdateState )
+		{
+			UpdateFormationState();
+			UpdateFormationCreate();
+		}
+
 		UpdateCurrentFormations();
 	}
 
@@ -175,13 +215,10 @@ public class MZFormationsManager : MZControlBase
 			if( _currentFormationsList.Count != 0 && _currentFormationsList.Contains( newFormation ) )
 				return;
 
-			newFormation.Reset();
-
 			if( newFormation.nextCreatedTime >= _nextCreateTimeCount )
 				_nextCreateTimeCount = newFormation.nextCreatedTime;
 
-			if( _currentFormationsList.Contains( newFormation ) == false )
-				_currentFormationsList.Add( newFormation );
+			ExecuteFormation( newFormation );
 		}
 	}
 
@@ -203,6 +240,18 @@ public class MZFormationsManager : MZControlBase
 				_currentFormationsList.RemoveAt( i );
 			}
 		}
+	}
 
+	void ExecuteFormation(MZFormation formation)
+	{
+		MZDebug.Assert( formation != null, "formation is null" );
+
+		formation.Reset();
+
+		if( _currentFormationsList == null )
+			_currentFormationsList = new List<MZFormation>();
+
+		if( _currentFormationsList.Contains( formation ) == false )
+			_currentFormationsList.Add( formation );
 	}
 }
