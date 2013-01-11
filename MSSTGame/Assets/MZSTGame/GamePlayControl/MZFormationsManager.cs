@@ -38,6 +38,10 @@ public class MZFormationsManager : MZControlBase
 		TestAddFormation( PositionType.Left, SizeType.Small, new Formation_S001() );
 		TestAddFormation( PositionType.Right, SizeType.Small, new Formation_S001() );
 
+		TestAddFormation( PositionType.Right, SizeType.Small, new TestFormation_S_XY() );
+//		TestAddFormation( PositionType.Mid, SizeType.Small, new TestFormation_S_AccelXY() );
+		TestAddFormation( PositionType.Left, SizeType.Small, new TestFormation_S_XY() );
+
 		TestAddFormation( PositionType.Left, SizeType.Mid, new Formation_M000() );
 		TestAddFormation( PositionType.Mid, SizeType.Mid, new Formation_M000() );
 		TestAddFormation( PositionType.Right, SizeType.Mid, new Formation_M000() );

@@ -7,7 +7,7 @@ public class MZAttack_OddWay : MZAttack
 	{
 		base.LaunchBullet();
 
-		Vector2 centerMovingVector = targetHelp.GetMovingVector();
+		Vector2 centerMovingVector = targetHelp.GetResultMovingVector();
 
 		for( int i = 0; i < currentWays; i++ )
 		{

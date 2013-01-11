@@ -9,8 +9,6 @@ public class MZTest
 	{
 		None,
 		Enable,
-//		Formation,
-//		FormationState,
 	}
 
 	public Type testType = Type.None;

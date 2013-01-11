@@ -37,7 +37,16 @@ public abstract class MZMove : MZControlBase
 		ToPosition,
 		ToTarget,
 		Rotation,
+		DegreesBy,
+		DegreesTo,
 	}
+
+	public enum RotationType
+	{
+		CW,
+		CCW,
+	}
+
 
 	public new IMZMove controlDelegate;
 	public float initVelocity = 0;
@@ -53,7 +62,7 @@ public abstract class MZMove : MZControlBase
 
 	public virtual Vector2 currentMovingVector
 	{
-		set { _currentMovingVector = value; }
+		set { _currentMovingVector = MZMath.UnitVectorFromVector( value ); }
 		get { return _currentMovingVector; }
 	}
 
@@ -66,7 +75,6 @@ public abstract class MZMove : MZControlBase
 	}
 
 	Vector2 _initMovingVector = Vector2.zero;
-
 	float _currentVelocity = 0;
 	Vector2 _currentMovingVector = Vector2.zero;
 }

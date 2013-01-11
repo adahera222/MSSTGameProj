@@ -27,7 +27,7 @@ public class MZAttack_Vortex : MZAttack
 		targetHelp.calcuteEveryTime = false;
 		targetHelp.BeginOneTime();
 
-		Vector2 mv = targetHelp.GetMovingVector();
+		Vector2 mv = targetHelp.GetResultMovingVector();
 		initDegrees = MZMath.DegreesFromXAxisToVector( mv );
 	}
 

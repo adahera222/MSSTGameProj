@@ -57,7 +57,7 @@ public abstract class MZTargetHelp
 		_movingVectorResult = Vector2.zero;
 	}
 
-	public Vector2 GetMovingVector()
+	public Vector2 GetResultMovingVector()
 	{
 		MZDebug.Assert( controlDelegate != null, "controlObject is null" );
 
@@ -66,6 +66,8 @@ public abstract class MZTargetHelp
 
 		return _movingVectorResult;
 	}
+
+	public abstract Vector2 GetResultPosition();
 
 	public virtual void BeginOneTime()
 	{
@@ -91,6 +93,12 @@ public abstract class MZTargetHelp
 
 public class MZTargetHelp_Target : MZTargetHelp
 {
+	public override Vector2 GetResultPosition()
+	{
+		MZDebug.AssertFalse( "not support" );
+		return Vector2.zero;
+	}
+
 	protected override Vector2 CalculateMovingVector()
 	{
 		return MZMath.UnitVectorFromP1ToP2( controlDelegate.selfPosition, GetTargetPosition() );
@@ -116,6 +124,12 @@ public class MZTargetHelp_AssignMovingVector : MZTargetHelp
 {
 	public Vector2 movingVector = Vector2.zero;
 
+	public override Vector2 GetResultPosition()
+	{
+		MZDebug.AssertFalse( "not support" );
+		return Vector2.zero;
+	}
+
 	protected override Vector2 CalculateMovingVector()
 	{
 		return movingVector;
@@ -138,7 +152,13 @@ public class MZTargetHelp_AssignPosition : MZTargetHelp
 	public override void BeginOneTime()
 	{
 		base.BeginOneTime();
+
 		_absolutePosition = ( assignType == AssignType.Relative )? controlDelegate.selfPosition + assignPosition : assignPosition;
+	}
+
+	public override Vector2 GetResultPosition()
+	{
+		return _absolutePosition;
 	}
 
 	protected override Vector2 CalculateMovingVector()

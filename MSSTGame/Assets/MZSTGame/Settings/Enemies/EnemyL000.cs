@@ -21,6 +21,12 @@ public class EnemyL000 : MZEnemy
 		m1show.duration = 1.0f;
 		m1show.isRunOnce = true;
 
+		MZMove_Rotation m1rot = mode1.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
+		m1rot.targetHelp.assignType = MZTargetHelp_AssignPosition.AssignType.Relative;
+		m1rot.targetHelp.assignPosition = new Vector2( 0, -100 );
+		m1rot.angularVelocity = 30;
+		m1rot.duration = -1;
+
 //		MZMove m1Idle = mode1.AddMove( MZMove.Type.Linear );
 //		m1Idle.initVelocity = 0;
 //		m1Idle.duration = 60;

@@ -7,7 +7,7 @@ public class MZFaceTo_Target : MZFaceTo
 	{
 		MZTargetHelp targetHelp = new MZTargetHelp_Target();
 		targetHelp.controlDelegate = this;
-		float rotation = MZMath.DegreesFromXAxisToVector( targetHelp.GetMovingVector() );
+		float rotation = MZMath.DegreesFromXAxisToVector( targetHelp.GetResultMovingVector() );
 
 		controlDelegate.rotation = rotation;
 	}

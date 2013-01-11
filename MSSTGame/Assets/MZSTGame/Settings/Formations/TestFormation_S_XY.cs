@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Formation_S001 : MZFormation
+public class TestFormation_S_XY : MZFormation
 {
 	//
 
@@ -16,7 +16,7 @@ public class Formation_S001 : MZFormation
 
 	//
 
-	public Formation_S001() : base()
+	public TestFormation_S_XY() : base()
 	{
 		duration = 4.0f;
 	}
@@ -53,8 +53,13 @@ public class Formation_S001 : MZFormation
 
 		MZMode mode = enemy.AddMode( "mode" );
 
-		MZMove move = mode.AddMove( "GoDie", MZMove.Type.ToTarget );
+		MZMove_DegreesTo move = mode.AddMove( "GoTurn", MZMove.Type.DegreesTo ) as MZMove_DegreesTo;
+		move.initMovingVector = ( positionType == PositionType.Left )? new Vector2( 1, 1 ) : new Vector2( -1, 1 );
 		move.initVelocity = 200;
+		move.totalTime = 4;
+
+		move.rotationType = MZMove.RotationType.CCW;
+		move.destinationDegrees = ( positionType == PositionType.Left )? 135 : 45;
 
 		MZPartControl partControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 		mode.AddPartControlUpdater().Add( partControl );
@@ -74,8 +79,8 @@ public class Formation_S001 : MZFormation
 
 	Vector2 GetInitPosition(PositionType sideType)
 	{
-		float xValue = 400;
-		float yValue = 500;
+		float xValue = 30;
+		float yValue = 100;
 
 		switch( sideType )
 		{

@@ -8,7 +8,19 @@ public class MZMove_Rotation : MZMove, IMZTargetHelp
 	public float radiansLimited = -1;
 
 	public MZTargetHelp_AssignPosition targetHelp
-	{ get { return _targetHelp; } }
+	{
+		get
+		{
+			if( _targetHelp == null )
+			{
+				_targetHelp = new MZTargetHelp_AssignPosition();
+				_targetHelp.controlDelegate = this;
+				_targetHelp.calcuteEveryTime = false;
+			}
+
+			return _targetHelp;
+		}
+	}
 
 	public override Vector2 currentMovingVector
 	{
@@ -26,7 +38,7 @@ public class MZMove_Rotation : MZMove, IMZTargetHelp
 
 	float _currentTheta;
 	float _currentRadians;
-	MZTargetHelp_AssignPosition _targetHelp = new MZTargetHelp_AssignPosition();
+	MZTargetHelp_AssignPosition _targetHelp;
 
 	//
 
@@ -53,8 +65,6 @@ public class MZMove_Rotation : MZMove, IMZTargetHelp
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-
-		targetHelp.calcuteEveryTime = false;
 
 		targetHelp.Reset();
 		targetHelp.BeginOneTime();
@@ -108,6 +118,6 @@ public class MZMove_Rotation : MZMove, IMZTargetHelp
 
 	Vector2 GetCenter()
 	{
-		return targetHelp.assignPosition;
+		return targetHelp.GetResultPosition();
 	}
 }
