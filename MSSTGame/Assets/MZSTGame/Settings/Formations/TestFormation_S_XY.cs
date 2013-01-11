@@ -41,7 +41,7 @@ public class TestFormation_S_XY : MZFormation
 
 		if( _createTimeCount < 0 )
 		{
-			AddNewEnemy( MZCharacterType.EnemyAir, "EnemyS001", false );
+			AddNewEnemy( MZCharacterType.EnemyAir, "EnemyS002", false );
 			_createTimeCount += _createInterval;
 		}
 	}
@@ -54,12 +54,12 @@ public class TestFormation_S_XY : MZFormation
 		MZMode mode = enemy.AddMode( "mode" );
 
 		MZMove_DegreesTo move = mode.AddMove( "GoTurn", MZMove.Type.DegreesTo ) as MZMove_DegreesTo;
-		move.initMovingVector = ( positionType == PositionType.Left )? new Vector2( 1, 1 ) : new Vector2( -1, 1 );
+		move.initMovingVector = ( positionType == PositionType.Left )? new Vector2( 1, 0 ) : new Vector2( -1, 0 );
 		move.initVelocity = 200;
 		move.totalTime = 4;
 
-		move.rotationType = MZMove.RotationType.CCW;
-		move.destinationDegrees = ( positionType == PositionType.Left )? 135 : 45;
+		move.rotationType = ( positionType == PositionType.Left )? MZMove.RotationType.CW : MZMove.RotationType.CCW;
+		move.destinationDegrees = ( positionType == PositionType.Left )? -45 : -135;
 
 		MZPartControl partControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 		mode.AddPartControlUpdater().Add( partControl );
@@ -79,8 +79,8 @@ public class TestFormation_S_XY : MZFormation
 
 	Vector2 GetInitPosition(PositionType sideType)
 	{
-		float xValue = 30;
-		float yValue = 100;
+		float xValue = 400;
+		float yValue = 500;
 
 		switch( sideType )
 		{

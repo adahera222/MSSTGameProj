@@ -27,8 +27,6 @@ public class MZMove_DegreesTo : MZMove
 
 		_destinationDegrees = NormalizeDestinationDegrees( rotationType, destinationDegrees );
 		_diffDegrees = _destinationDegrees - _initDegrees;
-
-		MZDebug.Log( "{0}: init={1:0} des={2:0.0}, diff={3:0.0}", rotationType.ToString(), _initDegrees, _destinationDegrees, _diffDegrees );
 	}
 
 	protected override void UpdateWhenActive()
@@ -38,7 +36,7 @@ public class MZMove_DegreesTo : MZMove
 		if( _timeCount > totalTime )
 			_timeCount = totalTime;
 
-		float currentDegrees = _initDegrees + _diffDegrees*( _timeCount/totalTime ); /**( ( rotationType == MZMove.RotationType.CCW )? 1 : -1 );*/
+		float currentDegrees = _initDegrees + _diffDegrees*( _timeCount/totalTime );
 		currentMovingVector = MZMath.UnitVectorFromDegrees( currentDegrees );
 
 		controlDelegate.position += currentMovingVector*currentVelocity*MZTime.deltaTime;
@@ -61,7 +59,7 @@ public class MZMove_DegreesTo : MZMove
 			int rounds = ( (int)_destDeg )/360;
 			int remain = -( (int)_destDeg )%360;
 
-			_destDeg = remain + 360*rounds;
+			_destDeg = ( 360 - remain ) + 360*rounds;
 		}
 
 		return _destDeg;

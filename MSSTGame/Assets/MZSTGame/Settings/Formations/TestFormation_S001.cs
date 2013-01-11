@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Formation_S001 : MZFormation
+public class TestFormation_S001 : MZFormation
 {
 	//
 
@@ -16,7 +16,7 @@ public class Formation_S001 : MZFormation
 
 	//
 
-	public Formation_S001() : base()
+	public TestFormation_S001() : base()
 	{
 		duration = 4.0f;
 	}

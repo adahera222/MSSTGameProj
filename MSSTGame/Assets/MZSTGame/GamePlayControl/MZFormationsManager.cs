@@ -30,27 +30,27 @@ public class MZFormationsManager : MZControlBase
 
 	void SetFormations()
 	{
-		TestAddFormation( PositionType.Mid, SizeType.Small, new Formation_S000() );
-		TestAddFormation( PositionType.Left, SizeType.Small, new Formation_S000() );
-		TestAddFormation( PositionType.Right, SizeType.Small, new Formation_S000() );
+		TestAddFormation( PositionType.Mid, SizeType.Small, new TestFormation_S000() );
+		TestAddFormation( PositionType.Left, SizeType.Small, new TestFormation_S000() );
+		TestAddFormation( PositionType.Right, SizeType.Small, new TestFormation_S000() );
 
-		TestAddFormation( PositionType.Mid, SizeType.Small, new Formation_S001() );
-		TestAddFormation( PositionType.Left, SizeType.Small, new Formation_S001() );
-		TestAddFormation( PositionType.Right, SizeType.Small, new Formation_S001() );
+		TestAddFormation( PositionType.Mid, SizeType.Small, new TestFormation_S001() );
+		TestAddFormation( PositionType.Left, SizeType.Small, new TestFormation_S001() );
+		TestAddFormation( PositionType.Right, SizeType.Small, new TestFormation_S001() );
 
 		TestAddFormation( PositionType.Right, SizeType.Small, new TestFormation_S_XY() );
 //		TestAddFormation( PositionType.Mid, SizeType.Small, new TestFormation_S_AccelXY() );
 		TestAddFormation( PositionType.Left, SizeType.Small, new TestFormation_S_XY() );
 
-		TestAddFormation( PositionType.Left, SizeType.Mid, new Formation_M000() );
-		TestAddFormation( PositionType.Mid, SizeType.Mid, new Formation_M000() );
-		TestAddFormation( PositionType.Right, SizeType.Mid, new Formation_M000() );
+		TestAddFormation( PositionType.Left, SizeType.Mid, new TestFormation_M000() );
+		TestAddFormation( PositionType.Mid, SizeType.Mid, new TestFormation_M000() );
+		TestAddFormation( PositionType.Right, SizeType.Mid, new TestFormation_M000() );
 
-		TestAddFormation( PositionType.Left, SizeType.Mid, new Formation_M001() );
-		TestAddFormation( PositionType.Mid, SizeType.Mid, new Formation_M001() );
-		TestAddFormation( PositionType.Right, SizeType.Mid, new Formation_M001() );
+		TestAddFormation( PositionType.Left, SizeType.Mid, new TestFormation_M001() );
+		TestAddFormation( PositionType.Mid, SizeType.Mid, new TestFormation_M001() );
+		TestAddFormation( PositionType.Right, SizeType.Mid, new TestFormation_M001() );
 
-		TestAddFormation( PositionType.Any, SizeType.Large, new Formation_L000() );
+		TestAddFormation( PositionType.Any, SizeType.Large, new TestFormation_L000() );
 	}
 
 	//

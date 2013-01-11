@@ -1,14 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
-public class Formation_L000 : MZFormation
+public class TestFormation_L000 : MZFormation
 {
 	public override float nextCreatedTime
 	{
 		get { return 15; }
 	}
 
-	public Formation_L000() : base()
+	public TestFormation_L000() : base()
 	{
 		duration = 9;
 	}

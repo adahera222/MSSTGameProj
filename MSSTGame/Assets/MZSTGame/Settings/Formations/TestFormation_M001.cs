@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Formation_M001 : MZFormation
+public class TestFormation_M001 : MZFormation
 {
 	Vector2 _initPosition;
 
@@ -13,7 +13,7 @@ public class Formation_M001 : MZFormation
 		}
 	}
 
-	public Formation_M001() :base()
+	public TestFormation_M001() :base()
 	{
 		duration = 3.0f;
 	}
