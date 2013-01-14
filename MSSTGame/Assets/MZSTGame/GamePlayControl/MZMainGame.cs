@@ -14,6 +14,11 @@ public class MZMainGame : MonoBehaviour
 
 	//
 
+	void Awake()
+	{
+		Application.targetFrameRate = 30;
+	}
+
 	void Start()
 	{
 		MZOTFramesManager.GetInstance().CreateFramesByExistedContainer();

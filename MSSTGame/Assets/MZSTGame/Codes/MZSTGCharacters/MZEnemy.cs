@@ -21,9 +21,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	{
 		get
 		{
-			if( _modeControlUpdate == null )
-				_modeControlUpdate = new MZControlUpdate<MZMode>();
-
+			MZDebug.Assert( _modeControlUpdate != null, "_modeControlUpdate is null, please call CreateNewModes()" );
 			return _modeControlUpdate.controlsList;
 		}
 	}
@@ -33,11 +31,18 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	//
 
+	public void CreateNewModes()
+	{
+		_modeControlUpdate = new MZControlUpdate<MZMode>();
+	}
+
 	public override void Enable()
 	{
 		base.Enable();
+
 		_currentHealthPoint = healthPoint;
 		enableRemoveTime = 3.0f;
+		_modeControlUpdate.ResetAll();
 	}
 
 	public override void Disable()
@@ -76,7 +81,9 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	public override void InitDefaultMode()
 	{
 		base.InitDefaultMode();
-		_modeControlUpdate = new MZControlUpdate<MZMode>();
+
+		if( _modeControlUpdate == null )
+			CreateNewModes();
 	}
 
 	protected override void UpdateWhenActive()
