@@ -30,6 +30,11 @@ public class MZFormationsManager : MZControlBase
 
 	void SetFormations()
 	{
+		TestAddFormation( PositionType.Left, SizeType.Small, new Formation_S_SideIn001() );
+		TestAddFormation( PositionType.Right, SizeType.Small, new Formation_S_SideIn001() );
+
+		TestAddFormation( PositionType.Any, SizeType.Small, new Formation_S_Round001() );
+
 		TestAddFormation( PositionType.Mid, SizeType.Small, new TestFormation_S000() );
 		TestAddFormation( PositionType.Left, SizeType.Small, new TestFormation_S000() );
 		TestAddFormation( PositionType.Right, SizeType.Small, new TestFormation_S000() );
@@ -39,7 +44,6 @@ public class MZFormationsManager : MZControlBase
 		TestAddFormation( PositionType.Right, SizeType.Small, new TestFormation_S001() );
 
 		TestAddFormation( PositionType.Right, SizeType.Small, new TestFormation_S_XY() );
-//		TestAddFormation( PositionType.Mid, SizeType.Small, new TestFormation_S_AccelXY() );
 		TestAddFormation( PositionType.Left, SizeType.Small, new TestFormation_S_XY() );
 
 		TestAddFormation( PositionType.Left, SizeType.Mid, new TestFormation_M000() );
@@ -219,8 +223,8 @@ public class MZFormationsManager : MZControlBase
 			if( _currentFormationsList.Count != 0 && _currentFormationsList.Contains( newFormation ) )
 				return;
 
-			if( newFormation.nextCreatedTime >= _nextCreateTimeCount )
-				_nextCreateTimeCount = newFormation.nextCreatedTime;
+			if( newFormation.disableNextFormationTime >= _nextCreateTimeCount )
+				_nextCreateTimeCount = newFormation.disableNextFormationTime;
 
 			ExecuteFormation( newFormation );
 		}

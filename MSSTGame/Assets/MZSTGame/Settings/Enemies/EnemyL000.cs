@@ -94,7 +94,8 @@ public class EnemyL000 : MZEnemy
 		wait1.duration = 2.0f;
 
 		MZAttack attack = partControl.AddAttack( MZAttack.Type.OddWay );
-		attack.numberOfWays = 1;
+		attack.numberOfWays = 5;
+		attack.intervalDegrees = 20;
 		attack.bulletName = "EBDonuts";
 		attack.initVelocity = 250;
 		attack.targetHelp = new MZTargetHelp_Target();

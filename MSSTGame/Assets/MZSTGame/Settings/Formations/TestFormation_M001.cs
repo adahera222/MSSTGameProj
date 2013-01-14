@@ -5,7 +5,7 @@ public class TestFormation_M001 : MZFormation
 {
 	Vector2 _initPosition;
 
-	public override float nextCreatedTime
+	public override float disableNextFormationTime
 	{
 		get
 		{

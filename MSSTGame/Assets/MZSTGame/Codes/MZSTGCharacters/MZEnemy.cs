@@ -41,7 +41,6 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 		base.Enable();
 
 		_currentHealthPoint = healthPoint;
-		enableRemoveTime = 3.0f;
 		_modeControlUpdate.ResetAll();
 	}
 
@@ -82,6 +81,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	{
 		base.InitDefaultMode();
 
+		enableRemoveTime = 3.0f;
 		if( _modeControlUpdate == null )
 			CreateNewModes();
 	}

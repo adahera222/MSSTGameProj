@@ -11,7 +11,7 @@ public class TestFormation_S001 : MZFormation
 
 	//
 
-	public override float nextCreatedTime
+	public override float disableNextFormationTime
 	{ get { return 1; } }
 
 	//

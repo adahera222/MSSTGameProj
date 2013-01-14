@@ -68,9 +68,8 @@ public class MZControlUpdate<T> where T : MZControlBase
 		{
 			_currentIndex = 0;
 			_controlsList[ _currentIndex ].Reset();
+			_controlsList[ _currentIndex ].Enable();
 		}
-
-		_controlsList[ _currentIndex ].Update();
 
 		if( _controlsList[ _currentIndex ].isActive == false )
 		{
@@ -87,7 +86,10 @@ public class MZControlUpdate<T> where T : MZControlBase
 
 			_currentIndex = ( _currentIndex >= _controlsList.Count - 1 )? 0 : _currentIndex + 1;
 			_controlsList[ _currentIndex ].Reset();
+			_controlsList[ _currentIndex ].Enable();
 		}
+
+		_controlsList[ _currentIndex ].Update();
 	}
 }
 

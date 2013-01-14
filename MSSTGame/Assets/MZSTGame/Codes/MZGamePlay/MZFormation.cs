@@ -29,7 +29,7 @@ public abstract class MZFormation : MZControlBase
 	List<MZEnemy> _enemiesList = null;
 	//
 
-	public abstract float nextCreatedTime
+	public abstract float disableNextFormationTime
 	{ get; }
 
 	public SizeType sizeType
