@@ -16,8 +16,8 @@ public class EnemyL000 : MZEnemy
 		MZMode mode1 = AddMode( "m1" );
 
 		MZMove m1show = mode1.AddMove( MZMove.Type.Linear );
-		m1show.initMovingVector = new Vector2( 0, -1 );
-		m1show.initVelocity = 150;
+		m1show.direction = 270;
+		m1show.velocity = 150;
 		m1show.duration = 1.0f;
 		m1show.isRunOnce = true;
 

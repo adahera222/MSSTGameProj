@@ -49,32 +49,43 @@ public abstract class MZMove : MZControlBase
 
 
 	public new IMZMove controlDelegate;
-	public float initVelocity = 0;
+	public float direction = 0;
+	public float velocity = 0;
 
-	public Vector2 initMovingVector
-	{
-		set{ _initMovingVector = MZMath.UnitVectorFromVector( value ); }
-		get{ return _initMovingVector; }
-	}
+	public float currentDirection
+	{ get { return _currentDirection; } }
 
 	public float currentVelocity
 	{ get { return _currentVelocity; } }
 
 	public virtual Vector2 currentMovingVector
 	{
-		set { _currentMovingVector = MZMath.UnitVectorFromVector( value ); }
-		get { return _currentMovingVector; }
+		get { return MZMath.UnitVectorFromDegrees( currentDirection );}
 	}
 
 	public override void Reset()
 	{
 		base.Reset();
 
-		_currentVelocity = initVelocity;
-		_currentMovingVector = initMovingVector;
+		_currentVelocity = velocity;
+		_currentDirection = direction;
 	}
 
-	Vector2 _initMovingVector = Vector2.zero;
+	//
+
+	protected float _currentDirection = 0;
+
+	//
+
 	float _currentVelocity = 0;
-	Vector2 _currentMovingVector = Vector2.zero;
+
+	//
+
+	protected override void FirstUpdate()
+	{
+		base.FirstUpdate();
+
+		_currentVelocity = velocity;
+		_currentDirection = direction;
+	}
 }

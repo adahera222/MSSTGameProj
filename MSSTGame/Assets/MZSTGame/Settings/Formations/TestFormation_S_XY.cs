@@ -54,8 +54,8 @@ public class TestFormation_S_XY : MZFormation
 		MZMode mode = enemy.AddMode( "mode" );
 
 		MZMove_DegreesTo move = mode.AddMove( "GoTurn", MZMove.Type.DegreesTo ) as MZMove_DegreesTo;
-		move.initMovingVector = ( positionType == PositionType.Left )? new Vector2( 1, 0 ) : new Vector2( -1, 0 );
-		move.initVelocity = 200;
+		move.direction = ( positionType == PositionType.Left )? 0 : 180;
+		move.velocity = 200;
 		move.totalTime = 4;
 
 		move.rotationType = ( positionType == PositionType.Left )? MZMove.RotationType.CW : MZMove.RotationType.CCW;

@@ -16,17 +16,17 @@ public class EnemyM000 : MZEnemy
 		MZMode mode1 = AddMode( "m1" );
 
 		MZMove m1show = mode1.AddMove( MZMove.Type.Linear );
-		m1show.initMovingVector = new Vector2( 0, -1 );
-		m1show.initVelocity = 700;
+		m1show.direction = 270;
+		m1show.velocity = 700;
 		m1show.duration = 0.2f;
 
 		MZMove m1Idle = mode1.AddMove( MZMove.Type.Linear );
-		m1Idle.initVelocity = 0;
+		m1Idle.velocity = 0;
 		m1Idle.duration = 5;
 
 		MZMove m1Left = mode1.AddMove( MZMove.Type.Linear );
-		m1Left.initMovingVector = new Vector2( 0, -1 );
-		m1Left.initVelocity = 100;
+		m1Left.direction = 270;
+		m1Left.velocity = 100;
 		m1Left.duration = -1;
 
 		SetMainBodyAttack( mode1 );

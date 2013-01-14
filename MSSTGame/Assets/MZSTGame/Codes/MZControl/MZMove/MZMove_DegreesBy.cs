@@ -15,14 +15,12 @@ public class MZMove_DegreesBy : MZMove
 	{
 		base.FirstUpdate();
 
-		_initDegrees = MZMath.DegreesFromXAxisToVector( this.initMovingVector );
+		_initDegrees = this.direction;
 	}
 
 	protected override void UpdateWhenActive()
 	{
-		float currentDegrees = _initDegrees + variationDegreesPerSecond*lifeTimeCount;
-		currentMovingVector = MZMath.UnitVectorFromDegrees( currentDegrees );
-
+		base._currentDirection = _initDegrees + variationDegreesPerSecond*lifeTimeCount;
 		controlDelegate.position += currentMovingVector*currentVelocity*MZTime.deltaTime;
 	}
 }

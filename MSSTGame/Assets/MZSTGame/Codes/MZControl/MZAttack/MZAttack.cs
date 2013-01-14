@@ -94,8 +94,8 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		{
 			if( _targetHelp == null )
 			{
-				_targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.AssignMovingVector, this );
-				( _targetHelp as MZTargetHelp_AssignMovingVector ).movingVector = new Vector2( 0, 1 );
+				_targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.AssignDirection, this );
+				( _targetHelp as MZTargetHelp_AssignDirection ).direction = 90;
 			}
 
 			return _targetHelp;
@@ -201,6 +201,13 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	protected virtual void LaunchBullet()
 	{
 		_launchCount++;
+	}
+
+	protected void AddLinearMoveToBullet(GameObject bulletObject)
+	{
+		MZBullet bullet = bulletObject.GetComponent<MZBullet>();
+		MZMove bulletMove = bullet.AddMove( "Linear", "Linear" );
+		bulletMove.velocity = currentVelocity;
 	}
 
 	protected void EnableBullet(MZBullet bullet)

@@ -40,10 +40,7 @@ public class MZMove_ToTarget : MZMove, IMZTargetHelp
 
 	protected override void UpdateWhenActive()
 	{
-		// mv not change
-
-		// mv always change
-		currentMovingVector = _targetHelp.GetResultMovingVector();
+		_currentDirection = _targetHelp.GetResultDirection();
 		float movement = currentVelocity*MZTime.deltaTime;
 		controlDelegate.position = controlDelegate.position + new Vector2( currentMovingVector.x*movement, currentMovingVector.y*movement );
 

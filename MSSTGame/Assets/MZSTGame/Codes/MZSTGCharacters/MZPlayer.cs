@@ -39,13 +39,13 @@ public class MZPlayer : MZCharacter
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-		_sideAttacks[ 0 ] = GetAttackToPart( "Option1", new Vector2( 0, 1 ), 1 );
-		_sideAttacks[ 1 ] = GetAttackToPart( "Option2", new Vector2( 0, 1 ), 1 );
+		_sideAttacks[ 0 ] = GetAttackToPart( "Option1", 90, 1 );
+		_sideAttacks[ 1 ] = GetAttackToPart( "Option2", 90, 1 );
 
-		_sideAttacks[ 2 ] = GetAttackToPart( "Option3", MZMath.UnitVectorFromDegrees( 120 ), 1 );
-		_sideAttacks[ 3 ] = GetAttackToPart( "Option4", MZMath.UnitVectorFromDegrees( 130 ), 1 );
-		_sideAttacks[ 4 ] = GetAttackToPart( "Option5", MZMath.UnitVectorFromDegrees( 50 ), 1 );
-		_sideAttacks[ 5 ] = GetAttackToPart( "Option6", MZMath.UnitVectorFromDegrees( 60 ), 1 );
+		_sideAttacks[ 2 ] = GetAttackToPart( "Option3", 120, 1 );
+		_sideAttacks[ 3 ] = GetAttackToPart( "Option4", 130, 1 );
+		_sideAttacks[ 4 ] = GetAttackToPart( "Option5", 50, 1 );
+		_sideAttacks[ 5 ] = GetAttackToPart( "Option6", 60, 1 );
 
 		sideMoveL = GetMoveToPart( "Option1", true );
 		sideMoveR = GetMoveToPart( "Option2", false );
@@ -127,7 +127,7 @@ public class MZPlayer : MZCharacter
 		return new Vector2( nextPosition.x, nextPosition.y );
 	}
 
-	MZAttack GetAttackToPart(string partName, Vector2 mv, int way)
+	MZAttack GetAttackToPart(string partName, float dir, int way)
 	{
 		MZAttack attack = new MZAttack_OddWay();
 		attack.numberOfWays = way;
@@ -139,8 +139,8 @@ public class MZPlayer : MZCharacter
 		attack.bulletName = "PB000";
 		attack.enable = false;
 		attack.controlDelegate = partsByNameDictionary[ partName ];
-		attack.targetHelp = new MZTargetHelp_AssignMovingVector();
-		( attack.targetHelp as MZTargetHelp_AssignMovingVector ).movingVector = mv;
+		attack.targetHelp = new MZTargetHelp_AssignDirection();
+		( attack.targetHelp as MZTargetHelp_AssignDirection ).direction = dir;
 
 		return attack;
 	}

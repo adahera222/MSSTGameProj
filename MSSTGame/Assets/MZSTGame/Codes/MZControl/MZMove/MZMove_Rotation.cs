@@ -24,10 +24,6 @@ public class MZMove_Rotation : MZMove, IMZTargetHelp
 
 	public override Vector2 currentMovingVector
 	{
-		set
-		{
-			base.currentMovingVector = value;
-		}
 		get
 		{
 			return MZMath.UnitVectorFromDegrees( _currentTheta + ( ( angularVelocity >= 0 )? 90 : -90 ) );

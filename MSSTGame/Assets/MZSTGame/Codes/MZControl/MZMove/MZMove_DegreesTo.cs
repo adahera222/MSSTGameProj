@@ -4,15 +4,12 @@ using System.Collections;
 public class MZMove_DegreesTo : MZMove
 {
 	public float destinationDegrees;
-	public float totalTime = -1;
+	public float totalTime = 10;
 	public RotationType rotationType = RotationType.CW;
 
 	//
 
-	float _initDegrees;
-	float _destinationDegrees;
-	float _diffDegrees;
-	float _timeCount;
+	float _degreesDistance;
 
 	//
 
@@ -21,47 +18,37 @@ public class MZMove_DegreesTo : MZMove
 		base.FirstUpdate();
 
 		MZDebug.Assert( totalTime > 0, "totalTime must be set" );
-
-		_timeCount = 0;
-		_initDegrees = MZMath.DegreesFromXAxisToVector( this.initMovingVector );
-
-		_destinationDegrees = NormalizeDestinationDegrees( rotationType, destinationDegrees );
-		_diffDegrees = _destinationDegrees - _initDegrees;
+		_degreesDistance = GetDegreesDistance( rotationType, direction, destinationDegrees );
 	}
 
 	protected override void UpdateWhenActive()
 	{
-		_timeCount += MZTime.deltaTime;
+		float currentProportion = lifeTimeCount/totalTime;
+		if( currentProportion > 1 )
+			currentProportion = 1;
 
-		if( _timeCount > totalTime )
-			_timeCount = totalTime;
+		_currentDirection = direction + _degreesDistance*currentProportion;
+		Vector2 movementXY = currentMovingVector*currentVelocity*MZTime.deltaTime;
 
-		float currentDegrees = _initDegrees + _diffDegrees*( _timeCount/totalTime );
-		currentMovingVector = MZMath.UnitVectorFromDegrees( currentDegrees );
-
-		controlDelegate.position += currentMovingVector*currentVelocity*MZTime.deltaTime;
+		controlDelegate.position += movementXY;
 	}
 
-	float NormalizeDestinationDegrees(MZMove.RotationType rotType, float originDestinationDegrees)
+	float GetDegreesDistance(RotationType rotType, float initDeg, float destDeg)
 	{
-		float _destDeg = originDestinationDegrees;
+		float _destDeg = destDeg;
+		int rounds = ( (int)_destDeg )/360;
+		int remain = ( (int)_destDeg )%360;
 
-		if( rotType == RotationType.CW && _destDeg > 0 )
-		{
-			int rounds = ( (int)_destDeg )/360;
-			int remain = ( (int)_destDeg )%360;
+		if( remain < 0 )
+			remain = 360 + remain;
 
-			_destDeg = -( 360.0f - remain ) + 360*rounds;
-		}
+		float distance = Mathf.Abs( remain - initDeg );
 
-		if( rotType == RotationType.CCW && _destDeg < 0 )
-		{
-			int rounds = ( (int)_destDeg )/360;
-			int remain = -( (int)_destDeg )%360;
+		if( rotType == RotationType.CW )
+			distance = -( 360 - distance );
+		distance += 360*rounds;
 
-			_destDeg = ( 360 - remain ) + 360*rounds;
-		}
-
-		return _destDeg;
+		return distance;
 	}
+
 }

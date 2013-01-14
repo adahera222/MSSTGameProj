@@ -29,14 +29,14 @@ public class EnemyS000 : MZEnemy
 	void AddMove_Linear(MZMode mode)
 	{
 		MZMove move = mode.AddMove( "move", MZMove.Type.Linear );
-		move.initMovingVector = ( position.x > 0 )? new Vector2( -1, -0.5f ) : ( position.x < 0 )? new Vector2( 1, -0.5f ) : new Vector2( 0, -1 );
-		move.initVelocity = 100;
+		move.direction = ( position.x > 0 )? 225 : ( position.x < 0 )? 315 : 270;
+		move.velocity = 100;
 	}
 
 	void AddMove_ToTarget(MZMode mode)
 	{
 		MZMove move = mode.AddMove( "move", MZMove.Type.ToTarget );
-		move.initVelocity = 300;
+		move.velocity = 300;
 	}
 
 	void AddMove_Rotation(MZMode mode)

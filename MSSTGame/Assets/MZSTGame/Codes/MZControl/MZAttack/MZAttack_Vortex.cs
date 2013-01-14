@@ -27,8 +27,7 @@ public class MZAttack_Vortex : MZAttack
 		targetHelp.calcuteEveryTime = false;
 		targetHelp.BeginOneTime();
 
-		Vector2 mv = targetHelp.GetResultMovingVector();
-		initDegrees = MZMath.DegreesFromXAxisToVector( mv );
+		initDegrees = targetHelp.GetResultDirection();
 	}
 
 	protected override void LaunchBullet()
@@ -54,12 +53,12 @@ public class MZAttack_Vortex : MZAttack
 		GameObject bulletObject = GetNewBulletObject();
 
 		float currentDegrees = initDegrees + intervalDegrees*( launchCount - 1 );
-		Vector2 currentMovingVector = MZMath.UnitVectorFromDegrees( currentDegrees );
+//		Vector2 currentMovingVector = MZMath.UnitVectorFromDegrees( currentDegrees );
 
 		MZBullet bullet = bulletObject.GetComponent<MZBullet>();
 		MZMove bulletMove = bullet.AddMove( "Linear", "Linear" );
-		bulletMove.initVelocity = currentVelocity;
-		bullet.movesList[ 0 ].initMovingVector = currentMovingVector;
+		bulletMove.velocity = currentVelocity;
+		bullet.movesList[ 0 ].direction = currentDegrees;
 
 		EnableBullet( bullet.GetComponent<MZBullet>() );
 

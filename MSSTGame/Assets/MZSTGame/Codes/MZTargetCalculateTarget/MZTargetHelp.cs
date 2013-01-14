@@ -35,7 +35,7 @@ public abstract class MZTargetHelp
 	public enum Type
 	{
 		Target,
-		AssignMovingVector,
+		AssignDirection,
 		AssignPosition,
 	}
 
@@ -47,24 +47,25 @@ public abstract class MZTargetHelp
 	//
 
 	bool _needCalcute = true;
-	Vector2 _movingVectorResult = Vector2.zero;
+	float _resultDirection = 0;
+//	Vector2 _movingVectorResult = Vector2.zero;
 
 	//
 
 	public void Reset()
 	{
 		_needCalcute = true;
-		_movingVectorResult = Vector2.zero;
+		_resultDirection = 0;
 	}
 
-	public Vector2 GetResultMovingVector()
+	public float GetResultDirection()
 	{
 		MZDebug.Assert( controlDelegate != null, "controlObject is null" );
 
 		if( _needCalcute == true )
-			_movingVectorResult = CalculateMovingVector();
+			_resultDirection = CalculateResultDirection();
 
-		return _movingVectorResult;
+		return _resultDirection;
 	}
 
 	public abstract Vector2 GetResultPosition();
@@ -81,7 +82,8 @@ public abstract class MZTargetHelp
 
 	//
 
-	protected abstract Vector2 CalculateMovingVector();
+//	protected abstract Vector2 CalculateMovingVector();
+	protected abstract float CalculateResultDirection();
 
 	//
 
@@ -99,9 +101,10 @@ public class MZTargetHelp_Target : MZTargetHelp
 		return Vector2.zero;
 	}
 
-	protected override Vector2 CalculateMovingVector()
+	protected override float CalculateResultDirection()
 	{
-		return MZMath.UnitVectorFromP1ToP2( controlDelegate.selfPosition, GetTargetPosition() );
+		Vector2 vector = GetTargetPosition() - controlDelegate.selfPosition;
+		return MZMath.DegreesFromXAxisToVector( vector );
 	}
 
 	Vector2 GetTargetPosition()
@@ -120,9 +123,9 @@ public class MZTargetHelp_Target : MZTargetHelp
 	}
 }
 
-public class MZTargetHelp_AssignMovingVector : MZTargetHelp
+public class MZTargetHelp_AssignDirection : MZTargetHelp
 {
-	public Vector2 movingVector = Vector2.zero;
+	public float direction = 0;
 
 	public override Vector2 GetResultPosition()
 	{
@@ -130,9 +133,9 @@ public class MZTargetHelp_AssignMovingVector : MZTargetHelp
 		return Vector2.zero;
 	}
 
-	protected override Vector2 CalculateMovingVector()
+	protected override float CalculateResultDirection()
 	{
-		return movingVector;
+		return direction;
 	}
 }
 
@@ -161,9 +164,9 @@ public class MZTargetHelp_AssignPosition : MZTargetHelp
 		return _absolutePosition;
 	}
 
-	protected override Vector2 CalculateMovingVector()
+	protected override float CalculateResultDirection()
 	{
-		Vector2 mvTotargetPos = MZMath.UnitVectorFromP1ToP2( controlDelegate.selfPosition, _absolutePosition );
-		return mvTotargetPos;
+		Vector2 vector = _absolutePosition - controlDelegate.selfPosition;
+		return MZMath.DegreesFromXAxisToVector( vector );
 	}
 }
