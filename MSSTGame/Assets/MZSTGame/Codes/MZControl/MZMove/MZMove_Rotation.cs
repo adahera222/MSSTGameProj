@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public class MZMove_Rotation : MZMove, IMZTargetHelp
 {
 	public float angularVelocity = 0;

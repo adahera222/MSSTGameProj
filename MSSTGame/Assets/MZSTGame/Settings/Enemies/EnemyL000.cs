@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemyL000 : MZEnemy
 {
-	public override void InitValues()
+	protected override void InitValues()
 	{
 		base.InitValues();
 		healthPoint = 190;

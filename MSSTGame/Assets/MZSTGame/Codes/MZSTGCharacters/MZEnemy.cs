@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class MZEnemy : MZCharacter, IMZMode, IMZMove
 {
 	public MZFormation belongFormation = null;
+	public int healthPointOnEditor;
 	public int healthPoint = 10;
 	//
 	int _currentHealthPoint = 1;
@@ -40,13 +41,14 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	{
 		base.Enable();
 
-		_currentHealthPoint = healthPoint;
-		_modeControlUpdate.ResetAll();
+		_modeControlUpdate.Reset();
+		_modeControlUpdate.Enable();
 	}
 
 	public override void Disable()
 	{
 		base.Disable();
+		_modeControlUpdate.Disable();
 	}
 
 	public override void OnRemoving()
@@ -73,6 +75,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	public void TakenDamage(int damage)
 	{
 		_currentHealthPoint -= damage;
+		healthPointOnEditor = _currentHealthPoint;
 	}
 
 	//
@@ -81,9 +84,22 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	{
 		base.InitDefaultMode();
 
-		enableRemoveTime = 3.0f;
 		if( _modeControlUpdate == null )
 			CreateNewModes();
+	}
+
+	public override void Clear()
+	{
+		base.Clear();
+		enableRemoveTime = 3.0f;
+	}
+
+	//
+
+	protected override void InitValues()
+	{
+		base.InitValues();
+		_currentHealthPoint = healthPoint;
 	}
 
 	protected override void UpdateWhenActive()

@@ -42,21 +42,34 @@ public class MZBullet : MZCharacter, IMZMove
 	public override void Enable()
 	{
 		base.Enable();
-		enableRemoveTime = 0.3f;
+
+		if( _moveControlUpdate != null )
+			_moveControlUpdate.Enable();
 	}
 
 	public override void Disable()
 	{
 		base.Disable();
 
+		if( _moveControlUpdate != null )
+			_moveControlUpdate.Disable();
+
 		_moveControlUpdate = null;
-		strength = 0;
 	}
 
 	public override void OnRemoving()
 	{
 		base.OnRemoving();
 		_moveControlUpdate = null;
+	}
+
+	//
+
+	public override void Clear()
+	{
+		base.Clear();
+		enableRemoveTime = 0.3f;
+		strength = 0;
 	}
 
 	protected override void UpdateWhenActive()

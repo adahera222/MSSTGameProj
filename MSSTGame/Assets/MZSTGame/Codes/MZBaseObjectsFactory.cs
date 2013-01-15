@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public class MZBaseObjectsFactory : MZSingleton<MZBaseObjectsFactory>
 {
 	public GameObject Create(MZCharacterType characterType)

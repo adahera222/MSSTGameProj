@@ -29,10 +29,32 @@ public class MZPartControl : MZControlBase
 		base.Reset();
 
 		if( _moveControlUpdate != null )
-			_moveControlUpdate.ResetAll();
+			_moveControlUpdate.Reset();
 
 		if( _attackControlUpdate != null )
-			_attackControlUpdate.ResetAll();
+			_attackControlUpdate.Reset();
+	}
+
+	public override void Enable()
+	{
+		base.Enable();
+
+		if( _moveControlUpdate != null )
+			_moveControlUpdate.Enable();
+
+		if( _attackControlUpdate != null )
+			_attackControlUpdate.Enable();
+	}
+
+	public override void Disable()
+	{
+		base.Disable();
+
+		if( _moveControlUpdate != null )
+			_moveControlUpdate.Disable();
+
+		if( _attackControlUpdate != null )
+			_attackControlUpdate.Disable();
 	}
 
 	public List<MZMove> movesList
@@ -96,8 +118,6 @@ public class MZPartControl : MZControlBase
 			_moveControlUpdate.Update();
 
 		if( _attackControlUpdate != null )
-		{
 			_attackControlUpdate.Update();
-		}
 	}
 }

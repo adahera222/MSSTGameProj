@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public class MZGameSetting
 {
 //	static bool DISABLE_ENEMY_ATTACK = false;

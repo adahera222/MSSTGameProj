@@ -2,13 +2,22 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class MZCharacter : MonoBehaviour, IMZCollision
+public class MZCharacter : MonoBehaviour, IMZCollision, IMZBaseBehavoir
 {
+	public enum MZCharacterType
+	{
+		Unknow,
+		Player,
+		PlayerBullet,
+		EnemyAir,
+		EnemyGround,
+		EnemyBullet,
+	}
+
 	public new string name = "";
 	//
-	bool _isActive;
+	bool _isActive = false;
 	bool _renderEnable = true;
-	bool _hasInitValues = false;
 	float _lifeTimeCount = 0;
 	float _enableRemoveTime = 9999.99f;
 	Dictionary<string, MZCharacterPart> _partsByNameDictionary;
@@ -95,17 +104,43 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		get{ return Vector2.zero; }
 	}
 
-	public virtual void InitValues()
-	{
-		MZDebug.Assert( _hasInitValues == false, "Don't call me twice, you suck!!!" );
+	//
 
-		InitPartsInfoFromChild();
+	public virtual void Clear()
+	{
 		_isActive = false;
+		_renderEnable = false;
+		_lifeTimeCount = 0;
+		_enableRemoveTime = 9999.99f;
+		_faceToType = MZFaceTo.Type.None;
 	}
 
-	public virtual void InitDefaultMode()
+	public virtual void InitCharacterPartsData()
 	{
-		MZDebug.Assert( partsByNameDictionary != null, "must set partsByNameDictionary first" );
+		MZDebug.Assert( _partsByNameDictionary == null, "Don't call me twice, you suck!!!" );
+
+		_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
+
+		foreach( Transform childTransform in gameObject.transform )
+		{
+			GameObject partObject = childTransform.gameObject;
+			string partName = GetClearPartName( partObject.name );
+
+			MZCharacterPart part = partObject.GetComponent<MZCharacterPart>();
+
+			if( part == null )
+				continue;
+
+			part.name = partName;
+			part.parentGameObject = gameObject;
+
+			MZDebug.Assert( _partsByNameDictionary.ContainsKey( partName ) == false, "Duplicate key=" + partName );
+			MZDebug.Assert( _partsByNameDictionary.ContainsValue( part ) == false, "Duplicate part=" + partName );
+
+			_partsByNameDictionary.Add( partName, part );
+		}
+
+		renderEnable = _renderEnable;
 	}
 
 	public virtual void Enable()
@@ -118,6 +153,8 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 			foreach( MZCharacterPart part in partsByNameDictionary.Values )
 				part.Enable();
 		}
+
+		InitValues();
 	}
 
 	public virtual void Disable()
@@ -161,7 +198,17 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 		return false;
 	}
 
+	public virtual void InitDefaultMode()
+	{
+		MZDebug.Assert( partsByNameDictionary != null, "must set partsByNameDictionary first" );
+	}
+
 	//
+
+	protected virtual void InitValues()
+	{
+
+	}
 
 	protected virtual void Update()
 	{
@@ -200,32 +247,6 @@ public class MZCharacter : MonoBehaviour, IMZCollision
 			return;
 
 		Gizmos.color = new Color( 0.67f, 0.917f, 0.921f );
-	}
-
-	void InitPartsInfoFromChild()
-	{
-		_partsByNameDictionary = new Dictionary<string, MZCharacterPart>();
-
-		foreach( Transform childTransform in gameObject.transform )
-		{
-			GameObject partObject = childTransform.gameObject;
-			string partName = GetClearPartName( partObject.name );
-
-			MZCharacterPart part = partObject.GetComponent<MZCharacterPart>();
-
-			if( part == null )
-				continue;
-
-			part.name = partName;
-			part.parentGameObject = gameObject;
-
-			MZDebug.Assert( _partsByNameDictionary.ContainsKey( partName ) == false, "Duplicate key=" + partName );
-			MZDebug.Assert( _partsByNameDictionary.ContainsValue( part ) == false, "Duplicate part=" + partName );
-
-			_partsByNameDictionary.Add( partName, part );
-		}
-
-		renderEnable = _renderEnable;
 	}
 
 	string GetClearPartName(string origin)

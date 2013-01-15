@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 {
 	Dictionary<MZCharacterType, Dictionary<string, MZPool<GameObject>>> _charactersPoolsDictionaryByType = null;
@@ -83,7 +85,7 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		newObject.transform.parent = _charactersParentTransformByType[ onCreatedCharacterStates.type ];
 
 		MZCharacter character = newObject.GetComponent<MZCharacter>();
-		character.InitValues();
+		character.InitCharacterPartsData();
 
 		character.characterType = onCreatedCharacterStates.type;
 		character.depth = MZGameSetting.GetDepthOfCharacter( onCreatedCharacterStates.type );
@@ -97,7 +99,10 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 	void OnCharacterObjectBecomeVaild(GameObject characterObject)
 	{
 		characterObject.active = true;
-		characterObject.GetComponent<MZCharacter>().renderEnable = true;
+
+		MZCharacter characterScript = characterObject.GetComponent<MZCharacter>();
+		characterScript.renderEnable = true;
+		characterScript.Clear();
 	}
 
 	void OnCharacterObjectRemove(GameObject characterObject)

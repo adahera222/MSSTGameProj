@@ -7,10 +7,12 @@ public class MZControlUpdate<T> where T : MZControlBase
 	{
 		get
 		{
-			if( _controlsList == null )
-				_controlsList = new List<T>();
+			if( _originalControlsList == null )
+			{
+				_originalControlsList = new List<T>();
+			}
 
-			return _controlsList;
+			return _originalControlsList;
 		}
 	}
 
@@ -19,14 +21,18 @@ public class MZControlUpdate<T> where T : MZControlBase
 		get
 		{
 			MZDebug.Assert( controlsList != null, "controlsList is null" );
-
-			int index = ( _currentIndex < 0 )? 0 : _currentIndex;
-			return ( 0 <= index && index < controlsList.Count)? controlsList[ index ] : null;
+			return _currentControl;
 		}
 	}
 
-	int _currentIndex = -1;
-	List<T> _controlsList = null;
+	//
+
+	bool _isActive;
+	List<T> _originalControlsList = null;
+	List<T> _executingControlsList = null;
+	T _currentControl = null;
+
+	//
 
 	public MZControlUpdate()
 	{
@@ -35,14 +41,13 @@ public class MZControlUpdate<T> where T : MZControlBase
 
 	public void Clear()
 	{
-		_currentIndex = -1;
-		_controlsList.Clear();
-		_controlsList = null;
+		_originalControlsList.Clear();
+		_originalControlsList = null;
 	}
 
 	public MZControlUpdate(List<T> controlsList)
 	{
-		_controlsList = controlsList;
+		_originalControlsList = controlsList;
 	}
 
 	public int Add(T control)
@@ -51,45 +56,93 @@ public class MZControlUpdate<T> where T : MZControlBase
 		return controlsList.Count;
 	}
 
-	public void ResetAll()
+	public void Reset()
 	{
-		_currentIndex = -1;
+		_currentControl = null;
 
 		foreach( T control in controlsList )
 			control.Reset();
 	}
 
+	public void Enable()
+	{
+		_isActive = true;
+
+		if( _executingControlsList == null )
+		{
+			_executingControlsList = new List<T>();
+		}
+
+		_executingControlsList.Clear();
+
+		foreach( T control in _originalControlsList )
+		{
+			_executingControlsList.Add( control );
+		}
+
+		_currentControl = NextControl();
+		_currentControl.Reset();
+		_currentControl.Enable();
+	}
+
+	public void Disable()
+	{
+		if( _currentControl != null )
+			_currentControl.Disable();
+		_currentControl = null;
+		_isActive = false;
+	}
+
 	public void Update()
 	{
-		if( _controlsList == null || _controlsList.Count == 0 )
+		if( _isActive == false )
 			return;
 
-		if( _currentIndex == -1 )
-		{
-			_currentIndex = 0;
-			_controlsList[ _currentIndex ].Reset();
-			_controlsList[ _currentIndex ].Enable();
-		}
+		if( /*disableUpdate ||*/ _executingControlsList == null )
+			return;
 
-		if( _controlsList[ _currentIndex ].isActive == false )
+		if( IsNeedSwitchControl() )
 		{
-			// need support use pre-setting ...
+			CheckRunOceAndRemove( _currentControl );
+			_currentControl = NextControl();
 
-			if( _controlsList[ _currentIndex ].isRunOnce == true )
+			if( _currentControl != null )
 			{
-				_controlsList.RemoveAt( _currentIndex );
-				_currentIndex--;
+
+				_currentControl.Reset();
+				_currentControl.Enable();
 			}
-
-			if( _controlsList.Count == 0 )
-				return;
-
-			_currentIndex = ( _currentIndex >= _controlsList.Count - 1 )? 0 : _currentIndex + 1;
-			_controlsList[ _currentIndex ].Reset();
-			_controlsList[ _currentIndex ].Enable();
 		}
 
-		_controlsList[ _currentIndex ].Update();
+		if( _currentControl != null )
+			_currentControl.Update();
+	}
+
+	bool IsNeedSwitchControl()
+	{
+		return ( _currentControl == null || _currentControl.isActive == false );
+	}
+
+	void CheckRunOceAndRemove(T control)
+	{
+		if( control == null || !control.isRunOnce )
+			return;
+
+		_executingControlsList.Remove( control );
+	}
+
+	T NextControl()
+	{
+		if( _executingControlsList.Count == 0 )
+			return null;
+
+		if( _currentControl == null )
+			return _executingControlsList[ 0 ];
+
+		int currentIndex = _executingControlsList.IndexOf( _currentControl );
+		int nextIndex = ( currentIndex >= _executingControlsList.Count - 1 )? 0 : currentIndex + 1;
+
+		return _executingControlsList[ nextIndex ];
 	}
 }
 

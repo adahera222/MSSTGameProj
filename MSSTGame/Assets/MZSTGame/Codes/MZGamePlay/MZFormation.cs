@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public abstract class MZFormation : MZControlBase
 {
 	public enum SizeType

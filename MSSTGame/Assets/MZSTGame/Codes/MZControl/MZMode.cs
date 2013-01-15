@@ -27,13 +27,29 @@ public class MZMode : MZControlBase
 		base.Reset();
 
 		if( _moveControlUpdate != null )
-			_moveControlUpdate.ResetAll();
+			_moveControlUpdate.Reset();
 
 		if( _multiPartControlUpdate != null )
 		{
 			foreach( MZControlUpdate<MZPartControl> pcUpdate in _multiPartControlUpdate )
-				pcUpdate.ResetAll();
+				pcUpdate.Reset();
 		}
+	}
+
+	public override void Enable()
+	{
+		base.Enable();
+		_moveControlUpdate.Enable();
+		foreach( MZControlUpdate<MZPartControl> pc in _multiPartControlUpdate )
+			pc.Enable();
+	}
+
+	public override void Disable()
+	{
+		base.Disable();
+		_moveControlUpdate.Disable();
+		foreach( MZControlUpdate<MZPartControl> pc in _multiPartControlUpdate )
+			pc.Disable();
 	}
 
 	public Vector2 currentMovingVector

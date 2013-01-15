@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public class Formation_S_Round001 : MZFormation
 {
 	public override float disableNextFormationTime
@@ -42,6 +44,7 @@ public class Formation_S_Round001 : MZFormation
 		enemy.CreateNewModes();
 		enemy.healthPoint = 10;
 		enemy.position = _currentPosition;
+		enemy.enableRemoveTime = 999;
 
 		MZMode mode = enemy.AddMode( "mode" );
 
@@ -49,9 +52,6 @@ public class Formation_S_Round001 : MZFormation
 		show.direction = MZMath.DegreesFromXAxisToVector( MZMath.UnitVectorFromP1ToP2( enemy.position, Vector2.zero ) );
 		show.duration = 0.6f;
 		show.velocity = 500;
-
-//		MZMove idle = mode.AddMove( MZMove.Type.Idle );
-//		idle.duration = 1000;
 
 		MZMove_Rotation rotShow = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
 		rotShow.angularVelocity = 50;

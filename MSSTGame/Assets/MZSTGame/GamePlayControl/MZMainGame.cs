@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public class MZMainGame : MonoBehaviour
 {
 	public MZTest test = new MZTest();

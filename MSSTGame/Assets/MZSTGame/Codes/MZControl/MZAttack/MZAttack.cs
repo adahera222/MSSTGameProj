@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public interface IMZAttack : IMZControl
 {
 	MZCharacterType characterType

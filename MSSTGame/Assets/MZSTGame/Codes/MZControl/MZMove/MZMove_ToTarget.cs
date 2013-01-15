@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public class MZMove_ToTarget : MZMove, IMZTargetHelp
 {
 	#region IMZTargetHelp implementation

@@ -2,15 +2,21 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public class MZCharactersManager : MonoBehaviour
 {
 	public GUIText guiCharactersInfo;
+
 	//
+
 	GameObject _playerObject = null;
 	MZCharacter _playerCharacter = null;
 	Dictionary<MZCharacterType, List<MZCharacter>> _dicActiveCharactersListByType = null;
 	MZCharactersCollisionTest<MZBullet, MZPlayer> _enemyBulletAndPlayerCollisionTest = null;
 	MZCharactersCollisionTest<MZBullet, MZEnemy> _playerBulletAndEnemyCollisionTest = null;
+
+	//
 
 	public GameObject playerObject
 	{
@@ -63,6 +69,8 @@ public class MZCharactersManager : MonoBehaviour
 				return "";
 		}
 	}
+
+	//
 
 	void Awake()
 	{

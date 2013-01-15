@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+using MZCharacterType = MZCharacter.MZCharacterType;
+
 public class TestFormation_L000 : MZFormation
 {
 	public override float disableNextFormationTime
