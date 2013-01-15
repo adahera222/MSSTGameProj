@@ -254,7 +254,7 @@ public class MZFormationsManager : MZControlBase
 	{
 		MZDebug.Assert( formation != null, "formation is null" );
 
-		formation.Reset();
+		formation.Enable();
 
 		if( _currentFormationsList == null )
 			_currentFormationsList = new List<MZFormation>();

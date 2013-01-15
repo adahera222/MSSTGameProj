@@ -6,7 +6,7 @@ public interface IMZControl
 
 }
 
-public abstract class MZControlBase
+public abstract class MZControlBase : IMZBaseBehavoir
 {
 	public string name = "";
 	public bool isRunOnce = false;
@@ -15,8 +15,8 @@ public abstract class MZControlBase
 
 	//
 
-	bool _isActive = true;
-	float _lifeTimeCount = 0;
+	bool _isActive;
+	float _lifeTimeCount;
 
 	public bool isActive
 	{ get { return _isActive; } }
@@ -26,13 +26,24 @@ public abstract class MZControlBase
 
 	//
 
+	public virtual void Clear()
+	{
+		_isActive = false;
+		_lifeTimeCount = 0;
+		isRunOnce = false;
+		duration = -1;
+		controlDelegate = null;
+	}
+
 	public virtual void Enable()
 	{
 		_isActive = true;
+		_lifeTimeCount = 0;
 	}
 
 	public virtual void Disable()
 	{
+
 	}
 
 	public void Update()
@@ -47,11 +58,6 @@ public abstract class MZControlBase
 			return;
 
 		UpdateWhenActive();
-	}
-
-	public virtual void Reset()
-	{
-		_lifeTimeCount = 0;
 	}
 
 	public virtual bool ActiveCondition()

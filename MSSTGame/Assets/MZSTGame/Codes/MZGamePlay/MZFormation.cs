@@ -63,11 +63,6 @@ public abstract class MZFormation : MZControlBase
 		_enemiesList.Remove( enemy );
 	}
 
-	public override void Reset()
-	{
-		base.Reset();
-	}
-
 	public int GetDefaultStateExp(SizeType _type)
 	{
 		switch( _type )

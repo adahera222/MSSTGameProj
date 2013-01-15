@@ -23,9 +23,9 @@ public class TestFormation_S_XY : MZFormation
 		duration = 4.0f;
 	}
 
-	public override void Reset()
+	public override void Enable()
 	{
-		base.Reset();
+		base.Enable();
 
 		_createTimeCount = 0;
 		_createInterval = 0.6f;

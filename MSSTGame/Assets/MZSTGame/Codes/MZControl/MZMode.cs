@@ -22,20 +22,6 @@ public class MZMode : MZControlBase
 	MZControlUpdate<MZMove> _moveControlUpdate = new MZControlUpdate<MZMove>();
 	List<MZControlUpdate<MZPartControl>> _multiPartControlUpdate = new List<MZControlUpdate<MZPartControl>>();
 
-	public override void Reset()
-	{
-		base.Reset();
-
-		if( _moveControlUpdate != null )
-			_moveControlUpdate.Reset();
-
-		if( _multiPartControlUpdate != null )
-		{
-			foreach( MZControlUpdate<MZPartControl> pcUpdate in _multiPartControlUpdate )
-				pcUpdate.Reset();
-		}
-	}
-
 	public override void Enable()
 	{
 		base.Enable();

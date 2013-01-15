@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class MZControlUpdate<T> where T : MZControlBase
+public class MZControlUpdate<T> : IMZBaseBehavoir
+	where T : MZControlBase
 {
 	public List<T> controlsList
 	{
@@ -56,17 +57,11 @@ public class MZControlUpdate<T> where T : MZControlBase
 		return controlsList.Count;
 	}
 
-	public void Reset()
-	{
-		_currentControl = null;
-
-		foreach( T control in controlsList )
-			control.Reset();
-	}
-
 	public void Enable()
 	{
 		_isActive = true;
+
+		_currentControl = null;
 
 		if( _executingControlsList == null )
 		{
@@ -81,7 +76,6 @@ public class MZControlUpdate<T> where T : MZControlBase
 		}
 
 		_currentControl = NextControl();
-		_currentControl.Reset();
 		_currentControl.Enable();
 	}
 
@@ -108,8 +102,6 @@ public class MZControlUpdate<T> where T : MZControlBase
 
 			if( _currentControl != null )
 			{
-
-				_currentControl.Reset();
 				_currentControl.Enable();
 			}
 		}

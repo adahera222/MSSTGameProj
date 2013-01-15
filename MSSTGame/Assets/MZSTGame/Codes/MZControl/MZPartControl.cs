@@ -24,17 +24,6 @@ public class MZPartControl : MZControlBase
 		this.controlDelegate = controlTarget;
 	}
 
-	public override void Reset()
-	{
-		base.Reset();
-
-		if( _moveControlUpdate != null )
-			_moveControlUpdate.Reset();
-
-		if( _attackControlUpdate != null )
-			_attackControlUpdate.Reset();
-	}
-
 	public override void Enable()
 	{
 		base.Enable();

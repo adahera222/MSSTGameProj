@@ -41,7 +41,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	{
 		base.Enable();
 
-		_modeControlUpdate.Reset();
+//		_modeControlUpdate.Reset();
 		_modeControlUpdate.Enable();
 	}
 

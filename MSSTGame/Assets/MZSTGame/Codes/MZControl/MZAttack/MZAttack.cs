@@ -104,9 +104,9 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		}
 	}
 
-	public override void Reset()
+	public override void Enable()
 	{
-		base.Reset();
+		base.Enable();
 
 		_launchCount = 0;
 		_colddownCount = 0;
@@ -115,6 +115,8 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		if( targetHelp != null )
 			targetHelp.Reset();
 	}
+
+	//
 
 	protected override void UpdateWhenActive()
 	{

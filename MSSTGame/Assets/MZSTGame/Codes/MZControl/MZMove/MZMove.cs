@@ -65,10 +65,9 @@ public abstract class MZMove : MZControlBase
 		get { return MZMath.UnitVectorFromDegrees( currentDirection );}
 	}
 
-	public override void Reset()
+	public override void Enable()
 	{
-		base.Reset();
-
+		base.Enable();
 		_currentVelocity = velocity;
 		_currentDirection = direction;
 	}
