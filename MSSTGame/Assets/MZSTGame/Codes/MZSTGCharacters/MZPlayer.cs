@@ -107,7 +107,7 @@ public class MZPlayer : MZCharacter
 
 		currentControlState = ControlState.None;
 		for( int i = 0; i < 6; i++ )
-			_sideAttacks[ i ].enable = true;
+			_sideAttacks[ i ].enable = false;
 	}
 
 	Vector2 GetModifyNextPositionInBound(Vector3 nextPosition)
@@ -137,7 +137,7 @@ public class MZPlayer : MZCharacter
 		attack.colddown = 0.1f;
 		attack.duration = -1;
 		attack.bulletName = "PB000";
-		attack.enable = true;
+		attack.enable = false;
 		attack.controlDelegate = partsByNameDictionary[ partName ];
 		attack.targetHelp = new MZTargetHelp_AssignDirection();
 		( attack.targetHelp as MZTargetHelp_AssignDirection ).direction = dir;

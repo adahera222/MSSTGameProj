@@ -42,6 +42,9 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	{
 		base.Disable();
 		_modeControlUpdate.Disable();
+
+		if( belongFormation != null )
+			belongFormation.Remove( this );
 	}
 
 	public override void OnRemoving()
@@ -101,9 +104,6 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	protected void DieAction()
 	{
-		if( belongFormation != null )
-			belongFormation.Remove( this );
-		
 		Disable();
 	}
 }

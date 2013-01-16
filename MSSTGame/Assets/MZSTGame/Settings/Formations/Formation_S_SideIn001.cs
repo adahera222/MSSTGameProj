@@ -13,6 +13,14 @@ public class Formation_S_SideIn001 : MZFormation
 		}
 	}
 
+	protected override int maxCreatedNumber
+	{
+		get
+		{
+			return 3;
+		}
+	}
+
 	//
 
 	float _createInterval;
@@ -28,8 +36,6 @@ public class Formation_S_SideIn001 : MZFormation
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-
-		duration = 4;
 
 		_createInterval = 0.4f;
 		_createTimeCount = 0;

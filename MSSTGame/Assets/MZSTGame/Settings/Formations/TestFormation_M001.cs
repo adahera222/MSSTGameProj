@@ -8,17 +8,10 @@ public class TestFormation_M001 : MZFormation
 	Vector2 _initPosition;
 
 	public override float disableNextFormationTime
-	{
-		get
-		{
-			return 3;
-		}
-	}
+	{ get { return 3; } }
 
-	public TestFormation_M001() :base()
-	{
-		duration = 3.0f;
-	}
+	protected override int maxCreatedNumber
+	{ get { return 1; } }
 
 	protected override void FirstUpdate()
 	{

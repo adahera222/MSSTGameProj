@@ -13,19 +13,24 @@ public class Formation_S_Any_Round001 : MZFormation
 		}
 	}
 
+	protected override int maxCreatedNumber
+	{
+		get
+		{
+			return 6;
+		}
+	}
+
 	Vector2 _currentPosition;
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
 
-		duration = 3;
-
-		int numEnemy = 12;
-		float intervalDegrees = 360/numEnemy;
+		float intervalDegrees = 360/maxCreatedNumber;
 		float distance = 700;
 
-		for( int i = 0; i < numEnemy; i++ )
+		for( int i = 0; i < maxCreatedNumber; i++ )
 		{
 			Vector2 vector = MZMath.UnitVectorFromDegrees( intervalDegrees*i );
 			_currentPosition = vector*distance;

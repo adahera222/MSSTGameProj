@@ -8,18 +8,16 @@ public class TestFormation_M000 : MZFormation
 	public override float disableNextFormationTime
 	{ get { return 3; } }
 
+	protected override int maxCreatedNumber
+	{ get { return 1; } }
+
 	//
 
 	int _enemyCount;
 	Vector2 _initPosition;
 
 	//
-
-	public TestFormation_M000() : base()
-	{
-		duration = 2.5f;
-	}
-
+	
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();

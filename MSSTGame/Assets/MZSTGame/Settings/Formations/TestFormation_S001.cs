@@ -16,12 +16,10 @@ public class TestFormation_S001 : MZFormation
 	public override float disableNextFormationTime
 	{ get { return 1; } }
 
-	//
+	protected override int maxCreatedNumber
+	{ get { return 5; } }
 
-	public TestFormation_S001() : base()
-	{
-		duration = 4.0f;
-	}
+	//
 
 	public override void Enable()
 	{

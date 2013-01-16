@@ -146,7 +146,7 @@ public class MZFormationsManager : MZControlBase
 			initValues.RemoveAt( choiceIndex );
 		}
 
-		MZDebug.Log( _currentPositionTypeOrder[ 0 ].ToString() + ", " + _currentPositionTypeOrder[ 1 ].ToString() + ", " + _currentPositionTypeOrder[ 2 ].ToString() );
+		MZDebug.Log( _currentPositionTypeOrder[ 0 ].ToString() + ", " + _currentPositionTypeOrder[ 1 ].GetType().ToString() + ", " + _currentPositionTypeOrder[ 2 ].ToString() );
 
 		_currentPositionTypeOrderIndex = 0;
 	}
@@ -200,7 +200,10 @@ public class MZFormationsManager : MZControlBase
 		{
 			if( _currentFormationsList[ i ].isActive == false )
 			{
-				_currentFormationState.exp += _currentFormationsList[ i ].stateExp;
+				if( MZGameSetting.SHOW_FORMATION_LOG )
+					MZDebug.Log( "remove: name={0}, xp={1}, pos={2}, size={3}", _currentFormationsList[ i ].GetType().ToString(), _currentFormationsList[ i ].stateExp,
+						_currentFormationsList[ i ].positionType, _currentFormationsList[ i ].sizeType );
+
 				_currentFormationsList.RemoveAt( i );
 			}
 		}
@@ -218,8 +221,12 @@ public class MZFormationsManager : MZControlBase
 			if( formation.positionType == PositionType.Any )
 				ResetPositionTypeOrder();
 
-			_currentFormationsList.Add( formation );
 			formation.Enable();
+			_currentFormationState.exp += formation.stateExp;
+			_currentFormationsList.Add( formation );
+
+			if( MZGameSetting.SHOW_FORMATION_LOG )
+				MZDebug.Log( "add: name={0}, xp={1}, pos={2}, size={3}", formation.ToString(), formation.stateExp, formation.positionType, formation.sizeType );
 		}
 		else
 		{

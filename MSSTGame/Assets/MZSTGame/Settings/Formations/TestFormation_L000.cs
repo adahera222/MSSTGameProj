@@ -10,9 +10,12 @@ public class TestFormation_L000 : MZFormation
 		get { return 15; }
 	}
 
-	public TestFormation_L000() : base()
+	protected override int maxCreatedNumber
 	{
-		duration = 9;
+		get
+		{
+			return 1;
+		}
 	}
 
 	protected override void FirstUpdate()
