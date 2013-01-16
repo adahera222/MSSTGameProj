@@ -32,16 +32,9 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	//
 
-	public void CreateNewModes()
-	{
-		_modeControlUpdate = new MZControlUpdate<MZMode>();
-	}
-
 	public override void Enable()
 	{
 		base.Enable();
-
-//		_modeControlUpdate.Reset();
 		_modeControlUpdate.Enable();
 	}
 
@@ -80,18 +73,11 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	//
 
-	public override void InitDefaultMode()
-	{
-		base.InitDefaultMode();
-
-		if( _modeControlUpdate == null )
-			CreateNewModes();
-	}
-
 	public override void Clear()
 	{
 		base.Clear();
 		enableRemoveTime = 3.0f;
+		_modeControlUpdate = new MZControlUpdate<MZMode>();
 	}
 
 	//

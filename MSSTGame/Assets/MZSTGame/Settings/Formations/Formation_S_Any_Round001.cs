@@ -3,7 +3,7 @@ using System.Collections;
 
 using MZCharacterType = MZCharacter.MZCharacterType;
 
-public class Formation_S_Round001 : MZFormation
+public class Formation_S_Any_Round001 : MZFormation
 {
 	public override float disableNextFormationTime
 	{
@@ -41,7 +41,6 @@ public class Formation_S_Round001 : MZFormation
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
-		enemy.CreateNewModes();
 		enemy.healthPoint = 10;
 		enemy.position = _currentPosition;
 		enemy.enableRemoveTime = 999;

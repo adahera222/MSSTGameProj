@@ -54,8 +54,8 @@ public class MZFormationsManager : MZControlBase
 
 	public MZFormationsManager()
 	{
-		MZFormationsLoader.SetFormationStates( this );
-		MZFormationsLoader.SetFormations( this );
+		MZFormationsLoad.SetFormationStates( this );
+		MZFormationsLoad.SetFormations( this );
 
 		_nextCreateTimeCount = 0;
 		_currentFormationStatesIndex = 0;
@@ -146,7 +146,7 @@ public class MZFormationsManager : MZControlBase
 			initValues.RemoveAt( choiceIndex );
 		}
 
-		MZDebug.Log( _currentPositionTypeOrder[ 0 ].ToString() + ", " + _currentPositionTypeOrder[ 1 ].ToString() + ", " + _currentPositionTypeOrder[ 2 ].ToString());
+		MZDebug.Log( _currentPositionTypeOrder[ 0 ].ToString() + ", " + _currentPositionTypeOrder[ 1 ].ToString() + ", " + _currentPositionTypeOrder[ 2 ].ToString() );
 
 		_currentPositionTypeOrderIndex = 0;
 	}
@@ -174,8 +174,7 @@ public class MZFormationsManager : MZControlBase
 			MZFormation.SizeType newCreateSizeType = _currentFormationState.GetNewFormationType();
 			MZDebug.Assert( _formationsBySizeDictionary.ContainsKey( newCreateSizeType ), "not contain this type: " + newCreateSizeType.ToString() );
 
-			bool anyOrPos = ( MZMath.RandomFromRange( 0, 1 ) == 0 );
-			MZFormation newFormation = GetFormationByDecision( newCreateSizeType, anyOrPos );
+			MZFormation newFormation = GetFormationByDecision( newCreateSizeType );
 
 			if( newFormation == null )
 				return;
@@ -216,28 +215,52 @@ public class MZFormationsManager : MZControlBase
 
 		if( _currentFormationsList.Contains( formation ) == false )
 		{
-			_currentFormationsList.Add( formation );
+			if( formation.positionType == PositionType.Any )
+				ResetPositionTypeOrder();
 
+			_currentFormationsList.Add( formation );
 			formation.Enable();
+		}
+		else
+		{
+			ResetPositionTypeOrder();
 		}
 	}
 
-	MZFormation GetFormationByDecision(SizeType sizeType, bool isPositionAny)
+	MZFormation GetFormationByDecision(SizeType sizeType)
 	{
 		MZDebug.Assert( _formationsBySizeDictionary != null, "_formationsBySizeDictionary is null" );
 		MZDebug.Assert( _formationsBySizeDictionary.ContainsKey( sizeType ), "not contain size=" + sizeType.ToString() );
 
+		bool isPosAny = ( MZMath.RandomFromRange( 0, 4 ) == 0 );
+
 		Dictionary<PositionType, List<MZFormation>> listByPos = _formationsBySizeDictionary[ sizeType ];
 
-//		if( isPositionAny )
-//		{
-//			return GetRandomInFormationList( listByPos[ PositionType.Any ] );
-//		}
-//		else
+		PositionType choicePosType = PositionType.Unknow;
+
+		if( isPosAny && listByPos.ContainsKey( PositionType.Any ) )
 		{
-			PositionType positionType = GetNextPositionType();
-			return GetRandomInFormationList( listByPos[ positionType ] );
+			choicePosType = PositionType.Any;
 		}
+		else
+		{
+			int selectCount = 0;
+			while(selectCount < _currentPositionTypeOrder.Count)
+			{
+				PositionType tryToChoicePosType = GetNextPositionType();
+				if( listByPos.ContainsKey( tryToChoicePosType ) == true )
+				{
+					choicePosType = tryToChoicePosType;
+					break;
+				}
+				selectCount++;
+			}
+
+			if( choicePosType == PositionType.Unknow )
+				choicePosType = ( listByPos.ContainsKey( PositionType.Any ) )? PositionType.Any : PositionType.Unknow;
+		}
+
+		return ( choicePosType != PositionType.Unknow )? GetRandomInFormationList( listByPos[ choicePosType ] ) : null;
 	}
 
 	MZFormation GetRandomInFormationList(List<MZFormation> list)

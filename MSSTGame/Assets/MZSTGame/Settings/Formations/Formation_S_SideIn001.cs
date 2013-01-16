@@ -51,8 +51,6 @@ public class Formation_S_SideIn001 : MZFormation
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
-		enemy.CreateNewModes();
-
 		enemy.healthPoint = 1;
 		enemy.position = _initPosition;
 

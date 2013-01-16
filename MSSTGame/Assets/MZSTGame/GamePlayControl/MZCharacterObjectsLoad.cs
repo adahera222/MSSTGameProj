@@ -8,7 +8,7 @@ public class MZCharacterObjectsLoad
 	public static void Load()
 	{
 		MZCharacterObjectsFactory.instance.Init();
-		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyS000", 50 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyS000", 20 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyS001", 50 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyS002", 50 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemySYellow", 50 );

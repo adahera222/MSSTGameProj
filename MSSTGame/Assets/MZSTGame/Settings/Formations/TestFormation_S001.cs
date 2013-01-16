@@ -50,8 +50,6 @@ public class TestFormation_S001 : MZFormation
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
-		enemy.CreateNewModes();
-		
 		enemy.healthPoint = 4;
 		enemy.position = _initPosition;
 

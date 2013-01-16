@@ -20,7 +20,7 @@ public class TestFormation_S000 : MZFormation
 
 	public TestFormation_S000() : base()
 	{
-		duration = 1.3f;
+		duration = 0.5f;
 	}
 
 	public override void Enable()
