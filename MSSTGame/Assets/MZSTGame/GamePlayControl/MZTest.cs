@@ -21,13 +21,13 @@ public class MZTest
 
 	MZFormationsManager _formationsManager;
 
-	public void SetForamtions(List<MZFormation> formatonsList, MZFormationsManager formationsManager)
+	public void SetForamtionsInfo(MZFormationsManager formationsManager)
 	{
 		MZDebug.Assert( formationsManager != null, "_formationsManager is null" );
 
 		_formationsManager = formationsManager;
 
-		foreach( MZFormation f in formatonsList )
+		foreach( MZFormation f in formationsManager.formations )
 			testFormationsSettings.Add( new MZTestFormationSetting( f ) );
 	}
 

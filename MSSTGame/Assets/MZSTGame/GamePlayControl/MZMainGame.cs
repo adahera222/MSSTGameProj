@@ -40,7 +40,7 @@ public class MZMainGame : MonoBehaviour
 			_formationsManager.enableUpdateState = false;
 		}
 
-		test.SetForamtions( _formationsManager.formations, _formationsManager );
+		test.SetForamtionsInfo( _formationsManager );
 
 		MZGameComponents.instance.charactersManager = GameObject.Find( "MZCharactersManager" ).GetComponent<MZCharactersManager>();
 		MZGameComponents.instance.rankControl = _rankControl;
