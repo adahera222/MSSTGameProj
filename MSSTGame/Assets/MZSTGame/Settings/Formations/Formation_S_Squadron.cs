@@ -7,7 +7,7 @@ public class Formation_S_Squadron : MZFormation
 	{
 		get
 		{
-			return 6;
+			return 3;
 		}
 	}
 
@@ -76,10 +76,11 @@ public class Formation_S_Squadron : MZFormation
 		attackShow.isRunOnce = true;
 
 		MZAttack_OddWay attack = mainPartControl.AddAttack( MZAttack.Type.OddWay ) as MZAttack_OddWay;
-		attack.numberOfWays = 1;
+		attack.numberOfWays = 5;
 		attack.colddown = 0.1f;
-		attack.duration = 0.5f;
-		attack.initVelocity = 400;
+		attack.duration = 0.1f;
+		attack.intervalDegrees = 5;
+		attack.initVelocity = 400 + 25*currentCreatedMemberCount;
 		attack.bulletName = "EBBee";
 		attack.targetHelp = new MZTargetHelp_Target();
 		attack.additionalVelocity = 50;
@@ -144,8 +145,10 @@ public class Formation_S_Squadron : MZFormation
 	{
 		if( positionType == MZFormation.PositionType.Mid )
 		{
-			float x = ( currentCreatedMemberCount == 0 || currentCreatedMemberCount == 3 || currentCreatedMemberCount == 5 )? -400 : 400;
-			Vector2 offset = new Vector2( x, 0 );
+			int grounpSign = ( currentCreatedMemberCount == 0 || currentCreatedMemberCount == 3 || currentCreatedMemberCount == 5 )? -1 : 1;
+			float x = 400*grounpSign;
+			float y = 400*grounpSign;
+			Vector2 offset = new Vector2( x, y );
 
 			return _currentNewEnemyDestPos + offset;
 		}
