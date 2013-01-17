@@ -56,15 +56,29 @@ public abstract class MZFormation : MZControlBase
 		get{ return ( _enemiesList != null )? _enemiesList.Count : 0; }
 	}
 
+	public int constructCode
+	{ get { return _constructCode; } }
+
 	//
 
 	int _stateExp = int.MinValue;
 	int _createdMemberCount = 0;
+	int _constructCode = 0;
 	SizeType _sizeType = SizeType.Unknow;
 	PositionType _positionType = PositionType.Unknow;
 	List<MZEnemy> _enemiesList = null;
 
 	//
+
+	public MZFormation() : base()
+	{
+
+	}
+
+	public MZFormation(int constructCode) : base()
+	{
+		_constructCode = constructCode;
+	}
 
 	public void Remove(MZEnemy enemy)
 	{
@@ -103,7 +117,7 @@ public abstract class MZFormation : MZControlBase
 	//
 
 	protected int currentCreatedMemberCount
-	{get{ return _createdMemberCount; }}
+	{ get { return _createdMemberCount; } }
 
 	protected override void FirstUpdate()
 	{

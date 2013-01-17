@@ -93,9 +93,10 @@ public class MZMove_Rotation : MZMove, IMZTargetHelp
 
 	void UpdateRadians()
 	{
+		if( variationOfRadians == 0 )
+			return;
+
 		_currentRadians += variationOfRadians*MZTime.deltaTime;
-		if( _currentRadians <= 0 )
-			_currentRadians = 0;
 
 		if( radiansLimited > 0 )
 		{

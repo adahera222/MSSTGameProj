@@ -35,7 +35,8 @@ public abstract class MZMove : MZControlBase
 	public enum Type
 	{
 		Idle,
-		Linear,
+		LinearBy,
+		LinearTo,
 		ToPosition,
 		ToTarget,
 		Rotation,
@@ -74,7 +75,7 @@ public abstract class MZMove : MZControlBase
 
 	//
 
-	protected float _currentDirection = 0;
+	float _currentDirection = 0;
 
 	//
 
@@ -88,5 +89,10 @@ public abstract class MZMove : MZControlBase
 
 		_currentVelocity = velocity;
 		_currentDirection = direction;
+	}
+
+	protected void MaintainCurrentDirectionValue(float dir)
+	{
+		_currentDirection = dir;
 	}
 }

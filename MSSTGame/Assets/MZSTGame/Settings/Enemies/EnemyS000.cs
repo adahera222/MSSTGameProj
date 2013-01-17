@@ -29,7 +29,7 @@ public class EnemyS000 : MZEnemy
 
 	void AddMove_Linear(MZMode mode)
 	{
-		MZMove move = mode.AddMove( "move", MZMove.Type.Linear );
+		MZMove move = mode.AddMove( "move", MZMove.Type.LinearBy );
 		move.direction = ( position.x > 0 )? 225 : ( position.x < 0 )? 315 : 270;
 		move.velocity = 100;
 	}

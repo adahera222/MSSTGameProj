@@ -64,12 +64,12 @@ public class MZFormationsManager : MZControlBase
 		ResetPositionTypeOrder();
 	}
 
-	public void ExecuteFormation(PositionType posType, SizeType sizeType, string name)
+	public void ExecuteFormation(PositionType posType, SizeType sizeType, int constructCode, string name)
 	{
 		List<MZFormation> list = _formationsBySizeDictionary[ sizeType ][ posType ];
 		foreach( MZFormation f in list )
 		{
-			if( f.GetType().ToString() == name && posType == f.positionType )
+			if( f.GetType().ToString() == name && posType == f.positionType && f.constructCode == constructCode )
 			{
 				ExecuteFormation( f );
 				break;

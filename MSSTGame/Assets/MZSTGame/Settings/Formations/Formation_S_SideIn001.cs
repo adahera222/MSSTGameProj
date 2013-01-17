@@ -65,7 +65,7 @@ public class Formation_S_SideIn001 : MZFormation
 		// move
 		float velocity = 400;
 
-		MZMove moveLinear1 = mode.AddMove( "l1", MZMove.Type.Linear );
+		MZMove moveLinear1 = mode.AddMove( "l1", MZMove.Type.LinearBy );
 		moveLinear1.direction = _initDirection;
 		moveLinear1.velocity = velocity;
 		moveLinear1.duration = 1.5f;

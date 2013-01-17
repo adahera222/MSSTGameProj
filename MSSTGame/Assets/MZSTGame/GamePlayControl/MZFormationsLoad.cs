@@ -32,7 +32,9 @@ public class MZFormationsLoad
 		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new Formation_S_SideIn001() );
 		formationsManager.AddFormation( SizeType.Small, PositionType.Right, new Formation_S_SideIn001() );
 
-		formationsManager.AddFormation( SizeType.Small, PositionType.Any, new Formation_S_Any_Round001() );
+		formationsManager.AddFormation( SizeType.Small, PositionType.Any, new Formation_S_Any_Round001( 0 ) );
+		formationsManager.AddFormation( SizeType.Small, PositionType.Any, new Formation_S_Any_Round001( 1 ) );
+		formationsManager.AddFormation( SizeType.Small, PositionType.Any, new Formation_S_Any_Round001( 2 ) );
 
 		formationsManager.AddFormation( SizeType.Small, PositionType.Mid, new TestFormation_S000() );
 		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new TestFormation_S000() );

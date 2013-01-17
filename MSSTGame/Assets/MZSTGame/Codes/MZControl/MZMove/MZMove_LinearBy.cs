@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MZMove_Linear : MZMove
+public class MZMove_LinearBy : MZMove
 {
 	Vector2 _startPosition = Vector2.zero;
 
@@ -13,6 +13,6 @@ public class MZMove_Linear : MZMove
 
 	protected override void UpdateWhenActive()
 	{
-		controlDelegate.position = _startPosition + currentMovingVector*currentVelocity*lifeTimeCount;
+		controlDelegate.position += currentMovingVector*currentVelocity*MZTime.deltaTime;
 	}
 }

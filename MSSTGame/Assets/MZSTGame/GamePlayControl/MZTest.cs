@@ -63,7 +63,7 @@ public class MZTest
 			setting.Update();
 			if( setting.hasExecting )
 			{
-				_formationsManager.ExecuteFormation( setting.positionType, setting.sizeType, setting.name );
+				_formationsManager.ExecuteFormation( setting.positionType, setting.sizeType, setting.constructCode, setting.name );
 			}
 		}
 	}
@@ -105,6 +105,7 @@ public class MZTestEnemySetting
 public class MZTestFormationSetting
 {
 	public bool create = false;
+	public int constructCode = -1;
 	public string name;
 	public MZFormation.SizeType sizeType;
 	public MZFormation.PositionType positionType;
@@ -125,6 +126,7 @@ public class MZTestFormationSetting
 	{
 		MZDebug.Assert( formation != null, "formation is null" );
 
+		constructCode = formation.constructCode;
 		name = formation.GetType().ToString();
 		sizeType = formation.sizeType;
 		positionType = formation.positionType;

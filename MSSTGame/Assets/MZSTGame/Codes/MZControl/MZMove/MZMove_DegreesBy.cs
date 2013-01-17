@@ -20,7 +20,7 @@ public class MZMove_DegreesBy : MZMove
 
 	protected override void UpdateWhenActive()
 	{
-		base._currentDirection = _initDegrees + variationDegreesPerSecond*lifeTimeCount;
+		MaintainCurrentDirectionValue( _initDegrees + variationDegreesPerSecond*lifeTimeCount );
 		controlDelegate.position += currentMovingVector*currentVelocity*MZTime.deltaTime;
 	}
 }

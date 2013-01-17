@@ -27,7 +27,7 @@ public class MZMove_DegreesTo : MZMove
 		if( currentProportion > 1 )
 			currentProportion = 1;
 
-		_currentDirection = direction + _degreesDistance*currentProportion;
+		MaintainCurrentDirectionValue( direction + _degreesDistance*currentProportion );
 		Vector2 movementXY = currentMovingVector*currentVelocity*MZTime.deltaTime;
 
 		controlDelegate.position += movementXY;
