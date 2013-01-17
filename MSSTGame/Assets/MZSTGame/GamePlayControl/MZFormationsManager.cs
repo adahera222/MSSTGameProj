@@ -146,7 +146,8 @@ public class MZFormationsManager : MZControlBase
 			initValues.RemoveAt( choiceIndex );
 		}
 
-		MZDebug.Log( _currentPositionTypeOrder[ 0 ].ToString() + ", " + _currentPositionTypeOrder[ 1 ].GetType().ToString() + ", " + _currentPositionTypeOrder[ 2 ].ToString() );
+		if( MZGameSetting.SHOW_FORMATION_LOG )
+			MZDebug.Log( _currentPositionTypeOrder[ 0 ].ToString() + ", " + _currentPositionTypeOrder[ 1 ].GetType().ToString() + ", " + _currentPositionTypeOrder[ 2 ].ToString() );
 
 		_currentPositionTypeOrderIndex = 0;
 	}

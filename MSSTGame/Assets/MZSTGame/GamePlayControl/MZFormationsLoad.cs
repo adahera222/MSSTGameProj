@@ -10,27 +10,36 @@ public class MZFormationsLoad
 	{
 		MZFormationState s0 = formationsManager.AddFormationState( "s0" );
 		s0.SetProbability( MZFormation.SizeType.Small, 1 );
+		s0.expLimited = 20;
 
 		MZFormationState s1 = formationsManager.AddFormationState( "s1" );
 		s1.SetProbability( MZFormation.SizeType.Small, 8 );
 		s1.SetProbability( MZFormation.SizeType.Mid, 2 );
+		s1.expLimited = 30;
 
 		MZFormationState s2 = formationsManager.AddFormationState( "s2" );
 		s2.SetProbability( MZFormation.SizeType.Small, 5 );
 		s2.SetProbability( MZFormation.SizeType.Mid, 5 );
+		s2.expLimited = 30;
 
 		MZFormationState s3 = formationsManager.AddFormationState( "s3" );
 		s3.SetProbability( MZFormation.SizeType.Small, 2 );
 		s3.SetProbability( MZFormation.SizeType.Mid, 8 );
+		s3.expLimited = 30;
 
 		MZFormationState s4 = formationsManager.AddFormationState( "s4" );
 		s4.SetProbability( MZFormation.SizeType.Large, 10 );
+		s4.expLimited = 5;
 	}
 
 	static public void SetFormations(MZFormationsManager formationsManager)
 	{
-		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new Formation_S_SideIn001() );
-		formationsManager.AddFormation( SizeType.Small, PositionType.Right, new Formation_S_SideIn001() );
+		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new Formation_S_Rail() );
+		formationsManager.AddFormation( SizeType.Small, PositionType.Right, new Formation_S_Rail() );
+
+		formationsManager.AddFormation( SizeType.Small, PositionType.Mid, new Formation_S_Squadron() );
+		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new Formation_S_Squadron() );
+		formationsManager.AddFormation( SizeType.Small, PositionType.Right, new Formation_S_Squadron() );
 
 		formationsManager.AddFormation( SizeType.Small, PositionType.Any, new Formation_S_Any_Round001( 0 ) );
 		formationsManager.AddFormation( SizeType.Small, PositionType.Any, new Formation_S_Any_Round001( 1 ) );

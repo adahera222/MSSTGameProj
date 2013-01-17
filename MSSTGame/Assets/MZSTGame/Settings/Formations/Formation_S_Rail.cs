@@ -3,7 +3,7 @@ using System.Collections;
 
 using MZCharacterType = MZCharacter.MZCharacterType;
 
-public class Formation_S_SideIn001 : MZFormation
+public class Formation_S_Rail : MZFormation
 {
 	public override float disableNextFormationTime
 	{

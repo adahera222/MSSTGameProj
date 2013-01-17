@@ -53,11 +53,11 @@ public class MZAttack_Vortex : MZAttack
 		GameObject bulletObject = GetNewBulletObject();
 
 		float currentDegrees = initDegrees + intervalDegrees*( launchCount - 1 );
-//		Vector2 currentMovingVector = MZMath.UnitVectorFromDegrees( currentDegrees );
 
 		MZBullet bullet = bulletObject.GetComponent<MZBullet>();
-		MZMove bulletMove = bullet.AddMove( "Linear", "Linear" );
-		bulletMove.velocity = currentVelocity;
+		AddLinearMoveToBullet( bullet );
+
+		bullet.movesList[ 0 ].velocity = currentVelocity;
 		bullet.movesList[ 0 ].direction = currentDegrees;
 
 		EnableBullet( bullet.GetComponent<MZBullet>() );

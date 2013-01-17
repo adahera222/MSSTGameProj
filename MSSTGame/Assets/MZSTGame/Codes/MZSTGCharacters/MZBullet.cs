@@ -28,14 +28,10 @@ public class MZBullet : MZCharacter, IMZMove
 		}
 	}
 
-	public MZMove AddMove(string name, string typeString)
+	public MZMove AddMove(string name, MZMove.Type moveType)
 	{
-		MZMove move = (MZMove)MZObjectHelp.CreateClass( "MZMove_" + typeString );
-		move.name = name;
-		move.controlDelegate = this;
-
+		MZMove move = MZMove.Create( moveType, name, this );
 		movesList.Add( move );
-
 		return move;
 	}
 

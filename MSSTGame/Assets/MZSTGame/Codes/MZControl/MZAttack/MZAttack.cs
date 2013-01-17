@@ -209,8 +209,12 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 	protected void AddLinearMoveToBullet(GameObject bulletObject)
 	{
-		MZBullet bullet = bulletObject.GetComponent<MZBullet>();
-		MZMove bulletMove = bullet.AddMove( "Linear", "Linear" );
+		AddLinearMoveToBullet( bulletObject.GetComponent<MZBullet>() );
+	}
+
+	protected void AddLinearMoveToBullet(MZBullet bullet)
+	{
+		MZMove bulletMove = bullet.AddMove( "LinearBy", MZMove.Type.LinearBy );
 		bulletMove.velocity = currentVelocity;
 	}
 

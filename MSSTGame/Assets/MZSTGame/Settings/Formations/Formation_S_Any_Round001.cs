@@ -123,16 +123,9 @@ public class Formation_S_Any_Round001 : MZFormation
 	{
 		MZMove_Rotation rotShow = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
 		rotShow.angularVelocity = 50;
-		rotShow.variationOfRadians = -300;
-		rotShow.radiansLimited = 400;
+		rotShow.variationOfRadians = -100;
 		rotShow.targetHelp.assignPosition = Vector2.zero;
-		rotShow.duration = 12;
-
-		MZMove_Rotation rotOut = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
-		rotOut.angularVelocity = 50;
-		rotOut.variationOfRadians = 300;
-		rotOut.targetHelp.assignPosition = Vector2.zero;
-		rotOut.duration = 10;
+		rotShow.duration = 20;
 	}
 
 	void SetType3Move(MZMode mode, MZEnemy enemy)
