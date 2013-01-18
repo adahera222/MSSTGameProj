@@ -53,7 +53,7 @@ public class TestFormation_S_XY : MZFormation
 
 		MZMode mode = enemy.AddMode( "mode" );
 
-		MZMove_DegreesTo move = mode.AddMove( "GoTurn", MZMove.Type.DegreesTo ) as MZMove_DegreesTo;
+		MZMove_DegreesTo move = mode.AddMove<MZMove_DegreesTo>( "GoTurn" );
 		move.direction = ( positionType == PositionType.Left )? 0 : 180;
 		move.velocity = 200;
 		move.totalTime = 4;

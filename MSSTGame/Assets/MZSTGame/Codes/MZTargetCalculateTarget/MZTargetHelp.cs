@@ -18,18 +18,19 @@ public interface IMZTargetHelp
 
 public abstract class MZTargetHelp
 {
-	static public MZTargetHelp Create(Type type)
+	static public T Create<T>() where T : MZTargetHelp, new()
 	{
-		MZTargetHelp targetHelp = (MZTargetHelp)MZObjectHelp.CreateClass( "MZTargetHelp_" + type.ToString() );
+		T targetHelp = new T();
 		return targetHelp;
 	}
 
-	static public MZTargetHelp Create(Type type, IMZTargetHelp controlDelegate)
+	static public T Create<T>(IMZTargetHelp controlDelegate) where T : MZTargetHelp, new()
 	{
 		MZDebug.Assert( controlDelegate != null, "controlDelegate is null" );
 
-		MZTargetHelp targetHelp = (MZTargetHelp)MZObjectHelp.CreateClass( "MZTargetHelp_" + type.ToString() );
+		T targetHelp = new T();
 		targetHelp.controlDelegate = controlDelegate;
+
 		return targetHelp;
 	}
 

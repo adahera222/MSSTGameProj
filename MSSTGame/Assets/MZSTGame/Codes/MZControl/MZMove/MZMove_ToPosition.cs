@@ -19,7 +19,7 @@ public class MZMove_ToPosition : MZMove, IMZTargetHelp
 		{
 			if( _targetHelp == null )
 			{
-				_targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.Target, this );
+				_targetHelp = MZTargetHelp.Create<MZTargetHelp_Target>( this );
 			}
 
 			return _targetHelp;

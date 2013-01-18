@@ -15,13 +15,13 @@ public class EnemyL000 : MZEnemy
 
 		MZMode mode1 = AddMode( "m1" );
 
-		MZMove m1show = mode1.AddMove( MZMove.Type.LinearBy );
+		MZMove_LinearBy m1show = mode1.AddMove<MZMove_LinearBy>( "l" );
 		m1show.direction = 270;
 		m1show.velocity = 150;
 		m1show.duration = 1.0f;
 		m1show.isRunOnce = true;
 
-		MZMove_Rotation m1rot = mode1.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
+		MZMove_Rotation m1rot = mode1.AddMove<MZMove_Rotation>( "r" );
 		m1rot.targetHelp.assignType = MZTargetHelp_AssignPosition.AssignType.Relative;
 		m1rot.targetHelp.assignPosition = new Vector2( 0, -100 );
 		m1rot.angularVelocity = 30;

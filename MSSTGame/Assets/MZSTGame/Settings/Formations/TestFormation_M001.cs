@@ -28,7 +28,7 @@ public class TestFormation_M001 : MZFormation
 
 		MZMode mode = enemy.AddMode( "mode" );
 
-		MZMove move = mode.AddMove( "GoDie", MZMove.Type.ToTarget );
+		MZMove_ToTarget move = mode.AddMove<MZMove_ToTarget>( "GoDie" );
 		move.velocity = 200;
 		move.isRunOnce = true;
 		move.duration = 3;
@@ -67,9 +67,8 @@ public class TestFormation_M001 : MZFormation
 //		( attack.targetHelp as MZTargetHelp_AssignPosition ).assignPosition = new Vector2( -20, 400 );
 
 //		target test 3
-		attack.targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.AssignDirection );
+		attack.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
 		( attack.targetHelp as MZTargetHelp_AssignDirection ).direction = 90;
-
 
 //		attack.resetAdditionalVelocityPerWave = true;
 //		attack.timePerWave = 0.3f;

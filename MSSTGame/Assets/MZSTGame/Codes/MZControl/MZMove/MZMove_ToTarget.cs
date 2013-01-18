@@ -35,7 +35,7 @@ public class MZMove_ToTarget : MZMove, IMZTargetHelp
 	{
 		base.FirstUpdate();
 
-		_targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.Target, this );
+		_targetHelp = MZTargetHelp.Create<MZTargetHelp_Target>( this );
 		_targetHelp.calcuteEveryTime = true;
 		_targetHelp.BeginOneTime();
 	}

@@ -110,19 +110,19 @@ public class Formation_S_Any_Round001 : MZFormation
 
 	void SetType1Move(MZMode mode, MZEnemy enemy)
 	{
-		MZMove show = mode.AddMove( MZMove.Type.LinearBy );
+		MZMove_LinearBy show = mode.AddMove<MZMove_LinearBy>( "l" );
 		show.direction = MZMath.DegreesFromXAxisToVector( MZMath.UnitVectorFromP1ToP2( enemy.position, Vector2.zero ) );
 		show.duration = 0.6f;
 		show.velocity = 500;
 
-		MZMove_Rotation rotShow = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
+		MZMove_Rotation rotShow = mode.AddMove< MZMove_Rotation>( "r1" );
 		rotShow.angularVelocity = 50*_angularVelocityDirection;
 		rotShow.variationOfRadians = -300;
 		rotShow.radiansLimited = 400;
 		rotShow.targetHelp.assignPosition = Vector2.zero;
 		rotShow.duration = 10.0f;
 
-		MZMove_Rotation rotOut = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
+		MZMove_Rotation rotOut = mode.AddMove< MZMove_Rotation>( "r2" );
 		rotOut.angularVelocity = 50*_angularVelocityDirection;
 		rotOut.variationOfRadians = 300;
 		rotOut.targetHelp.assignPosition = Vector2.zero;
@@ -131,7 +131,7 @@ public class Formation_S_Any_Round001 : MZFormation
 
 	void SetType2Move(MZMode mode, MZEnemy enemy)
 	{
-		MZMove_Rotation rotShow = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
+		MZMove_Rotation rotShow = mode.AddMove<MZMove_Rotation>( "r" );
 		rotShow.angularVelocity = 50*_angularVelocityDirection;
 		rotShow.variationOfRadians = -100;
 		rotShow.targetHelp.assignPosition = Vector2.zero;
@@ -140,17 +140,17 @@ public class Formation_S_Any_Round001 : MZFormation
 
 	void SetType3Move(MZMode mode, MZEnemy enemy)
 	{
-		MZMove_Rotation rotShow = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
+		MZMove_Rotation rotShow = mode.AddMove<MZMove_Rotation>( "r" );
 		rotShow.angularVelocity = 50*_angularVelocityDirection;
 		rotShow.variationOfRadians = -300;
 		rotShow.radiansLimited = 400;
 		rotShow.targetHelp.assignPosition = Vector2.zero;
 		rotShow.duration = 1.5f;
 
-		MZMove_Idle moveIdle = mode.AddMove( MZMove.Type.Idle ) as MZMove_Idle;
+		MZMove_Idle moveIdle = mode.AddMove<MZMove_Idle>( "i" );
 		moveIdle.duration = 5;
 
-		MZMove_LinearTo moveOut = mode.AddMove( MZMove.Type.LinearTo ) as MZMove_LinearTo;
+		MZMove_LinearTo moveOut = mode.AddMove<MZMove_LinearTo>( "l" );
 		moveOut.destationPosition = Vector2.zero;
 		moveOut.totalTime = 0.5f;
 		moveOut.notEndAtDestation = true;

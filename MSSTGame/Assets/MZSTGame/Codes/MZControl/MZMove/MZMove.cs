@@ -19,19 +19,6 @@ public interface IMZMove : IMZControl
 
 public abstract class MZMove : MZControlBase
 {
-	static public MZMove Create(Type type, string name, IMZMove controlDelegate)
-	{
-		MZDebug.Assert( controlDelegate != null, "controlTarget is null" );
-
-		MZMove move = (MZMove)MZObjectHelp.CreateClass( "MZMove_" + type.ToString() );
-		MZDebug.Assert( move != null, "create fail, type=" + type.ToString() );
-
-		move.name = name;
-		move.controlDelegate = controlDelegate;
-
-		return move;
-	}
-
 	static public M Create<M>(string name, IMZMove controlDelegate) where M : MZMove, new()
 	{
 		M m = new M();

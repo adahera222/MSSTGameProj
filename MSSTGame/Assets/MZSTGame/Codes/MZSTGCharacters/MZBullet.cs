@@ -28,9 +28,9 @@ public class MZBullet : MZCharacter, IMZMove
 		}
 	}
 
-	public MZMove AddMove(string name, MZMove.Type moveType)
+	public M AddMove<M>(string name) where M : MZMove, new()
 	{
-		MZMove move = MZMove.Create( moveType, name, this );
+		M move = MZMove.Create<M>( name, this );
 		movesList.Add( move );
 		return move;
 	}

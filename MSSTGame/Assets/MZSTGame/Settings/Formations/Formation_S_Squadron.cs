@@ -57,14 +57,14 @@ public class Formation_S_Squadron : MZFormation
 
 		MZMode mode = enemy.AddMode( "m" );
 
-		MZMove_LinearTo move = mode.AddMove( "m", MZMove.Type.LinearTo ) as MZMove_LinearTo;
+		MZMove_LinearTo move = mode.AddMove<MZMove_LinearTo>( "m" );
 		move.destationPosition = _currentNewEnemyDestPos;
 		move.totalTime = 0.3f;
 		move.duration = 1.0f;
 
-		mode.AddMove( "idle", MZMove.Type.Idle ).duration = 3;
+		mode.AddMove<MZMove_Idle>( "idle" ).duration = 3;
 
-		MZMove_LinearBy leave = mode.AddMove( "leave", MZMove.Type.LinearBy ) as MZMove_LinearBy;
+		MZMove_LinearBy leave = mode.AddMove<MZMove_LinearBy>( "leave" );
 		leave.direction = 270;
 		leave.velocity = 200;
 

@@ -110,7 +110,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		{
 			if( _targetHelp == null )
 			{
-				_targetHelp = MZTargetHelp.Create( MZTargetHelp.Type.AssignDirection, this );
+				_targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>( this );
 				( _targetHelp as MZTargetHelp_AssignDirection ).direction = 90;
 			}
 
@@ -223,7 +223,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 	protected void AddLinearMoveToBullet(MZBullet bullet)
 	{
-		MZMove bulletMove = bullet.AddMove( "LinearBy", MZMove.Type.LinearBy );
+		MZMove_LinearBy bulletMove = bullet.AddMove<MZMove_LinearBy>( "LinearBy" );
 		bulletMove.velocity = currentVelocity;
 	}
 

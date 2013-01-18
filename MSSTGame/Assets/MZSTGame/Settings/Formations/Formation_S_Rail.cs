@@ -65,12 +65,12 @@ public class Formation_S_Rail : MZFormation
 		// move
 		float velocity = 400;
 
-		MZMove moveLinear1 = mode.AddMove( "l1", MZMove.Type.LinearBy );
+		MZMove_LinearBy moveLinear1 = mode.AddMove<MZMove_LinearBy>( "l1" );
 		moveLinear1.direction = _initDirection;
 		moveLinear1.velocity = velocity;
 		moveLinear1.duration = 1.5f;
 
-		MZMove_DegreesTo moveTurn = mode.AddMove( "t", MZMove.Type.DegreesTo ) as MZMove_DegreesTo;
+		MZMove_DegreesTo moveTurn = mode.AddMove<MZMove_DegreesTo>( "t" );
 		moveTurn.direction = _initDirection;
 		moveTurn.destinationDegrees = _destDirection;
 		moveTurn.rotationType = rotationType;

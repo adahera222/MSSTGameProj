@@ -55,29 +55,14 @@ public class MZMode : MZControlBase
 		}
 	}
 
-	public MZMove AddMove(string name, MZMove.Type type)
-	{
-		MZMove move = MZMove.Create( type, name, controlDelegate.moveDelegate );
-		movesList.Add( move );
-
-		return move;
-	}
-
 	public M AddMove<M>(string name) where M : MZMove, new()
 	{
-		M move = new M();
-		( (MZMove)move ).name = name;
-		( (MZMove)move ).controlDelegate = controlDelegate.moveDelegate;
+		M move = MZMove.Create<M>( name, controlDelegate.moveDelegate );
 		movesList.Add( move );
 
 		return move;
 	}
-
-	public MZMove AddMove(MZMove.Type type)
-	{
-		return AddMove( "", type );
-	}
-
+	
 	public MZControlUpdate<MZPartControl> AddPartControlUpdater()
 	{
 		if( _multiPartControlUpdate == null )

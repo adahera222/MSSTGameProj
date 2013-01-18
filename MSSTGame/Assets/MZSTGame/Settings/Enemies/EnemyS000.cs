@@ -29,20 +29,20 @@ public class EnemyS000 : MZEnemy
 
 	void AddMove_Linear(MZMode mode)
 	{
-		MZMove move = mode.AddMove( "move", MZMove.Type.LinearBy );
+		MZMove_LinearBy move = mode.AddMove< MZMove_LinearBy>( "move" );
 		move.direction = ( position.x > 0 )? 225 : ( position.x < 0 )? 315 : 270;
 		move.velocity = 100;
 	}
 
 	void AddMove_ToTarget(MZMode mode)
 	{
-		MZMove move = mode.AddMove( "move", MZMove.Type.ToTarget );
+		MZMove_ToTarget move = mode.AddMove<MZMove_ToTarget>( "move" );
 		move.velocity = 300;
 	}
 
 	void AddMove_Rotation(MZMode mode)
 	{
-		MZMove_Rotation move = mode.AddMove( "move", MZMove.Type.Rotation ) as MZMove_Rotation;
+		MZMove_Rotation move = mode.AddMove<MZMove_Rotation>( "move" );
 		move.angularVelocity = -100;
 		move.variationOfRadians = -10;
 		move.radiansLimited = 100;

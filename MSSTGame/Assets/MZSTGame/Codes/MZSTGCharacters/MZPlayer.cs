@@ -150,7 +150,7 @@ public class MZPlayer : MZCharacter
 		MZCharacterPart part = partsByNameDictionary[ partName ];
 
 		float angularVelocityBase = 270;
-		MZMove_Rotation move = MZMove.Create( MZMove.Type.Rotation, "r", part ) as MZMove_Rotation;
+		MZMove_Rotation move = MZMove.Create<MZMove_Rotation>( "r", part );
 		move.targetHelp.assignPosition = Vector2.zero;
 		move.angularVelocity = angularVelocityBase*( ( angularVelocityFlag )? -1 : 1 );
 
