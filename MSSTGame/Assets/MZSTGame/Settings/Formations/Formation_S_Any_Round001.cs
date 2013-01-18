@@ -90,11 +90,11 @@ public class Formation_S_Any_Round001 : MZFormation
 		MZPartControl mainPartControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 		mode.AddPartControlUpdater().Add( mainPartControl );
 
-		MZAttack attackIdle = mainPartControl.AddAttack( MZAttack.Type.Idle );
+		MZAttack_Idle attackIdle = mainPartControl.AddAttack<MZAttack_Idle>();
 		attackIdle.duration = 0.8f;
 		attackIdle.isRunOnce = true;
 
-		MZAttack attack = mainPartControl.AddAttack( MZAttack.Type.OddWay );
+		MZAttack_OddWay attack = mainPartControl.AddAttack<MZAttack_OddWay>();
 		attack.numberOfWays = 1;
 		attack.initVelocity = 200;
 		attack.additionalVelocity = 50;
@@ -104,7 +104,7 @@ public class Formation_S_Any_Round001 : MZFormation
 		attack.targetHelp = new MZTargetHelp_AssignPosition();
 		( attack.targetHelp as MZTargetHelp_AssignPosition ).assignPosition = Vector2.zero;
 
-		MZAttack attackIdle2 = mainPartControl.AddAttack( MZAttack.Type.Idle );
+		MZAttack_Idle attackIdle2 = mainPartControl.AddAttack<MZAttack_Idle>();
 		attackIdle2.duration = 1.8f;
 	}
 

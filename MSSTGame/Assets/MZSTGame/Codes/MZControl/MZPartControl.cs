@@ -80,31 +80,9 @@ public class MZPartControl : MZControlBase
 		return move;
 	}
 
-	// delete
-	public MZAttack AddAttack(string typeString)
-	{
-		MZAttack attack = (MZAttack)MZObjectHelp.CreateClass( "MZAttack_" + typeString );
-
-		attack.name = "attack";
-		attack.controlDelegate = controlDelegate;
-
-		attacksList.Add( attack );
-
-		return attack;
-	}
-
-	public MZAttack AddAttack(MZAttack.Type type)
-	{
-		MZAttack attack = MZAttack.Create( "attack", type, controlDelegate );
-		attacksList.Add( attack );
-
-		return attack;
-	}
-
 	public A AddAttack<A>() where A : MZAttack, new()
 	{
-		A attack = new A();
-		( attack as MZAttack ).controlDelegate = controlDelegate;
+		A attack = MZAttack.Create<A>( "attack", controlDelegate );
 		attacksList.Add( attack );
 
 		return attack;

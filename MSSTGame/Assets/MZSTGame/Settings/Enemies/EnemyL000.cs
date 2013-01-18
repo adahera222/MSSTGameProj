@@ -62,11 +62,11 @@ public class EnemyL000 : MZEnemy
 		MZPartControl partControl = new MZPartControl( partsByNameDictionary[ partName ] );
 		partControlUpdate.Add( partControl );
 
-		MZAttack show = partControl.AddAttack( MZAttack.Type.Idle );
+		MZAttack_Idle show = partControl.AddAttack<MZAttack_Idle>();
 		show.duration = 1.0f;
 		show.isRunOnce = true;
 
-		MZAttack nWay = partControl.AddAttack( MZAttack.Type.OddWay );
+		MZAttack_OddWay nWay = partControl.AddAttack<MZAttack_OddWay>();
 		nWay.bulletName = "EBBee";
 		nWay.numberOfWays = 7;
 		nWay.colddown = 0.25f;
@@ -76,7 +76,7 @@ public class EnemyL000 : MZEnemy
 		nWay.additionalWaysPerLaunch = -2;
 		nWay.targetHelp = new MZTargetHelp_Target();
 
-		MZAttack cd = partControl.AddAttack( MZAttack.Type.Idle );
+		MZAttack_Idle cd = partControl.AddAttack<MZAttack_Idle>();
 		cd.duration = 4.0f;
 	}
 
@@ -86,14 +86,14 @@ public class EnemyL000 : MZEnemy
 		MZPartControl partControl = new MZPartControl( partsByNameDictionary[ partName ] );
 		partControlUpdate.Add( partControl );
 
-		MZAttack show = partControl.AddAttack( MZAttack.Type.Idle );
+		MZAttack_Idle show = partControl.AddAttack<MZAttack_Idle>();
 		show.duration = 1.0f;
 		show.isRunOnce = true;
 
-		MZAttack wait1 = partControl.AddAttack( MZAttack.Type.Idle );
+		MZAttack_Idle wait1 = partControl.AddAttack<MZAttack_Idle>();
 		wait1.duration = 2.0f;
 
-		MZAttack attack = partControl.AddAttack( MZAttack.Type.OddWay );
+		MZAttack_OddWay attack = partControl.AddAttack<MZAttack_OddWay>();
 		attack.numberOfWays = 5;
 		attack.intervalDegrees = 20;
 		attack.bulletName = "EBDonuts";
@@ -103,7 +103,7 @@ public class EnemyL000 : MZEnemy
 		attack.additionalVelocity = 50;
 		attack.duration = 0.5f;
 
-		MZAttack wait2 = partControl.AddAttack( MZAttack.Type.Idle );
+		MZAttack_Idle wait2 = partControl.AddAttack<MZAttack_Idle>();
 		wait2.duration = 2.5f;
 	}
 }

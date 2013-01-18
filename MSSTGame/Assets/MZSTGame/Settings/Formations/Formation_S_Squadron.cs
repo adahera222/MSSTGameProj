@@ -71,11 +71,11 @@ public class Formation_S_Squadron : MZFormation
 		MZPartControl mainPartControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 		mode.AddPartControlUpdater().Add( mainPartControl );
 
-		MZAttack_Idle attackShow = mainPartControl.AddAttack( MZAttack.Type.Idle ) as MZAttack_Idle;
+		MZAttack_Idle attackShow = mainPartControl.AddAttack<MZAttack_Idle>();
 		attackShow.duration = 0.5f;
 		attackShow.isRunOnce = true;
 
-		MZAttack_EvenWay attackEven = mainPartControl.AddAttack( MZAttack.Type.EvenWay ) as MZAttack_EvenWay;
+		MZAttack_EvenWay attackEven = mainPartControl.AddAttack<MZAttack_EvenWay>();
 		attackEven.numberOfWays = 2;
 		attackEven.colddown = 0.1f;
 		attackEven.duration = 0.5f;
@@ -84,10 +84,10 @@ public class Formation_S_Squadron : MZFormation
 		attackEven.bulletName = "EBBee";
 		attackEven.targetHelp = new MZTargetHelp_Target();
 
-		MZAttack_Idle attackIdleInterval = mainPartControl.AddAttack( MZAttack.Type.Idle ) as MZAttack_Idle;
+		MZAttack_Idle attackIdleInterval = mainPartControl.AddAttack<MZAttack_Idle>();
 		attackIdleInterval.duration = 0.3f;
 
-		MZAttack_OddWay attackOdd = mainPartControl.AddAttack( MZAttack.Type.OddWay ) as MZAttack_OddWay;
+		MZAttack_OddWay attackOdd = mainPartControl.AddAttack<MZAttack_OddWay>();
 		attackOdd.numberOfWays = 1;
 		attackOdd.colddown = 0.1f;
 		attackOdd.duration = 0.5f;
@@ -95,9 +95,10 @@ public class Formation_S_Squadron : MZFormation
 		attackOdd.initVelocity = 500;// + 25*currentCreatedMemberCount;
 		attackOdd.bulletName = "EBBee";
 		attackOdd.targetHelp = new MZTargetHelp_Target();
+		attackOdd.targetHelp.calcuteEveryTime = true;
 //		attackOdd.additionalVelocity = 50;
 
-		MZAttack_Idle attackIdle = mainPartControl.AddAttack( MZAttack.Type.Idle ) as MZAttack_Idle;
+		MZAttack_Idle attackIdle = mainPartControl.AddAttack<MZAttack_Idle>();
 		attackIdle.duration = 3.0f;
 	}
 

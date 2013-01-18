@@ -19,15 +19,28 @@ public interface IMZAttack : IMZControl
 
 public abstract class MZAttack : MZControlBase, IMZTargetHelp
 {
-	static public MZAttack Create(string name, Type type, IMZAttack controlTarget)
-	{
-		MZDebug.Assert( controlTarget != null, "controlTarget is null" );
+//	static public MZAttack Create(string name, Type type, IMZAttack controlTarget)
+//	{
+//		MZDebug.Assert( controlTarget != null, "controlTarget is null" );
+//
+//		MZAttack attack = (MZAttack)MZObjectHelp.CreateClass( "MZAttack_" + type.ToString() );
+//		MZDebug.Assert( attack != null, "create fail, type=" + type.ToString() );
+//
+//		attack.name = name;
+//		attack.controlDelegate = controlTarget;
+//
+//		return attack;
+//	}
 
-		MZAttack attack = (MZAttack)MZObjectHelp.CreateClass( "MZAttack_" + type.ToString() );
-		MZDebug.Assert( attack != null, "create fail, type=" + type.ToString() );
+	static public A Create<A>(string name, IMZAttack controlDelegate) where A : MZAttack, new()
+	{
+		MZDebug.Assert( controlDelegate != null, "controlTarget is null" );
+
+		A attack = new A();
+		MZDebug.Assert( attack != null, "create fail" );
 
 		attack.name = name;
-		attack.controlDelegate = controlTarget;
+		attack.controlDelegate = controlDelegate;
 
 		return attack;
 	}

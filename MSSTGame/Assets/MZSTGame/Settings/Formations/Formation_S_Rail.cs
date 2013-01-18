@@ -82,7 +82,7 @@ public class Formation_S_Rail : MZFormation
 		MZPartControl mainPartControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 		mode.AddPartControlUpdater().Add( mainPartControl );
 
-		MZAttack attack = mainPartControl.AddAttack( MZAttack.Type.OddWay );
+		MZAttack_OddWay attack = mainPartControl.AddAttack<MZAttack_OddWay>();
 		attack.numberOfWays = 1;
 		attack.initVelocity = 300;
 		attack.additionalVelocity = 200;
@@ -91,7 +91,7 @@ public class Formation_S_Rail : MZFormation
 		attack.duration = 0.3f;
 		attack.targetHelp = new MZTargetHelp_Target();
 
-		MZAttack attackIdle = mainPartControl.AddAttack( MZAttack.Type.Idle );
+		MZAttack_Idle attackIdle = mainPartControl.AddAttack<MZAttack_Idle>();
 		attackIdle.duration = moveLinear1.duration - 0.35f;
 	}
 

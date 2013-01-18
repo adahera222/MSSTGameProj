@@ -55,7 +55,7 @@ public class EnemyS000 : MZEnemy
 		MZControlUpdate<MZPartControl> partControlUpdate = mode.AddPartControlUpdater();
 		partControlUpdate.Add( partControl );
 
-		MZAttack attack = partControl.AddAttack( MZAttack.Type.OddWay );
+		MZAttack_OddWay attack = partControl.AddAttack<MZAttack_OddWay>();
 		attack.numberOfWays = 1;
 		attack.colddown = 0.3f;
 		attack.duration = 0.1f;
@@ -63,7 +63,7 @@ public class EnemyS000 : MZEnemy
 		attack.bulletName = "EBDonuts";
 		attack.targetHelp = new MZTargetHelp_Target();
 
-		MZAttack idle = partControl.AddAttack( MZAttack.Type.Idle );
+		MZAttack_Idle idle = partControl.AddAttack<MZAttack_Idle>();
 		idle.duration = 3;
 	}
 }

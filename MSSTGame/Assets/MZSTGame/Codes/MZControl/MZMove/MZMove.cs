@@ -32,6 +32,15 @@ public abstract class MZMove : MZControlBase
 		return move;
 	}
 
+	static public M Create<M>(string name, IMZMove controlDelegate) where M : MZMove, new()
+	{
+		M m = new M();
+		m.name = name;
+		m.controlDelegate = controlDelegate;
+
+		return m;
+	}
+
 	public enum Type
 	{
 		Idle,

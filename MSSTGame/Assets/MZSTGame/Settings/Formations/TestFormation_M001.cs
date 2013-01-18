@@ -51,7 +51,7 @@ public class TestFormation_M001 : MZFormation
 		MZControlUpdate<MZPartControl> partControlUpdate = mode.AddPartControlUpdater();
 		partControlUpdate.Add( partControl );
 
-		MZAttack_Vortex attack = partControl.AddAttack( MZAttack.Type.Vortex ) as MZAttack_Vortex;
+		MZAttack_Vortex attack = partControl.AddAttack<MZAttack_Vortex>();
 		attack.colddown = 0.05f;
 		attack.duration = -1;
 		attack.initVelocity = 200;
@@ -75,7 +75,7 @@ public class TestFormation_M001 : MZFormation
 //		attack.timePerWave = 0.3f;
 //		attack.resetTime = 0.15f;
 
-		MZAttack idle = partControl.AddAttack( MZAttack.Type.Idle );
+		MZAttack_Idle idle = partControl.AddAttack<MZAttack_Idle>();
 		idle.duration = 3;
 	}
 
