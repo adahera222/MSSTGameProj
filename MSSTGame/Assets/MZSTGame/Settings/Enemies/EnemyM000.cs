@@ -56,6 +56,13 @@ public class EnemyM000 : MZEnemy
 		nWay.targetHelp = new MZTargetHelp_Target();
 		nWay.targetHelp.calcuteEveryTime = false;
 
+		nWay.offsetPosition.Add( new Vector2( 0, 0 ) );
+		for( int i = 0; i < nWay.numberOfWays; i++ )
+		{
+			nWay.offsetPosition.Add( new Vector2( -40*i, 0 ) );
+			nWay.offsetPosition.Add( new Vector2( 40*i, 0 ) );
+		}
+
 		MZAttack cd = partControl.AddAttack( MZAttack.Type.Idle );
 		cd.duration = 4.0f;
 	}

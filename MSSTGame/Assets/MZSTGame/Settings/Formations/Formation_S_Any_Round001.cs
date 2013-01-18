@@ -22,6 +22,13 @@ public class Formation_S_Any_Round001 : MZFormation
 	}
 
 	Vector2 _currentPosition;
+	int _constructCode;
+	int _angularVelocityDirection;
+
+	public Formation_S_Any_Round001() : base()
+	{
+
+	}
 
 	public Formation_S_Any_Round001(int constructCode) : base( constructCode )
 	{
@@ -31,6 +38,9 @@ public class Formation_S_Any_Round001 : MZFormation
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
+
+		_constructCode = MZMath.RandomFromRange( 0, 2 );
+		_angularVelocityDirection = ( MZMath.RandomFromRange( 0, 1 ) == 0 )? 1 : -1;
 
 		float intervalDegrees = 360/maxCreatedNumber;
 		float distance = 700;
@@ -57,7 +67,7 @@ public class Formation_S_Any_Round001 : MZFormation
 
 		MZMode mode = enemy.AddMode( "mode" );
 
-		switch( constructCode )
+		switch( _constructCode )
 		{
 			case 0:
 				SetType1Move( mode, enemy );
@@ -72,7 +82,7 @@ public class Formation_S_Any_Round001 : MZFormation
 				break;
 
 			default:
-				MZDebug.AssertFalse( "not supprt code=" + constructCode.ToString() );
+				MZDebug.AssertFalse( "not supprt code=" + _constructCode.ToString() );
 				break;
 		}
 
@@ -106,14 +116,14 @@ public class Formation_S_Any_Round001 : MZFormation
 		show.velocity = 500;
 
 		MZMove_Rotation rotShow = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
-		rotShow.angularVelocity = 50;
+		rotShow.angularVelocity = 50*_angularVelocityDirection;
 		rotShow.variationOfRadians = -300;
 		rotShow.radiansLimited = 400;
 		rotShow.targetHelp.assignPosition = Vector2.zero;
 		rotShow.duration = 10.0f;
 
 		MZMove_Rotation rotOut = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
-		rotOut.angularVelocity = 50;
+		rotOut.angularVelocity = 50*_angularVelocityDirection;
 		rotOut.variationOfRadians = 300;
 		rotOut.targetHelp.assignPosition = Vector2.zero;
 		rotOut.duration = 10;
@@ -122,7 +132,7 @@ public class Formation_S_Any_Round001 : MZFormation
 	void SetType2Move(MZMode mode, MZEnemy enemy)
 	{
 		MZMove_Rotation rotShow = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
-		rotShow.angularVelocity = 50;
+		rotShow.angularVelocity = 50*_angularVelocityDirection;
 		rotShow.variationOfRadians = -100;
 		rotShow.targetHelp.assignPosition = Vector2.zero;
 		rotShow.duration = 20;
@@ -131,7 +141,7 @@ public class Formation_S_Any_Round001 : MZFormation
 	void SetType3Move(MZMode mode, MZEnemy enemy)
 	{
 		MZMove_Rotation rotShow = mode.AddMove( MZMove.Type.Rotation ) as MZMove_Rotation;
-		rotShow.angularVelocity = 50;
+		rotShow.angularVelocity = 50*_angularVelocityDirection;
 		rotShow.variationOfRadians = -300;
 		rotShow.radiansLimited = 400;
 		rotShow.targetHelp.assignPosition = Vector2.zero;

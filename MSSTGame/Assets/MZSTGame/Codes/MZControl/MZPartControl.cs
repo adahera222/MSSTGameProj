@@ -101,6 +101,15 @@ public class MZPartControl : MZControlBase
 		return attack;
 	}
 
+	public A AddAttack<A>() where A : MZAttack, new()
+	{
+		A attack = new A();
+		( attack as MZAttack ).controlDelegate = controlDelegate;
+		attacksList.Add( attack );
+
+		return attack;
+	}
+
 	protected override void UpdateWhenActive()
 	{
 		if( _moveControlUpdate != null )

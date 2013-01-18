@@ -59,7 +59,7 @@ public class TestFormation_S001 : MZFormation
 		MZPartControl partControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 		mode.AddPartControlUpdater().Add( partControl );
 
-		MZAttack attack = partControl.AddAttack( MZAttack.Type.OddWay );
+		MZAttack_OddWay attack = partControl.AddAttack<MZAttack_OddWay>();
 		attack.numberOfWays = 3;
 		attack.colddown = 10;
 		attack.duration = -1;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 using MZCharacterType = MZCharacter.MZCharacterType;
 
@@ -40,7 +41,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	}
 
 	//
-
+	public List<Vector2> offsetPosition = new List<Vector2>();
 	public new IMZAttack controlDelegate = null;
 	public int numberOfWays = 0;
 	public int additionalWaysPerLaunch = 0;
@@ -188,18 +189,13 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 	#endregion
 
-	protected GameObject GetNewBulletObject()
+	protected MZBullet GetNewBullet(int index)
 	{
-		MZDebug.Assert( bulletName != null, "bulletName is null" );
-
-		GameObject bullet = MZCharacterObjectsFactory.instance.Get( GetBulletType(), bulletName );
+		GameObject bullet = GetNewBulletObject();
 		MZBullet bulletScript = bullet.GetComponent<MZBullet>();
+		SetOffsetToBullet( bulletScript, index );
 
-		bulletScript.strength = strength;
-		bulletScript.position = controlDelegate.realPosition;
-		bulletScript.faceToType = bulletFaceToType;
-
-		return bullet;
+		return bulletScript;
 	}
 
 	protected virtual void LaunchBullet()
@@ -224,6 +220,30 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	}
 
 	//
+
+	GameObject GetNewBulletObject()
+	{
+		MZDebug.Assert( bulletName != null, "bulletName is null" );
+
+		GameObject bullet = MZCharacterObjectsFactory.instance.Get( GetBulletType(), bulletName );
+		MZBullet bulletScript = bullet.GetComponent<MZBullet>();
+
+		bulletScript.strength = strength;
+		bulletScript.faceToType = bulletFaceToType;
+
+		bulletScript.position = controlDelegate.realPosition;
+		return bullet;
+	}
+
+		void SetOffsetToBullet(MZBullet bullet, int index)
+	{
+		if( offsetPosition == null || offsetPosition.Count == 0 )
+			return;
+
+		int _index = index%offsetPosition.Count;
+		bullet.position += offsetPosition[ _index ];
+	}
+
 
 	MZCharacterType GetBulletType()
 	{

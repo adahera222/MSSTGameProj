@@ -70,13 +70,16 @@ public class MZControlUpdate<T> : IMZBaseBehavoir
 
 		_executingControlsList.Clear();
 
-		foreach( T control in _originalControlsList )
+		if( _originalControlsList != null )
 		{
-			_executingControlsList.Add( control );
-		}
+			foreach( T control in _originalControlsList )
+			{
+				_executingControlsList.Add( control );
+			}
 
-		_currentControl = NextControl();
-		_currentControl.Enable();
+			_currentControl = NextControl();
+			_currentControl.Enable();
+		}
 	}
 
 	public void Disable()

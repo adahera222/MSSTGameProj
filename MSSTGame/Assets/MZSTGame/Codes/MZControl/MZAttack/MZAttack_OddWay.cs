@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MZAttack_OddWay : MZAttack
 {
@@ -7,28 +8,26 @@ public class MZAttack_OddWay : MZAttack
 	{
 		base.LaunchBullet();
 
-		// temp
 		float centerDirection = targetHelp.GetResultDirection();
-		float currentDegrees = 0;
+		float currentDegreesOffset = 0;
 
 		for( int i = 0; i < currentWays; i++ )
 		{
-			GameObject bullet = GetNewBulletObject();
+			MZBullet bullet = GetNewBullet( i );
 			AddLinearMoveToBullet( bullet );
-			MZBullet bulletScript = bullet.GetComponent<MZBullet>();
 
 			if( i == 0 )
 			{
-				bulletScript.movesList[ 0 ].direction = centerDirection;
-				currentDegrees += intervalDegrees;
+				bullet.movesList[ 0 ].direction = centerDirection;
+				currentDegreesOffset += intervalDegrees;
 			}
 			else
 			{
-				bulletScript.movesList[ 0 ].direction = centerDirection + currentDegrees;
-				currentDegrees = ( i%2 == 1 )? -currentDegrees : -currentDegrees + intervalDegrees;
+				bullet.movesList[ 0 ].direction = centerDirection + currentDegreesOffset;
+				currentDegreesOffset = ( i%2 == 1 )? -currentDegreesOffset : -currentDegreesOffset + intervalDegrees;
 			}
 
-			EnableBullet( bullet.GetComponent<MZBullet>() );
+			EnableBullet( bullet );
 		}
 
 		UpdateAdditionalVelocity();

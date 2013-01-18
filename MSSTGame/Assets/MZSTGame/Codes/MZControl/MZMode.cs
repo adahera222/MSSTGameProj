@@ -41,7 +41,7 @@ public class MZMode : MZControlBase
 	public Vector2 currentMovingVector
 	{
 		get
-		{ return _moveControlUpdate.currentControl.currentMovingVector; }
+		{ return ( _moveControlUpdate != null && _moveControlUpdate.currentControl != null )? _moveControlUpdate.currentControl.currentMovingVector : new Vector2( 0, 0 ); }
 	}
 
 	public List<MZMove> movesList
@@ -58,6 +58,16 @@ public class MZMode : MZControlBase
 	public MZMove AddMove(string name, MZMove.Type type)
 	{
 		MZMove move = MZMove.Create( type, name, controlDelegate.moveDelegate );
+		movesList.Add( move );
+
+		return move;
+	}
+
+	public M AddMove<M>(string name) where M : MZMove, new()
+	{
+		M move = new M();
+		( (MZMove)move ).name = name;
+		( (MZMove)move ).controlDelegate = controlDelegate.moveDelegate;
 		movesList.Add( move );
 
 		return move;

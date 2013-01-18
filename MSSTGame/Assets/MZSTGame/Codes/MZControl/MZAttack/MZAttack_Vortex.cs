@@ -50,17 +50,15 @@ public class MZAttack_Vortex : MZAttack
 
 	void LaunchWaveBullet()
 	{
-		GameObject bulletObject = GetNewBulletObject();
+		MZBullet bullet = GetNewBullet( 0 );
 
 		float currentDegrees = initDegrees + intervalDegrees*( launchCount - 1 );
-
-		MZBullet bullet = bulletObject.GetComponent<MZBullet>();
 		AddLinearMoveToBullet( bullet );
 
 		bullet.movesList[ 0 ].velocity = currentVelocity;
 		bullet.movesList[ 0 ].direction = currentDegrees;
 
-		EnableBullet( bullet.GetComponent<MZBullet>() );
+		EnableBullet( bullet );
 
 		if( timePerWave == -1 )
 			return;

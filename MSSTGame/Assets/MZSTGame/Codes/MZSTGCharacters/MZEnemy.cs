@@ -35,7 +35,9 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 	public override void Enable()
 	{
 		base.Enable();
-		_modeControlUpdate.Enable();
+
+		if( _modeControlUpdate != null )
+			_modeControlUpdate.Enable();
 	}
 
 	public override void Disable()
@@ -54,7 +56,7 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	public override Vector2 currentMovingVector
 	{
-		get { return ( _modeControlUpdate != null )? _modeControlUpdate.currentControl.currentMovingVector : new Vector2( 1, 0 ); }
+		get { return ( _modeControlUpdate != null && _modeControlUpdate.currentControl != null )? _modeControlUpdate.currentControl.currentMovingVector : new Vector2( 1, 0 ); }
 	}
 
 	public MZMode AddMode(string name)
