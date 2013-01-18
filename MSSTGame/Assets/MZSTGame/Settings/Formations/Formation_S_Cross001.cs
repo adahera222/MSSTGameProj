@@ -15,11 +15,14 @@ public class Formation_S_Cross : MZFormation
 	{
 		get
 		{
-			return 8;
+			return _maxCreatedNumber;
 		}
 	}
 
+	int _attackCode;
+	int _dirCode;
 	int _numberOfRow = 4;
+	int _maxCreatedNumber = 8;
 	float _createTimeIntercval = 0.7f;
 	float _createTimeCount;
 	float _xInterval;
@@ -30,6 +33,8 @@ public class Formation_S_Cross : MZFormation
 	{
 		base.FirstUpdate();
 
+		_dirCode = ( MZMath.RandomFromRange( 0, 1 ) == 0 )? 1 : -1;
+		_attackCode = MZMath.RandomFromRange( 0, 1 );
 		_createTimeCount = 0;
 
 		_xInterval = ( MZGameSetting.ENEMY_BOUNDLE_RIGHT - MZGameSetting.ENEMY_BOUNDLE_LEFT )/_numberOfRow;
@@ -44,6 +49,7 @@ public class Formation_S_Cross : MZFormation
 			return;
 
 		_createTimeCount += _createTimeIntercval;
+
 		AddNewEnemy( MZCharacter.MZCharacterType.EnemyAir, "EnemySRed", false );
 	}
 
@@ -57,19 +63,26 @@ public class Formation_S_Cross : MZFormation
 		linear.velocity = 160;
 		linear.direction = 270;
 
-		for( int i = 0; i < 4; i++ )
+		int ways = 3 + _attackCode;
+		float initDegrees = ( ways == 4 )? 0 : 30;
+		float intervalDegrees = 360/ways;
+
+		for( int i = 0; i < ways; i++ )
 		{
 			MZPartControl pControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 			mode.AddPartControlUpdater().Add( pControl );
-			SetTwinWayAttack( pControl, 0 + i*90 );
+			SetTwinWayAttack( pControl, initDegrees + i*intervalDegrees );
 		}
 	}
 
 	void SetTwinWayAttack(MZPartControl partControl, float degree)
 	{
+		float colddown = 0.1f;
+		float duration = 0.3f + ( ( _attackCode == 0 )? 0.6f : 0.0f );
+
 		MZAttack_OddWay oddWay = partControl.AddAttack<MZAttack_OddWay>();
-		oddWay.colddown = 0.1f;
-		oddWay.duration = 0.4f;
+		oddWay.colddown = colddown;
+		oddWay.duration = duration;
 		oddWay.numberOfWays = 2;
 		oddWay.offsetPosition.Add( MZMath.UnitVectorFromDegrees( degree + 90 )*10 );
 		oddWay.offsetPosition.Add( MZMath.UnitVectorFromDegrees( degree + 90 )*-10 );
@@ -78,12 +91,12 @@ public class Formation_S_Cross : MZFormation
 		oddWay.initVelocity = 400;
 		( (MZTargetHelp_AssignDirection)oddWay.targetHelp ).direction = degree;
 
-		MZAttack_Idle idle = partControl.AddAttack<MZAttack_Idle>();
-		idle.duration = 1;
+		MZAttack_Idle idle1 = partControl.AddAttack<MZAttack_Idle>();
+		idle1.duration = 0.5f;
 
 		MZAttack_OddWay oddWay2 = partControl.AddAttack<MZAttack_OddWay>();
-		oddWay2.colddown = 0.1f;
-		oddWay2.duration = 0.4f;
+		oddWay2.colddown = colddown;
+		oddWay2.duration = duration;
 		oddWay2.numberOfWays = 2;
 		oddWay2.offsetPosition.Add( MZMath.UnitVectorFromDegrees( degree + 90 + 45 )*10 );
 		oddWay2.offsetPosition.Add( MZMath.UnitVectorFromDegrees( degree + 90 + 45 )*-10 );
@@ -91,12 +104,15 @@ public class Formation_S_Cross : MZFormation
 		oddWay2.bulletName = "EBBee";
 		oddWay2.initVelocity = 400;
 		( (MZTargetHelp_AssignDirection)oddWay2.targetHelp ).direction = degree + 45;
+
+		MZAttack_Idle idle2 = partControl.AddAttack<MZAttack_Idle>();
+		idle2.duration = 0.5f;
 	}
 
 	Vector2 GetStartPosition()
 	{
-		return( ( currentCreatedMemberCount/_numberOfRow )%2 == 0 )?
-			 leftStartPosition + new Vector2( _xInterval*( currentCreatedMemberCount%_numberOfRow ), 0 ) :
-				rightStartPosition - new Vector2( _xInterval*( currentCreatedMemberCount%_numberOfRow ), 0 );
+		_dirCode = ( currentCreatedMemberCount != 0 && currentCreatedMemberCount%_numberOfRow == 0 )? -_dirCode : _dirCode;
+		Vector2 startPosition = ( _dirCode > 0 )? leftStartPosition : rightStartPosition;
+		return startPosition + new Vector2( _xInterval*( currentCreatedMemberCount%_numberOfRow )*_dirCode, 0 );
 	}
 }

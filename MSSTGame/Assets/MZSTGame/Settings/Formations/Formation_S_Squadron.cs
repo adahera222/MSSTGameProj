@@ -76,11 +76,12 @@ public class Formation_S_Squadron : MZFormation
 		attackShow.isRunOnce = true;
 
 		MZAttack_EvenWay attackEven = mainPartControl.AddAttack<MZAttack_EvenWay>();
-		attackEven.numberOfWays = 2;
+		attackEven.numberOfWays = 4;
 		attackEven.colddown = 0.1f;
 		attackEven.duration = 0.5f;
 		attackEven.intervalDegrees = 45;
-		attackEven.initVelocity = 500;// + 25*currentCreatedMemberCount;
+		attackEven.initVelocity = 300;// + 25*currentCreatedMemberCount;
+		attackEven.additionalVelocity = 50;
 		attackEven.bulletName = "EBBee";
 		attackEven.targetHelp = new MZTargetHelp_Target();
 
@@ -92,10 +93,9 @@ public class Formation_S_Squadron : MZFormation
 		attackOdd.colddown = 0.1f;
 		attackOdd.duration = 0.5f;
 		attackOdd.intervalDegrees = 5;
-		attackOdd.initVelocity = 500;// + 25*currentCreatedMemberCount;
-		attackOdd.bulletName = "EBBee";
+		attackOdd.initVelocity = 600;// + 25*currentCreatedMemberCount;
+		attackOdd.bulletName = "EBBee2";
 		attackOdd.targetHelp = new MZTargetHelp_Target();
-		attackOdd.targetHelp.calcuteEveryTime = true;
 //		attackOdd.additionalVelocity = 50;
 
 		MZAttack_Idle attackIdle = mainPartControl.AddAttack<MZAttack_Idle>();
