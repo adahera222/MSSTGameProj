@@ -35,17 +35,21 @@ public class MZMove_DegreesTo : MZMove
 
 	float GetDegreesDistance(RotationType rotType, float initDeg, float destDeg)
 	{
-		float _destDeg = destDeg;
+		float _destDeg = ( (int)destDeg )%360;
 		int rounds = ( (int)_destDeg )/360;
 		int remain = ( (int)_destDeg )%360;
 
-		if( remain < 0 )
+		if( remain <= 0 )
 			remain = 360 + remain;
 
-		float distance = Mathf.Abs( remain - initDeg );
+		float distance = initDeg - remain;
+		MZMove.RotationType resultRotType = ( distance >= 0 )? MZMove.RotationType.CW : MZMove.RotationType.CCW;
+		distance = Mathf.Abs( distance );
 
-		if( rotType == RotationType.CW )
-			distance = -( 360 - distance );
+		if( rotType != resultRotType )
+			distance = 360 - distance;
+
+		distance = distance*( ( rotType == MZMove.RotationType.CCW )? 1 : -1 );
 		distance += 360*rounds;
 
 		return distance;

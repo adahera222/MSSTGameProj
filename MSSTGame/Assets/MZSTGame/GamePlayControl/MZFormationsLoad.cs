@@ -34,6 +34,9 @@ public class MZFormationsLoad
 
 	static public void SetFormations(MZFormationsManager formationsManager)
 	{
+
+		formationsManager.AddFormation( SizeType.Mid, PositionType.Any, new Formation_M_Split() );
+
 		formationsManager.AddFormation( SizeType.Small, PositionType.Any, new Formation_S_Cross() );
 		formationsManager.AddFormation( SizeType.Small, PositionType.Any, new Formation_S_Any_Round001() );
 //		formationsManager.AddFormation( SizeType.Small, PositionType.Any, new Formation_S_Any_Round001( 0 ) );
@@ -41,6 +44,7 @@ public class MZFormationsLoad
 //		formationsManager.AddFormation( SizeType.Small, PositionType.Any, new Formation_S_Any_Round001( 2 ) );
 
 		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new Formation_S_Rail() );
+		formationsManager.AddFormation( SizeType.Small, PositionType.Mid, new Formation_S_Rail() );
 		formationsManager.AddFormation( SizeType.Small, PositionType.Right, new Formation_S_Rail() );
 
 		formationsManager.AddFormation( SizeType.Small, PositionType.Mid, new Formation_S_Squadron() );
@@ -62,9 +66,9 @@ public class MZFormationsLoad
 		formationsManager.AddFormation( SizeType.Mid, PositionType.Mid, new TestFormation_M000() );
 		formationsManager.AddFormation( SizeType.Mid, PositionType.Right, new TestFormation_M000() );
 
-		formationsManager.AddFormation( SizeType.Mid, PositionType.Left, new TestFormation_M001() );
-		formationsManager.AddFormation( SizeType.Mid, PositionType.Mid, new TestFormation_M001() );
-		formationsManager.AddFormation( SizeType.Mid, PositionType.Right, new TestFormation_M001() );
+		formationsManager.AddFormation( SizeType.Mid, PositionType.Left, new Formation_M_Waterfall() );
+//		formationsManager.AddFormation( SizeType.Mid, PositionType.Mid, new Formation_M_Waterfall() );
+		formationsManager.AddFormation( SizeType.Mid, PositionType.Right, new Formation_M_Waterfall() );
 
 		formationsManager.AddFormation( SizeType.Large, PositionType.Any, new TestFormation_L000() );
 	}

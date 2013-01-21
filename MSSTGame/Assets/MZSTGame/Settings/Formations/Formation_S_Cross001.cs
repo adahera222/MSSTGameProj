@@ -78,7 +78,7 @@ public class Formation_S_Cross : MZFormation
 	void SetTwinWayAttack(MZPartControl partControl, float degree)
 	{
 		float colddown = 0.1f;
-		float duration = 0.3f + ( ( _attackCode == 0 )? 0.6f : 0.0f );
+		float duration = 0.3f + ( ( _attackCode == 0 )? 0.6f : 0.3f );
 
 		MZAttack_OddWay oddWay = partControl.AddAttack<MZAttack_OddWay>();
 		oddWay.colddown = colddown;

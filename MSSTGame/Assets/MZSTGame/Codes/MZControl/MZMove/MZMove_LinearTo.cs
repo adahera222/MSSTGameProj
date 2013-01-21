@@ -11,7 +11,6 @@ public class MZMove_LinearTo : MZMove
 
 	Vector2 _initPosiiton;
 	Vector2 _moveDistanceXY;
-//	float _moveDirection;
 
 	//
 

@@ -18,6 +18,7 @@ public class MZCharacterObjectsLoad
 
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyM000", 10 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyM001", 10 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyM002", 30 );
 
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyAir, "EnemyL000", 3 );
 
