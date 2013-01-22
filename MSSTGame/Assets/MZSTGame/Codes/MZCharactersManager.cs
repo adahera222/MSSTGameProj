@@ -166,9 +166,12 @@ public class MZCharactersManager : MonoBehaviour
 		return !( enemy.isActive == false || enemy.currentHealthPoint <= 0 );
 	}
 
+	int _playerHitTime = 0;
 	void OnEnemyBulletCollidePlayer(MZBullet enemyBullet, MZPlayer player)
 	{
 		enemyBullet.Disable();
+		_playerHitTime++;
+		MZDebug.Log( "Your hit by " + _playerHitTime.ToString() + " times" );
 	}
 
 	void OnPlayerBulletCollideEnemy(MZBullet playerBullet, MZEnemy enemy)

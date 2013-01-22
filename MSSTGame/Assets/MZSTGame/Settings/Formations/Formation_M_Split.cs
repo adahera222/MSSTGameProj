@@ -69,11 +69,22 @@ public class Formation_M_Split : MZFormation
 		MZPartControl partControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 		mode.AddPartControlUpdater().Add( partControl );
 
-		partControl.AddAttack<MZAttack_Idle>().duration = _showTime + 0.5f;
+		partControl.AddAttack<MZAttack_Idle>().duration = _showTime - 0.1f;// _showTime + 0.5f; //
+
+		MZAttack_OddWay splitOdd = partControl.AddAttack<MZAttack_OddWay>();
+		splitOdd.bulletName = "EBDonuts";
+		splitOdd.numberOfWays = 36;
+		splitOdd.initVelocity = 500;
+		splitOdd.colddown = 0.1f;
+		splitOdd.duration = 0.1f;
+		splitOdd.intervalDegrees = 360/splitOdd.numberOfWays;
+		splitOdd.isRunOnce = true;
+
+		partControl.AddAttack<MZAttack_Idle>().duration = 0.5f;
 
 		MZAttack_OddWay odd = partControl.AddAttack<MZAttack_OddWay>();
 		odd.bulletName = "EBDonuts";
-		odd.numberOfWays = 18;
+		odd.numberOfWays = 16;
 		odd.initVelocity = 300;
 		odd.colddown = 0.25f;
 		odd.duration = 1;
