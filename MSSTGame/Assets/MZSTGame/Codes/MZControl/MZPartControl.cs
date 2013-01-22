@@ -68,13 +68,9 @@ public class MZPartControl : MZControlBase
 		}
 	}
 
-	public MZMove AddMove(string name, string typeString)
+	public M AddMove<M>(string name) where M : MZMove, new()
 	{
-		MZMove move = (MZMove)MZObjectHelp.CreateClass( "MZMove_" + typeString );
-
-		move.name = name;
-		move.controlDelegate = controlDelegate;
-
+		M move = MZMove.Create<M>( name, controlDelegate );
 		movesList.Add( move );
 
 		return move;

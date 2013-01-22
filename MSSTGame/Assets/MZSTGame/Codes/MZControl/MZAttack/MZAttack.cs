@@ -65,7 +65,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	public float additionalVelocity = 0;
 	public float maxVelocity = float.NaN;
 	public string bulletName = null;
-	public MZFaceTo.Type bulletFaceToType = MZFaceTo.Type.MovingVector;
+//	public MZFaceTo.Type bulletFaceToType = MZFaceTo.Type.MovingVector;
 
 	//
 
@@ -242,7 +242,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		MZBullet bulletScript = bullet.GetComponent<MZBullet>();
 
 		bulletScript.strength = strength;
-		bulletScript.faceToType = bulletFaceToType;
+//		bulletScript.faceToType = bulletFaceToType;
 
 		bulletScript.position = controlDelegate.realPosition;
 		return bullet;

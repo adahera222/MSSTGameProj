@@ -12,6 +12,7 @@ public class MZGameSetting
 	static public bool SHOW_BULLET_ON_COLLISION_CHECK = false;
 	static public bool SHOW_CHARACTERS_INFO = false;
 	static public bool SHOW_FORMATION_LOG = false;
+	static public bool DISABLE_BULLET_EFFECT = false;
 	static public Vector2 INVALID_POSITIONV2 = new Vector2( -999, -999 );// new Vector2( 0, 330 ); //Vector2.zero;// new Vector2( -9999, -9999 );
 	static public Vector2 PLAYER_MOVABLE_BOUND_CENTER = new Vector2( 0, 0 );
 	static public Vector2 PLAYER_MOVABLE_BOUND_SIZE = new Vector2( 640, 850 );

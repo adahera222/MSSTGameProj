@@ -7,7 +7,7 @@ public class Formation_S_Cross : MZFormation
 	{
 		get
 		{
-			return 6;
+			return 4.5f;
 		}
 	}
 
@@ -77,7 +77,7 @@ public class Formation_S_Cross : MZFormation
 
 	void SetTwinWayAttack(MZPartControl partControl, float degree)
 	{
-		float colddown = 0.1f;
+		float colddown = 0.3f;
 		float duration = 0.3f + ( ( _attackCode == 0 )? 0.6f : 0.3f );
 
 		MZAttack_OddWay oddWay = partControl.AddAttack<MZAttack_OddWay>();
@@ -88,11 +88,11 @@ public class Formation_S_Cross : MZFormation
 		oddWay.offsetPosition.Add( MZMath.UnitVectorFromDegrees( degree + 90 )*-10 );
 		oddWay.targetHelp = new MZTargetHelp_AssignDirection();
 		oddWay.bulletName = "EBBee";
-		oddWay.initVelocity = 400;
+		oddWay.initVelocity = 350;
 		( (MZTargetHelp_AssignDirection)oddWay.targetHelp ).direction = degree;
 
 		MZAttack_Idle idle1 = partControl.AddAttack<MZAttack_Idle>();
-		idle1.duration = 0.5f;
+		idle1.duration = 1.5f;
 
 		MZAttack_OddWay oddWay2 = partControl.AddAttack<MZAttack_OddWay>();
 		oddWay2.colddown = colddown;
@@ -102,11 +102,11 @@ public class Formation_S_Cross : MZFormation
 		oddWay2.offsetPosition.Add( MZMath.UnitVectorFromDegrees( degree + 90 + 45 )*-10 );
 		oddWay2.targetHelp = new MZTargetHelp_AssignDirection();
 		oddWay2.bulletName = "EBBee";
-		oddWay2.initVelocity = 400;
+		oddWay2.initVelocity = 350;
 		( (MZTargetHelp_AssignDirection)oddWay2.targetHelp ).direction = degree + 45;
 
 		MZAttack_Idle idle2 = partControl.AddAttack<MZAttack_Idle>();
-		idle2.duration = 0.5f;
+		idle2.duration = 1.5f;
 	}
 
 	Vector2 GetStartPosition()

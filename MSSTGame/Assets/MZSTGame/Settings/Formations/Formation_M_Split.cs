@@ -69,11 +69,11 @@ public class Formation_M_Split : MZFormation
 		MZPartControl partControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 		mode.AddPartControlUpdater().Add( partControl );
 
-		partControl.AddAttack<MZAttack_Idle>().duration = _showTime - 0.1f;// _showTime + 0.5f; //
+		partControl.AddAttack<MZAttack_Idle>().duration = _showTime;// _showTime + 0.5f; //
 
 		MZAttack_OddWay splitOdd = partControl.AddAttack<MZAttack_OddWay>();
 		splitOdd.bulletName = "EBDonuts";
-		splitOdd.numberOfWays = 36;
+		splitOdd.numberOfWays = 18;
 		splitOdd.initVelocity = 500;
 		splitOdd.colddown = 0.1f;
 		splitOdd.duration = 0.1f;
@@ -111,12 +111,12 @@ public class Formation_M_Split : MZFormation
 
 		MZAttack_OddWay odd = partControl.AddAttack<MZAttack_OddWay>();
 		odd.bulletName = "EBBee";
-		odd.colddown = 0.3f;
-		odd.duration = 1;
+		odd.colddown = 1.0f;
+		odd.duration = 1.0f;
 		odd.initVelocity = 350;
 		odd.numberOfWays = 1;
 		odd.targetHelp = new MZTargetHelp_Target();
-		odd.targetHelp.calcuteEveryTime = true;
+//		odd.targetHelp.calcuteEveryTime = true;
 	}
 
 	MZMove AddCommonMove(MZMode mode, string name)

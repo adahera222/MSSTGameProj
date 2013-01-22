@@ -6,7 +6,7 @@ using MZCharacterType = MZCharacter.MZCharacterType;
 
 public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 {
-	public MZFaceTo.Type faceToType = MZFaceTo.Type.None;
+//	public MZFaceTo.Type faceToType = MZFaceTo.Type.None;
 	public List<MZCollision> collisionsList = new List<MZCollision>();
 	//
 	GameObject _parentGameObject = null;
@@ -57,16 +57,16 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 		get{ return _faceTo; }
 	}
 
-	public void SetFaceTo(MZFaceTo.Type faceToType)
-	{
-		this.faceToType = faceToType;
-		_faceTo = MZFaceTo.Create( faceToType, this );
-	}
+//	public void SetFaceTo(MZFaceTo.Type faceToType)
+//	{
+//		this.faceToType = faceToType;
+//		_faceTo = MZFaceTo.Create( faceToType, this );
+//	}
 
 	public override void Enable()
 	{
 		base.Enable();
-		SetFaceTo( faceToType );
+//		SetFaceTo( faceToType );
 	}
 
 	public override void Disable()

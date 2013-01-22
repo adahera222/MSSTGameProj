@@ -55,9 +55,10 @@ public class MZFormationsLoad
 		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new TestFormation_S000() );
 		formationsManager.AddFormation( SizeType.Small, PositionType.Right, new TestFormation_S000() );
 
-		formationsManager.AddFormation( SizeType.Small, PositionType.Mid, new TestFormation_S001() );
-		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new TestFormation_S001() );
-		formationsManager.AddFormation( SizeType.Small, PositionType.Right, new TestFormation_S001() );
+		// tracer
+//		formationsManager.AddFormation( SizeType.Small, PositionType.Mid, new TestFormation_S001() );
+//		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new TestFormation_S001() );
+//		formationsManager.AddFormation( SizeType.Small, PositionType.Right, new TestFormation_S001() );
 
 		formationsManager.AddFormation( SizeType.Small, PositionType.Right, new TestFormation_S_XY() );
 		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new TestFormation_S_XY() );

@@ -39,19 +39,27 @@ public interface IMZFaceTo : IMZControl
 
 public abstract class MZFaceTo : MZControlBase, IMZTargetHelp
 {
-	static public MZFaceTo Create(Type type, IMZFaceTo controlTarget)
+//	static public MZFaceTo Create(Type type, IMZFaceTo controlTarget)
+//	{
+//		MZFaceTo faceTo = (MZFaceTo)MZObjectHelp.CreateClass( "MZFaceTo_" + type.ToString() );
+//		faceTo.controlDelegate = controlTarget;
+//
+//		return faceTo;
+//	}
+//
+//	public enum Type
+//	{
+//		None,
+//		Target,
+//		MovingVector,
+//	}
+
+	static public MZFaceTo Create<F>(IMZFaceTo controlTarget) where F : MZFaceTo, new()
 	{
-		MZFaceTo faceTo = (MZFaceTo)MZObjectHelp.CreateClass( "MZFaceTo_" + type.ToString() );
+		F faceTo = new F();
 		faceTo.controlDelegate = controlTarget;
 
 		return faceTo;
-	}
-
-	public enum Type
-	{
-		None,
-		Target,
-		MovingVector,
 	}
 
 	public enum MZMovingVectorType

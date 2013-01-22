@@ -50,10 +50,10 @@ public class Formation_S_Squadron : MZFormation
 	{
 		enemy.position = GetStartPosition();
 
-		foreach( MZCharacterPart p in enemy.partsByNameDictionary.Values )
-		{
-			p.faceToType = MZFaceTo.Type.None;
-		}
+//		foreach( MZCharacterPart p in enemy.partsByNameDictionary.Values )
+//		{
+//			p.faceToType = MZFaceTo.Type.None;
+//		}
 
 		MZMode mode = enemy.AddMode( "m" );
 
