@@ -6,8 +6,22 @@ using MZCharacterType = MZCharacter.MZCharacterType;
 
 public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 {
-//	public MZFaceTo.Type faceToType = MZFaceTo.Type.None;
 	public List<MZCollision> collisionsList = new List<MZCollision>();
+
+	public MZFaceTo faceTo
+	{
+		set
+		{
+			MZDebug.Assert( value != null, "face to is null" );
+			_faceTo = value;
+			_faceTo.controlDelegate = this;
+		}
+		get
+		{
+			return _faceTo;
+		}
+	}
+
 	//
 	GameObject _parentGameObject = null;
 	MZCharacter _parentCharacter = null;
@@ -34,39 +48,16 @@ public class MZCharacterPart : MZBaseObject, IMZPart, IMZFaceTo, IMZCollision
 		get{ return MZGameComponents.GetInstance().charactersManager.GetPlayerPosition(); }
 	}
 
-	public Vector2 parentMovingVector
+	public float movingDirection
 	{
-		get
-		{
-			return _parentCharacter.currentMovingVector;
-		}
-	}
-
-	public Vector2 selfMovingVector
-	{
-		get
-		{
-			throw new System.NotImplementedException();
-		}
+		get{ return _parentCharacter.currentMovingDirection; }
 	}
 
 	#endregion
 
-	public MZFaceTo faceTo
-	{
-		get{ return _faceTo; }
-	}
-
-//	public void SetFaceTo(MZFaceTo.Type faceToType)
-//	{
-//		this.faceToType = faceToType;
-//		_faceTo = MZFaceTo.Create( faceToType, this );
-//	}
-
 	public override void Enable()
 	{
 		base.Enable();
-//		SetFaceTo( faceToType );
 	}
 
 	public override void Disable()

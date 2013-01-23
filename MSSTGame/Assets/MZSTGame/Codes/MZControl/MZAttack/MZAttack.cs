@@ -19,19 +19,6 @@ public interface IMZAttack : IMZControl
 
 public abstract class MZAttack : MZControlBase, IMZTargetHelp
 {
-//	static public MZAttack Create(string name, Type type, IMZAttack controlTarget)
-//	{
-//		MZDebug.Assert( controlTarget != null, "controlTarget is null" );
-//
-//		MZAttack attack = (MZAttack)MZObjectHelp.CreateClass( "MZAttack_" + type.ToString() );
-//		MZDebug.Assert( attack != null, "create fail, type=" + type.ToString() );
-//
-//		attack.name = name;
-//		attack.controlDelegate = controlTarget;
-//
-//		return attack;
-//	}
-
 	static public A Create<A>(string name, IMZAttack controlDelegate) where A : MZAttack, new()
 	{
 		MZDebug.Assert( controlDelegate != null, "controlTarget is null" );
@@ -242,7 +229,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		MZBullet bulletScript = bullet.GetComponent<MZBullet>();
 
 		bulletScript.strength = strength;
-//		bulletScript.faceToType = bulletFaceToType;
+		bulletScript.partsByNameDictionary[ "MainBody" ].faceTo = new MZFaceTo_MovingDirection();
 
 		bulletScript.position = controlDelegate.realPosition;
 		return bullet;

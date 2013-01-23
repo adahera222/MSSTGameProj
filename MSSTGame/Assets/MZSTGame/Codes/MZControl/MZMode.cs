@@ -38,10 +38,12 @@ public class MZMode : MZControlBase
 			pc.Disable();
 	}
 
-	public Vector2 currentMovingVector
+	public float currentMovingDirection
 	{
 		get
-		{ return ( _moveControlUpdate != null && _moveControlUpdate.currentControl != null )? _moveControlUpdate.currentControl.currentMovingVector : new Vector2( 0, 0 ); }
+		{
+			return ( _moveControlUpdate != null && _moveControlUpdate.currentControl != null )? _moveControlUpdate.currentControl.currentDirection : 0;
+		}
 	}
 
 	public List<MZMove> movesList

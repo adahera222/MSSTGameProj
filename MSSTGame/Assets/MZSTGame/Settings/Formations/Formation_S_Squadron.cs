@@ -50,11 +50,6 @@ public class Formation_S_Squadron : MZFormation
 	{
 		enemy.position = GetStartPosition();
 
-//		foreach( MZCharacterPart p in enemy.partsByNameDictionary.Values )
-//		{
-//			p.faceToType = MZFaceTo.Type.None;
-//		}
-
 		MZMode mode = enemy.AddMode( "m" );
 
 		MZMove_LinearTo move = mode.AddMove<MZMove_LinearTo>( "m" );
@@ -81,7 +76,7 @@ public class Formation_S_Squadron : MZFormation
 		attackEven.duration = 0.5f;
 		attackEven.intervalDegrees = 45;
 		attackEven.initVelocity = 300;// + 25*currentCreatedMemberCount;
-		attackEven.additionalVelocity = 50;
+//		attackEven.additionalVelocity = 50;
 		attackEven.bulletName = "EBBee";
 		attackEven.targetHelp = new MZTargetHelp_Target();
 

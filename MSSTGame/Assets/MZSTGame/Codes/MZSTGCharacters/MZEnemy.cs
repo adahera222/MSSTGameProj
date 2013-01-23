@@ -54,9 +54,12 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 		base.OnRemoving();
 	}
 
-	public override Vector2 currentMovingVector
+	public override float currentMovingDirection
 	{
-		get { return ( _modeControlUpdate != null && _modeControlUpdate.currentControl != null )? _modeControlUpdate.currentControl.currentMovingVector : new Vector2( 1, 0 ); }
+		get
+		{
+			return ( _modeControlUpdate != null && _modeControlUpdate.currentControl != null )? _modeControlUpdate.currentControl.currentMovingDirection : 0;
+		}
 	}
 
 	public MZMode AddMode(string name)

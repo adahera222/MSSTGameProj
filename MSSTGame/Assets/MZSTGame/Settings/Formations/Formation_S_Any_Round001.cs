@@ -65,6 +65,11 @@ public class Formation_S_Any_Round001 : MZFormation
 		enemy.position = _currentPosition;
 		enemy.enableRemoveTime = 12;
 
+		MZTargetHelp_AssignPosition faceToTarget = MZTargetHelp.Create<MZTargetHelp_AssignPosition>();
+		faceToTarget.assignPosition = new Vector2( 0, 0 );
+		enemy.partsByNameDictionary[ "MainBody" ].faceTo = MZFaceTo.Create<MZFaceTo_Target>( null );
+		( enemy.partsByNameDictionary[ "MainBody" ].faceTo as MZFaceTo_Target ).target = faceToTarget;
+
 		MZMode mode = enemy.AddMode( "mode" );
 
 		switch( _constructCode )

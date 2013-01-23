@@ -61,6 +61,8 @@ public class Formation_S_Rail : MZFormation
 		enemy.position = _initPosition;
 		MZMove.RotationType rotType = rotationType;
 
+		enemy.partsByNameDictionary[ "MainBody" ].faceTo = new MZFaceTo_MovingDirection();
+
 		if( _constructCode == 1 )
 		{
 			if( positionType == MZFormation.PositionType.Mid )

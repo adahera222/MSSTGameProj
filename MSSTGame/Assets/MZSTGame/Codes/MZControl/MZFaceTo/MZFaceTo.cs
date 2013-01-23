@@ -10,15 +10,8 @@ public interface IMZFaceTo : IMZControl
 		get;
 	}
 
-	Vector2 parentMovingVector
-	{
-		get;
-	}
-
-	Vector2 selfMovingVector
-	{
-		get;
-	}
+	float movingDirection
+	{ get; }
 
 	Vector2 realPosition
 	{
@@ -37,23 +30,8 @@ public interface IMZFaceTo : IMZControl
 	}
 }
 
-public abstract class MZFaceTo : MZControlBase, IMZTargetHelp
+public abstract class MZFaceTo : MZControlBase
 {
-//	static public MZFaceTo Create(Type type, IMZFaceTo controlTarget)
-//	{
-//		MZFaceTo faceTo = (MZFaceTo)MZObjectHelp.CreateClass( "MZFaceTo_" + type.ToString() );
-//		faceTo.controlDelegate = controlTarget;
-//
-//		return faceTo;
-//	}
-//
-//	public enum Type
-//	{
-//		None,
-//		Target,
-//		MovingVector,
-//	}
-
 	static public MZFaceTo Create<F>(IMZFaceTo controlTarget) where F : MZFaceTo, new()
 	{
 		F faceTo = new F();
@@ -62,15 +40,7 @@ public abstract class MZFaceTo : MZControlBase, IMZTargetHelp
 		return faceTo;
 	}
 
-	public enum MZMovingVectorType
-	{
-		None,
-		Self,
-		Parent,
-	}
-
 	public new IMZFaceTo controlDelegate = null;
-	public MZMovingVectorType usingMovingVectorType = MZMovingVectorType.Parent;
 
 	#region IMZTargetHelp implementation
 	public Vector2 selfPosition

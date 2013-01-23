@@ -5,15 +5,19 @@ using System.Collections.Generic;
 public class MZBullet : MZCharacter, IMZMove
 {
 	public int strength = 0;
+
 	//
+
 	bool _drawCollisionCheck = false;
 	MZControlUpdate<MZMove> _moveControlUpdate = null;
 
-	public override Vector2 currentMovingVector
+	//
+
+	public override float currentMovingDirection
 	{
 		get
 		{
-			return ( _moveControlUpdate != null )? _moveControlUpdate.currentControl.currentMovingVector : Vector2.zero;
+			return ( _moveControlUpdate != null )? _moveControlUpdate.currentControl.currentDirection : 0;
 		}
 	}
 
