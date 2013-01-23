@@ -25,19 +25,27 @@ public class MZMove_ToTarget : MZMove, IMZTargetHelp
 
 	#endregion
 
+
+	public MZTargetHelp_Target target
+	{
+		get
+		{
+			if( _targetHelp == null )
+				_targetHelp = MZTargetHelp.Create<MZTargetHelp_Target>( this );
+			return _targetHelp;
+		}
+	}
+
 	//
 
-	MZTargetHelp _targetHelp = null;
+	MZTargetHelp_Target _targetHelp = null;
 
 	//
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-
-		_targetHelp = MZTargetHelp.Create<MZTargetHelp_Target>( this );
-		_targetHelp.calcuteEveryTime = true;
-		_targetHelp.BeginOneTime();
+		target.BeginOneTime();
 	}
 
 	protected override void UpdateWhenActive()
@@ -46,6 +54,6 @@ public class MZMove_ToTarget : MZMove, IMZTargetHelp
 		float movement = currentVelocity*MZTime.deltaTime;
 		controlDelegate.position = controlDelegate.position + new Vector2( currentMovingVector.x*movement, currentMovingVector.y*movement );
 
-		_targetHelp.EndOneTime();
+		target.EndOneTime();
 	}
 }

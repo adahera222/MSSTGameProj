@@ -67,8 +67,8 @@ public class Formation_M_Waterfall : MZFormation
 		odd.colddown = 0.1f;
 		odd.duration = 1.0f;
 		odd.bulletName = "EBDonuts";
-		odd.initVelocity = 500;
-//		odd.additionalVelocity = 50;
+		odd.initVelocity = 300;
+		odd.additionalVelocity = 80;
 		odd.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
 		( odd.targetHelp as MZTargetHelp_AssignDirection ).direction = degree;
 		float interval = 50;

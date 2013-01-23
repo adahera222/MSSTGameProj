@@ -4,15 +4,26 @@ using System.Collections.Generic;
 
 public interface IMZPart : IMZAttack, IMZMove
 {
-
+	MZFaceTo faceTo
+	{
+		set;
+		get;
+	}
 }
 
 public class MZPartControl : MZControlBase
 {
+	public delegate MZFaceTo GetFaceTo();
+
+	//
 	public new IMZPart controlDelegate = null;
+	public GetFaceTo getFaceTo;
+
+	//
 	MZControlUpdate<MZMove> _moveControlUpdate = null;
 	MZControlUpdate<MZAttack> _attackControlUpdate = null;
 
+	//
 	public MZPartControl()
 	{
 
@@ -27,6 +38,12 @@ public class MZPartControl : MZControlBase
 	public override void Enable()
 	{
 		base.Enable();
+
+		if( getFaceTo != null )
+		{
+			controlDelegate.faceTo = getFaceTo();
+			controlDelegate.faceTo.Enable();
+		}
 
 		if( _moveControlUpdate != null )
 			_moveControlUpdate.Enable();

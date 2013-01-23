@@ -171,7 +171,9 @@ public class MZCharactersManager : MonoBehaviour
 	{
 		enemyBullet.Disable();
 		_playerHitTime++;
-		MZDebug.Log( "Your hit by " + _playerHitTime.ToString() + " times" );
+//		MZDebug.Log( "Your hit by " + _playerHitTime.ToString() + " times" );
+
+		Debug.Log( "Your hit by " + _playerHitTime.ToString() + " times" );
 	}
 
 	void OnPlayerBulletCollideEnemy(MZBullet playerBullet, MZEnemy enemy)

@@ -53,7 +53,7 @@ public class Formation_S_Squadron : MZFormation
 		MZMode mode = enemy.AddMode( "m" );
 
 		MZMove_LinearTo move = mode.AddMove<MZMove_LinearTo>( "m" );
-		move.destationPosition = _currentNewEnemyDestPos;
+		move.destinationPosition = _currentNewEnemyDestPos;
 		move.totalTime = 0.3f;
 		move.duration = 1.0f;
 

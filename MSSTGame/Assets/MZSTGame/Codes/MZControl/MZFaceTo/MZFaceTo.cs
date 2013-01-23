@@ -32,7 +32,7 @@ public interface IMZFaceTo : IMZControl
 
 public abstract class MZFaceTo : MZControlBase
 {
-	static public MZFaceTo Create<F>(IMZFaceTo controlTarget) where F : MZFaceTo, new()
+	static public F Create<F>(IMZFaceTo controlTarget) where F : MZFaceTo, new()
 	{
 		F faceTo = new F();
 		faceTo.controlDelegate = controlTarget;

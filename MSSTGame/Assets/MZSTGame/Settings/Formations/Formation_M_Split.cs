@@ -20,8 +20,8 @@ public class Formation_M_Split : MZFormation
 		}
 	}
 
-	float _showTime = 1.0f;
-	float _splitTime = 0.1f;
+	float _showTime = 1.5f;
+	float _splitTime = 0.2f;
 	Vector2 _startPosition;
 
 	protected override void FirstUpdate()
@@ -113,10 +113,9 @@ public class Formation_M_Split : MZFormation
 		odd.bulletName = "EBBee";
 		odd.colddown = 1.0f;
 		odd.duration = 1.0f;
-		odd.initVelocity = 350;
+		odd.initVelocity = 400;
 		odd.numberOfWays = 1;
 		odd.targetHelp = new MZTargetHelp_Target();
-//		odd.targetHelp.calcuteEveryTime = true;
 	}
 
 	MZMove AddCommonMove(MZMode mode, string name)
@@ -130,14 +129,20 @@ public class Formation_M_Split : MZFormation
 
 	void AddSplitMoveToSubEmemy(MZMode mode)
 	{
-		MZMove_LinearBy linearToSplit = mode.AddMove<MZMove_LinearBy>( "s" );
-		linearToSplit.velocity = 1500;
-		linearToSplit.duration = _splitTime;
-		linearToSplit.direction = ( 360/8 )*currentCreatedMemberCount;
+		MZMove_LinearTo splitMove = mode.AddMove<MZMove_LinearTo>( "s" );
+		float moveDegrees = ( 360/8 )*currentCreatedMemberCount;
+		float movement = 200;
+		splitMove.useRelativePosition = true;
+		splitMove.destinationPosition = MZMath.UnitVectorFromDegrees( moveDegrees )*movement;
+		splitMove.totalTime = _splitTime - 0.1f;
+		splitMove.duration = _splitTime;
 	}
 
 	Vector2 GetStartPosition()
 	{
-		return new Vector2( MZMath.RandomFromRange( (int)MZGameSetting.ENEMY_BOUNDLE_LEFT + 100, (int)(MZGameSetting.ENEMY_BOUNDLE_RIGHT - 100 ) ), MZGameSetting.ENEMY_BOUNDLE_TOP + 120 );
+		int sideOffset = 150;
+
+		int x = MZMath.RandomFromRange( (int)MZGameSetting.ENEMY_BOUNDLE_LEFT + sideOffset, (int)MZGameSetting.ENEMY_BOUNDLE_RIGHT - sideOffset );
+		return new Vector2(  x, MZGameSetting.ENEMY_BOUNDLE_TOP + 120 );
 	}
 }

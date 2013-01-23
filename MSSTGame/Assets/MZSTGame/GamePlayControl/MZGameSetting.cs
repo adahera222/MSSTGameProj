@@ -26,6 +26,8 @@ public class MZGameSetting
 	static public float ENEMY_BOUNDLE_DOWN = -PLAYER_MOVABLE_BOUND_SIZE.y/2;
 	static public float ENEMY_BOUNDLE_LEFT = -PLAYER_MOVABLE_BOUND_SIZE.x/2;
 	static public float ENEMY_BOUNDLE_RIGHT = PLAYER_MOVABLE_BOUND_SIZE.x/2;
+	static public float ENEMY_BOUNDLE_WIDTH = PLAYER_MOVABLE_BOUND_SIZE.x;
+	static public float ENEMY_BOUNDLE_HEIGHT = PLAYER_MOVABLE_BOUND_SIZE.y;
 
 	static public Rect GetPlayerMovableBoundRect()
 	{

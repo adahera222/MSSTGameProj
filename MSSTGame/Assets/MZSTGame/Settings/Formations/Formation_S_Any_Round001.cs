@@ -65,11 +65,6 @@ public class Formation_S_Any_Round001 : MZFormation
 		enemy.position = _currentPosition;
 		enemy.enableRemoveTime = 12;
 
-		MZTargetHelp_AssignPosition faceToTarget = MZTargetHelp.Create<MZTargetHelp_AssignPosition>();
-		faceToTarget.assignPosition = new Vector2( 0, 0 );
-		enemy.partsByNameDictionary[ "MainBody" ].faceTo = MZFaceTo.Create<MZFaceTo_Target>( null );
-		( enemy.partsByNameDictionary[ "MainBody" ].faceTo as MZFaceTo_Target ).target = faceToTarget;
-
 		MZMode mode = enemy.AddMode( "mode" );
 
 		switch( _constructCode )
@@ -94,6 +89,7 @@ public class Formation_S_Any_Round001 : MZFormation
 		// main attack
 		MZPartControl mainPartControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 		mode.AddPartControlUpdater().Add( mainPartControl );
+		mainPartControl.getFaceTo = new MZPartControl.GetFaceTo( testFaceTo );
 
 		MZAttack_Idle attackIdle = mainPartControl.AddAttack<MZAttack_Idle>();
 		attackIdle.duration = 0.8f;
@@ -156,8 +152,18 @@ public class Formation_S_Any_Round001 : MZFormation
 		moveIdle.duration = 5;
 
 		MZMove_LinearTo moveOut = mode.AddMove<MZMove_LinearTo>( "l" );
-		moveOut.destationPosition = Vector2.zero;
+		moveOut.destinationPosition = Vector2.zero;
 		moveOut.totalTime = 0.5f;
 		moveOut.notEndAtDestation = true;
+	}
+
+	MZFaceTo testFaceTo()
+	{
+		MZTargetHelp_AssignPosition target = MZTargetHelp.Create<MZTargetHelp_AssignPosition>();
+		target.assignPosition = new Vector2( 0, 0 );
+		MZFaceTo_Target faceTo = MZFaceTo.Create<MZFaceTo_Target>( null );
+		faceTo.target = target;
+
+		return faceTo;
 	}
 }

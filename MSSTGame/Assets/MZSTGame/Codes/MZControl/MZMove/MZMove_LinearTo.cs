@@ -4,7 +4,8 @@ using System.Collections;
 public class MZMove_LinearTo : MZMove
 {
 	public bool notEndAtDestation = false;
-	public Vector2 destationPosition = Vector2.zero;
+	public bool useRelativePosition = false; // ready to target
+	public Vector2 destinationPosition = Vector2.zero; // ready to target
 	public float totalTime = 0;
 
 	//
@@ -21,7 +22,9 @@ public class MZMove_LinearTo : MZMove
 		MZDebug.Assert( totalTime > 0, "totalTime must be set" );
 
 		_initPosiiton = controlDelegate.position;
-		_moveDistanceXY = destationPosition - _initPosiiton;
+		destinationPosition = GetDestinationPosition( useRelativePosition, _initPosiiton, destinationPosition );
+
+		_moveDistanceXY = destinationPosition - _initPosiiton;
 		MaintainCurrentDirectionValue( MZMath.DegreesFromXAxisToVector( _moveDistanceXY ) );
 	}
 
@@ -32,5 +35,10 @@ public class MZMove_LinearTo : MZMove
 			currentProp = 1;
 
 		controlDelegate.position = _initPosiiton + ( _moveDistanceXY*currentProp );
+	}
+
+	Vector2 GetDestinationPosition(bool useRelative, Vector2 startPosition, Vector2 destPosition)
+	{
+		return ( useRelative )? startPosition + destPosition : destPosition;
 	}
 }

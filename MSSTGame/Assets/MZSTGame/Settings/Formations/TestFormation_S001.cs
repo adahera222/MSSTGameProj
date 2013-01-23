@@ -55,6 +55,7 @@ public class TestFormation_S001 : MZFormation
 
 		MZMove_ToTarget move = mode.AddMove<MZMove_ToTarget>( "GoDie" );
 		move.velocity = 200;
+		move.target.calcuteEveryTime = true;
 
 		MZPartControl partControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
 		mode.AddPartControlUpdater().Add( partControl );
