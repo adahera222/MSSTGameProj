@@ -7,49 +7,37 @@ public class TestFormation_S_XY : MZFormation
 {
 	//
 
-	float _createTimeCount;
-	float _createInterval;
-	Vector2 _initPosition;
-
 	//
 
 	public override float disableNextFormationTime
 	{ get { return 1; } }
 
-	protected override int maxCreatedNumber
+	protected override int maxEnemyCreatedNumber
 	{ get { return 8; } }
 
 	//
 
-	public override void Enable()
+	protected override void InitValues()
 	{
-		base.Enable();
-
-		_createTimeCount = 0;
-		_createInterval = 0.6f;
+		enemyCreateTimeInterval = 0.6f;
 	}
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-		_initPosition = GetInitPosition( positionType );
 	}
 
 	protected override void UpdateWhenActive()
 	{
-		_createTimeCount -= MZTime.deltaTime;
-
-		if( _createTimeCount < 0 )
+		if( UpdateAndCheckTimeToCreateEnemy() )
 		{
 			AddNewEnemy( MZCharacterType.EnemyAir, "EnemyS002", false );
-			_createTimeCount += _createInterval;
 		}
 	}
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
 		enemy.healthPoint = 4;
-		enemy.position = _initPosition;
 
 		MZMode mode = enemy.AddMode( "mode" );
 
@@ -76,13 +64,12 @@ public class TestFormation_S_XY : MZFormation
 	}
 
 	//
-
-	Vector2 GetInitPosition(PositionType sideType)
+	protected override Vector2 GetEnemyStartPosition()
 	{
 		float xValue = 400;
 		float yValue = 500;
 
-		switch( sideType )
+		switch( positionType )
 		{
 			case PositionType.Left:
 				return new Vector3( -xValue, yValue );

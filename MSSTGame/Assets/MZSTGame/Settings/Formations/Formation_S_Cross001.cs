@@ -11,51 +11,50 @@ public class Formation_S_Cross : MZFormation
 		}
 	}
 
-	protected override int maxCreatedNumber
+	protected override int maxEnemyCreatedNumber
 	{
 		get
 		{
-			return _maxCreatedNumber;
+			return 8;
 		}
 	}
 
 	int _attackCode;
 	int _dirCode;
 	int _numberOfRow = 4;
-	int _maxCreatedNumber = 8;
-	float _createTimeIntercval = 0.7f;
-	float _createTimeCount;
 	float _xInterval;
-	Vector2 leftStartPosition;
-	Vector2 rightStartPosition;
+	Vector2 _leftStartPosition;
+	Vector2 _rightStartPosition;
+
+	protected override void InitValues()
+	{
+		enemyCreateTimeInterval = 0.7f;
+
+		_dirCode = ( MZMath.RandomFromRange( 0, 1 ) == 0 )? 1 : -1;
+		_attackCode = MZMath.RandomFromRange( 0, 1 );
+		_xInterval = ( MZGameSetting.ENEMY_BOUNDLE_RIGHT - MZGameSetting.ENEMY_BOUNDLE_LEFT )/_numberOfRow;
+		_leftStartPosition = new Vector2( MZGameSetting.ENEMY_BOUNDLE_LEFT + _xInterval/2, MZGameSetting.ENEMY_BOUNDLE_TOP + 100 );
+		_rightStartPosition = new Vector2( MZGameSetting.ENEMY_BOUNDLE_RIGHT - _xInterval/2, MZGameSetting.ENEMY_BOUNDLE_TOP + 100 );
+	}
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-
-		_dirCode = ( MZMath.RandomFromRange( 0, 1 ) == 0 )? 1 : -1;
-		_attackCode = MZMath.RandomFromRange( 0, 1 );
-		_createTimeCount = 0;
-
-		_xInterval = ( MZGameSetting.ENEMY_BOUNDLE_RIGHT - MZGameSetting.ENEMY_BOUNDLE_LEFT )/_numberOfRow;
-		leftStartPosition = new Vector2( MZGameSetting.ENEMY_BOUNDLE_LEFT + _xInterval/2, MZGameSetting.ENEMY_BOUNDLE_TOP + 100 );
-		rightStartPosition = new Vector2( MZGameSetting.ENEMY_BOUNDLE_RIGHT - _xInterval/2, MZGameSetting.ENEMY_BOUNDLE_TOP + 100 );
 	}
 
 	protected override void UpdateWhenActive()
 	{
-		_createTimeCount -= MZTime.deltaTime;
-		if( _createTimeCount >= 0 || currentCreatedMemberCount >= maxCreatedNumber )
+		if( currentEnemyCreatedCount >= maxEnemyCreatedNumber )
 			return;
 
-		_createTimeCount += _createTimeIntercval;
-
-		AddNewEnemy( MZCharacter.MZCharacterType.EnemyAir, "EnemySRed", false );
+		if( UpdateAndCheckTimeToCreateEnemy() )
+		{
+			AddNewEnemy( MZCharacter.MZCharacterType.EnemyAir, "EnemySRed", false );
+		}
 	}
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
-		enemy.position = GetStartPosition();
 		enemy.partsByNameDictionary[ "MainBody" ].faceTo = new MZFaceTo_MovingDirection();
 
 		MZMode mode = enemy.AddMode( "m" );
@@ -74,6 +73,13 @@ public class Formation_S_Cross : MZFormation
 			mode.AddPartControlUpdater().Add( pControl );
 			SetTwinWayAttack( pControl, initDegrees + i*intervalDegrees );
 		}
+	}
+
+	protected override Vector2 GetEnemyStartPosition()
+	{
+		_dirCode = ( currentEnemyCreatedCount != 0 && currentEnemyCreatedCount%_numberOfRow == 0 )? -_dirCode : _dirCode;
+		Vector2 startPosition = ( _dirCode > 0 )? _leftStartPosition : _rightStartPosition;
+		return startPosition + new Vector2( _xInterval*( currentEnemyCreatedCount%_numberOfRow )*_dirCode, 0 );
 	}
 
 	void SetTwinWayAttack(MZPartControl partControl, float degree)
@@ -108,12 +114,5 @@ public class Formation_S_Cross : MZFormation
 
 		MZAttack_Idle idle2 = partControl.AddAttack<MZAttack_Idle>();
 		idle2.duration = 1.5f;
-	}
-
-	Vector2 GetStartPosition()
-	{
-		_dirCode = ( currentCreatedMemberCount != 0 && currentCreatedMemberCount%_numberOfRow == 0 )? -_dirCode : _dirCode;
-		Vector2 startPosition = ( _dirCode > 0 )? leftStartPosition : rightStartPosition;
-		return startPosition + new Vector2( _xInterval*( currentCreatedMemberCount%_numberOfRow )*_dirCode, 0 );
 	}
 }

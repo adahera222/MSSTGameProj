@@ -11,7 +11,7 @@ public class Formation_S_Rocket : MZFormation
 		}
 	}
 
-	protected override int maxCreatedNumber
+	protected override int maxEnemyCreatedNumber
 	{
 		get
 		{
@@ -19,8 +19,10 @@ public class Formation_S_Rocket : MZFormation
 		}
 	}
 
-	float _createInterval = 0.2f;
-	float _createTimeCount;
+	protected override void InitValues()
+	{
+		enemyCreateTimeInterval = 0.2f;
+	}
 
 	protected override void FirstUpdate()
 	{
@@ -29,31 +31,58 @@ public class Formation_S_Rocket : MZFormation
 
 	protected override void UpdateWhenActive()
 	{
-		if( currentCreatedMemberCount >= maxCreatedNumber )
-			return;
-
-		_createTimeCount -= MZTime.deltaTime;
-
-		if( _createTimeCount < 0 )
+		if( UpdateAndCheckTimeToCreateEnemy() )
 		{
 			AddNewEnemy( MZCharacter.MZCharacterType.EnemyAir, "EnemyM002", false );
-			_createTimeCount += _createInterval;
 		}
 	}
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
 		enemy.healthPoint = 5;
-		enemy.position = GetEnemyInitPosiion();
 		enemy.partsByNameDictionary[ "MainBody" ].faceTo = MZFaceTo.Create<MZFaceTo_MovingDirection>( null );
 
 		AddShowMode( enemy );
 		AddRocketMode( enemy );
 	}
 
+	protected override Vector2 GetEnemyStartPosition()
+	{
+		float prepharePosOffset = 150;
+		float sideOffset = 50;
+		float posIntervl = GetPositionInterval( sideOffset );
+
+		float x;
+		float y;
+
+		switch( positionType )
+		{
+			case PositionType.Mid:
+				x = MZGameSetting.ENEMY_BOUNDLE_LEFT + sideOffset + ( posIntervl/2 ) + posIntervl*currentEnemyCreatedCount;
+				y = MZGameSetting.ENEMY_BOUNDLE_TOP + prepharePosOffset;
+				break;
+
+			case PositionType.Left:
+				x = MZGameSetting.ENEMY_BOUNDLE_LEFT - 150;
+				y = MZGameSetting.ENEMY_BOUNDLE_TOP + sideOffset - ( ( posIntervl/2 ) + posIntervl*currentEnemyCreatedCount );
+				break;
+
+			case PositionType.Right:
+				x = MZGameSetting.ENEMY_BOUNDLE_RIGHT + 150;
+				y = MZGameSetting.ENEMY_BOUNDLE_TOP + sideOffset - ( ( posIntervl/2 ) + posIntervl*currentEnemyCreatedCount );
+				break;
+
+			default:
+				MZDebug.AssertFalse( "not supprt: " + positionType.ToString() );
+				return Vector2.zero;
+		}
+
+		return new Vector2( x, y );
+	}
+
 	void AddShowMode(MZEnemy enemy)
 	{
-		float duration = maxCreatedNumber*_createInterval + 0.15f;
+		float duration = maxEnemyCreatedNumber*enemyCreateTimeInterval + 0.15f;
 
 		MZMode mode = enemy.AddMode( "show" );
 		mode.duration = duration;
@@ -89,40 +118,6 @@ public class Formation_S_Rocket : MZFormation
 		mainPartControl.AddAttack<MZAttack_Idle>().duration = -1;
 	}
 
-	Vector2 GetEnemyInitPosiion()
-	{
-		float prepharePosOffset = 150;
-		float sideOffset = 50;
-		float posIntervl = GetPositionInterval( sideOffset );
-
-		float x;
-		float y;
-
-		switch( positionType )
-		{
-			case PositionType.Mid:
-				x = MZGameSetting.ENEMY_BOUNDLE_LEFT + sideOffset + ( posIntervl/2 ) + posIntervl*currentCreatedMemberCount;
-				y = MZGameSetting.ENEMY_BOUNDLE_TOP + prepharePosOffset;
-				break;
-
-			case PositionType.Left:
-				x = MZGameSetting.ENEMY_BOUNDLE_LEFT - 150;
-				y = MZGameSetting.ENEMY_BOUNDLE_TOP + sideOffset - ( ( posIntervl/2 ) + posIntervl*currentCreatedMemberCount );
-				break;
-
-			case PositionType.Right:
-				x = MZGameSetting.ENEMY_BOUNDLE_RIGHT + 150;
-				y = MZGameSetting.ENEMY_BOUNDLE_TOP + sideOffset - ( ( posIntervl/2 ) + posIntervl*currentCreatedMemberCount );
-				break;
-
-			default:
-				MZDebug.AssertFalse( "not supprt: " + positionType.ToString() );
-				return Vector2.zero;
-		}
-
-		return new Vector2( x, y );
-	}
-
 	Vector2 GetShowMoveDestPosition()
 	{
 		switch( positionType )
@@ -145,12 +140,12 @@ public class Formation_S_Rocket : MZFormation
 	float GetPositionInterval(float sideOffset)
 	{
 		if( positionType == MZFormation.PositionType.Mid )
-			return ( ( MZGameSetting.ENEMY_BOUNDLE_WIDTH - sideOffset*2 )/maxCreatedNumber );
+			return ( ( MZGameSetting.ENEMY_BOUNDLE_WIDTH - sideOffset*2 )/maxEnemyCreatedNumber );
 
 		if( positionType == MZFormation.PositionType.Left || positionType == MZFormation.PositionType.Right )
 		{
 			float enemyLine = MZGameSetting.ENEMY_BOUNDLE_HEIGHT/3*2;
-			return enemyLine/maxCreatedNumber;
+			return enemyLine/maxEnemyCreatedNumber;
 		}
 
 		MZDebug.AssertFalse( "not support type" + positionType.ToString() );

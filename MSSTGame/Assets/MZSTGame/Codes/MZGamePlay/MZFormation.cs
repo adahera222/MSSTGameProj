@@ -61,8 +61,14 @@ public abstract class MZFormation : MZControlBase
 
 	//
 
+	protected float enemyCreateTimeInterval;
+	protected string enemyName;
+	protected float enemyCreateTimeCount;
+
+	//
+
 	int _stateExp = int.MinValue;
-	int _createdMemberCount = 0;
+	int _enemyCreatedCount = 0;
 	int _constructCode = 0;
 	SizeType _sizeType = SizeType.Unknow;
 	PositionType _positionType = PositionType.Unknow;
@@ -105,29 +111,50 @@ public abstract class MZFormation : MZControlBase
 
 	public override bool ActiveCondition()
 	{
-		return ( _createdMemberCount < maxCreatedNumber || existedBelongEnemiesCount > 0 );
+		return ( _enemyCreatedCount < maxEnemyCreatedNumber || existedBelongEnemiesCount > 0 );
 	}
 
 	public override void Enable()
 	{
 		base.Enable();
-		_createdMemberCount = 0;
+
+		enemyCreateTimeCount = 0;
+		_enemyCreatedCount = 0;
 		_enemiesList = new List<MZEnemy>();
+
+		InitValues();
 	}
+
 	//
 
-	protected int currentCreatedMemberCount
-	{ get { return _createdMemberCount; } }
+	protected bool UpdateAndCheckTimeToCreateEnemy()
+	{
+		if( currentEnemyCreatedCount >= maxEnemyCreatedNumber )
+			return false;
+
+		enemyCreateTimeCount -= MZTime.deltaTime;
+
+		if( enemyCreateTimeCount < 0 )
+		{
+			enemyCreateTimeCount += enemyCreateTimeInterval;
+			return true;
+		}
+
+		return false;
+	}
+
+	protected int currentEnemyCreatedCount
+	{ get { return _enemyCreatedCount; } }
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-		MZDebug.Assert( maxCreatedNumber >= 0, "maxCreateNumber must br more than zero" );
+		MZDebug.Assert( maxEnemyCreatedNumber >= 0, "maxCreateNumber must br more than zero" );
 	}
 
 	protected MZEnemy AddNewEnemy(MZCharacterType type, string name, bool initDefaultMode)
 	{
-		if( _createdMemberCount >= maxCreatedNumber )
+		if( _enemyCreatedCount >= maxEnemyCreatedNumber )
 			return null;
 
 		GameObject enemyObject = MZCharacterObjectsFactory.instance.Get( type, name );
@@ -137,6 +164,7 @@ public abstract class MZFormation : MZControlBase
 		if( initDefaultMode )
 			enemy.InitDefaultMode();
 
+		enemy.position = GetEnemyStartPosition();
 		NewEnemyBeforeEnable( enemy );
 
 		if( _enemiesList == null )
@@ -145,14 +173,27 @@ public abstract class MZFormation : MZControlBase
 
 		MZGameComponents.instance.charactersManager.Add( type, enemy.GetComponent<MZCharacter>() );
 
-		_createdMemberCount++;
-		MZDebug.Assert( _createdMemberCount <= maxCreatedNumber, "created/max=" + _createdMemberCount.ToString() + "/" + maxCreatedNumber + "???" );
+		_enemyCreatedCount++;
+		MZDebug.Assert( _enemyCreatedCount <= maxEnemyCreatedNumber, "created/max=" + _enemyCreatedCount.ToString() + "/" + maxEnemyCreatedNumber + "???" );
 
 		return enemy;
 	}
 
-	protected abstract int maxCreatedNumber
+	protected abstract int maxEnemyCreatedNumber
 	{ get; }
+
+	/// <summary>
+	/// Inits the values.
+	/// </summary>
+	protected abstract void InitValues();
+
+	/// <summary>
+	/// Gets the enemy start position.
+	/// </summary>
+	/// <returns>
+	/// The enemy start position.
+	/// </returns>
+	protected abstract Vector2 GetEnemyStartPosition();
 
 	/// <summary>
 	/// set new enemy before enable, such like position, override default mode ... etc

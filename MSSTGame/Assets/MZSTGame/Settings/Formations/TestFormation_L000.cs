@@ -10,12 +10,17 @@ public class TestFormation_L000 : MZFormation
 		get { return 15; }
 	}
 
-	protected override int maxCreatedNumber
+	protected override int maxEnemyCreatedNumber
 	{
 		get
 		{
 			return 1;
 		}
+	}
+
+	protected override void InitValues()
+	{
+
 	}
 
 	protected override void FirstUpdate()
@@ -27,7 +32,12 @@ public class TestFormation_L000 : MZFormation
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
-		enemy.GetComponent<MZEnemy>().position = new Vector2( 0, 500 );
+
+	}
+
+	protected override Vector2 GetEnemyStartPosition()
+	{
+		return new Vector2( 0, 500 );
 	}
 
 	protected override void UpdateWhenActive()

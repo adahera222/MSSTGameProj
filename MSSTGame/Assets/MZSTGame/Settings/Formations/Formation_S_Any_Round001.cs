@@ -13,7 +13,7 @@ public class Formation_S_Any_Round001 : MZFormation
 		}
 	}
 
-	protected override int maxCreatedNumber
+	protected override int maxEnemyCreatedNumber
 	{
 		get
 		{
@@ -21,37 +21,32 @@ public class Formation_S_Any_Round001 : MZFormation
 		}
 	}
 
-	Vector2 _currentPosition;
 	int _constructCode;
 	int _angularVelocityDirection;
+	float _intervalDegrees;
+	float _distance;
 
-	public Formation_S_Any_Round001() : base()
+	protected override void InitValues()
 	{
-
-	}
-
-	public Formation_S_Any_Round001(int constructCode) : base( constructCode )
-	{
-
+		_constructCode = MZMath.RandomFromRange( 0, 2 );
+		_angularVelocityDirection = ( MZMath.RandomFromRange( 0, 1 ) == 0 )? 1 : -1;
+		_intervalDegrees = 360/maxEnemyCreatedNumber;
+		_distance = 700;
 	}
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
 
-		_constructCode = MZMath.RandomFromRange( 0, 2 );
-		_angularVelocityDirection = ( MZMath.RandomFromRange( 0, 1 ) == 0 )? 1 : -1;
-
-		float intervalDegrees = 360/maxCreatedNumber;
-		float distance = 700;
-
-		for( int i = 0; i < maxCreatedNumber; i++ )
+		for( int i = 0; i < maxEnemyCreatedNumber; i++ )
 		{
-			Vector2 vector = MZMath.UnitVectorFromDegrees( intervalDegrees*i );
-			_currentPosition = vector*distance;
-
 			AddNewEnemy( MZCharacterType.EnemyAir, "EnemySYellow", false );
 		}
+	}
+
+	protected override Vector2 GetEnemyStartPosition()
+	{
+		return MZMath.UnitVectorFromDegrees( _intervalDegrees*currentEnemyCreatedCount )*_distance;
 	}
 
 	protected override void UpdateWhenActive()
@@ -62,7 +57,6 @@ public class Formation_S_Any_Round001 : MZFormation
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
 		enemy.healthPoint = 10;
-		enemy.position = _currentPosition;
 		enemy.enableRemoveTime = 12;
 
 		MZMode mode = enemy.AddMode( "mode" );

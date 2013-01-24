@@ -8,7 +8,7 @@ public class TestFormation_M000 : MZFormation
 	public override float disableNextFormationTime
 	{ get { return 3; } }
 
-	protected override int maxCreatedNumber
+	protected override int maxEnemyCreatedNumber
 	{ get { return 1; } }
 
 	//
@@ -17,35 +17,21 @@ public class TestFormation_M000 : MZFormation
 	Vector2 _initPosition;
 
 	//
+
+	protected override void InitValues()
+	{
+
+	}
 	
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-
-		_initPosition = GetInitPosition( positionType );
-
-//		_enemyCount = 0;
-//		int rank = GetSelfRank();
-
-//		for( int i = 0; i < rank + 1; i++ )
-//		{
 		AddNewEnemy( MZCharacterType.EnemyAir, "EnemyM000", true );
-
-//			_enemyCount++;
-//		}
 	}
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
-//		int rank = GetSelfRank();
-//		float interval = MZGameSetting.PLAYER_MOVABLE_BOUND_SIZE.x/( rank + 2 );
-//		float x = MZGameSetting.PLAYER_MOVABLE_BOUND_DOWNLEFT.x + ( _enemyCount + 1 )*interval;
-//		float y = MZGameSetting.PLAYER_MOVABLE_BOUND_TOPRIGHT.y + 150;
-//
-//		enemy.GetComponent<MZEnemy>().position = new Vector2( x, y );
 
-		enemy.position = _initPosition;
-			
 	}
 
 	protected override void UpdateWhenActive()
@@ -53,25 +39,7 @@ public class TestFormation_M000 : MZFormation
 
 	}
 
-//	int GetSelfRank()
-//	{
-//		switch( MZGameComponents.instance.rank )
-//		{
-//			case 0:
-//			case 1:
-//				return 0;
-//			case 2:
-//			case 3:
-//				return 1;
-//			case 4:
-//			case 5:
-//				return 2;
-//			default:
-//				return 3;
-//		}
-//	}
-
-	Vector2 GetInitPosition(PositionType positionType)
+	protected override Vector2 GetEnemyStartPosition()
 	{
 		float y = MZGameSetting.PLAYER_MOVABLE_BOUND_TOPRIGHT.y + 150;
 		float left = MZGameSetting.PLAYER_MOVABLE_BOUND_DOWNLEFT.x/2;

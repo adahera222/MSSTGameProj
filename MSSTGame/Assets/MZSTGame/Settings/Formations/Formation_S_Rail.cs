@@ -13,7 +13,7 @@ public class Formation_S_Rail : MZFormation
 		}
 	}
 
-	protected override int maxCreatedNumber
+	protected override int maxEnemyCreatedNumber
 	{
 		get
 		{
@@ -24,41 +24,36 @@ public class Formation_S_Rail : MZFormation
 	//
 
 	int _constructCode;
-	float _createInterval;
-	float _createTimeCount;
+//	float _createInterval;
+//	float _createTimeCount;
 	Vector2 _initPosition;
 	MZMove.RotationType rotationType;
-	string enemyName = "EnemySYellow";
 
 	//
+
+	protected override void InitValues()
+	{
+		enemyCreateTimeInterval = 0.25f;
+		enemyName = "EnemySYellow";
+
+		_constructCode = MZMath.RandomFromRange( 0, 1 );
+		SetInitByType();
+	}
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-
-		_createInterval = 0.25f;
-		_createTimeCount = 0;
-		_constructCode = MZMath.RandomFromRange( 0, 1 );
-
-		SetInitByType();
 	}
 
 	protected override void UpdateWhenActive()
 	{
-		_createTimeCount -= MZTime.deltaTime;
-
-		if( _createTimeCount < 0 )
-		{
-			_createTimeCount += _createInterval;
-
+		if( UpdateAndCheckTimeToCreateEnemy() )
 			AddNewEnemy( MZCharacterType.EnemyAir, enemyName, false );
-		}
 	}
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
 		enemy.healthPoint = 1;
-		enemy.position = _initPosition;
 		MZMove.RotationType rotType = rotationType;
 
 		enemy.partsByNameDictionary[ "MainBody" ].faceTo = new MZFaceTo_MovingDirection();
@@ -67,17 +62,17 @@ public class Formation_S_Rail : MZFormation
 		{
 			if( positionType == MZFormation.PositionType.Mid )
 			{
-				enemy.position += new Vector2( 50*( ( currentCreatedMemberCount%2 == 0 )? 1 : -1 ), 0 );
+				enemy.position += new Vector2( 50*( ( currentEnemyCreatedCount%2 == 0 )? 1 : -1 ), 0 );
 			}
 			else
 			{
-				enemy.position += ( ( currentCreatedMemberCount%2 == 0 )? new Vector2( 0, 100 ) : Vector2.zero );
+				enemy.position += ( ( currentEnemyCreatedCount%2 == 0 )? new Vector2( 0, 100 ) : Vector2.zero );
 			}
 		}
 
 		if( positionType == MZFormation.PositionType.Mid )
 		{
-			rotType = ( currentCreatedMemberCount%2 == 0 )? MZMove.RotationType.CCW : MZMove.RotationType.CW;
+			rotType = ( currentEnemyCreatedCount%2 == 0 )? MZMove.RotationType.CCW : MZMove.RotationType.CW;
 		}
 
 		MZMode mode = enemy.AddMode( "mode" );
@@ -113,6 +108,11 @@ public class Formation_S_Rail : MZFormation
 
 		MZAttack_Idle attackIdle = mainPartControl.AddAttack<MZAttack_Idle>();
 		attackIdle.duration = 3;
+	}
+
+	protected override Vector2 GetEnemyStartPosition()
+	{
+		return _initPosition;
 	}
 
 	void SetInitByType()

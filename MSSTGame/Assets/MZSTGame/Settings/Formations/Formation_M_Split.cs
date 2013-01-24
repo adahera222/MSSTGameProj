@@ -12,7 +12,7 @@ public class Formation_M_Split : MZFormation
 		}
 	}
 
-	protected override int maxCreatedNumber
+	protected override int maxEnemyCreatedNumber
 	{
 		get
 		{
@@ -22,16 +22,21 @@ public class Formation_M_Split : MZFormation
 
 	float _showTime = 1.5f;
 	float _splitTime = 0.2f;
-	Vector2 _startPosition;
+	Vector2 _startPoisiton;
+
+	protected override void InitValues()
+	{
+		int sideOffset = 150;
+
+		int x = MZMath.RandomFromRange( (int)MZGameSetting.ENEMY_BOUNDLE_LEFT + sideOffset, (int)MZGameSetting.ENEMY_BOUNDLE_RIGHT - sideOffset );
+		_startPoisiton = new Vector2( x, MZGameSetting.ENEMY_BOUNDLE_TOP + 120 );
+	}
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
 
-		_startPosition = GetStartPosition();
-
-
-		for( int i = 0; i < maxCreatedNumber; i++ )
+		for( int i = 0; i < maxEnemyCreatedNumber; i++ )
 		{
 			AddNewEnemy( MZCharacter.MZCharacterType.EnemyAir, "EnemyM002", false );
 		}
@@ -39,9 +44,7 @@ public class Formation_M_Split : MZFormation
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
-		enemy.position = _startPosition;
-
-		if( currentCreatedMemberCount == 0 )
+		if( currentEnemyCreatedCount == 0 )
 		{
 			SetMainEnemy( enemy );
 		}
@@ -49,6 +52,11 @@ public class Formation_M_Split : MZFormation
 		{
 			SetSubEnemy( enemy );
 		}
+	}
+
+	protected override Vector2 GetEnemyStartPosition()
+	{
+		return _startPoisiton;
 	}
 
 	protected override void UpdateWhenActive()
@@ -130,19 +138,11 @@ public class Formation_M_Split : MZFormation
 	void AddSplitMoveToSubEmemy(MZMode mode)
 	{
 		MZMove_LinearTo splitMove = mode.AddMove<MZMove_LinearTo>( "s" );
-		float moveDegrees = ( 360/8 )*currentCreatedMemberCount;
+		float moveDegrees = ( 360/8 )*currentEnemyCreatedCount;
 		float movement = 200;
 		splitMove.useRelativePosition = true;
 		splitMove.destinationPosition = MZMath.UnitVectorFromDegrees( moveDegrees )*movement;
 		splitMove.totalTime = _splitTime - 0.1f;
 		splitMove.duration = _splitTime;
-	}
-
-	Vector2 GetStartPosition()
-	{
-		int sideOffset = 150;
-
-		int x = MZMath.RandomFromRange( (int)MZGameSetting.ENEMY_BOUNDLE_LEFT + sideOffset, (int)MZGameSetting.ENEMY_BOUNDLE_RIGHT - sideOffset );
-		return new Vector2(  x, MZGameSetting.ENEMY_BOUNDLE_TOP + 120 );
 	}
 }

@@ -8,25 +8,26 @@ public class Formation_M_Waterfall : MZFormation
 	public override float disableNextFormationTime
 	{ get { return 3.0f; } }
 
-	protected override int maxCreatedNumber
+	protected override int maxEnemyCreatedNumber
 	{ get { return 3; } }
 
-	float _createInterval = 3.0f;
-	float _createtimeCount;
-	Vector2 _initPosition;
+//	float _createInterval = 3.0f;
+//	float _createtimeCount;
+//	Vector2 _initPosition;
+
+	protected override void InitValues()
+	{
+		enemyCreateTimeInterval = 3.0f;
+	}
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-		
-		_initPosition = GetInitPosition( positionType );
-		_createtimeCount = 0;
 	}
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
 		enemy.healthPoint = 25;
-		enemy.position = _initPosition;
 
 		MZMode mode = enemy.AddMode( "mode" );
 
@@ -43,18 +44,33 @@ public class Formation_M_Waterfall : MZFormation
 //		AddCrossWayAttack( enemy.partsByNameDictionary[ "MainBody" ], mode, 270 - 30 );
 	}
 
+		protected override Vector2 GetEnemyStartPosition()
+	{
+		float y = MZGameSetting.ENEMY_BOUNDLE_TOP - 120;
+		float left = MZGameSetting.ENEMY_BOUNDLE_LEFT - 50;
+		float right = MZGameSetting.ENEMY_BOUNDLE_RIGHT + 50;
+
+		switch( positionType )
+		{
+			case PositionType.Left:
+				return new Vector2( left, y );
+
+			case PositionType.Right:
+				return new Vector2( right, y );
+
+			default:
+				MZDebug.AssertFalse( "not supprt" );
+				return new Vector2( 0, y );
+		}
+	}
+
 	protected override void UpdateWhenActive()
 	{
-		if( currentCreatedMemberCount >= maxCreatedNumber )
+		if( currentEnemyCreatedCount >= maxEnemyCreatedNumber )
 			return;
 
-		_createtimeCount -= MZTime.deltaTime;
-
-		if( _createtimeCount < 0 )
-		{
+		if( UpdateAndCheckTimeToCreateEnemy() )
 			AddNewEnemy( MZCharacterType.EnemyAir, "EnemyM001", false );
-			_createtimeCount += _createInterval;
-		}
 	}
 
 	void AddCrossWayAttack(MZCharacterPart part, MZMode mode, float degree)
@@ -78,26 +94,5 @@ public class Formation_M_Waterfall : MZFormation
 
 		MZAttack_Idle idle = partControl.AddAttack<MZAttack_Idle>();
 		idle.duration = 0.6f;
-	}
-
-	Vector2 GetInitPosition(PositionType positionType)
-	{
-		float y = MZGameSetting.ENEMY_BOUNDLE_TOP - 120;
-		float left = MZGameSetting.ENEMY_BOUNDLE_LEFT - 50;
-		float right = MZGameSetting.ENEMY_BOUNDLE_RIGHT + 50;
-
-		switch( positionType )
-		{
-			case PositionType.Left:
-				return new Vector2( left, y );
-
-			case PositionType.Right:
-				return new Vector2( right, y );
-
-			default:
-				MZDebug.AssertFalse( "not supprt" );
-				return new Vector2( 0, y );
-		}
-
 	}
 }

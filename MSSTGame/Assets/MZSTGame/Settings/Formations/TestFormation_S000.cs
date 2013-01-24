@@ -5,66 +5,50 @@ using MZCharacterType = MZCharacter.MZCharacterType;
 
 public class TestFormation_S000 : MZFormation
 {
-	//
-
-	float _createTimeCount;
-	float _createInterval;
-	Vector2 _initPosition;
-
-	//
-
 	public override float disableNextFormationTime
 	{ get { return 1; } }
 
-	protected override int maxCreatedNumber
+	protected override int maxEnemyCreatedNumber
 	{ get { return 4; } }
 
 	//
 
-	public override void Enable()
+	protected override void InitValues()
 	{
-		base.Enable();
-
-		_createTimeCount = 0;
-		_createInterval = 0.8f;
+		enemyCreateTimeInterval = 0.8f;
 	}
 
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-		_initPosition = GetInitPosition( positionType );
 	}
 
 	protected override void UpdateWhenActive()
 	{
-		_createTimeCount -= MZTime.deltaTime;
-
-		if( _createTimeCount < 0 )
+		if( UpdateAndCheckTimeToCreateEnemy() )
 		{
 			AddNewEnemy( MZCharacterType.EnemyAir, "EnemyS000", false );
-			_createTimeCount += _createInterval;
 		}
 	}
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
-		enemy.position = _initPosition;
 		enemy.InitDefaultMode();
 	}
 
-	//
-
-	Vector2 GetInitPosition(PositionType sideType)
+	protected override Vector2 GetEnemyStartPosition()
 	{
 		float xValue = 280;
 		float yValue = 400;
 
-		switch( sideType )
+		switch( positionType )
 		{
 			case PositionType.Left:
 				return new Vector3( -xValue, yValue );
+
 			case PositionType.Right:
 				return new Vector3( xValue, yValue );
+
 			case PositionType.Mid:
 			default:
 				return new Vector3( 0, yValue + 90 );
