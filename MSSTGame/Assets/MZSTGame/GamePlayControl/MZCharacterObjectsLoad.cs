@@ -27,6 +27,8 @@ public class MZCharacterObjectsLoad
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.PlayerBullet, "PB000", 200 );
 
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "EBDonuts", 500 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "EBDonutsSmall", 500 );
+		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "EBDonutsLarge", 200 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "EBBee", 500 );
 		MZCharacterObjectsFactory.instance.Add( MZCharacterType.EnemyBullet, "EBBee2", 200 );
 	}

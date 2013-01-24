@@ -7,8 +7,8 @@ public class MZGameSetting
 {
 //	static bool DISABLE_ENEMY_ATTACK = false;
 
-	static public bool SHOW_GIZMOS = false;
-	static public bool SHOW_COLLISION_RANGE = false;
+	static public bool SHOW_GIZMOS = true;
+	static public bool SHOW_COLLISION_RANGE = true;
 	static public bool SHOW_BULLET_ON_COLLISION_CHECK = false;
 	static public bool SHOW_CHARACTERS_INFO = false;
 	static public bool SHOW_FORMATION_LOG = false;

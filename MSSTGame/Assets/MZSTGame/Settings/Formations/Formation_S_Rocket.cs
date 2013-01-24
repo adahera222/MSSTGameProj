@@ -21,6 +21,7 @@ public class Formation_S_Rocket : MZFormation
 
 	protected override void InitValues()
 	{
+		enemyName = "EnemyM002";
 		enemyCreateTimeInterval = 0.2f;
 	}
 
@@ -33,7 +34,7 @@ public class Formation_S_Rocket : MZFormation
 	{
 		if( UpdateAndCheckTimeToCreateEnemy() )
 		{
-			AddNewEnemy( MZCharacter.MZCharacterType.EnemyAir, "EnemyM002", false );
+			AddNewEnemy( false );
 		}
 	}
 

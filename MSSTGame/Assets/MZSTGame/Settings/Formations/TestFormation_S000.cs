@@ -15,6 +15,7 @@ public class TestFormation_S000 : MZFormation
 
 	protected override void InitValues()
 	{
+		enemyName = "EnemyS000";
 		enemyCreateTimeInterval = 0.8f;
 	}
 
@@ -27,7 +28,7 @@ public class TestFormation_S000 : MZFormation
 	{
 		if( UpdateAndCheckTimeToCreateEnemy() )
 		{
-			AddNewEnemy( MZCharacterType.EnemyAir, "EnemyS000", false );
+			AddNewEnemy( false );
 		}
 	}
 

@@ -48,7 +48,7 @@ public class Formation_S_Rail : MZFormation
 	protected override void UpdateWhenActive()
 	{
 		if( UpdateAndCheckTimeToCreateEnemy() )
-			AddNewEnemy( MZCharacterType.EnemyAir, enemyName, false );
+			AddNewEnemy( false );
 	}
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)

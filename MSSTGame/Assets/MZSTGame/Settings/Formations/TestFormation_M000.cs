@@ -20,13 +20,13 @@ public class TestFormation_M000 : MZFormation
 
 	protected override void InitValues()
 	{
-
+		enemyName = "EnemyM000";
 	}
 	
 	protected override void FirstUpdate()
 	{
 		base.FirstUpdate();
-		AddNewEnemy( MZCharacterType.EnemyAir, "EnemyM000", true );
+		AddNewEnemy( true );
 	}
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)

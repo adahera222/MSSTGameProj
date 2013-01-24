@@ -28,6 +28,8 @@ public class Formation_S_Any_Round001 : MZFormation
 
 	protected override void InitValues()
 	{
+		enemyName = "EnemySYellow";
+
 		_constructCode = MZMath.RandomFromRange( 0, 2 );
 		_angularVelocityDirection = ( MZMath.RandomFromRange( 0, 1 ) == 0 )? 1 : -1;
 		_intervalDegrees = 360/maxEnemyCreatedNumber;
@@ -40,7 +42,7 @@ public class Formation_S_Any_Round001 : MZFormation
 
 		for( int i = 0; i < maxEnemyCreatedNumber; i++ )
 		{
-			AddNewEnemy( MZCharacterType.EnemyAir, "EnemySYellow", false );
+			AddNewEnemy( false );
 		}
 	}
 

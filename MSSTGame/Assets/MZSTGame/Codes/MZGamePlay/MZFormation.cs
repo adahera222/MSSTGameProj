@@ -152,8 +152,11 @@ public abstract class MZFormation : MZControlBase
 		MZDebug.Assert( maxEnemyCreatedNumber >= 0, "maxCreateNumber must br more than zero" );
 	}
 
-	protected MZEnemy AddNewEnemy(MZCharacterType type, string name, bool initDefaultMode)
+	protected MZEnemy AddNewEnemy(/*MZCharacterType type, string name, */bool initDefaultMode)
 	{
+		MZCharacterType type = MZCharacterType.EnemyAir;
+		string name = enemyName;
+
 		if( _enemyCreatedCount >= maxEnemyCreatedNumber )
 			return null;
 

@@ -60,7 +60,7 @@ public class MZAttack_Vortex : MZAttack
 
 		EnableBullet( bullet );
 
-		if( timePerWave == -1 )
+		if( timePerWave <= 0 )
 			return;
 
 		launchTimeCount += MZTime.deltaTime;

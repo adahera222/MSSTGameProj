@@ -18,6 +18,7 @@ public class Formation_M_Waterfall : MZFormation
 	protected override void InitValues()
 	{
 		enemyCreateTimeInterval = 3.0f;
+		enemyName = "EnemyM001";
 	}
 
 	protected override void FirstUpdate()
@@ -70,7 +71,7 @@ public class Formation_M_Waterfall : MZFormation
 			return;
 
 		if( UpdateAndCheckTimeToCreateEnemy() )
-			AddNewEnemy( MZCharacterType.EnemyAir, "EnemyM001", false );
+			AddNewEnemy( false );
 	}
 
 	void AddCrossWayAttack(MZCharacterPart part, MZMode mode, float degree)

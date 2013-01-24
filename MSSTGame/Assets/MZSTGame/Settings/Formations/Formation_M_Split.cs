@@ -26,6 +26,8 @@ public class Formation_M_Split : MZFormation
 
 	protected override void InitValues()
 	{
+		enemyName = "EnemyM002";
+
 		int sideOffset = 150;
 
 		int x = MZMath.RandomFromRange( (int)MZGameSetting.ENEMY_BOUNDLE_LEFT + sideOffset, (int)MZGameSetting.ENEMY_BOUNDLE_RIGHT - sideOffset );
@@ -38,7 +40,7 @@ public class Formation_M_Split : MZFormation
 
 		for( int i = 0; i < maxEnemyCreatedNumber; i++ )
 		{
-			AddNewEnemy( MZCharacter.MZCharacterType.EnemyAir, "EnemyM002", false );
+			AddNewEnemy( false );
 		}
 	}
 

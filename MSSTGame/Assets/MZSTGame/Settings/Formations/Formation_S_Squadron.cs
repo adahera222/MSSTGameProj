@@ -27,6 +27,8 @@ public class Formation_S_Squadron : MZFormation
 
 	protected override void InitValues()
 	{
+		enemyName = "EnemySGreen";
+
 		_row = 3;
 		_col = 3;
 		_enemyInterval = new Vector2( 90, 90 );
@@ -76,8 +78,8 @@ public class Formation_S_Squadron : MZFormation
 
 		MZAttack_EvenWay attackEven = mainPartControl.AddAttack<MZAttack_EvenWay>();
 		attackEven.numberOfWays = 4;
-		attackEven.colddown = 0.1f;
-		attackEven.duration = 0.5f;
+		attackEven.colddown = 0.2f;
+		attackEven.duration = 0.6f;
 		attackEven.intervalDegrees = 45;
 		attackEven.initVelocity = 300;// + 25*currentCreatedMemberCount;
 //		attackEven.additionalVelocity = 50;
@@ -89,8 +91,8 @@ public class Formation_S_Squadron : MZFormation
 
 		MZAttack_OddWay attackOdd = mainPartControl.AddAttack<MZAttack_OddWay>();
 		attackOdd.numberOfWays = 1;
-		attackOdd.colddown = 0.1f;
-		attackOdd.duration = 0.5f;
+		attackOdd.colddown = 0.2f;
+		attackOdd.duration = 0.6f;
 		attackOdd.intervalDegrees = 5;
 		attackOdd.initVelocity = 600;// + 25*currentCreatedMemberCount;
 		attackOdd.bulletName = "EBBee2";
@@ -110,7 +112,7 @@ public class Formation_S_Squadron : MZFormation
 			for( int j = 0; j < _col - i; j++ )
 			{
 				_currentNewEnemyDestPos = _leaderTargetPosition + leftPositionOfCol + new Vector2( _enemyInterval.x*j, 0 );
-				AddNewEnemy( MZCharacter.MZCharacterType.EnemyAir, "EnemySGreen", false );
+				AddNewEnemy( false );
 			}
 		}
 	}
@@ -127,7 +129,7 @@ public class Formation_S_Squadron : MZFormation
 			for( int j = 0; j < _col - i; j++ )
 			{
 				_currentNewEnemyDestPos = new Vector2( _leaderTargetPosition.x + __enemyInterval.x*i, offsetY + _leaderTargetPosition.y + __enemyInterval.y*j );
-				AddNewEnemy( MZCharacter.MZCharacterType.EnemyAir, "EnemySGreen", false );
+				AddNewEnemy( false );
 			}
 		}
 	}

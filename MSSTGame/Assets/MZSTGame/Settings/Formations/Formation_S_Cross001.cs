@@ -28,6 +28,7 @@ public class Formation_S_Cross : MZFormation
 
 	protected override void InitValues()
 	{
+		enemyName = "EnemySRed";
 		enemyCreateTimeInterval = 0.7f;
 
 		_dirCode = ( MZMath.RandomFromRange( 0, 1 ) == 0 )? 1 : -1;
@@ -49,7 +50,7 @@ public class Formation_S_Cross : MZFormation
 
 		if( UpdateAndCheckTimeToCreateEnemy() )
 		{
-			AddNewEnemy( MZCharacter.MZCharacterType.EnemyAir, "EnemySRed", false );
+			AddNewEnemy( false );
 		}
 	}
 

@@ -34,6 +34,8 @@ public class MZFormationsLoad
 
 	static public void SetFormations(MZFormationsManager formationsManager)
 	{
+		formationsManager.AddFormation( SizeType.Mid, PositionType.Any, new Formation_M_SwastikaMaster() );
+
 		formationsManager.AddFormation( SizeType.Small, PositionType.Left, new Formation_S_Rocket() );
 		formationsManager.AddFormation( SizeType.Small, PositionType.Mid, new Formation_S_Rocket() );
 		formationsManager.AddFormation( SizeType.Small, PositionType.Right, new Formation_S_Rocket() );
