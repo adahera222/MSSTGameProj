@@ -42,7 +42,7 @@ public class TestFormation_S_XY : MZFormation
 
 		MZMode mode = enemy.AddMode( "mode" );
 
-		MZMove_DegreesTo move = mode.AddMove<MZMove_DegreesTo>( "GoTurn" );
+		MZMove_TurnTo move = mode.AddMove<MZMove_TurnTo>( "GoTurn" );
 		move.direction = ( positionType == PositionType.Left )? 0 : 180;
 		move.velocity = 200;
 		move.totalTime = 4;

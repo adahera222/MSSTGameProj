@@ -41,7 +41,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	}
 
 	//
-	public List<Vector2> offsetPosition = new List<Vector2>();
+	public List<Vector2> offsetPositionsList = new List<Vector2>();
 	public new IMZAttack controlDelegate = null;
 	public int numberOfWays = 0;
 	public int additionalWaysPerLaunch = 0;
@@ -237,11 +237,11 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 		void SetOffsetToBullet(MZBullet bullet, int index)
 	{
-		if( offsetPosition == null || offsetPosition.Count == 0 )
+		if( offsetPositionsList == null || offsetPositionsList.Count == 0 )
 			return;
 
-		int _index = index%offsetPosition.Count;
-		bullet.position += offsetPosition[ _index ];
+		int _index = index%offsetPositionsList.Count;
+		bullet.position += offsetPositionsList[ _index ];
 	}
 
 

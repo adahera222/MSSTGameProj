@@ -82,7 +82,7 @@ public class Formation_M_Split : MZFormation
 		partControl.AddAttack<MZAttack_Idle>().duration = _showTime;// _showTime + 0.5f; //
 
 		MZAttack_OddWay splitOdd = partControl.AddAttack<MZAttack_OddWay>();
-		splitOdd.bulletName = "EBDonuts";
+		splitOdd.bulletName = "EBDonutsLarge";
 		splitOdd.numberOfWays = 18;
 		splitOdd.initVelocity = 500;
 		splitOdd.colddown = 0.1f;

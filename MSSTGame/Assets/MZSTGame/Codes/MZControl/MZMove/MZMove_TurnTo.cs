@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MZMove_DegreesTo : MZMove
+public class MZMove_TurnTo : MZMove
 {
 	public float destinationDegrees;
 	public float totalTime = 10;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Formation_S_Cross : MZFormation
+public class Formation_S_TwinWay : MZFormation
 {
 	public override float disableNextFormationTime
 	{
@@ -92,8 +92,8 @@ public class Formation_S_Cross : MZFormation
 		oddWay.colddown = colddown;
 		oddWay.duration = duration;
 		oddWay.numberOfWays = 2;
-		oddWay.offsetPosition.Add( MZMath.UnitVectorFromDegrees( degree + 90 )*10 );
-		oddWay.offsetPosition.Add( MZMath.UnitVectorFromDegrees( degree + 90 )*-10 );
+		oddWay.offsetPositionsList.Add( MZMath.UnitVectorFromDegrees( degree + 90 )*10 );
+		oddWay.offsetPositionsList.Add( MZMath.UnitVectorFromDegrees( degree + 90 )*-10 );
 		oddWay.targetHelp = new MZTargetHelp_AssignDirection();
 		oddWay.bulletName = "EBBee";
 		oddWay.initVelocity = 350;
@@ -106,8 +106,8 @@ public class Formation_S_Cross : MZFormation
 		oddWay2.colddown = colddown;
 		oddWay2.duration = duration;
 		oddWay2.numberOfWays = 2;
-		oddWay2.offsetPosition.Add( MZMath.UnitVectorFromDegrees( degree + 90 + 45 )*10 );
-		oddWay2.offsetPosition.Add( MZMath.UnitVectorFromDegrees( degree + 90 + 45 )*-10 );
+		oddWay2.offsetPositionsList.Add( MZMath.UnitVectorFromDegrees( degree + 90 + 45 )*10 );
+		oddWay2.offsetPositionsList.Add( MZMath.UnitVectorFromDegrees( degree + 90 + 45 )*-10 );
 		oddWay2.targetHelp = new MZTargetHelp_AssignDirection();
 		oddWay2.bulletName = "EBBee";
 		oddWay2.initVelocity = 350;

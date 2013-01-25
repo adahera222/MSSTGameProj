@@ -85,7 +85,7 @@ public class Formation_S_Rail : MZFormation
 		moveLinear1.velocity = velocity;
 		moveLinear1.duration = 0.8f;
 
-		MZMove_DegreesTo moveTurn = mode.AddMove<MZMove_DegreesTo>( "t" );
+		MZMove_TurnTo moveTurn = mode.AddMove<MZMove_TurnTo>( "t" );
 		moveTurn.rotationType = rotType;
 		moveTurn.direction = moveLinear1.direction;
 		moveTurn.destinationDegrees = GetDestinationDirection( rotType );

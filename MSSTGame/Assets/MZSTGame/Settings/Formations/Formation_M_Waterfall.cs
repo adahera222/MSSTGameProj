@@ -89,9 +89,9 @@ public class Formation_M_Waterfall : MZFormation
 		odd.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
 		( odd.targetHelp as MZTargetHelp_AssignDirection ).direction = degree;
 		float interval = 50;
-		odd.offsetPosition.Add( new Vector2( 0, -interval ) );
-		odd.offsetPosition.Add( new Vector2( -interval, 0 ) );
-		odd.offsetPosition.Add( new Vector2( interval, 0 ) );
+		odd.offsetPositionsList.Add( new Vector2( 0, -interval ) );
+		odd.offsetPositionsList.Add( new Vector2( -interval, 0 ) );
+		odd.offsetPositionsList.Add( new Vector2( interval, 0 ) );
 
 		MZAttack_Idle idle = partControl.AddAttack<MZAttack_Idle>();
 		idle.duration = 0.6f;

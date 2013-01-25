@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class MZMove_DegreesBy : MZMove
+public class MZMove_TurnBy : MZMove
 {
 	public float variationDegreesPerSecond;
 
