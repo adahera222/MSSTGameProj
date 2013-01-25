@@ -21,6 +21,7 @@ public class Formation_M_TwinWay : MZFormation
 	}
 
 	int _row;
+	bool _isLeftRoRight;
 
 	protected override void InitValues()
 	{
@@ -28,6 +29,7 @@ public class Formation_M_TwinWay : MZFormation
 		enemyCreateTimeInterval = 1.5f;
 
 		_row = 3;
+		_isLeftRoRight = ( MZMath.RandomFromRange( 0, 1 ) == 0 );
 	}
 
 	protected override void FirstUpdate()
@@ -90,16 +92,27 @@ public class Formation_M_TwinWay : MZFormation
 
 		Vector2 initPos = GetRowInitPosition( dir, sideOffset, posInterval );
 
-		return initPos + new Vector2( posInterval*posCount*dir, 0 );
+		return initPos + new Vector2( posInterval*posCount*dir*( ( _isLeftRoRight )? 1 : -1 ), 0 );
 	}
 
 	Vector2 GetRowInitPosition(int dirCode, float sideOffset, float posInterval)
 	{
-		float x = ( dirCode == 1 )?
+		float x;
+
+		if( _isLeftRoRight )
+		{
+			x = ( dirCode == 1 )?
 			( MZGameSetting.ENEMY_BOUNDLE_LEFT + ( sideOffset + posInterval/2.0f ) ) :
 				( MZGameSetting.ENEMY_BOUNDLE_RIGHT - ( sideOffset + posInterval ) );
+		}
+		else
+		{
+			x = ( dirCode == 1 )?
+			( MZGameSetting.ENEMY_BOUNDLE_RIGHT - ( sideOffset + posInterval/2.0f ) ) :
+				( MZGameSetting.ENEMY_BOUNDLE_LEFT + ( sideOffset + posInterval ) );
+		}
 
-		float y = MZGameSetting.ENEMY_BOUNDLE_TOP + 150;
+		float y = MZGameSetting.ENEMY_BOUNDLE_TOP + 120;
 
 		return new Vector2( x, y );
 	}
@@ -107,7 +120,7 @@ public class Formation_M_TwinWay : MZFormation
 	void SetTwinWay(MZPartControl partControl, Vector2 position, bool isLeft)
 	{
 		MZAttack_OddWay twin = partControl.AddAttack<MZAttack_OddWay>();
-		twin.initVelocity = 400;
+		twin.initVelocity = 450;
 		twin.numberOfWays = 2;
 		twin.offsetPositionsList.Add( position + new Vector2( 10*( ( isLeft )? -1 : 1 ), 0 ) );
 		twin.offsetPositionsList.Add( position + new Vector2( 10*( ( isLeft )? 1 : -1 ), 20 ) );
@@ -127,7 +140,7 @@ public class Formation_M_TwinWay : MZFormation
 		MZAttack_EvenWay even = partControl.AddAttack<MZAttack_EvenWay>();
 		even.numberOfWays = 6;
 		even.intervalDegrees = 12;
-		even.initVelocity = 300;
+		even.initVelocity = 400;
 		even.offsetPositionsList.Add( position );
 		even.colddown = 100.0f;
 		even.duration = 0.1f;
