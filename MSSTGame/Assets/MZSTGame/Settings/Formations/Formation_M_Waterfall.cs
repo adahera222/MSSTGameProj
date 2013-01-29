@@ -11,10 +11,6 @@ public class Formation_M_Waterfall : MZFormation
 	protected override int maxEnemyCreatedNumber
 	{ get { return 3; } }
 
-//	float _createInterval = 3.0f;
-//	float _createtimeCount;
-//	Vector2 _initPosition;
-
 	protected override void InitValues()
 	{
 		enemyCreateTimeInterval = 3.0f;
