@@ -109,6 +109,9 @@ public class MZEnemy : MZCharacter, IMZMode, IMZMove
 
 	protected void DieAction()
 	{
+		MZDebug.Assert( belongFormation != null, "belongFormation is null" );
+		belongFormation.NotifyDefeated( this );
+
 		Disable();
 	}
 }

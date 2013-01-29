@@ -15,7 +15,7 @@ public class Formation_S_Rocket : MZFormation
 	{
 		get
 		{
-			return 7;
+			return 3 + ( ( rank - 1 )/2 )*2;
 		}
 	}
 

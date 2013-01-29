@@ -17,7 +17,7 @@ public class Formation_S_Any_Round001 : MZFormation
 	{
 		get
 		{
-			return 8;
+			return 4 + ( ( rank - 1 )/2 )*2;
 		}
 	}
 
@@ -95,7 +95,7 @@ public class Formation_S_Any_Round001 : MZFormation
 		attack.numberOfWays = 1;
 		attack.initVelocity = 200;
 		attack.additionalVelocity = 50;
-		attack.bulletName = "EBDonuts";
+		attack.bulletName = "EBBee2";
 		attack.colddown = 0.05f;
 		attack.duration = 0.15f;
 		attack.targetHelp = new MZTargetHelp_AssignPosition();

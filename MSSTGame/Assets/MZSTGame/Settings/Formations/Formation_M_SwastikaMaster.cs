@@ -55,12 +55,16 @@ public class Formation_M_SwastikaMaster : MZFormation
 		mode.AddPartControlUpdater().Add( partControl );
 		AddRingAttack( partControl );
 
-		float degreesInterval = 2.0f;
+		float degreesInterval = ( rank > 8 )? 2.0f : 4.0f;
+		int centerDegreesInterval = ( rank < 5 )? 180 : 90;
 
-		for( int centerDegrees = 0; centerDegrees < 360; centerDegrees += 90 )
+		for( int centerDegrees = 0; centerDegrees < 360; centerDegrees += centerDegreesInterval )
 		{
 			SetNewPartToMultiVortexAttack( mode, enemy, centerDegrees + degreesInterval );
 			SetNewPartToMultiVortexAttack( mode, enemy, centerDegrees - degreesInterval );
+
+			if( rank >= 8 )
+				SetNewPartToMultiVortexAttack( mode, enemy, centerDegrees );
 		}
 	}
 
@@ -101,11 +105,6 @@ public class Formation_M_SwastikaMaster : MZFormation
 		float velocity = 300;
 		float intervalDegrees = 360.0f/ways;
 
-//		List<Vector2> outPosList = new List<Vector2>();
-//		float offset = 30.0f;
-//		for( int i = 0; i < ways; i++ )
-//			outPosList.Add( MZMath.UnitVectorFromDegrees( 270 + i*intervalDegrees )*offset );
-
 		MZAttack_Idle show = partControl.AddAttack<MZAttack_Idle>();
 		show.duration = _showTime;
 		show.isRunOnce = true;
@@ -121,7 +120,9 @@ public class Formation_M_SwastikaMaster : MZFormation
 		outRing.duration = 0.15f;
 		outRing.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
 		( outRing.targetHelp as MZTargetHelp_AssignDirection ).direction = 270;
-//		outRing.offsetPosition = outPosList;
+
+		if( rank < 2 )
+			return;
 
 		MZAttack_OddWay innerRing = partControl.AddAttack<MZAttack_OddWay>();
 		innerRing.numberOfWays = ways*2;
@@ -133,6 +134,9 @@ public class Formation_M_SwastikaMaster : MZFormation
 		innerRing.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
 		( innerRing.targetHelp as MZTargetHelp_AssignDirection ).direction = 270 + intervalDegrees/4.0f;
 
+		if( rank < 4 )
+			return;
+
 		MZAttack_OddWay thirdRing = partControl.AddAttack<MZAttack_OddWay>();
 		thirdRing.numberOfWays = ways;
 		thirdRing.intervalDegrees = intervalDegrees;
@@ -142,6 +146,29 @@ public class Formation_M_SwastikaMaster : MZFormation
 		thirdRing.duration = 0.15f;
 		thirdRing.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
 		( thirdRing.targetHelp as MZTargetHelp_AssignDirection ).direction = 270 + intervalDegrees/2.0f;
+
+		if( rank < 8 )
+			return;
+
+		MZAttack_OddWay exInnerRing = partControl.AddAttack<MZAttack_OddWay>();
+		exInnerRing.numberOfWays = ways*2;
+		exInnerRing.intervalDegrees = intervalDegrees/2.0f;
+		exInnerRing.initVelocity = velocity;
+		exInnerRing.bulletName = "EBDonuts";
+		exInnerRing.colddown = 10.0f;
+		exInnerRing.duration = 0.15f;
+		exInnerRing.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
+		( exInnerRing.targetHelp as MZTargetHelp_AssignDirection ).direction = 270 + intervalDegrees/4.0f;
+
+		MZAttack_OddWay exOutRing = partControl.AddAttack<MZAttack_OddWay>();
+		exOutRing.numberOfWays = ways;
+		exOutRing.intervalDegrees = intervalDegrees;
+		exOutRing.initVelocity = velocity;
+		exOutRing.bulletName = "EBDonutsLarge";
+		exOutRing.colddown = 10.0f;
+		exOutRing.duration = 0.15f;
+		exOutRing.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
+		( exOutRing.targetHelp as MZTargetHelp_AssignDirection ).direction = 270;
 	}
 
 	void SetNewPartToMultiVortexAttack(MZMode mode, MZEnemy enemy, float degrees)

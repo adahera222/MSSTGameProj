@@ -14,6 +14,8 @@ public class MZTest
 	}
 
 	public Type testType = Type.None;
+	public int enemyRank = 1;
+	public MZRankControl rankControl;
 	public List<MZTestEnemySetting> testEnemySettings = new List<MZTestEnemySetting>();
 	public List<MZTestFormationSetting> testFormationsSettings = new List<MZTestFormationSetting>();
 
@@ -37,6 +39,12 @@ public class MZTest
 	{
 		if( testType != Type.Enable )
 			return;
+
+		if( enemyRank < 1 )
+			enemyRank = 1;
+
+		if( rankControl.enemyRank != enemyRank )
+			rankControl.enemyRank = enemyRank;
 
 		UpdateTestEnemy();
 		UpdateTestFormations();

@@ -41,6 +41,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	}
 
 	//
+	public bool disableRankEffect = false;
 	public List<Vector2> offsetPositionsList = new List<Vector2>();
 	public new IMZAttack controlDelegate = null;
 	public int numberOfWays = 0;
@@ -134,9 +135,6 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 			_colddownCount += colddown;
 
 			targetHelp.EndOneTime();
-
-			// fail to check ????
-//			MZDebug.Assert( _mustCalledsFlag == true, "some methods must call in sub class implement, plz check" );
 		}
 	}
 
@@ -211,7 +209,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	protected void AddLinearMoveToBullet(MZBullet bullet)
 	{
 		MZMove_LinearBy bulletMove = bullet.AddMove<MZMove_LinearBy>( "LinearBy" );
-		bulletMove.velocity = currentVelocity;
+		bulletMove.velocity = currentVelocity*GetBulletVelocityMultiply();
 	}
 
 	protected void EnableBullet(MZBullet bullet)
@@ -259,5 +257,12 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 		MZDebug.Assert( false, "Bullet not support this type: " + controlDelegate.characterType.ToString() );
 		return MZCharacterType.Unknow;
+	}
+
+	float GetBulletVelocityMultiply()
+	{
+		float min = 0.6f;
+		float interval = ( 1.0f - min )/4.0f;
+		return ( disableRankEffect == false )? min + interval*( MZGameComponents.instance.enemyRank - 1 ) : 1;
 	}
 }

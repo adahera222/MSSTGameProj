@@ -15,7 +15,13 @@ public class Formation_S_TwinWay : MZFormation
 	{
 		get
 		{
-			return 8;
+			if( rank < 4 )
+				return 4;
+			if( rank < 7 )
+				return 8;
+			if( rank < 10 )
+				return 10;
+			return 12;
 		}
 	}
 
@@ -85,8 +91,10 @@ public class Formation_S_TwinWay : MZFormation
 
 	void SetTwinWayAttack(MZPartControl partControl, float degree)
 	{
+		float rankDurationMulitiply = 0.2f*rank;
+
 		float colddown = 0.15f;
-		float duration = 0.3f + ( ( _attackCode == 0 )? 0.6f : 0.3f );
+		float duration = ( 0.3f + ( ( _attackCode == 0 )? 0.6f : 0.3f ) )*rankDurationMulitiply;
 
 		MZAttack_OddWay oddWay = partControl.AddAttack<MZAttack_OddWay>();
 		oddWay.colddown = colddown;

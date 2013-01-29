@@ -26,7 +26,7 @@ public class Formation_M_TwinWay : MZFormation
 	protected override void InitValues()
 	{
 		enemyName = "EnemyM003";
-		enemyCreateTimeInterval = 1.5f;
+		enemyCreateTimeInterval = 1.8f;
 
 		_row = 3;
 		_isLeftRoRight = ( MZMath.RandomFromRange( 0, 1 ) == 0 );
@@ -66,13 +66,16 @@ public class Formation_M_TwinWay : MZFormation
 		mode.AddPartControlUpdater().Add( twinRightPartControl );
 		SetTwinWay( twinRightPartControl, new Vector2( 45, -80 ), false );
 
-		MZPartControl fanWayLeftPartControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
-		mode.AddPartControlUpdater().Add( fanWayLeftPartControl );
-		SetFanWay( fanWayLeftPartControl, new Vector2( -45, 80 ), 1.2f );
+		if( rank >= 5 )
+		{
+			MZPartControl fanWayLeftPartControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
+			mode.AddPartControlUpdater().Add( fanWayLeftPartControl );
+			SetFanWay( fanWayLeftPartControl, new Vector2( -45, 80 ), 1.2f );
 
-		MZPartControl fanWayRightPartControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
-		mode.AddPartControlUpdater().Add( fanWayRightPartControl );
-		SetFanWay( fanWayRightPartControl, new Vector2( 45, 80 ), 1.4f );
+			MZPartControl fanWayRightPartControl = new MZPartControl( enemy.partsByNameDictionary[ "MainBody" ] );
+			mode.AddPartControlUpdater().Add( fanWayRightPartControl );
+			SetFanWay( fanWayRightPartControl, new Vector2( 45, 80 ), 1.4f );
+		}
 
 		MZMode modeReset = enemy.AddMode( "m2" );
 		modeReset.duration = 0.5f;
@@ -121,11 +124,22 @@ public class Formation_M_TwinWay : MZFormation
 	{
 		MZAttack_OddWay twin = partControl.AddAttack<MZAttack_OddWay>();
 		twin.initVelocity = 450;
-		twin.numberOfWays = 2;
-		twin.offsetPositionsList.Add( position + new Vector2( 10*( ( isLeft )? -1 : 1 ), 0 ) );
-		twin.offsetPositionsList.Add( position + new Vector2( 10*( ( isLeft )? 1 : -1 ), 20 ) );
+		twin.numberOfWays = ( rank <= 4 )? 1 : ( rank >= 8 )? 3 : 2;
+
+		if( rank >= 5 )
+		{
+			float interval = ( rank >= 8 )? 20 : 10;
+			twin.offsetPositionsList.Add( position + new Vector2( interval*( ( isLeft )? -1 : 1 ), 0 ) );
+			twin.offsetPositionsList.Add( position + new Vector2( interval*( ( isLeft )? 1 : -1 ), 0 ) );
+		}
+
+		if( rank >= 8 || rank <= 4 )
+		{
+			twin.offsetPositionsList.Add( position + new Vector2( 0, 0 ) );
+		}
+
 		twin.colddown = 0.2f;
-		twin.duration = 1.0f;
+		twin.duration = 1.0f - ( ( rank <= 4 )? 0.5f : 0 );
 		twin.bulletName = "EBBee";
 		twin.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
 		( twin.targetHelp as MZTargetHelp_AssignDirection ).direction = 270;

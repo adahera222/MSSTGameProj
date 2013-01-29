@@ -58,6 +58,12 @@ public class MZDebug
 		}
 	}
 
+	static public void Assert(bool condition, string format, params object[] args)
+	{
+		string message = string.Format( format, args );
+		Assert( condition, message );
+	}
+
 	static public void AssertFalse(string message)
 	{
 		Assert( false, message );

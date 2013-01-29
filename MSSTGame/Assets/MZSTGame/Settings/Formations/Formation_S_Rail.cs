@@ -17,15 +17,13 @@ public class Formation_S_Rail : MZFormation
 	{
 		get
 		{
-			return 8;
+			return 2 + ( rank - 1 )/2*3;
 		}
 	}
 
 	//
 
 	int _constructCode;
-//	float _createInterval;
-//	float _createTimeCount;
 	Vector2 _initPosition;
 	MZMove.RotationType rotationType;
 
@@ -53,7 +51,7 @@ public class Formation_S_Rail : MZFormation
 
 	protected override void NewEnemyBeforeEnable(MZEnemy enemy)
 	{
-		enemy.healthPoint = 1;
+		enemy.healthPoint = 1/*1*rank*/;
 		MZMove.RotationType rotType = rotationType;
 
 		enemy.partsByNameDictionary[ "MainBody" ].faceTo = new MZFaceTo_MovingDirection();

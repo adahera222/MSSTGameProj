@@ -6,6 +6,8 @@ using MZCharacterType = MZCharacter.MZCharacterType;
 
 public class MZMainGame : MonoBehaviour
 {
+	public string playerRankInfo = "";
+	public string enemyRankInfo = "";
 	public MZTest test = new MZTest();
 
 	//
@@ -32,8 +34,10 @@ public class MZMainGame : MonoBehaviour
 
 		MZTime.instance.Reset();
 
-		_formationsManager = new MZFormationsManager();
 		_rankControl = new MZRankControl();
+		_formationsManager = new MZFormationsManager();
+		_formationsManager.rankControl = _rankControl;
+		test.rankControl = _rankControl;
 
 		if( test.testType != MZTest.Type.None )
 		{
@@ -46,6 +50,9 @@ public class MZMainGame : MonoBehaviour
 		MZGameComponents.instance.rankControl = _rankControl;
 
 		InitPlayer();
+
+		_rankControl.Enable();
+		_formationsManager.Enable();
 	}
 
 	void Update()
@@ -62,6 +69,11 @@ public class MZMainGame : MonoBehaviour
 
 		if( _formationsManager != null )
 			_formationsManager.Update();
+
+		if( _rankControl != null && test.testType == MZTest.Type.None )
+			_rankControl.Update();
+
+		UpdateRankInfoToEditor();
 	}
 
 	void InitPlayer()
@@ -71,6 +83,12 @@ public class MZMainGame : MonoBehaviour
 		playerObject.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
 
 		MZGameComponents.instance.charactersManager.Add( MZCharacterType.Player, playerObject.GetComponent<MZCharacter>() );
+	}
+
+	void UpdateRankInfoToEditor()
+	{
+		playerRankInfo = string.Format( "Lv: {0} {1}/{2}", _rankControl.playerRank, _rankControl.playerRankXp, _rankControl.playerNextRankUp );
+		enemyRankInfo = string.Format( "Lv: {0} {1}/{2}", _rankControl.enemyRank, _rankControl.enemyRankXp, _rankControl.enemyNextRankUp );
 	}
 
 	void OnDrawGizmos()

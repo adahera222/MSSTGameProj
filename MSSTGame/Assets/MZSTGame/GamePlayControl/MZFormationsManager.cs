@@ -8,6 +8,7 @@ using SizeType = MZFormation.SizeType;
 public class MZFormationsManager : MZControlBase
 {
 	public bool enableUpdateState = true;
+	public MZRankControl rankControl = null;
 
 	public List<MZFormation> formations
 	{
@@ -115,6 +116,8 @@ public class MZFormationsManager : MZControlBase
 
 	protected override void UpdateWhenActive()
 	{
+		MZDebug.Assert( rankControl != null, "rankControl is null" );
+
 		if( enableUpdateState )
 		{
 			UpdateFormationState();
@@ -205,6 +208,7 @@ public class MZFormationsManager : MZControlBase
 					MZDebug.Log( "remove: name={0}, xp={1}, pos={2}, size={3}", _currentFormationsList[ i ].GetType().ToString(), _currentFormationsList[ i ].stateExp,
 						_currentFormationsList[ i ].positionType, _currentFormationsList[ i ].sizeType );
 
+				rankControl.playerRankXp += ( _currentFormationsList[ i ].isAllMembersTakenDownByPlayer )? 1 : 0;
 				_currentFormationsList.RemoveAt( i );
 			}
 		}
@@ -215,19 +219,24 @@ public class MZFormationsManager : MZControlBase
 		MZDebug.Assert( formation != null, "formation is null" );
 
 		if( _currentFormationsList == null )
+		{
 			_currentFormationsList = new List<MZFormation>();
+		}
 
 		if( _currentFormationsList.Contains( formation ) == false )
 		{
 			if( formation.positionType == PositionType.Any )
 				ResetPositionTypeOrder();
 
+			formation.rank = rankControl.enemyRank;
 			formation.Enable();
-			_currentFormationState.exp += formation.stateExp;
 			_currentFormationsList.Add( formation );
 
 			if( MZGameSetting.SHOW_FORMATION_LOG )
 				MZDebug.Log( "add: name={0}, xp={1}, pos={2}, size={3}", formation.ToString(), formation.stateExp, formation.positionType, formation.sizeType );
+
+			_currentFormationState.exp += formation.stateExp;
+			rankControl.enemyRankXp += 1;
 		}
 		else
 		{

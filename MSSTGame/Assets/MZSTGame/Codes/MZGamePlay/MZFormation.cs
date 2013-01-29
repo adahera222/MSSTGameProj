@@ -25,6 +25,16 @@ public abstract class MZFormation : MZControlBase
 
 	//
 
+	public int rank = 0;
+
+	public bool isAllMembersTakenDownByPlayer
+	{
+		get
+		{
+			return ( maxEnemyCreatedNumber == _enemyDefeatedCount );
+		}
+	}
+
 	public new float duration
 	{
 		get{ return -1; }
@@ -69,6 +79,7 @@ public abstract class MZFormation : MZControlBase
 
 	int _stateExp = int.MinValue;
 	int _enemyCreatedCount = 0;
+	int _enemyDefeatedCount = 0;
 	int _constructCode = 0;
 	SizeType _sizeType = SizeType.Unknow;
 	PositionType _positionType = PositionType.Unknow;
@@ -107,6 +118,14 @@ public abstract class MZFormation : MZControlBase
 		}
 	}
 
+	public void NotifyDefeated(MZEnemy enemy)
+	{
+		MZDebug.Assert( enemy.currentHealthPoint <= 0, "you hp={0}, are you sure you would be defeated", enemy.healthPoint );
+		MZDebug.Assert( _enemiesList.Contains( enemy ) == true, "you are not my member, go out " + enemy.name );
+
+		_enemyDefeatedCount++;
+	}
+
 	//
 
 	public override bool ActiveCondition()
@@ -116,10 +135,13 @@ public abstract class MZFormation : MZControlBase
 
 	public override void Enable()
 	{
+		MZDebug.Assert( rank > 0, "You must set rank first" );
+
 		base.Enable();
 
 		enemyCreateTimeCount = 0;
 		_enemyCreatedCount = 0;
+		_enemyDefeatedCount = 0;
 		_enemiesList = new List<MZEnemy>();
 
 		InitValues();

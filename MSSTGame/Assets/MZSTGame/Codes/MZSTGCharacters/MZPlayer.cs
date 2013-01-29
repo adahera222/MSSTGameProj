@@ -129,7 +129,8 @@ public class MZPlayer : MZCharacter
 
 	MZAttack GetAttackToPart(string partName, float dir, int way)
 	{
-		MZAttack attack = new MZAttack_OddWay();
+		MZAttack_OddWay attack = MZAttack.Create<MZAttack_OddWay>( "test", partsByNameDictionary[ partName ] );
+		attack.disableRankEffect = true;
 		attack.numberOfWays = way;
 		attack.initVelocity = 1500;
 		attack.strength = 1;
@@ -138,7 +139,6 @@ public class MZPlayer : MZCharacter
 		attack.duration = -1;
 		attack.bulletName = "PB000";
 		attack.enable = false;
-		attack.controlDelegate = partsByNameDictionary[ partName ];
 		attack.targetHelp = new MZTargetHelp_AssignDirection();
 		( attack.targetHelp as MZTargetHelp_AssignDirection ).direction = dir;
 
