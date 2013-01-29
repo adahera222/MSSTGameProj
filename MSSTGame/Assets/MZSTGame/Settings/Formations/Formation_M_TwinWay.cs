@@ -130,12 +130,12 @@ public class Formation_M_TwinWay : MZFormation
 		{
 			float interval = ( rank >= 8 )? 20 : 10;
 			twin.offsetPositionsList.Add( position + new Vector2( interval*( ( isLeft )? -1 : 1 ), 0 ) );
-			twin.offsetPositionsList.Add( position + new Vector2( interval*( ( isLeft )? 1 : -1 ), 0 ) );
+			twin.offsetPositionsList.Add( position + new Vector2( interval*( ( isLeft )? 1 : -1 ), -20 ) );
 		}
 
 		if( rank >= 8 || rank <= 4 )
 		{
-			twin.offsetPositionsList.Add( position + new Vector2( 0, 0 ) );
+			twin.offsetPositionsList.Add( position + new Vector2( 0, -10 ) );
 		}
 
 		twin.colddown = 0.2f;

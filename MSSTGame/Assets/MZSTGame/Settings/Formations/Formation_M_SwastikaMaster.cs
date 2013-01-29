@@ -55,7 +55,7 @@ public class Formation_M_SwastikaMaster : MZFormation
 		mode.AddPartControlUpdater().Add( partControl );
 		AddRingAttack( partControl );
 
-		float degreesInterval = ( rank > 8 )? 2.0f : 4.0f;
+		float degreesInterval = ( rank > 8 )? 10.0f : 4.0f;
 		int centerDegreesInterval = ( rank < 5 )? 180 : 90;
 
 		for( int centerDegrees = 0; centerDegrees < 360; centerDegrees += centerDegreesInterval )
@@ -147,7 +147,7 @@ public class Formation_M_SwastikaMaster : MZFormation
 		thirdRing.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
 		( thirdRing.targetHelp as MZTargetHelp_AssignDirection ).direction = 270 + intervalDegrees/2.0f;
 
-		if( rank < 8 )
+		if( rank < 7 )
 			return;
 
 		MZAttack_OddWay exInnerRing = partControl.AddAttack<MZAttack_OddWay>();
@@ -159,6 +159,9 @@ public class Formation_M_SwastikaMaster : MZFormation
 		exInnerRing.duration = 0.15f;
 		exInnerRing.targetHelp = MZTargetHelp.Create<MZTargetHelp_AssignDirection>();
 		( exInnerRing.targetHelp as MZTargetHelp_AssignDirection ).direction = 270 + intervalDegrees/4.0f;
+
+		if( rank < 8 )
+			return;
 
 		MZAttack_OddWay exOutRing = partControl.AddAttack<MZAttack_OddWay>();
 		exOutRing.numberOfWays = ways;

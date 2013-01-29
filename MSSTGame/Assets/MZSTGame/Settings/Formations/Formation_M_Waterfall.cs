@@ -87,7 +87,7 @@ public class Formation_M_Waterfall : MZFormation
 		MZAttack_OddWay odd = partControl.AddAttack<MZAttack_OddWay>();
 		odd.numberOfWays = way;
 		odd.colddown = 0.1f;
-		odd.duration = 1.0f - rankIdle;
+		odd.duration = 1.0f - rankIdle + ( ( rank >= 7 )? -0.6f : 0 );
 		odd.bulletName = "EBDonuts";
 		odd.initVelocity = 300;
 		odd.additionalVelocity = 80;
