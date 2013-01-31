@@ -15,6 +15,11 @@ public interface IMZAttack : IMZControl
 	{
 		get;
 	}
+
+	float rotation
+	{
+		get;
+	}
 }
 
 public abstract class MZAttack : MZControlBase, IMZTargetHelp
@@ -42,6 +47,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 
 	//
 	public bool disableRankEffect = false;
+	public bool enableLaunchOffsetWithRotation = false;
 	public List<Vector2> offsetPositionsList = new List<Vector2>();
 	public new IMZAttack controlDelegate = null;
 	public int numberOfWays = 0;
@@ -53,7 +59,6 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	public float additionalVelocity = 0;
 	public float maxVelocity = float.NaN;
 	public string bulletName = null;
-//	public MZFaceTo.Type bulletFaceToType = MZFaceTo.Type.MovingVector;
 
 	//
 
@@ -191,7 +196,7 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 	{
 		GameObject bullet = GetNewBulletObject();
 		MZBullet bulletScript = bullet.GetComponent<MZBullet>();
-		SetOffsetToBullet( bulletScript, index );
+		bulletScript.position = GetBulletLaunchPosition( index );
 
 		return bulletScript;
 	}
@@ -229,19 +234,8 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		bulletScript.strength = strength;
 		bulletScript.partsByNameDictionary[ "MainBody" ].faceTo = new MZFaceTo_MovingDirection();
 
-		bulletScript.position = controlDelegate.realPosition;
 		return bullet;
 	}
-
-		void SetOffsetToBullet(MZBullet bullet, int index)
-	{
-		if( offsetPositionsList == null || offsetPositionsList.Count == 0 )
-			return;
-
-		int _index = index%offsetPositionsList.Count;
-		bullet.position += offsetPositionsList[ _index ];
-	}
-
 
 	MZCharacterType GetBulletType()
 	{
@@ -264,5 +258,28 @@ public abstract class MZAttack : MZControlBase, IMZTargetHelp
 		float min = 0.6f;
 		float interval = ( 1.0f - min )/4.0f;
 		return ( disableRankEffect == false )? min + interval*( MZGameComponents.instance.enemyRank - 1 ) : 1;
+	}
+
+	Vector2 GetBulletLaunchPosition(int index)
+	{
+		if( offsetPositionsList == null || offsetPositionsList.Count == 0 )
+			return controlDelegate.realPosition;
+
+		int _index = index%offsetPositionsList.Count;
+		Vector2 offset = offsetPositionsList[ _index ];
+
+		if( enableLaunchOffsetWithRotation )
+		{
+			float radians = MZMath.DegreesToRadians( controlDelegate.rotation );
+			float cosValue = Mathf.Cos( radians );
+			float sinValue = Mathf.Sin( radians );
+
+			float x = offset.x*cosValue - offset.y*sinValue;
+			float y = offset.x*sinValue + offset.y*cosValue;
+
+			offset = new Vector2( x, y );
+		}
+
+		return controlDelegate.realPosition + offset;
 	}
 }
