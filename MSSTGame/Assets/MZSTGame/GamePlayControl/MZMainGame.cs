@@ -11,8 +11,8 @@ public class MZMainGame : MonoBehaviour
 	public MZTest test = new MZTest();
 
 	//
-
-	float _delayUpdate = 3;
+	int _firstAndSecondUpateCount;
+	float _delayUpdate = 4;
 	MZFormationsManager _formationsManager;
 	MZRankControl _rankControl;
 
@@ -51,6 +51,8 @@ public class MZMainGame : MonoBehaviour
 
 		InitPlayer();
 
+		_firstAndSecondUpateCount = 0;
+
 		_rankControl.Enable();
 		_formationsManager.Enable();
 	}
@@ -58,6 +60,11 @@ public class MZMainGame : MonoBehaviour
 	void Update()
 	{
 		MZTime.instance.Update();
+
+		if( _firstAndSecondUpateCount == 0 )
+			FirstUpdate();
+		else if( _firstAndSecondUpateCount == 1 )
+				SecondUpdate();
 
 		_delayUpdate -= MZTime.deltaTime;
 
@@ -83,6 +90,25 @@ public class MZMainGame : MonoBehaviour
 		playerObject.GetComponent<MZCharacter>().position = new Vector2( 0, -200 );
 
 		MZGameComponents.instance.charactersManager.Add( MZCharacterType.Player, playerObject.GetComponent<MZCharacter>() );
+	}
+
+	void FirstUpdate()
+	{
+		_firstAndSecondUpateCount = 1;
+
+		foreach( string name in MZCharacterObjectsFactory.instance.characterObjectNamesByType[MZCharacter.MZCharacterType.EnemyBullet] )
+		{
+			GameObject bullet = MZCharacterObjectsFactory.instance.Get( MZCharacterType.EnemyBullet, name );
+			bullet.GetComponent<MZCharacter>().position = new Vector2( 0, 0 );
+
+			MZGameComponents.instance.charactersManager.Add( MZCharacterType.EnemyBullet, bullet.GetComponent<MZCharacter>() );
+		}
+	}
+
+	void SecondUpdate()
+	{
+		_firstAndSecondUpateCount = 2;
+		MZGameComponents.instance.charactersManager.RemoveAllCharactersByType( MZCharacterType.EnemyBullet );
 	}
 
 	void UpdateRankInfoToEditor()

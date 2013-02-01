@@ -16,7 +16,7 @@ public class MZRankControl : MZControlBase
 	{
 		base.Enable();
 
-		enemyRank = 1;
+		enemyRank = 5;
 		enemyRankXp = 0;
 		enemyNextRankUp = 20;
 

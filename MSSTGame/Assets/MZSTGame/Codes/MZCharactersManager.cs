@@ -43,6 +43,14 @@ public class MZCharactersManager : MonoBehaviour
 		}
 	}
 
+	public void RemoveAllCharactersByType(MZCharacterType characterType)
+	{
+		foreach( MZCharacter character in  _dicActiveCharactersListByType[characterType] )
+		{
+			character.Disable();
+		}
+	}
+
 	public Vector2 GetPlayerPosition()
 	{
 		return ( _playerCharacter != null )? _playerCharacter.position : Vector2.zero;
@@ -171,9 +179,8 @@ public class MZCharactersManager : MonoBehaviour
 	{
 		enemyBullet.Disable();
 		_playerHitTime++;
-//		MZDebug.Log( "Your hit by " + _playerHitTime.ToString() + " times" );
 
-		Debug.Log( "Your hit by " + _playerHitTime.ToString() + " times" );
+		MZDebug.Log( "Your hit by " + _playerHitTime.ToString() + " times" );
 	}
 
 	void OnPlayerBulletCollideEnemy(MZBullet playerBullet, MZEnemy enemy)

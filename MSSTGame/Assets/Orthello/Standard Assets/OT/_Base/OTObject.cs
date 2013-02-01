@@ -2164,23 +2164,23 @@ public class OTObject : MonoBehaviour
 		
     }
 
-    void OnBecameVisible()
-    {
-        inView = true;
-        if (onIntoView != null)
-            onIntoView(this);
-        if (!CallBack("onIntoView", callBackParams))
-            CallBack("OnIntoView", callBackParams);
-    }
-
-    void OnBecameInvisible()
-    {
-        inView = false;
-        if (onOutOfView != null)
-            onOutOfView(this);
-        if (!CallBack("onOutOfView", callBackParams))
-            CallBack("OnOutOfView", callBackParams);
-    }
+//    void OnBecameVisible()
+//	{
+//		inView = true;
+//		if( onIntoView != null )
+//			onIntoView( this );
+//		if( !CallBack( "onIntoView", callBackParams ) )
+//			CallBack( "OnIntoView", callBackParams );
+//	}
+//
+//    void OnBecameVisible()
+//    {
+//        inView = false;
+//        if (onOutOfView != null)
+//            onOutOfView(this);
+//        if (!CallBack("onOutOfView", callBackParams))
+//            CallBack("OnOutOfView", callBackParams);
+//    }
 
     /// <summary>
     /// Get a Controller from this object with a specific type

@@ -6,6 +6,10 @@ using MZCharacterType = MZCharacter.MZCharacterType;
 
 public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 {
+	public Dictionary<MZCharacterType, List<string>> characterObjectNamesByType = null;
+
+	//
+
 	Dictionary<MZCharacterType, Dictionary<string, MZPool<GameObject>>> _charactersPoolsDictionaryByType = null;
 	Dictionary<MZCharacterType, Transform> _charactersParentTransformByType = null;
 	MZOnCreatedCharacterStates onCreatedCharacterStates = new MZOnCreatedCharacterStates();
@@ -50,6 +54,13 @@ public class MZCharacterObjectsFactory : MZSingleton<MZCharacterObjectsFactory>
 		onCreatedCharacterStates.Restore();
 
 		poolDict.Add( name, newPool );
+
+		if( characterObjectNamesByType == null )
+			characterObjectNamesByType = new Dictionary<MZCharacterType, List<string>>();
+		if( characterObjectNamesByType.ContainsKey( type ) == false )
+			characterObjectNamesByType.Add( type, new List<string>() );
+
+		characterObjectNamesByType[ type ].Add( name );
 	}
 
 	public GameObject Get(MZCharacterType type, string name)
