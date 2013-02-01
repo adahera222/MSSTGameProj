@@ -1707,10 +1707,10 @@ public class OT : MonoBehaviour
 
     void _Register(OTObject o)
     {
-        if (!objects.Contains(o))
+//        if (!objects.Contains(o))
             objects.Add(o);
-        if (!lookup.ContainsKey(o.name.ToLower()))
-            lookup.Add(o.name.ToLower(), o);
+//        if (!lookup.ContainsKey(o.name.ToLower()))
+//            lookup.Add(o.name.ToLower(), o);
     }
 	
     void _RegisterContainer(OTContainer container)

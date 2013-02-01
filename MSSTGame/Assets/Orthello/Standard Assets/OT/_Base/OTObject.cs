@@ -1956,7 +1956,7 @@ public class OTObject : MonoBehaviour
     protected virtual void Start()
 	{								
 		InitComponents();
-		
+
 		callBackParams = new object[] { this };		
 
 		if( !OT.isValid )
@@ -1965,112 +1965,113 @@ public class OTObject : MonoBehaviour
 			Debug.Log( "Please remove this Orthello object and add the OT object first." );
 		}
 		
-		isCopy = ( name != "" && OT.ObjectByName( name ) != null && OT.ObjectByName( name ) != this );
-		if( isCopy )
-			copyObject = OT.ObjectByName( name );
-				
-		if( _name == "" || isCopy )
+//		isCopy = ( name != "" && OT.ObjectByName( name ) != null && OT.ObjectByName( name ) != this );
+//		if( isCopy )
+//			copyObject = OT.ObjectByName( name );
+//				
+//		if( _name == "" || isCopy )
+//		{
+//			if( copyObject != null )
+//			{
+//				if( copyObject != null )
+//				{
+//					baseName = copyObject.baseName;
+//					if( baseName == "" )
+//						baseName = name;
+//				}				
+//				if( baseName != "" )
+//				{
+////					int baseIdx = 1;
+////					while(GameObject.Find(baseName + "-" + baseIdx))
+////						baseIdx++;
+////					name = baseName + "-" + baseIdx;
+//					name = baseName;
+//#if UNITY_EDITOR
+//					if (!Application.isPlaying)
+//						UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(this);
+//#endif			
+//				}
+//            }
+//
+//			if (name == "")
+//
+//			{
+//                name = GetTypeName() + " (id=" + this.gameObject.GetInstanceID() + ")";
+//#if UNITY_EDITOR
+//				if (!Application.isPlaying)
+//					UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(this);
+//#endif											
+//			}
+//        }
+
+		// check if we have a meshfilter
+		MeshFilter mf = GetComponent<MeshFilter>();
+		if( mf == null )
+			mf = gameObject.AddComponent<MeshFilter>();
+		// check if we have a mesh renderer
+		MeshRenderer mr = GetComponent<MeshRenderer>();
+		if( mr == null )
 		{
-			if( copyObject != null )
-			{
-				if( copyObject != null )
-				{
-					baseName = copyObject.baseName;
-					if( baseName == "" )
-						baseName = name;
-				}				
-				if( baseName != "" )
-				{
-//					int baseIdx = 1;
-//					while(GameObject.Find(baseName + "-" + baseIdx))
-//						baseIdx++;
-//					name = baseName + "-" + baseIdx;
-					name = baseName;
-#if UNITY_EDITOR
-					if (!Application.isPlaying)
-						UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(this);
-#endif			
-				}
-            }
-
-			if (name == "")
-
-			{
-                name = GetTypeName() + " (id=" + this.gameObject.GetInstanceID() + ")";
-#if UNITY_EDITOR
-				if (!Application.isPlaying)
-					UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(this);
-#endif											
-			}
-        }
-
-        // check if we have a meshfilter
-        MeshFilter mf = GetComponent<MeshFilter>();
-        if (mf == null)
-            mf = gameObject.AddComponent<MeshFilter>();
-        // check if we have a mesh renderer
-        MeshRenderer mr = GetComponent<MeshRenderer>();
-        if (mr == null)
-		{
-            mr = gameObject.AddComponent<MeshRenderer>();
+			mr = gameObject.AddComponent<MeshRenderer>();
 			otRenderer = renderer;
 
 		}
 
-        // check if we have to generate a mesh for this object
-        if (Application.isPlaying) mesh = mf.mesh;
-
-        else mesh = mf.sharedMesh;
+		// check if we have to generate a mesh for this object
+		if( Application.isPlaying )
+			mesh = mf.mesh;
+		else
+			mesh = mf.sharedMesh;
 				
 
-        if (mesh == null || mesh.vertexCount == 0 || isCopy)
-
-        {
-            Mesh m = null;
-            if (Application.isPlaying) m = mf.mesh;
-
-            else m = mf.sharedMesh;
+		if( mesh == null || mesh.vertexCount == 0 || isCopy )
+		{
+			Mesh m = null;
+			if( Application.isPlaying )
+				m = mf.mesh;
+			else
+				m = mf.sharedMesh;
 						
-            mesh = GetMesh();
+			mesh = GetMesh();
 
-            if (mesh != null)
+			if( mesh != null )
+			{
+				if( Application.isPlaying )
+					mf.mesh = mesh;
+				else
+					mf.sharedMesh = mesh;
+				AfterMesh();
 
-            {
-                if (Application.isPlaying) mf.mesh = mesh;
-
-                else mf.sharedMesh = mesh;
-                AfterMesh();
 
 
+				if( !isCopy && m != null )
+				{
+					if( m.uv.Length > 0 )
+						mesh.uv = m.uv;
+					DestroyImmediate( m );
 
-                if (!isCopy && m != null)
+				}
+				meshDirty = false;
+			}
+		}
+		;
 
-                {
-                    if (m.uv.Length > 0)
-                        mesh.uv = m.uv;
-                    DestroyImmediate(m);
+		if( !OT.IsRegistered( this ) )
+			OT.Register( this );
 
-                }
-                meshDirty = false;
-            }
-        };
+		CheckInputCollidable();
+		if( !Application.isPlaying )
+		{
 
-        if (!OT.IsRegistered(this))
-            OT.Register(this);
+			if( init )
+			{
+				if( OT.view.customSize > 0 )
+					_size *= OT.view.sizeFactor;
+				init = false;
+			}
+		}
 
-        CheckInputCollidable();
-        if (!Application.isPlaying)
-        {
-
-            if (init)
-            {
-                if (OT.view.customSize > 0)
-                    _size *= OT.view.sizeFactor;
-                init = false;
-            }
-        }
-
-    }
+	}
 	
 	/// <summary>
 	/// Worldbounds of this object to the area of the provided orthello object
